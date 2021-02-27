@@ -1,4 +1,4 @@
-<img src="./docs_src/static/matbench_logo.png" alt="logo" width="300"/>
+<img src="./docs_src/static/matbench_logo_with_text.png" alt="logo" width="300"/>
 
 matbench is an ImageNet for materials science; a set of 13 curated machine learning tasks for benchmarking and performance testing.
 
