@@ -6,6 +6,7 @@ from pymatgen import Structure
 from matbench.data import load
 from matbench.constants import DATASETS
 
+
 class TestLoad(unittest.TestCase):
 
     def test_datasets_metadata_file(self):
@@ -18,6 +19,7 @@ class TestLoad(unittest.TestCase):
 
                 elif key == "problem_type":
                     self.assertIn(metadata[key], ["regression", "classification"])
+        self.assertEqual(len(list(DATASETS.values())), 13)
 
     def test_downloads(self):
 
