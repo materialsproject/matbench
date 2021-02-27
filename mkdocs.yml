@@ -10,21 +10,27 @@ theme:
   name: material
   palette:
     scheme: slate
-    primary: light blue
+    primary: grey
     accent: green
   logo: static/matbench_logo.png
   favicon: static/matbench_logo_favicon.png
+#  features:
+#    - navigation.tracking
+  hide:
+    - natigation
+    - toc
 
 plugins:
   - search
 
 markdown_extensions:
-  - admonition
-  - codehilite
-  - attr_list
-  - footnotes
-  - toc:
-      permalink: true
+  - meta
+#  - admonition
+#  - codehilite
+#  - attr_list
+#  - footnotes
+#  - toc:
+#      permalink: true
 
 repo_url: https://github.com/hackingmaterials/matbench
 #docs_dir: src
