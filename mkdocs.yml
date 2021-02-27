@@ -1,0 +1,30 @@
+site_name: MatBench
+site_description: A benchmark and leaderboard for predicting materials properties
+copyright: HackingMaterials
+
+docs_dir: docs_src
+site_dir: docs
+
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: light blue
+    accent: green
+  logo: static/matbench_logo.png
+  favicon: static/matbench_logo_favicon.png
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - attr_list
+  - footnotes
+  - toc:
+      permalink: true
+
+repo_url: https://github.com/hackingmaterials/matbench
+#docs_dir: src
