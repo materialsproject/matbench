@@ -1,21 +1,22 @@
-# MatBench v0.1 benchmark
-###### A benchmark for materials science property prediction
+<img src="./docs_src/static/matbench_logo.png" alt="logo" width="300"/>
 
-Overview
-------------
-
-MatBench is an [ImageNet]<http://www.image-net.org>`_ for materials science; a
-set of 13 supervised, pre-cleaned, ready-to-use ML tasks for benchmarking and fair comparison. The tasks span a wide domain of
-inorganic materials science applications.
-
-.. image:: _static/matbench_pie_charts.png
-   :alt: matbench
-   :align: center
-   :width: 600px
-
-You can find details and results on the benchmark in our paper
-`Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm <https://doi.org/10.1038/s41524-020-00406-3>`_. Please consider citing this paper if you use Matbench v0.1 for benchmarking, comparison, or prototyping.
+matbench is an ImageNet for materials science; a set of 13 curated machine learning tasks for benchmarking and performance testing.
 
 
-Leaderboard
-------------
+| Tests  |   Code Coverage   |  Codacy | Release |
+|:----------:|:-------------:|:------:|:------:|
+| n/a | n/a | n/a | n/a |
+
+- **Website (including documentation)**: <https://hackingmaterials.lbl.gov/matbench>
+- **Help/Support:** <https://discuss.matsci.org/c/matminer>
+- **Source:** <https://github.com/hackingmaterials/matbench>
+
+If you find `matbench`. useful, please consider citing [our paper](https://doi.org/10.1038/s41524-020-00406-3):
+
+```
+Dunn, A., Wang, Q., Ganose, A., Dopp, D., Jain, A. Benchmarking Materials Property
+Prediction Methods: The Matbench Test Set and Automatminer Reference Algorithm. npj 
+Computational Materials 6, 138 (2020). https://doi.org/10.1038/s41524-020-00406-3
+```
+
+`matbench` will be `pip` installable soon. Please stay tuned for the first release!
