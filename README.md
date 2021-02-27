@@ -11,7 +11,7 @@ matbench is an ImageNet for materials science; a set of 13 curated machine learn
 - **Help/Support:** <https://discuss.matsci.org/c/matminer>
 - **Source:** <https://github.com/hackingmaterials/matbench>
 
-If you find `matbench`. useful, please consider citing [our paper](https://doi.org/10.1038/s41524-020-00406-3):
+If you find `matbench` useful, please consider citing [our paper](https://doi.org/10.1038/s41524-020-00406-3):
 
 ```
 Dunn, A., Wang, Q., Ganose, A., Dopp, D., Jain, A. Benchmarking Materials Property
