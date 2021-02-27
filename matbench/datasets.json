@@ -72,7 +72,7 @@
     "input_type": "structure"
   },
   "matbench_steels": {
-    "target": "yield_strength",
+    "target": "yield strength",
     "n_samples": 312,
     "problem_type": "regression",
     "input_type": "composition"
