@@ -1,7 +1,22 @@
 from sklearn.model_selection import KFold, StratifiedKFold
-from matminer.datasets import load_dataset
+from matminer.datasets import load_dataset, get_all_dataset_info
 
 from matbench.constants import DATASETS, VALIDATION, REG_KEY, CLF_KEY
+
+
+class MatbenchTask:
+
+    def __init__(self, dataset_name):
+        self.df = load(dataset_name)
+        self.info = get_all_dataset_info(dataset_name)
+
+    def get_info(self):
+        print(self.info)
+
+    def get_info
+
+
+
 
 
 def load(dataset_name):
@@ -27,6 +42,7 @@ def load(dataset_name):
             f"Please see https://hackingmaterials.lbl.gov/matbench for "
             f"a list of the dataset names, or choose from:\n{list(DATASETS.keys())}"
         )
+    print(f"Loading {dataset_name} into memory; please be patient as many structures can take a while to serialize.")
     return load_dataset(dataset_name)
 
 
@@ -50,6 +66,9 @@ def get_kfold(problem_type):
         return StratifiedKFold(**kfold_config)
     else:
         raise ValueError(f"'problem_type' must be one of {allowed}.")
+
+
+
 
 
 def _generate_random_data():
