@@ -31,6 +31,16 @@ def load(dataset_name):
 
 
 def get_kfold(problem_type):
+    """
+    Obtain the test/train split for a given problem type (regression or classfication).
+
+    Args:
+        problem_type (str): Either 'regression' or 'classification'
+
+    Returns:
+        (KFold or StratifiedKFold): A kfold cross validation object
+
+    """
     allowed = [REG_KEY, CLF_KEY]
     kfold_config = VALIDATION["common"]
 
