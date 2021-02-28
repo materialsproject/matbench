@@ -4,10 +4,7 @@ import numpy as np
 from pymatgen import Structure
 
 from matbench.data import load
-from matbench.constants import DATASETS, VALIDATION
-
-REG_KEY = "regression"
-CLF_KEY = "classification"
+from matbench.constants import DATASETS, VALIDATION, REG_KEY, CLF_KEY
 
 
 class TestMetadata(unittest.TestCase):
@@ -24,8 +21,9 @@ class TestMetadata(unittest.TestCase):
         self.assertEqual(len(list(DATASETS.values())), 13)
 
     def test_validation_metadata_file(self):
-        self.assertIn(REG_KEY, VALIDATION.keys())
-        self.assertIn(CLF_KEY, VALIDATION.keys())
+        self.assertIn("common", VALIDATION.keys())
+        self.assertIn("seed", VALIDATION["common"].keys())
+        self.assertIn("n_spits", VALIDATION["common"].keys())
 
 
 class TestLoad(unittest.TestCase):

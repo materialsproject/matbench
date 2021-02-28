@@ -1,6 +1,7 @@
+from sklearn.model_selection import KFold, StratifiedKFold
 from matminer.datasets import load_dataset
 
-from matbench.constants import DATASETS
+from matbench.constants import DATASETS, VALIDATION, REG_KEY, CLF_KEY
 
 
 def load(dataset_name):
@@ -28,6 +29,17 @@ def load(dataset_name):
         )
     return load_dataset(dataset_name)
 
+
+def get_kfold(problem_type):
+    allowed = [REG_KEY, CLF_KEY]
+    kfold_config = VALIDATION["common"]
+
+    if problem_type == REG_KEY:
+        return KFold(**kfold_config)
+    elif problem_type == CLF_KEY:
+        return StratifiedKFold(**kfold_config)
+    else:
+        raise ValueError(f"'problem_type' must be one of {allowed}.")
 
 
 def _generate_random_data():

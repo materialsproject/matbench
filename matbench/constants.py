@@ -13,3 +13,6 @@ with open(DATASETS_JSON_PATH, "r") as f:
 
 with open(VALIDATION_JSON_PATH ,"r") as f:
     VALIDATION = json.load(f)
+
+REG_KEY = "regression"
+CLF_KEY = "classification"
