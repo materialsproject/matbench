@@ -1,0 +1,10 @@
+{
+  "regression": {
+    "seed":18012019,
+    "type": "kfold"
+  },
+  "classification":{
+    "seed": 18012019,
+    "type": "stratified_kfold"
+  }
+}

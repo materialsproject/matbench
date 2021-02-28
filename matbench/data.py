@@ -29,6 +29,11 @@ def load(dataset_name):
     return load_dataset(dataset_name)
 
 
+
+def _generate_random_data():
+    pass
+
+
 if __name__ == "__main__":
     df = load("matbench_steels")
     print(df)
