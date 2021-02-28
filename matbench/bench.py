@@ -1,4 +1,4 @@
-from matbench.constants import DATASETS
+from matbench.constants import datasets
 
 
 class MatbenchBenchmark:

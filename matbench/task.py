@@ -1,4 +1,4 @@
-from matbench.constants import DATASETS
+from matbench.constants import datasets
 
 from matminer.datasets import get_all_dataset_info
 
@@ -12,7 +12,7 @@ class MatbenchTask:
         self.df = load(dataset_name)
         self.info = get_all_dataset_info(dataset_name)
 
-        self.metadata = DATASETS[dataset_name]
+        self.metadata = datasets[dataset_name]
         self.kfold = get_kfold(self.metadata["task_type"])
 
         self.results = None

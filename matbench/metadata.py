@@ -1,22 +1,23 @@
 import os
 import json
 
+from matminer.datasets.utils import _load_dataset_dict
+
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 DATASETS_JSON_PATH = os.path.join(THIS_DIR, "datasets.json")
 VALIDATION_JSON_PATH = os.path.join(THIS_DIR, "validation.json")
 
-
-with open(DATASETS_JSON_PATH, "r") as f:
-    DATASETS = json.load(f)
-
-with open(VALIDATION_JSON_PATH, "r") as f:
-    VALIDATION = json.load(f)
-
 REG_KEY = "regression"
 CLF_KEY = "classification"
 
+MATMINER_DATASET_METADATA = _load_dataset_dict()
+
 
 class RecurisveDotDict(dict):
+    """
+    Adapted from user Curt Hagenlocher from
+    https://stackoverflow.com/questions/3031219/recursively-access-dict-via-attributes-as-well-as-index-access
+    """
     MARKER = object()
 
     def __init__(self, value=None):
@@ -43,7 +44,13 @@ class RecurisveDotDict(dict):
     __setattr__, __getattr__ = __setitem__, __getitem__
 
 
-datasets_metadata = RecurisveDotDict(DATASETS)
+with open(DATASETS_JSON_PATH, "r") as f:
+    metadata = json.load(f)
 
+for d in metadata.keys():
+    metadata[d].update(MATMINER_DATASET_METADATA[d])
 
-from matminer.datasets import g
+with open(VALIDATION_JSON_PATH, "r") as f:
+    validation_metadata = json.load(f)
+
+metadata = RecurisveDotDict(metadata)

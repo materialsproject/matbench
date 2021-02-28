@@ -1,7 +1,7 @@
 from sklearn.model_selection import KFold, StratifiedKFold
 from matminer.datasets import load_dataset
 
-from matbench.constants import DATASETS, VALIDATION, REG_KEY, CLF_KEY
+from matbench.constants import datasets, validation, REG_KEY, CLF_KEY
 
 
 
@@ -23,11 +23,11 @@ def load(dataset_name):
             - Outputs, either a float (for regression) or a boolean (for classification).
     """
 
-    if dataset_name not in DATASETS:
+    if dataset_name not in datasets:
         raise KeyError(
             f"Dataset name {dataset_name} not recognized by matbench. "
             f"Please see https://hackingmaterials.lbl.gov/matbench for "
-            f"a list of the dataset names, or choose from:\n{list(DATASETS.keys())}"
+            f"a list of the dataset names, or choose from:\n{list(datasets.keys())}"
         )
     print(f"Loading {dataset_name} into memory; please be patient as many structures can take a while to serialize.")
     return load_dataset(dataset_name)
@@ -45,7 +45,7 @@ def get_kfold(problem_type):
 
     """
     allowed = [REG_KEY, CLF_KEY]
-    kfold_config = VALIDATION["common"]
+    kfold_config = validation["common"]
 
     if problem_type == REG_KEY:
         return KFold(**kfold_config)

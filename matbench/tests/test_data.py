@@ -4,12 +4,12 @@ import numpy as np
 from pymatgen import Structure
 
 from matbench.data import load
-from matbench.constants import DATASETS, VALIDATION, REG_KEY, CLF_KEY
+from matbench.constants import datasets, validation, REG_KEY, CLF_KEY
 
 
 class TestMetadata(unittest.TestCase):
     def test_datasets_metadata_file(self):
-        for metadata in DATASETS.values():
+        for metadata in datasets.values():
             for key in ["task_type", "n_samples", "input_type", "target"]:
                 self.assertIn(key, metadata.keys())
 
@@ -18,18 +18,18 @@ class TestMetadata(unittest.TestCase):
 
                 elif key == "task_type":
                     self.assertIn(metadata[key], [REG_KEY, CLF_KEY])
-        self.assertEqual(len(list(DATASETS.values())), 13)
+        self.assertEqual(len(list(datasets.values())), 13)
 
     def test_validation_metadata_file(self):
-        self.assertIn("common", VALIDATION.keys())
-        self.assertIn("seed", VALIDATION["common"].keys())
-        self.assertIn("n_spits", VALIDATION["common"].keys())
+        self.assertIn("common", validation.keys())
+        self.assertIn("seed", validation["common"].keys())
+        self.assertIn("n_spits", validation["common"].keys())
 
 
 class TestLoad(unittest.TestCase):
 
     def test_downloads(self):
-        for dataset, metadata in DATASETS.items():
+        for dataset, metadata in datasets.items():
             print(f"Testing {dataset} with metadata {metadata}")
             df = load(dataset)
 
