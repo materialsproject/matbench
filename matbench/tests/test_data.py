@@ -10,13 +10,13 @@ from matbench.constants import DATASETS, VALIDATION, REG_KEY, CLF_KEY
 class TestMetadata(unittest.TestCase):
     def test_datasets_metadata_file(self):
         for metadata in DATASETS.values():
-            for key in ["problem_type", "n_samples", "input_type", "target"]:
+            for key in ["task_type", "n_samples", "input_type", "target"]:
                 self.assertIn(key, metadata.keys())
 
                 if key == "input_type":
                     self.assertIn(metadata[key], ["composition", "structure"])
 
-                elif key == "problem_type":
+                elif key == "task_type":
                     self.assertIn(metadata[key], [REG_KEY, CLF_KEY])
         self.assertEqual(len(list(DATASETS.values())), 13)
 
@@ -41,7 +41,7 @@ class TestLoad(unittest.TestCase):
             self.assertTrue(all([isinstance(input, test_type) for input in
                                  df[metadata["input_type"]]]))
 
-            problem_type = metadata["problem_type"]
+            problem_type = metadata["task_type"]
             test_types = [np.bool_, bool] if problem_type == CLF_KEY else [
                 np.float_, np.float32, np.float64, float]
             self.assertIn(df[metadata["target"]].dtypes, test_types)

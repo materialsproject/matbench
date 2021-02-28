@@ -1,20 +1,7 @@
 from sklearn.model_selection import KFold, StratifiedKFold
-from matminer.datasets import load_dataset, get_all_dataset_info
+from matminer.datasets import load_dataset
 
 from matbench.constants import DATASETS, VALIDATION, REG_KEY, CLF_KEY
-
-
-class MatbenchTask:
-
-    def __init__(self, dataset_name):
-        self.df = load(dataset_name)
-        self.info = get_all_dataset_info(dataset_name)
-
-    def get_info(self):
-        print(self.info)
-
-    def get_info
-
 
 
 

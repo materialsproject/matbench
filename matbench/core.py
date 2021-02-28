@@ -5,10 +5,12 @@ Core functions for benchmarking.
 
 User:
 {
-    "matbench_steels: {fold0: fold0_df, fold1: fold1_df, fold3: ...},
+    "matbench_steels: {fold0: {data: fold0_df, params: {}},  {fold1: fold1_df, params: {}}, fold3: ...},
     ...
     [[any number of these]]
 }
+
+params is a freeform dictionary representing the hyperparameters of the model, which may have been determined via automated processes.
 
 Each df should be of the form
 
@@ -27,7 +29,7 @@ Final, bedrock truth results format:
 
 {
     "raw": {
-        "matbench_steels": {fold0: { index1: prediction1, index2: prediction2...}, fold1: ...}
+        "matbench_steels": {fold0: {data: { index1: prediction1, index2: prediction2...}, params, fold1: ...}
         "matbench_dielectric": {fold0: { index1: prediction1, index2: prediction2...}, fold1: ...}
         ...
     },

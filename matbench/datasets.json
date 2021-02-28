@@ -2,79 +2,79 @@
   "matbench_dielectric": {
     "target": "n",
     "n_samples": 4764,
-    "problem_type": "regression",
+    "task_type": "regression",
     "input_type": "structure"
   },
   "matbench_expt_gap": {
     "target": "gap expt",
     "n_samples": 4604,
-    "problem_type": "regression",
+    "task_type": "regression",
     "input_type": "composition"
   },
   "matbench_expt_is_metal": {
     "target": "is_metal",
     "n_samples": 4921,
-    "problem_type": "classification",
+    "task_type": "classification",
     "input_type": "composition"
   },
   "matbench_glass": {
     "target": "gfa",
     "n_samples": 5680,
-    "problem_type": "classification",
+    "task_type": "classification",
     "input_type": "composition"
   },
   "matbench_jdft2d": {
     "target": "exfoliation_en",
     "n_samples": 636,
-    "problem_type": "regression",
+    "task_type": "regression",
     "input_type": "structure"
   },
   "matbench_log_gvrh": {
     "target": "log10(G_VRH)",
     "n_samples": 10987,
-    "problem_type": "regression",
+    "task_type": "regression",
     "input_type": "structure"
   },
   "matbench_log_kvrh": {
     "target": "log10(K_VRH)",
     "n_samples": 10987,
-    "problem_type": "regression",
+    "task_type": "regression",
     "input_type": "structure"
   },
   "matbench_mp_e_form": {
     "target": "e_form",
     "n_samples": 132752,
-    "problem_type": "regression",
+    "task_type": "regression",
     "input_type": "structure"
   },
   "matbench_mp_gap": {
     "target": "gap pbe",
     "n_samples": 106113,
-    "problem_type": "regression",
+    "task_type": "regression",
     "input_type": "structure"
   },
   "matbench_mp_is_metal": {
     "target": "is_metal",
     "n_samples": 106113,
-    "problem_type": "classification",
+    "task_type": "classification",
     "input_type": "structure"
   },
   "matbench_perovskites": {
     "target": "e_form",
     "n_samples": 18928,
-    "problem_type": "regression",
+    "task_type": "regression",
     "input_type": "structure"
   },
   "matbench_phonons": {
     "target": "last phdos peak",
     "n_samples": 1265,
-    "problem_type": "regression",
+    "task_type": "regression",
     "input_type": "structure"
   },
   "matbench_steels": {
     "target": "yield strength",
     "n_samples": 312,
-    "problem_type": "regression",
+    "task_type": "regression",
     "input_type": "composition"
   }
 }
