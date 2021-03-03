@@ -1,8 +1,9 @@
 from sklearn.model_selection import KFold, StratifiedKFold
 from matminer.datasets import load_dataset
 
-from matbench.metadata import metadata, validation_metadata, REG_KEY, CLF_KEY
-
+from matbench.constants import REG_KEY, CLF_KEY, METRIC_MAP, CLF_METRICS, REG_METRICS
+from matbench.metadata import metadata, validation_metadata
+from matbench.util import RecursiveDotDict
 
 def load(dataset_name):
     """
@@ -45,7 +46,6 @@ def get_kfold(problem_type):
         (KFold or StratifiedKFold): A kfold cross validation object
 
     """
-    allowed = [REG_KEY, CLF_KEY]
     kfold_config = validation_metadata.common
 
     if problem_type == REG_KEY:
@@ -53,4 +53,15 @@ def get_kfold(problem_type):
     elif problem_type == CLF_KEY:
         return StratifiedKFold(**kfold_config)
     else:
-        raise ValueError(f"'problem_type' must be one of {allowed}.")
+        raise ValueError(f"'problem_type' must be one of {[REG_KEY, CLF_KEY]}.")
+
+
+def score_array(true_array, pred_array, metrics):
+    computed = {}
+    for metric in metrics:
+        if metric not in METRIC_MAP:
+            raise KeyError(f"Metric '{metric}' not defined in sklearn for use with matbench.")
+        else:
+            mfunc = METRIC_MAP[metric]
+            computed[metric] = mfunc(true_array, pred_array)
+    return RecursiveDotDict(computed)

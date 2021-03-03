@@ -51,6 +51,7 @@ mb.scores
 # access the raw results of an individual test
 mb.tasks.matbench_dielectric.results.fold0.data
 mb.tasks.matbench_dielectric.results.fold0.params
+mb.tasks.matbench_dielectric.results.fold0.scores
 
 
 # access the individual scores of a fold
