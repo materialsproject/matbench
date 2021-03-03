@@ -12,7 +12,7 @@ class MatbenchTask(MSONable):
     """
     The core interface for running a Matbench task and recording its results.
     """
-    FOLD_MAPPING = {i: f"fold_{i}" for i in range(validation_metadata.n_splits)}
+    FOLD_MAPPING = {i: f"fold_{i}" for i in range(validation_metadata.common.n_splits)}
 
     def __init__(self, dataset_name):
         self.dataset_name = dataset_name
@@ -21,7 +21,7 @@ class MatbenchTask(MSONable):
 
         self.metadata = metadata[dataset_name]
         self.kfold = get_kfold(self.metadata.task_type)
-        self.split_ix = tuple([s for s in self.kfold.split(self.df)])
+        self.split_ix = tuple([s for s in self.kfold.split(X=self.df, y=self.df[self.metadata.target])])
 
         self.results = RecursiveDotDict({})
         self.is_recorded = {k: False for k in self.FOLD_MAPPING.keys()}
