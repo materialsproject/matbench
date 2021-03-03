@@ -1,9 +1,7 @@
 from sklearn.model_selection import KFold, StratifiedKFold
 from matminer.datasets import load_dataset
 
-from matbench.constants import datasets, validation, REG_KEY, CLF_KEY
-
-
+from matbench.metadata import metadata, validation_metadata, REG_KEY, CLF_KEY
 
 
 def load(dataset_name):
@@ -23,13 +21,16 @@ def load(dataset_name):
             - Outputs, either a float (for regression) or a boolean (for classification).
     """
 
-    if dataset_name not in datasets:
+    if dataset_name not in metadata:
         raise KeyError(
             f"Dataset name {dataset_name} not recognized by matbench. "
             f"Please see https://hackingmaterials.lbl.gov/matbench for "
-            f"a list of the dataset names, or choose from:\n{list(datasets.keys())}"
+            f"a list of the dataset names, or choose from:\n{list(metadata.keys())}"
         )
-    print(f"Loading {dataset_name} into memory; please be patient as many structures can take a while to serialize.")
+    print(
+        f"Loading {dataset_name} into memory; please be patient as loading many "
+        f"structures can take a while to serialize."
+    )
     return load_dataset(dataset_name)
 
 
@@ -45,7 +46,7 @@ def get_kfold(problem_type):
 
     """
     allowed = [REG_KEY, CLF_KEY]
-    kfold_config = validation["common"]
+    kfold_config = validation_metadata.common
 
     if problem_type == REG_KEY:
         return KFold(**kfold_config)
@@ -53,16 +54,3 @@ def get_kfold(problem_type):
         return StratifiedKFold(**kfold_config)
     else:
         raise ValueError(f"'problem_type' must be one of {allowed}.")
-
-
-
-
-
-def _generate_random_data():
-    pass
-
-
-if __name__ == "__main__":
-    df = load("matbench_steels")
-    print(df)
-    print(df.dtypes)

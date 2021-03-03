@@ -1,2 +1,2 @@
-from matbench.data import load
+from matbench.util import load
 

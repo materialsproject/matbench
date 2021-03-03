@@ -1,6 +1,7 @@
 {
   "common": {
     "n_splits": 5,
-    "seed": 18012019
+    "random_state": 18012019,
+    "shuffle": true
   }
 }
