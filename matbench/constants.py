@@ -23,8 +23,9 @@ CLF_KEY = "classification"
 # per task keys
 DATA_KEY = "data"
 PARAMS_KEY = "parameters"
+SCORES_KEY = "scores"
 
-# scoring per task
+# scoring per task on a single fold
 REG_METRICS = ["mae", "rmse", "mape", "max_error"],
 CLF_METRICS = ["accuracy", "balanced_accuracy", "f1", "rocauc"]
 METRIC_MAP = {
@@ -39,3 +40,6 @@ METRIC_MAP = {
 }
 
 
+
+# scoring on a single task among folds
+FOLD_DIST_METRICS = ["mean", "max", "min", "std"]

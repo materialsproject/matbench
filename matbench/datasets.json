@@ -21,6 +21,12 @@
     "target": "gfa",
     "n_samples": 5680,
     "task_type": "classification",
+  "matbench_mp_e_form": {
+    "target": "e_form",
+    "n_samples": 132752,
+    "task_type": "regression",
+    "input_type": "structure"
+  },
     "input_type": "composition"
   },
   "matbench_jdft2d": {
@@ -38,12 +44,6 @@
   "matbench_log_kvrh": {
     "target": "log10(K_VRH)",
     "n_samples": 10987,
-    "task_type": "regression",
-    "input_type": "structure"
-  },
-  "matbench_mp_e_form": {
-    "target": "e_form",
-    "n_samples": 132752,
     "task_type": "regression",
     "input_type": "structure"
   },

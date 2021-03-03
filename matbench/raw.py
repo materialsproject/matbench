@@ -53,15 +53,20 @@ def get_kfold(problem_type):
     elif problem_type == CLF_KEY:
         return StratifiedKFold(**kfold_config)
     else:
-        raise ValueError(f"'problem_type' must be one of {[REG_KEY, CLF_KEY]}.")
+        raise ValueError(f"'problem_type' must be one of {[REG_KEY, CLF_KEY]}, not '{problem_type}'.")
 
 
-def score_array(true_array, pred_array, metrics):
+def score_array(true_array, pred_array, problem_type):
     computed = {}
+
+    if problem_type == REG_KEY:
+        metrics = REG_METRICS
+    elif problem_type == CLF_KEY:
+        metrics = CLF_METRICS
+    else:
+        raise ValueError(f"'problem_type' must be on of {[REG_KEY, CLF_KEY]}, not '{problem_type}'")
+
     for metric in metrics:
-        if metric not in METRIC_MAP:
-            raise KeyError(f"Metric '{metric}' not defined in sklearn for use with matbench.")
-        else:
             mfunc = METRIC_MAP[metric]
             computed[metric] = mfunc(true_array, pred_array)
     return RecursiveDotDict(computed)

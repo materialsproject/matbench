@@ -1,15 +1,18 @@
+import numpy as np
+from monty.json import MSONable
 from matminer.datasets import get_all_dataset_info
 
-from matbench.constants import DATA_KEY, PARAMS_KEY
+from matbench.constants import DATA_KEY, PARAMS_KEY, SCORES_KEY, REG_KEY, REG_METRICS, CLF_METRICS, FOLD_DIST_METRICS
 from matbench.util import RecursiveDotDict
-from matbench.raw import get_kfold, load
-from matbench.metadata import metadata
+from matbench.raw import get_kfold, load, score_array
+from matbench.metadata import metadata, validation_metadata
 
-class MatbenchTask:
+
+class MatbenchTask(MSONable):
     """
     The core interface for running a Matbench task and recording its results.
     """
-    FOLD_MAPPING = {i: f"fold_{i}" for i in range(5)}
+    FOLD_MAPPING = {i: f"fold_{i}" for i in range(validation_metadata.n_splits)}
 
     def __init__(self, dataset_name):
         self.dataset_name = dataset_name
@@ -22,6 +25,22 @@ class MatbenchTask:
 
         self.results = RecursiveDotDict({})
         self.is_recorded = {k: False for k in self.FOLD_MAPPING.keys()}
+
+
+    @property
+    def scores(self):
+        metric_keys = REG_METRICS if self.metadata.problem_type == REG_KEY else CLF_METRICS
+        scores = {}
+        if self.all_folds_recorded:
+            for mk in metric_keys:
+                metric = {}
+
+                # scores for a metric among all folds
+                raw_metrics_on_folds = [self.results[fk][SCORES_KEY][mk] for fk in self.FOLD_MAPPING.keys()]
+                for op in FOLD_DIST_METRICS:
+                    metric[op] = getattr(np, op)(raw_metrics_on_folds)
+                scores[mk] = metric
+        return scores
 
     @property
     def all_folds_recorded(self):
@@ -51,7 +70,6 @@ class MatbenchTask:
         ix = self.split_ix[fold_number][0]
         return self._get_data_from_df(ix, as_type)
 
-
     def get_test_data(self, fold_number, as_type="tuple"):
         """
         The test data used for recording benchmarks.
@@ -66,7 +84,7 @@ class MatbenchTask:
         ix = self.split_ix[fold_number][1]
         return self._get_data_from_df(ix, as_type)
 
-    def record(self, fold_number, predictions, params=None, score=True):
+    def record(self, fold_number, predictions, params=None):
         """
         Record the test data as well as parameters about the model trained on this fold.
 
@@ -89,14 +107,7 @@ class MatbenchTask:
             # todo: replace with logging info
             print(f"Recorded fold {fold_number} successfully.")
 
-            if score:
+            truth = self._get_data_from_df(self.split_ix[fold_number][1], as_type="tuple")[1]
+            self.results[fold_number][SCORES_KEY] = score_array(truth, predictions)
+            print(f"Scored fold {fold_number} successfully.")
 
-
-
-    def score(self):
-        if not self.all_folds_recorded:
-            raise ValueError(
-                f"Folds {[f for f in self.is_recorded.values() if not f]} not recorded! "
-                f"Task '{self.dataset_name}' cannot be scored unless all folds are recorded."
-            )
-        else:

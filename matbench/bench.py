@@ -42,7 +42,6 @@ for task in mb.tasks:
         predictions = my_model.predict(test_inputs)
         
         task.record(predictions, params=my_model.hyperparams)  
-mb.score()
 
 
 # holds all the scoring info
