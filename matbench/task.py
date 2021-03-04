@@ -8,7 +8,10 @@ from matbench.raw import get_kfold, load, score_array
 from matbench.metadata import metadata, validation_metadata
 
 
-class MatbenchTask:
+from monty.json import MSONable
+
+
+class MatbenchTask(MSONable):
     """
     The core interface for running a Matbench task and recording its results.
     """
@@ -21,6 +24,7 @@ class MatbenchTask:
 
         self.metadata = metadata[dataset_name]
         self.kfold = get_kfold(self.metadata.task_type)
+        self.folds = list(self.FOLD_MAPPING.keys())
         self.split_ix = tuple([s for s in self.kfold.split(X=self.df, y=self.df[self.metadata.target])])
 
         self.results = RecursiveDotDict({})
