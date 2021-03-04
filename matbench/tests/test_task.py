@@ -144,7 +144,10 @@ class TestMatbenchTask(unittest.TestCase):
                 self.assertEqual(mbt.df["gfa"].iloc[55], gfa)
 
     def test_get_task_info(self):
-        pass
+        mbt = MatbenchTask("matbench_steels")
+        mbt.get_task_info()
+        self.assertTrue("citations" in mbt.info.lower())
+        self.assertTrue("SHA256 Hash Digest" in mbt.info)
 
 
     def test_record(self):
@@ -187,8 +190,6 @@ class TestMatbenchTask(unittest.TestCase):
                         self.assertAlmostEqual(rocauc, 1.0, places=10)
                     else:
                         self.assertAlmostEqual(rocauc, 0.5061317574566012, places=10)
-
-
 
     def test_scores(self):
         pass
