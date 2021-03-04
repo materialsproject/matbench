@@ -30,6 +30,7 @@ def model_random(training_outputs, test_inputs, response_type, seed):
             pred[i] = r.uniform(max(training_outputs), min(training_outputs))
         return pred
 
+
 class TestMatbenchTask(unittest.TestCase):
 
     def setUp(self) -> None:
@@ -148,15 +149,44 @@ class TestMatbenchTask(unittest.TestCase):
 
     def test_record(self):
         for ds in self.test_datasets:
-            mbt = MatbenchTask(ds)
+            # Testing two scenarios: model is perfect, and model is random
+            for model_is_perfect in (True, False):
+                mbt = MatbenchTask(ds)
 
-            for fold in mbt.folds:
-                _, training_outputs = mbt.get_train_and_val_data(fold, as_type="tuple", shuffle_seed=self.shuffle_seed)
-                test_inputs = mbt.get_test_data(fold, as_type="tuple", include_target=False)
-                model_response = model_random(training_outputs, test_inputs, response_type=mbt.metadata.task_type, seed=self.shuffle_seed)
-                mbt.record(fold, predictions=model_response, params={"test_param": 1, "other_param": "string", "hyperparam": True})
+                # test to make sure raw data output is correct, using a random model
+                for fold in mbt.folds:
+                    _, training_outputs = mbt.get_train_and_val_data(fold, as_type="tuple", shuffle_seed=self.shuffle_seed)
+                    if model_is_perfect:
+                        test_inputs, test_outputs = mbt.get_test_data(fold, as_type="tuple", include_target=True)
+                        model_response = test_outputs
+                    else:
+                        test_inputs = mbt.get_test_data(fold, as_type="tuple",include_target=False)
+                        model_response = model_random(training_outputs, test_inputs, response_type=mbt.metadata.task_type, seed=self.shuffle_seed)
+                    mbt.record(fold, predictions=model_response, params={"test_param": 1, "other_param": "string", "hyperparam": True})
 
+                    self.assertEqual(len(mbt.results[f"fold_{fold}"].data.values()), len(test_inputs))
+                    self.assertEqual(mbt.results[f"fold_{fold}"].parameters.test_param, 1)
+                    self.assertEqual(mbt.results[f"fold_{fold}"].parameters.other_param, "string")
+                    self.assertEqual(mbt.results[f"fold_{fold}"].parameters.hyperparam, True)
 
+                if ds == "matbench_dielectric":
+                    mae = mbt.results.fold_0.scores.mae
+                    if model_is_perfect:
+                        self.assertAlmostEqual(mae, 0.0, places=10)
+                    else:
+                        self.assertAlmostEqual(mae, 28.67286016140617, places=10)
+                elif ds == "matbench_steels":
+                    mae = mbt.results.fold_0.scores.mae
+                    if model_is_perfect:
+                        self.assertAlmostEqual(mae, 0.0, places=10)
+                    else:
+                        self.assertAlmostEqual(mae, 503.00317490820277, places=10)
+                elif ds == "matbench_glass":
+                    rocauc = mbt.results.fold_0.scores.rocauc
+                    if model_is_perfect:
+                        self.assertAlmostEqual(rocauc, 1.0, places=10)
+                    else:
+                        self.assertAlmostEqual(rocauc, 0.5061317574566012, places=10)
 
 
 

@@ -117,7 +117,10 @@ class MatbenchTask(MSONable):
             raise ValueError(f"Fold number {fold_number} already recorded! Aborting...")
         else:
             fold_key = self.FOLD_MAPPING[fold_number]
-            self.results[fold_key][DATA_KEY] = predictions
+
+            # create map of original df index to prediction, e.g., {ix_of_original_df1: prediction1, ... etc.}
+            loc_index_to_predictions = {self.split_ix[fold_number][1][i]: p for i, p in enumerate(predictions)}
+            self.results[fold_key][DATA_KEY] = loc_index_to_predictions
             self.results[fold_key][PARAMS_KEY] = params if params else {}
             self.is_recorded[fold_number] = True
 
@@ -125,6 +128,6 @@ class MatbenchTask(MSONable):
             print(f"Recorded fold {fold_number} successfully.")
 
             truth = self._get_data_from_df(self.split_ix[fold_number][1], as_type="tuple")[1]
-            self.results[fold_number][SCORES_KEY] = score_array(truth, predictions, self.metadata.task_type)
-            print(f"Scored fold {fold_number} successfully.")
+            self.results[fold_key][SCORES_KEY] = score_array(truth, predictions, self.metadata.task_type)
+            print(f"Scored fold {fold_key} successfully.")
 
