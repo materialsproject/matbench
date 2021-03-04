@@ -1,5 +1,5 @@
+import random
 import numpy as np
-from monty.json import MSONable
 from matminer.datasets import get_all_dataset_info
 
 from matbench.constants import DATA_KEY, PARAMS_KEY, SCORES_KEY, REG_KEY, REG_METRICS, CLF_METRICS, FOLD_DIST_METRICS
@@ -8,7 +8,7 @@ from matbench.raw import get_kfold, load, score_array
 from matbench.metadata import metadata, validation_metadata
 
 
-class MatbenchTask(MSONable):
+class MatbenchTask:
     """
     The core interface for running a Matbench task and recording its results.
     """
@@ -57,7 +57,7 @@ class MatbenchTask(MSONable):
     def get_task_info(self):
         print(self.info)
 
-    def get_train_and_val_data(self, fold_number, as_type="tuple"):
+    def get_train_and_val_data(self, fold_number, as_type="tuple", shuffle_seed=None):
         """
         The training + validation data. All model tuning and hyperparameter selection must be done on this data, NOT test data.
 
@@ -68,6 +68,13 @@ class MatbenchTask(MSONable):
 
         """
         ix = self.split_ix[fold_number][0]
+
+        if shuffle_seed:
+            r = random.Random(shuffle_seed)
+        else:
+            r = random
+
+        r.shuffle(ix)
         return self._get_data_from_df(ix, as_type)
 
     def get_test_data(self, fold_number, as_type="tuple"):
