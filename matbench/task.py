@@ -81,7 +81,7 @@ class MatbenchTask(MSONable):
         r.shuffle(ix)
         return self._get_data_from_df(ix, as_type)
 
-    def get_test_data(self, fold_number, as_type="tuple"):
+    def get_test_data(self, fold_number, as_type="tuple", include_target=False):
         """
         The test data used for recording benchmarks.
 
@@ -93,7 +93,13 @@ class MatbenchTask(MSONable):
 
         """
         ix = self.split_ix[fold_number][1]
-        return self._get_data_from_df(ix, as_type)
+        if include_target:
+            return self._get_data_from_df(ix, as_type)
+        else:
+            if as_type == "tuple":
+                return self._get_data_from_df(ix, as_type)[0]
+            elif as_type == "df":
+                return self._get_data_from_df(ix, as_type)[self.metadata.problem_type]
 
     def record(self, fold_number, predictions, params=None):
         """

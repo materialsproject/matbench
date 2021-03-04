@@ -1,4 +1,5 @@
 import unittest
+import random
 
 import pandas as pd
 import numpy as np
@@ -13,22 +14,26 @@ import traceback
 import sys
 
 
+def model_random(training_outputs, test_inputs, response_type, seed):
+    r = random.Random(seed)
+
+    l = len(test_inputs)
+
+    if isinstance(response_type, bool):
+        return r.choices([True, False], k=test_inputs)
+
+    # Regression: simply sample from random distribution bounded by max and min training samples
+    pred = [None] * l
+    if isinstance(response_type, float):
+        for i in range(l):
+            pred[i] = r.uniform(max(training_outputs), min(training_outputs))
+        return pred
 
 class TestMatbenchTask(unittest.TestCase):
 
     def setUp(self) -> None:
         self.test_datasets = ["matbench_dielectric", "matbench_steels", "matbench_glass"]
         self.shuffle_seed = 1001
-
-        # def warn_with_traceback(message, category, filename, lineno, file=None,
-        #                         line=None):
-        #     log = file if hasattr(file, 'write') else sys.stderr
-        #     traceback.print_stack(file=log)
-        #     log.write(
-        #         warnings.formatwarning(message, category, filename, lineno,
-        #                                line))
-        #
-        # warnings.showwarning = warn_with_traceback
 
     def test_instantiation(self):
         for ds in self.test_datasets:
@@ -85,7 +90,7 @@ class TestMatbenchTask(unittest.TestCase):
             mbt = MatbenchTask(ds)
             folds = []
             for fold in mbt.folds:
-                inputs, outputs = mbt.get_test_data(fold_number=fold, as_type="tuple")
+                inputs, outputs = mbt.get_test_data(fold_number=fold, as_type="tuple", include_target=True)
 
                 self.assertListEqual(inputs.index.tolist(), outputs.index.tolist())
 
@@ -136,7 +141,28 @@ class TestMatbenchTask(unittest.TestCase):
                 self.assertEqual(outputs.loc[55], gfa)
                 self.assertEqual(mbt.df["gfa"].iloc[55], gfa)
 
+    def test_get_task_info(self):
+        pass
+
+
+    def test_record(self):
+        for ds in self.test_datasets:
+            mbt = MatbenchTask(ds)
+
+            for fold in mbt.folds:
+                _, training_outputs = mbt.get_train_and_val_data(fold, as_type="tuple", shuffle_seed=self.shuffle_seed)
+                test_inputs = mbt.get_test_data(fold, as_type="tuple", include_target=False)
+                model_response = model_random(test_inputs)
+                mbt.record(fold, predictions=model_response, params={"test_param": 1, "other_param": "string", "hyperparam": True})
 
 
 
 
+
+    def test_scores(self):
+        pass
+
+
+    def test_usage(self):
+        # access all attrs
+        pass
