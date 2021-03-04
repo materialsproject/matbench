@@ -33,7 +33,7 @@ class MatbenchTask(MSONable):
 
     @property
     def scores(self):
-        metric_keys = REG_METRICS if self.metadata.problem_type == REG_KEY else CLF_METRICS
+        metric_keys = REG_METRICS if self.metadata.task_type == REG_KEY else CLF_METRICS
         scores = {}
         if self.all_folds_recorded:
             for mk in metric_keys:
@@ -99,7 +99,7 @@ class MatbenchTask(MSONable):
             if as_type == "tuple":
                 return self._get_data_from_df(ix, as_type)[0]
             elif as_type == "df":
-                return self._get_data_from_df(ix, as_type)[self.metadata.problem_type]
+                return self._get_data_from_df(ix, as_type)[self.metadata.task_type]
 
     def record(self, fold_number, predictions, params=None):
         """
@@ -125,6 +125,6 @@ class MatbenchTask(MSONable):
             print(f"Recorded fold {fold_number} successfully.")
 
             truth = self._get_data_from_df(self.split_ix[fold_number][1], as_type="tuple")[1]
-            self.results[fold_number][SCORES_KEY] = score_array(truth, predictions)
+            self.results[fold_number][SCORES_KEY] = score_array(truth, predictions, self.metadata.task_type)
             print(f"Scored fold {fold_number} successfully.")
 

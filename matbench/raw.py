@@ -67,6 +67,6 @@ def score_array(true_array, pred_array, problem_type):
         raise ValueError(f"'problem_type' must be on of {[REG_KEY, CLF_KEY]}, not '{problem_type}'")
 
     for metric in metrics:
-            mfunc = METRIC_MAP[metric]
-            computed[metric] = mfunc(true_array, pred_array)
-    return RecursiveDotDict(computed)
+        mfunc = METRIC_MAP[metric]
+        computed[metric] = mfunc(true_array, pred_array)
+    return computed

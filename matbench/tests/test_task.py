@@ -6,7 +6,7 @@ import numpy as np
 from pymatgen import Structure
 
 from matbench.task import MatbenchTask
-from matbench.metadata import metadata
+from matbench.constants import CLF_KEY, REG_KEY
 
 
 import warnings
@@ -15,16 +15,17 @@ import sys
 
 
 def model_random(training_outputs, test_inputs, response_type, seed):
+    print(response_type)
     r = random.Random(seed)
 
     l = len(test_inputs)
 
-    if isinstance(response_type, bool):
-        return r.choices([True, False], k=test_inputs)
+    if response_type == CLF_KEY:
+        return r.choices([True, False], k=l)
 
     # Regression: simply sample from random distribution bounded by max and min training samples
     pred = [None] * l
-    if isinstance(response_type, float):
+    if response_type == REG_KEY:
         for i in range(l):
             pred[i] = r.uniform(max(training_outputs), min(training_outputs))
         return pred
@@ -152,7 +153,7 @@ class TestMatbenchTask(unittest.TestCase):
             for fold in mbt.folds:
                 _, training_outputs = mbt.get_train_and_val_data(fold, as_type="tuple", shuffle_seed=self.shuffle_seed)
                 test_inputs = mbt.get_test_data(fold, as_type="tuple", include_target=False)
-                model_response = model_random(test_inputs)
+                model_response = model_random(training_outputs, test_inputs, response_type=mbt.metadata.task_type, seed=self.shuffle_seed)
                 mbt.record(fold, predictions=model_response, params={"test_param": 1, "other_param": "string", "hyperparam": True})
 
 
