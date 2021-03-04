@@ -15,7 +15,6 @@ import sys
 
 
 def model_random(training_outputs, test_inputs, response_type, seed):
-    print(response_type)
     r = random.Random(seed)
 
     l = len(test_inputs)
@@ -39,12 +38,13 @@ class TestMatbenchTask(unittest.TestCase):
 
     def test_instantiation(self):
         for ds in self.test_datasets:
-            mbt = MatbenchTask(ds)
+            mbt = MatbenchTask(ds, autoload=True)
 
     def test_get_train_and_val_data(self):
         # Assuming 5-fold nested cross validation
         for ds in self.test_datasets:
-            mbt = MatbenchTask(ds)
+            mbt = MatbenchTask(ds, autoload=True)
+            mbt.load()
             # shuffle seed must be set because it shuffles the (same) training data in a deterministic manner
             inputs, outputs = mbt.get_train_and_val_data(fold_number=0, as_type="tuple", shuffle_seed=self.shuffle_seed)
 
@@ -89,7 +89,8 @@ class TestMatbenchTask(unittest.TestCase):
 
     def test_get_test_data(self):
         for ds in self.test_datasets:
-            mbt = MatbenchTask(ds)
+            mbt = MatbenchTask(ds, autoload=False)
+            mbt.load()
             folds = []
             for fold in mbt.folds:
                 inputs, outputs = mbt.get_test_data(fold_number=fold, as_type="tuple", include_target=True)
@@ -144,17 +145,17 @@ class TestMatbenchTask(unittest.TestCase):
                 self.assertEqual(mbt.df["gfa"].iloc[55], gfa)
 
     def test_get_task_info(self):
-        mbt = MatbenchTask("matbench_steels")
+        mbt = MatbenchTask("matbench_steels", autoload=False)
         mbt.get_task_info()
         self.assertTrue("citations" in mbt.info.lower())
         self.assertTrue("SHA256 Hash Digest" in mbt.info)
-
 
     def test_record(self):
         for ds in self.test_datasets:
             # Testing two scenarios: model is perfect, and model is random
             for model_is_perfect in (True, False):
-                mbt = MatbenchTask(ds)
+                mbt = MatbenchTask(ds, autoload=False)
+                mbt.load()
 
                 # test to make sure raw data output is correct, using a random model
                 for fold in mbt.folds:
@@ -191,8 +192,15 @@ class TestMatbenchTask(unittest.TestCase):
                     else:
                         self.assertAlmostEqual(rocauc, 0.5061317574566012, places=10)
 
+                self.assertTrue(mbt.all_folds_recorded)
+
+
+    def test_autoload(self):
+        pass
+
     def test_scores(self):
         pass
+
 
 
     def test_usage(self):

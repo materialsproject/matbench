@@ -17,19 +17,35 @@ class MatbenchTask(MSONable):
     """
     FOLD_MAPPING = {i: f"fold_{i}" for i in range(validation_metadata.common.n_splits)}
 
-    def __init__(self, dataset_name):
+    def __init__(self, dataset_name, autoload=True):
         self.dataset_name = dataset_name
-        self.df = load(dataset_name)
+        self.df = None if autoload else load(self.dataset_name)
         self.info = get_all_dataset_info(dataset_name)
 
         self.metadata = metadata[dataset_name]
         self.kfold = get_kfold(self.metadata.task_type)
         self.folds = list(self.FOLD_MAPPING.keys())
-        self.split_ix = tuple([s for s in self.kfold.split(X=self.df, y=self.df[self.metadata.target])])
 
         self.results = RecursiveDotDict({})
         self.is_recorded = {k: False for k in self.FOLD_MAPPING.keys()}
 
+    def load(self):
+        if self.df is None:
+            # todo: turn into logging
+            print("Dataset already loaded")
+        else:
+            self.df = load(self.dataset_name)
+
+    def _check_is_loaded(self):
+        if not self.df:
+            raise ValueError("Task dataset is not loaded! Run MatbenchTask.load() to load the dataset into memory.")
+
+    @property
+    def split_ix(self):
+        if self.df is None:
+            return None
+        else:
+            return tuple([s for s in self.kfold.split(X=self.df, y=self.df[self.metadata.target])])
 
     @property
     def scores(self):
@@ -71,6 +87,7 @@ class MatbenchTask(MSONable):
         Returns:
 
         """
+        self._check_is_loaded()
         ix = self.split_ix[fold_number][0]
 
         if shuffle_seed:
@@ -92,6 +109,7 @@ class MatbenchTask(MSONable):
 
 
         """
+        self._check_is_loaded()
         ix = self.split_ix[fold_number][1]
         if include_target:
             return self._get_data_from_df(ix, as_type)
@@ -112,6 +130,7 @@ class MatbenchTask(MSONable):
         Returns:
             None
         """
+        self._check_is_loaded()
         if self.is_recorded[fold_number]:
             # todo: replace with logging critical
             raise ValueError(f"Fold number {fold_number} already recorded! Aborting...")
@@ -130,4 +149,29 @@ class MatbenchTask(MSONable):
             truth = self._get_data_from_df(self.split_ix[fold_number][1], as_type="tuple")[1]
             self.results[fold_key][SCORES_KEY] = score_array(truth, predictions, self.metadata.task_type)
             print(f"Scored fold {fold_key} successfully.")
+
+    def as_dict(self):
+        return {
+            "@module": self.__class__.__module__,
+            "@class": self.__class__.__name__,
+            "init_args": {
+                "real_space_cut": self.real_space_cut,
+                "recip_space_cut": self.recip_space_cut,
+                "eta": self.eta,
+                "acc_factor": self.acc_factor,
+            },
+        }
+
+    @classmethod
+    def from_dict(cls, d):
+        pass
+
+
+    @classmethod
+    def _from_args(cls, dataset_name, results_dict):
+        obj = cls.__init__(dataset_name, autoload=False)
+        obj.results = RecursiveDotDict(results_dict)
+        obj.is_recorded = {i: True for i in obj.FOLD_MAPPING.keys()}
+        return obj
+
 
