@@ -2,6 +2,7 @@ import unittest
 import random
 import json
 import copy
+import os
 
 import pandas as pd
 import numpy as np
@@ -12,9 +13,7 @@ from matbench.metadata import validation_metadata
 from matbench.constants import CLF_KEY, REG_KEY, PARAMS_KEY, DATA_KEY, SCORES_KEY
 
 
-import warnings
-import traceback
-import sys
+TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def model_random(training_outputs, test_inputs, response_type, seed):
@@ -234,10 +233,10 @@ class TestMatbenchTask(unittest.TestCase):
                 # make sure test set as per MbT and the recorded predictions are the same shape inside dict
                 self.assertEqual(len(res["data"]), mbt.split_ix[fold][1].shape[0])
 
-            mbt.to_file(f"msonability_{ds}_output.json")
+            mbt.to_file(os.path.join(TEST_DIR, f"msonability_{ds}_output.json"))
 
             # todo: uncomment to regenerate test files
-            # mbt.to_file(f"msonability_{ds}.json")
+            # mbt.to_file(os.path.join(TEST_DIR, f"msonability_{ds}.json"))
 
 
             # Test ingestion from ground truth json files
@@ -286,11 +285,22 @@ class TestMatbenchTask(unittest.TestCase):
                 MatbenchTask.from_dict(wrong_dtype)
 
     def test_autoload(self):
-        mbt = MatbenchTask("matbench_steels")
+        mbt = MatbenchTask("matbench_steels", autoload=False)
+        with self.assertRaises(ValueError):
+            mbt._check_is_loaded()
+
+        with self.assertRaises(ValueError):
+            mbt.get_test_data(0)
+
+        with self.assertRaises(ValueError):
+            mbt.get_train_and_val_data(0)
+
+        MatbenchTask("matbench_steels", autoload=True)
 
 
     def test_scores(self):
-        pass
+        mbt = MatbenchTask.from_file("scores_matbench_dielectric.json")
+
 
 
 

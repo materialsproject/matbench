@@ -3,15 +3,13 @@ import copy
 import json
 
 import numpy as np
+from monty.json import MSONable
 from matminer.datasets import get_all_dataset_info
 
 from matbench.constants import DATA_KEY, PARAMS_KEY, SCORES_KEY, REG_KEY, REG_METRICS, CLF_METRICS, FOLD_DIST_METRICS
 from matbench.util import RecursiveDotDict
 from matbench.raw import get_kfold, load, score_array
 from matbench.metadata import metadata, validation_metadata
-
-
-from monty.json import MSONable
 
 
 class MatbenchTask(MSONable):
@@ -22,7 +20,7 @@ class MatbenchTask(MSONable):
 
     def __init__(self, dataset_name, autoload=True):
         self.dataset_name = dataset_name
-        self.df = None if autoload else load(self.dataset_name)
+        self.df = load(self.dataset_name) if autoload else None
         self.info = get_all_dataset_info(dataset_name)
 
         self.metadata = metadata[dataset_name]
