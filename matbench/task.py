@@ -150,6 +150,9 @@ class MatbenchTask(MSONable):
 
             loc_index_to_predictions = {int(self.split_ix[fold_number][1][i]): p for i, p in enumerate(predictions)}
             self.results[fold_key][DATA_KEY] = loc_index_to_predictions
+
+            if not isinstance(params, (dict, type(None))):
+                raise TypeError(f"Parameters must be stored as a dictionary, not {type(params)}!")
             self.results[fold_key][PARAMS_KEY] = params if params else {}
             self.is_recorded[fold_number] = True
 

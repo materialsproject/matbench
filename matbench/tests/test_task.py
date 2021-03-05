@@ -3,6 +3,7 @@ import random
 import json
 import copy
 import os
+import glob
 
 import pandas as pd
 import numpy as np
@@ -10,7 +11,7 @@ from pymatgen import Structure
 
 from matbench.task import MatbenchTask
 from matbench.metadata import validation_metadata
-from matbench.constants import CLF_KEY, REG_KEY, PARAMS_KEY, DATA_KEY, SCORES_KEY
+from matbench.constants import CLF_KEY, REG_KEY, PARAMS_KEY, DATA_KEY, SCORES_KEY, FOLD_DIST_METRICS, REG_METRICS, CLF_METRICS
 
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -37,6 +38,11 @@ class TestMatbenchTask(unittest.TestCase):
 
     def setUp(self) -> None:
         self.shuffle_seed = 1001
+
+    def tearDown(self) -> None:
+        # remove all temporary output files
+        for f in glob.glob(os.path.join(TEST_DIR, "*_output.json")):
+            os.remove(f)
 
     def test_instantiation(self):
         for ds in self.test_datasets:
@@ -236,6 +242,7 @@ class TestMatbenchTask(unittest.TestCase):
             mbt.to_file(os.path.join(TEST_DIR, f"msonability_{ds}_output.json"))
 
             # todo: uncomment to regenerate test files
+            # todo: these can be used as the score_matbench_*_perfect.json files as well if renamed.
             # mbt.to_file(os.path.join(TEST_DIR, f"msonability_{ds}.json"))
 
 
@@ -295,15 +302,35 @@ class TestMatbenchTask(unittest.TestCase):
         with self.assertRaises(ValueError):
             mbt.get_train_and_val_data(0)
 
+        mbt.load()
+        mbt._check_is_loaded()
+        mbt.get_test_data(0)
+        mbt.get_train_and_val_data(0)
+
         MatbenchTask("matbench_steels", autoload=True)
 
-
     def test_scores(self):
-        mbt = MatbenchTask.from_file("scores_matbench_dielectric.json")
+        mbt = MatbenchTask.from_file("scores_matbench_dielectric_perfect.json")
 
+        for metric in REG_METRICS:
+            for fdm in FOLD_DIST_METRICS:
+                self.assertAlmostEqual(0.0, mbt.scores[metric][fdm], places=10)
 
+        mbt = MatbenchTask.from_file("scores_matbench_glass_perfect.json")
 
+        for metric in CLF_METRICS:
+            for fdm in FOLD_DIST_METRICS:
+                test_val = 0.0 if fdm == "std" else 1.0
+                self.assertAlmostEqual(test_val, mbt.scores[metric][fdm], places=10)
 
     def test_usage(self):
-        # access all attrs
-        pass
+        # access some common attrs
+        mbt_clf = MatbenchTask.from_file("scores_matbench_dielectric_perfect.json")
+        mbt_reg = MatbenchTask.from_file("scores_matbench_glass_perfect.json")
+
+        for mbt in (mbt_clf, mbt_reg):
+            for index, datum in mbt.results.fold_2.data.items():
+                self.assertTrue(isinstance(datum, (bool, float)))
+                self.assertTrue(isinstance(index, int))
+
+        self.assertTrue(isinstance(mbt.results.fold_3.parameters, (dict, type(None))))
