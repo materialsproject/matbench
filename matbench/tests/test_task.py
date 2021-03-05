@@ -1,5 +1,7 @@
 import unittest
 import random
+import json
+import copy
 
 import pandas as pd
 import numpy as np
@@ -32,9 +34,9 @@ def model_random(training_outputs, test_inputs, response_type, seed):
 
 
 class TestMatbenchTask(unittest.TestCase):
+    test_datasets = ["matbench_dielectric", "matbench_steels", "matbench_glass"]
 
     def setUp(self) -> None:
-        self.test_datasets = ["matbench_dielectric", "matbench_steels", "matbench_glass"]
         self.shuffle_seed = 1001
 
     def test_instantiation(self):
@@ -231,15 +233,61 @@ class TestMatbenchTask(unittest.TestCase):
 
                 # make sure test set as per MbT and the recorded predictions are the same shape inside dict
                 self.assertEqual(len(res["data"]), mbt.split_ix[fold][1].shape[0])
-                # self.
+
+            mbt.to_file(f"msonability_{ds}_output.json")
+
+            # todo: uncomment to regenerate test files
+            # mbt.to_file(f"msonability_{ds}.json")
 
 
+            # Test ingestion from ground truth json files
+            truth_fname = f"msonability_{ds}.json"
 
-    def test_json(self):
-        pass
+            with open(truth_fname, "r") as f:
+                truth = json.load(f)
+            MatbenchTask.from_file(truth_fname)
+            MatbenchTask.from_dict(truth)
+
+
+            # Ensure errors are thrown for bad json
+
+            missing_results = copy.deepcopy(truth)
+            missing_results.pop("results")
+
+            with self.assertRaises(KeyError):
+                MatbenchTask.from_dict(missing_results)
+
+            for key in [PARAMS_KEY, DATA_KEY, SCORES_KEY]:
+                missing_key = copy.deepcopy(truth)
+                missing_key["results"]["fold_3"].pop(key)
+
+                with self.assertRaises(KeyError):
+                    MatbenchTask.from_dict(missing_key)
+
+            # If an otherwise perfect json is missing a required index
+            missing_ix_fold0 = copy.deepcopy(truth)
+            missing_ix_fold0["results"]["fold_0"]["data"].pop(mbt.split_ix[0][1][0])
+
+            with self.assertRaises(ValueError):
+                MatbenchTask.from_dict(missing_ix_fold0)
+
+            # If an otherwise perfect json has an extra index
+            extra_ix_fold0 = copy.deepcopy(truth)
+            extra_ix_fold0["results"]["fold_0"]["data"][310131] = 1.92
+
+            with self.assertRaises(ValueError):
+                MatbenchTask.from_dict(extra_ix_fold0)
+
+            # If an otherwise perfect json has a wrong datatype
+            wrong_dtype = copy.deepcopy(truth)
+            wrong_dtype["results"]["fold_2"]["data"][mbt.split_ix[2][1][4]] = "any string"
+
+            with self.assertRaises(TypeError):
+                MatbenchTask.from_dict(wrong_dtype)
 
     def test_autoload(self):
-        pass
+        mbt = MatbenchTask("matbench_steels")
+
 
     def test_scores(self):
         pass

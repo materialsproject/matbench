@@ -43,6 +43,10 @@ class MatbenchTask(MSONable):
         if self.df is None:
             raise ValueError("Task dataset is not loaded! Run MatbenchTask.load() to load the dataset into memory.")
 
+    def _check_all_folds_recorded(self, msg):
+        if not self.all_folds_recorded:
+            raise ValueError(
+                f"{msg}; folds {[f for f in self.is_recorded if not self.is_recorded[f]]} not recorded!")
     @property
     def split_ix(self):
         if self.df is None:
@@ -54,15 +58,15 @@ class MatbenchTask(MSONable):
     def scores(self):
         metric_keys = REG_METRICS if self.metadata.task_type == REG_KEY else CLF_METRICS
         scores = {}
-        if self.all_folds_recorded:
-            for mk in metric_keys:
-                metric = {}
+        self._check_all_folds_recorded("Cannot score unless all folds are recorded!")
+        for mk in metric_keys:
+            metric = {}
 
-                # scores for a metric among all folds
-                raw_metrics_on_folds = [self.results[fk][SCORES_KEY][mk] for fk in self.FOLD_MAPPING.values()]
-                for op in FOLD_DIST_METRICS:
-                    metric[op] = getattr(np, op)(raw_metrics_on_folds)
-                scores[mk] = metric
+            # scores for a metric among all folds
+            raw_metrics_on_folds = [self.results[fk][SCORES_KEY][mk] for fk in self.FOLD_MAPPING.values()]
+            for op in FOLD_DIST_METRICS:
+                metric[op] = getattr(np, op)(raw_metrics_on_folds)
+            scores[mk] = metric
         return scores
 
     @property
@@ -146,7 +150,7 @@ class MatbenchTask(MSONable):
             if len(predictions) != len(split):
                 raise ValueError(f"Prediction outputs must be the same length as the inputs! {len(predictions)} != {len(split)}")
 
-            loc_index_to_predictions = {i: p for i, p in enumerate(predictions)}
+            loc_index_to_predictions = {int(self.split_ix[fold_number][1][i]): p for i, p in enumerate(predictions)}
             self.results[fold_key][DATA_KEY] = loc_index_to_predictions
             self.results[fold_key][PARAMS_KEY] = params if params else {}
             self.is_recorded[fold_number] = True
@@ -170,6 +174,44 @@ class MatbenchTask(MSONable):
         with open(filename, "w") as f:
             json.dump(self.as_dict(), f)
 
+    def validate(self):
+        self._check_all_folds_recorded("Cannot validate unless all folds recorded!")
+        self._check_is_loaded()
+        rev_fold_mapping = {v: k for k, v in self.FOLD_MAPPING.items()}
+
+        for fold_name, fold in self.results.items():
+            fold_data = fold.data
+
+            # Ensure all the indices are present with no extras for each fold
+
+            fold_number = rev_fold_mapping[fold_name]
+            req_indices = set(self.split_ix[fold_number][1])
+            remaining_indices = copy.deepcopy(req_indices)
+            extra_indices = {}
+            req_data_type = float if self.metadata.task_type == REG_KEY else bool
+            for ix, datum in fold_data.items():
+                if ix not in req_indices:
+                    extra_indices[ix] = datum
+                else:
+                    if not isinstance(datum, req_data_type):
+                        raise TypeError(
+                            f"Data point '{ix}: {datum}' has data type {type(datum)} while required type is {req_data_type}!")
+                    remaining_indices.remove(ix)
+
+            if extra_indices and not remaining_indices:
+                raise ValueError(
+                    f"{len(extra_indices)} extra indices for problem {self.dataset_name} are not allowed (found in {fold_name}: {remaining_indices}")
+            elif not extra_indices and remaining_indices:
+                raise ValueError(
+                    f"{len(remaining_indices)} required indices for problem {self.dataset_name} not found for {fold_name}: {remaining_indices}")
+            elif extra_indices and remaining_indices:
+                raise ValueError(
+                    f"{len(remaining_indices)} required indices for problem {self.dataset_name} not found and {len(extra_indices)} not allowed indices found for {fold_name}!")
+            else:
+                pass
+        print(f"Data for {self.dataset_name} successfully validated.")
+
+
     @classmethod
     def from_file(cls, filename):
         with open(filename, "r") as f:
@@ -179,16 +221,18 @@ class MatbenchTask(MSONable):
     @classmethod
     def from_dict(cls, d):
 
-        req_base_keys = ["dataset_name", "results"]
+        req_base_keys = ["dataset_name", "results", "@module", "@class"]
         for k in req_base_keys:
             if k not in d:
                 raise KeyError(f"Required key '{k}' not found.")
+
+        df = load(d["dataset_name"])
         extra_base_keys = [k for k in d.keys() if k not in req_base_keys]
         if extra_base_keys:
             raise KeyError(f"Extra keys {extra_base_keys} not allowed.")
         dataset_name = d["dataset_name"]
         task_type = metadata[dataset_name].task_type
-        req_fold_keys = list(cls.FOLD_MAPPING.keys())
+        req_fold_keys = list(cls.FOLD_MAPPING.values())
         extra_fold_keys = [k for k in d["results"].keys() if k not in req_fold_keys]
         if extra_fold_keys:
             raise KeyError(f"Extra fold keys {extra_fold_keys} not allowed.")
@@ -209,46 +253,33 @@ class MatbenchTask(MSONable):
                     for m in metrics:
                         if m not in scores:
                             raise KeyError(f"Required score '{m}' not found for '{fold_key}'.")
-                        elif not isinstance(float, scores[m]):
+                        elif not isinstance(scores[m], float):
                             raise TypeError(f"Required score '{m}' is not float-type for '{fold_key}'!")
                     extra_metrics = [k for k in scores if k not in  metrics]
                     if extra_metrics:
                         raise KeyError(f"Extra keys {extra_metrics} for fold scores of '{fold_key}' not allowed.")
+
+                # Data key checking is done in .validate()
+                # results data indices are cast by json to be strings, so must be converted to int
                 elif subkey == DATA_KEY:
-                    data = d["results"][fold_key][DATA_KEY]
-
-                    # Ensure all the indices are present with no extras
-                    req_indices = set(list(range(metadata[dataset_name].n_samples)))
-                    remaining_indices = copy.deepcopy(req_indices)
-                    extra_indices = {}
-                    req_data_type = float if metadata[dataset_name].task_type == REG_KEY else bool
-                    for ix, datum in data:
-                        if ix not in req_indices:
-                            extra_indices[ix] = datum
-                        else:
-                            if not isinstance(req_data_type, datum):
-                                raise TypeError(f"Data point '{ix}: {datum}' has data type {type(datum)} while required type is {req_data_type}!")
-                            remaining_indices.remove(ix)
-
-                    if extra_indices and not remaining_indices:
-                        raise ValueError(f"{len(extra_indices)} extra indices for problem {dataset_name} are not allowed (found in {fold_key}: {remaining_indices}")
-                    elif not extra_indices and remaining_indices:
-                        raise ValueError(f"{len(remaining_indices)} required indices for problem {dataset_name} not found for {fold_key}: {remaining_indices}")
-                    elif extra_indices and remaining_indices:
-                        raise ValueError(f"{len(remaining_indices)} required indices not found and {len(extra_indices)} not allowed indices found for {fold_key}!")
-                    else:
-                        pass
+                    try:
+                        formatted_data = {int(k): v for k, v in d["results"][fold_key][DATA_KEY].items()}
+                    except TypeError:
+                        raise TypeError(f"Indices for {fold_key} cannot be cast to int!")
+                    d["results"][fold_key][DATA_KEY] = formatted_data
 
                 # Params key has no required form; it is up to the model to determine it.
 
-        return cls._from_args(dataset_name=dataset_name, results_dict=d["results"])
+        return cls._from_args(dataset_name=dataset_name, results_dict=d["results"], df=df)
 
 
     @classmethod
-    def _from_args(cls, dataset_name, results_dict):
-        obj = cls.__init__(dataset_name, autoload=False)
+    def _from_args(cls, dataset_name, results_dict, df):
+        obj = cls(dataset_name, autoload=False)
         obj.results = RecursiveDotDict(results_dict)
         obj.is_recorded = {i: True for i in obj.FOLD_MAPPING.keys()}
+        obj.df = df
+        obj.validate()
         return obj
 
 
