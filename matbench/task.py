@@ -141,7 +141,12 @@ class MatbenchTask(MSONable):
             fold_key = self.FOLD_MAPPING[fold_number]
 
             # create map of original df index to prediction, e.g., {ix_of_original_df1: prediction1, ... etc.}
-            loc_index_to_predictions = {self.split_ix[fold_number][1][i]: p for i, p in enumerate(predictions)}
+
+            split = self.split_ix[fold_number][1]
+            if len(predictions) != len(split):
+                raise ValueError(f"Prediction outputs must be the same length as the inputs! {len(predictions)} != {len(split)}")
+
+            loc_index_to_predictions = {i: p for i, p in enumerate(predictions)}
             self.results[fold_key][DATA_KEY] = loc_index_to_predictions
             self.results[fold_key][PARAMS_KEY] = params if params else {}
             self.is_recorded[fold_number] = True
@@ -178,35 +183,26 @@ class MatbenchTask(MSONable):
         for k in req_base_keys:
             if k not in d:
                 raise KeyError(f"Required key '{k}' not found.")
-
         extra_base_keys = [k for k in d.keys() if k not in req_base_keys]
         if extra_base_keys:
             raise KeyError(f"Extra keys {extra_base_keys} not allowed.")
-
         dataset_name = d["dataset_name"]
         task_type = metadata[dataset_name].task_type
-
-
         req_fold_keys = list(cls.FOLD_MAPPING.keys())
-
         extra_fold_keys = [k for k in d["results"].keys() if k not in req_fold_keys]
         if extra_fold_keys:
             raise KeyError(f"Extra fold keys {extra_fold_keys} not allowed.")
-
         for fold_key in req_fold_keys:
             if fold_key not in d["results"]:
                 raise KeyError(f"Required fold data for fold '{fold_key}' not found.")
-
             req_subfold_keys = [SCORES_KEY, DATA_KEY, PARAMS_KEY]
             extra_subfold_keys = [k for k in d["results"][fold_key] if k not in req_subfold_keys]
             if extra_subfold_keys:
                 raise KeyError(f"Extra keys {extra_subfold_keys} for fold results of '{fold_key}' not allowed.")
-
             for subkey in req_subfold_keys:
                 fold_results = d["results"][fold_key]
                 if subkey not in fold_results:
                     raise KeyError(f"Required key '{subkey}' not found for fold '{fold_key}'.")
-
                 if subkey == SCORES_KEY:
                     scores = d["results"][fold_key][subkey]
                     metrics = REG_METRICS if task_type == REG_KEY else CLF_METRICS
@@ -218,17 +214,13 @@ class MatbenchTask(MSONable):
                     extra_metrics = [k for k in scores if k not in  metrics]
                     if extra_metrics:
                         raise KeyError(f"Extra keys {extra_metrics} for fold scores of '{fold_key}' not allowed.")
-
                 elif subkey == DATA_KEY:
                     data = d["results"][fold_key][DATA_KEY]
 
                     # Ensure all the indices are present with no extras
                     req_indices = set(list(range(metadata[dataset_name].n_samples)))
-
                     remaining_indices = copy.deepcopy(req_indices)
-
                     extra_indices = {}
-
                     req_data_type = float if metadata[dataset_name].task_type == REG_KEY else bool
                     for ix, datum in data:
                         if ix not in req_indices:

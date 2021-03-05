@@ -6,7 +6,8 @@ import numpy as np
 from pymatgen import Structure
 
 from matbench.task import MatbenchTask
-from matbench.constants import CLF_KEY, REG_KEY
+from matbench.metadata import validation_metadata
+from matbench.constants import CLF_KEY, REG_KEY, PARAMS_KEY, DATA_KEY, SCORES_KEY
 
 
 import warnings
@@ -194,8 +195,16 @@ class TestMatbenchTask(unittest.TestCase):
 
                 self.assertTrue(mbt.all_folds_recorded)
 
-                print(mbt.scores)
+                with self.assertRaises(ValueError):
+                    mbt.record(0, predictions=np.random.random(mbt.metadata.n_samples))
 
+            mbt = MatbenchTask(self.test_datasets[0], autoload=True)
+            # Test to make sure bad predictions won't be recorded
+            with self.assertRaises(ValueError):
+                mbt.record(0, [0.0, 1.0])
+
+            with self.assertRaises(ValueError):
+                mbt.record(0, ["not", "a number"])
 
     def test_MSONability(self):
         for ds in self.test_datasets:
@@ -208,9 +217,26 @@ class TestMatbenchTask(unittest.TestCase):
                 mbt.record(fold, predictions=test_outputs, params={"some_param": 1, "another param": 30349.4584})
 
             d = mbt.as_dict()
-            mbt.to_json()
-            print(d)
 
+            self.assertEqual(d["@module"], "matbench.task")
+            self.assertEqual(d["@class"], "MatbenchTask")
+            self.assertEqual(d["dataset_name"], ds)
+            self.assertEqual(len(d["results"]), validation_metadata.common.n_splits)
+
+            for fold in mbt.folds:
+                res = d["results"][f"fold_{fold}"]
+                self.assertIn(PARAMS_KEY, res)
+                self.assertIn(SCORES_KEY, res)
+                self.assertIn(DATA_KEY, res)
+
+                # make sure test set as per MbT and the recorded predictions are the same shape inside dict
+                self.assertEqual(len(res["data"]), mbt.split_ix[fold][1].shape[0])
+                # self.
+
+
+
+    def test_json(self):
+        pass
 
     def test_autoload(self):
         pass
