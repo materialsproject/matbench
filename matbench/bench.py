@@ -1,5 +1,9 @@
 from matbench.metadata import metadata
+from matbench.constants import STRUCTURE_KEY, COMPOSITION_KEY, REG_KEY, CLF_KEY
+from matbench.util import RecursiveDotDict
+from matbench.task import MatbenchTask
 
+from monty.json import MSONable
 
 '''
 Core functions for benchmarking.
@@ -59,16 +63,82 @@ mb.tasks.matbench_steels.scores.fold0
 '''
 
 
-class MatbenchBenchmark:
+class MatbenchBenchmark(MSONable):
 
-    def __init__(self):
+    def __init__(self, autoload=False, subset=None):
+
+        if subset:
+            not_datasets = [k for k in subset if k not in metadata]
+            if not_datasets:
+                raise KeyError(f"Some tasks in {subset} are not matbench datasets! Remove {not_datasets}.")
+            else:
+                available_tasks = subset
+        else:
+            available_tasks = metadata.keys()
+
         self.metadata = metadata
+        self.tasks = RecursiveDotDict()
+
+        for ds in available_tasks:
+            self.tasks[ds] = MatbenchTask(ds, autoload=autoload)
 
 
-        #todo
-        self.folds = "something"
+    @classmethod
+    def from_preset(cls, preset_name, autoload=False):
+        if preset_name == STRUCTURE_KEY:
+            available_tasks = [k for k, v in metadata.items() if v.input_type == STRUCTURE_KEY]
+        elif preset_name == COMPOSITION_KEY:
+            available_tasks = [k for k, v in metadata.items() if v.input_type == COMPOSITION_KEY]
+        elif preset_name == REG_KEY:
+            available_tasks = [k for k, v in metadata.items() if v.task_type == REG_KEY]
+        elif preset_name == CLF_KEY:
+            available_tasks = [k for k, v in metadata.items() if v.task_type == CLF_KEY]
+        else:
+            raise ValueError(f"Preset name '{preset_name}' not recognized! Select from {[STRUCTURE_KEY, COMPOSITION_KEY, CLF_KEY, REG_KEY]}")
+        return cls(autoload=autoload, subset=available_tasks)
+
+    def add_metadata(self, metadata):
+        """
+        Add freeform information about this run to the object (and subsequent json)
+
+        Args:
+            metadata:
+
+        Returns:
+
+        """
+        pass
+
+    @property
+    def is_complete(self):
+        """
+        All 13 available tasks are included in this benchmark.
+
+        Returns:
+
+        """
+        pass
+
+    @property
+    def is_recorded(self):
+        """
+        All tasks in this benchmark (whether or not it includes all problems) are recorded.
+
+        Returns:
+
+        """
+        pass
+
+    def as_dict(self):
+        d = {
+            mbt.dataset_name for mbt in self.tasks
+        }
+        return d
+
+    def from_dict(cls, d):
+        pass
 
 
-    def
+
 
 

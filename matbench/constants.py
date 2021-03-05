@@ -20,6 +20,8 @@ MBID_KEY = "mbid"
 
 REG_KEY = "regression"
 CLF_KEY = "classification"
+STRUCTURE_KEY = "structure"
+COMPOSITION_KEY = "composition"
 
 
 # per task keys
