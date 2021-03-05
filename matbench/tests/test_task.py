@@ -194,6 +194,23 @@ class TestMatbenchTask(unittest.TestCase):
 
                 self.assertTrue(mbt.all_folds_recorded)
 
+                print(mbt.scores)
+
+
+    def test_MSONability(self):
+        for ds in self.test_datasets:
+            mbt = MatbenchTask(ds, autoload=False)
+            mbt.load()
+
+            for fold in mbt.folds:
+                _, training_outputs = mbt.get_train_and_val_data(fold, as_type="tuple", shuffle_seed=self.shuffle_seed)
+                test_inputs, test_outputs = mbt.get_test_data(fold, as_type="tuple", include_target=True)
+                mbt.record(fold, predictions=test_outputs, params={"some_param": 1, "another param": 30349.4584})
+
+            d = mbt.as_dict()
+            mbt.to_json()
+            print(d)
+
 
     def test_autoload(self):
         pass

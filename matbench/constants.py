@@ -16,6 +16,8 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 DATASETS_JSON_PATH = os.path.join(THIS_DIR, "datasets.json")
 VALIDATION_JSON_PATH = os.path.join(THIS_DIR, "validation.json")
 
+MBID_KEY = "mbid"
+
 REG_KEY = "regression"
 CLF_KEY = "classification"
 

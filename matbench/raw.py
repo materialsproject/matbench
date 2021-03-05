@@ -1,7 +1,9 @@
+import math
+
 from sklearn.model_selection import KFold, StratifiedKFold
 from matminer.datasets import load_dataset
 
-from matbench.constants import REG_KEY, CLF_KEY, METRIC_MAP, CLF_METRICS, REG_METRICS
+from matbench.constants import REG_KEY, CLF_KEY, METRIC_MAP, CLF_METRICS, REG_METRICS, MBID_KEY
 from matbench.metadata import metadata, validation_metadata
 from matbench.util import RecursiveDotDict
 
@@ -32,7 +34,15 @@ def load(dataset_name):
         f"Loading {dataset_name} into memory; please be patient as loading many "
         f"structures can take a while to serialize."
     )
-    return load_dataset(dataset_name)
+    df = load_dataset(dataset_name)
+
+    id_n_zeros = math.floor(math.log(df.shape[0], 10)) + 1
+    mpcontribs_prefix = dataset_name.replace("matbench", "mb").replace("_", "-")
+    df[MBID_KEY] = [f"{mpcontribs_prefix}-{i + 1:0{id_n_zeros}d}" for i in df.index]
+
+    df = df[[MBID_KEY, metadata[dataset_name].input_type, metadata[dataset_name].target]]
+
+    return df
 
 
 def get_kfold(problem_type):

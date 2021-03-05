@@ -1,4 +1,7 @@
 import random
+import copy
+import json
+
 import numpy as np
 from matminer.datasets import get_all_dataset_info
 
@@ -32,12 +35,12 @@ class MatbenchTask(MSONable):
     def load(self):
         if self.df is None:
             # todo: turn into logging
-            print("Dataset already loaded")
-        else:
             self.df = load(self.dataset_name)
+        else:
+            print("Dataset already loaded")
 
     def _check_is_loaded(self):
-        if not self.df:
+        if self.df is None:
             raise ValueError("Task dataset is not loaded! Run MatbenchTask.load() to load the dataset into memory.")
 
     @property
@@ -56,7 +59,7 @@ class MatbenchTask(MSONable):
                 metric = {}
 
                 # scores for a metric among all folds
-                raw_metrics_on_folds = [self.results[fk][SCORES_KEY][mk] for fk in self.FOLD_MAPPING.keys()]
+                raw_metrics_on_folds = [self.results[fk][SCORES_KEY][mk] for fk in self.FOLD_MAPPING.values()]
                 for op in FOLD_DIST_METRICS:
                     metric[op] = getattr(np, op)(raw_metrics_on_folds)
                 scores[mk] = metric
@@ -154,17 +157,99 @@ class MatbenchTask(MSONable):
         return {
             "@module": self.__class__.__module__,
             "@class": self.__class__.__name__,
-            "init_args": {
-                "real_space_cut": self.real_space_cut,
-                "recip_space_cut": self.recip_space_cut,
-                "eta": self.eta,
-                "acc_factor": self.acc_factor,
-            },
-        }
+            "dataset_name": self.dataset_name,
+            "results": dict(self.results)
+            }
+
+    def to_file(self, filename):
+        with open(filename, "w") as f:
+            json.dump(self.as_dict(), f)
+
+    @classmethod
+    def from_file(cls, filename):
+        with open(filename, "r") as f:
+            d = json.load(f)
+        return cls.from_dict(d)
 
     @classmethod
     def from_dict(cls, d):
-        pass
+
+        req_base_keys = ["dataset_name", "results"]
+        for k in req_base_keys:
+            if k not in d:
+                raise KeyError(f"Required key '{k}' not found.")
+
+        extra_base_keys = [k for k in d.keys() if k not in req_base_keys]
+        if extra_base_keys:
+            raise KeyError(f"Extra keys {extra_base_keys} not allowed.")
+
+        dataset_name = d["dataset_name"]
+        task_type = metadata[dataset_name].task_type
+
+
+        req_fold_keys = list(cls.FOLD_MAPPING.keys())
+
+        extra_fold_keys = [k for k in d["results"].keys() if k not in req_fold_keys]
+        if extra_fold_keys:
+            raise KeyError(f"Extra fold keys {extra_fold_keys} not allowed.")
+
+        for fold_key in req_fold_keys:
+            if fold_key not in d["results"]:
+                raise KeyError(f"Required fold data for fold '{fold_key}' not found.")
+
+            req_subfold_keys = [SCORES_KEY, DATA_KEY, PARAMS_KEY]
+            extra_subfold_keys = [k for k in d["results"][fold_key] if k not in req_subfold_keys]
+            if extra_subfold_keys:
+                raise KeyError(f"Extra keys {extra_subfold_keys} for fold results of '{fold_key}' not allowed.")
+
+            for subkey in req_subfold_keys:
+                fold_results = d["results"][fold_key]
+                if subkey not in fold_results:
+                    raise KeyError(f"Required key '{subkey}' not found for fold '{fold_key}'.")
+
+                if subkey == SCORES_KEY:
+                    scores = d["results"][fold_key][subkey]
+                    metrics = REG_METRICS if task_type == REG_KEY else CLF_METRICS
+                    for m in metrics:
+                        if m not in scores:
+                            raise KeyError(f"Required score '{m}' not found for '{fold_key}'.")
+                        elif not isinstance(float, scores[m]):
+                            raise TypeError(f"Required score '{m}' is not float-type for '{fold_key}'!")
+                    extra_metrics = [k for k in scores if k not in  metrics]
+                    if extra_metrics:
+                        raise KeyError(f"Extra keys {extra_metrics} for fold scores of '{fold_key}' not allowed.")
+
+                elif subkey == DATA_KEY:
+                    data = d["results"][fold_key][DATA_KEY]
+
+                    # Ensure all the indices are present with no extras
+                    req_indices = set(list(range(metadata[dataset_name].n_samples)))
+
+                    remaining_indices = copy.deepcopy(req_indices)
+
+                    extra_indices = {}
+
+                    req_data_type = float if metadata[dataset_name].task_type == REG_KEY else bool
+                    for ix, datum in data:
+                        if ix not in req_indices:
+                            extra_indices[ix] = datum
+                        else:
+                            if not isinstance(req_data_type, datum):
+                                raise TypeError(f"Data point '{ix}: {datum}' has data type {type(datum)} while required type is {req_data_type}!")
+                            remaining_indices.remove(ix)
+
+                    if extra_indices and not remaining_indices:
+                        raise ValueError(f"{len(extra_indices)} extra indices for problem {dataset_name} are not allowed (found in {fold_key}: {remaining_indices}")
+                    elif not extra_indices and remaining_indices:
+                        raise ValueError(f"{len(remaining_indices)} required indices for problem {dataset_name} not found for {fold_key}: {remaining_indices}")
+                    elif extra_indices and remaining_indices:
+                        raise ValueError(f"{len(remaining_indices)} required indices not found and {len(extra_indices)} not allowed indices found for {fold_key}!")
+                    else:
+                        pass
+
+                # Params key has no required form; it is up to the model to determine it.
+
+        return cls._from_args(dataset_name=dataset_name, results_dict=d["results"])
 
 
     @classmethod
