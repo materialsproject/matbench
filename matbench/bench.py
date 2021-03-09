@@ -1,9 +1,11 @@
+import datetime
+
+from monty.json import MSONable
+
 from matbench.metadata import metadata
 from matbench.constants import STRUCTURE_KEY, COMPOSITION_KEY, REG_KEY, CLF_KEY
 from matbench.util import RecursiveDotDict
 from matbench.task import MatbenchTask
-
-from monty.json import MSONable
 
 '''
 Core functions for benchmarking.
@@ -68,6 +70,8 @@ class MatbenchBenchmark(MSONable):
     _version_key = "version"
     _user_metadata_key = "user_metadata"
     _tasks_key = "tasks"
+    _datestamp_key = "datestamp"
+    _datestamp_fmt = "yyyy.MM.dd HH:mm:ss"
 
     def __init__(self, autoload=False, subset=None):
 
@@ -163,6 +167,7 @@ class MatbenchBenchmark(MSONable):
         Returns:
             (bool): True if all tasks are valid
         """
+        self.load()
         if self.is_recorded:
             for t in self.tasks.values():
                 t.validate()
@@ -180,12 +185,14 @@ class MatbenchBenchmark(MSONable):
             "@class": self.__class__.__name__,
             self._version_key: "something",
             self._tasks_key: tasksd,
-            self._user_metadata_key: self.user_metadata
+            self._user_metadata_key: self.user_metadata,
+            self._datestamp_key: datetime.datetime.utcnow().strftime()
         }
         return d
 
     @classmethod
     def from_dict(cls, d):
+        required_keys = [self._version_key, self._tasks_key, self._user_metadata_key, ]
 
 
 
