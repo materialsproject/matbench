@@ -65,6 +65,10 @@ mb.tasks.matbench_steels.scores.fold0
 
 class MatbenchBenchmark(MSONable):
 
+    _version_key = "version"
+    _user_metadata_key = "user_metadata"
+    _tasks_key = "tasks"
+
     def __init__(self, autoload=False, subset=None):
 
         if subset:
@@ -77,6 +81,7 @@ class MatbenchBenchmark(MSONable):
             available_tasks = metadata.keys()
 
         self.metadata = metadata
+        self.user_metadata = metadata
         self.tasks = RecursiveDotDict()
 
         for ds in available_tasks:
@@ -99,15 +104,28 @@ class MatbenchBenchmark(MSONable):
 
     def add_metadata(self, metadata):
         """
-        Add freeform information about this run to the object (and subsequent json)
+        Add freeform information about this run to the object (and subsequent json),
+        accessible thru the 'user_metadata' attr.
 
         Args:
-            metadata:
+            metadata (dict)
 
+        Returns:
+            None
+        """
+
+        if not isinstance(metadata, dict):
+            raise TypeError("User metadata must be reducible to dict format.")
+        self.user_metadata = metadata
+
+    def load(self):
+        """
+        Load all tasks in this benchmark.
         Returns:
 
         """
-        pass
+        for t in self.tasks.values():
+            t.load()
 
     @property
     def is_complete(self):
@@ -117,7 +135,11 @@ class MatbenchBenchmark(MSONable):
         Returns:
 
         """
-        pass
+        for task in self.metadata:
+            if task not in self.tasks:
+                return False
+            else:
+                return True
 
     @property
     def is_recorded(self):
@@ -125,18 +147,46 @@ class MatbenchBenchmark(MSONable):
         All tasks in this benchmark (whether or not it includes all problems) are recorded.
 
         Returns:
+            (bool): True if all tasks (even if only a subset of all matbench) for this benchmark are recorded.
 
         """
-        pass
+        return all([t.all_folds_recorded for t in self.tasks.values()])
+
+
+    @property
+    def is_valid(self):
+        """
+        Checks all tasks are recorded and valid, as per each task's validation procedure.
+
+        Can take some time, especially if the tasks are not already loaded into memory.
+
+        Returns:
+            (bool): True if all tasks are valid
+        """
+        if self.is_recorded:
+            for t in self.tasks.values():
+                t.validate()
+        else:
+            raise ValueError("Not all tasks have all folds recorded!")
+
 
     def as_dict(self):
+        tasksd = {
+            mbt.dataset_name: mbt.as_dict() for mbt in self.tasks
+        }
+
         d = {
-            mbt.dataset_name for mbt in self.tasks
+            "@module": self.__class__.__module__,
+            "@class": self.__class__.__name__,
+            self._version_key: "something",
+            self._tasks_key: tasksd,
+            self._user_metadata_key: self.user_metadata
         }
         return d
 
+    @classmethod
     def from_dict(cls, d):
-        pass
+
 
 
 
