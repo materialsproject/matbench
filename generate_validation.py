@@ -93,7 +93,6 @@ def matbench_v01():
 
         splits[ds] = split
 
-
     d["splits"] = splits
 
     print("Writing file...")
