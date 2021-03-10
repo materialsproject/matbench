@@ -10,7 +10,7 @@ import numpy as np
 from pymatgen import Structure
 
 from matbench.task import MatbenchTask
-from matbench.metadata import validation_metadata
+from matbench.metadata import mbv01_metadata, mbv01_validation
 from matbench.constants import CLF_KEY, REG_KEY, PARAMS_KEY, DATA_KEY, SCORES_KEY, FOLD_DIST_METRICS, REG_METRICS, CLF_METRICS, COMPOSITION_KEY, STRUCTURE_KEY
 
 

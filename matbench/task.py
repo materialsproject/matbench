@@ -7,8 +7,7 @@ from monty.json import MSONable
 from matminer.datasets import get_all_dataset_info
 
 from matbench.constants import DATA_KEY, PARAMS_KEY, SCORES_KEY, REG_KEY, REG_METRICS, CLF_METRICS, FOLD_DIST_METRICS
-from matbench.util import RecursiveDotDict
-from matbench.raw import load, score_array
+from matbench.util import RecursiveDotDict, load, score_array
 from matbench.metadata import mbv01_validation, mbv01_metadata
 
 
@@ -16,19 +15,27 @@ class MatbenchTask(MSONable):
     """
     The core interface for running a Matbench task and recording its results.
     """
-    FOLD_MAPPING = {i: f"fold_{i}" for i in range(validation_metadata.common.n_splits)}
 
     def __init__(self, dataset_name, autoload=True, validation=mbv01_validation, metadata=mbv01_metadata):
         self.dataset_name = dataset_name
         self.df = load(self.dataset_name) if autoload else None
         self.info = get_all_dataset_info(dataset_name)
 
+
+        # all static data needed for this task
+        # including citations, data size, as well as specific validation splits
         self.metadata = metadata[dataset_name]
-        self.kfold = get_kfold(self.metadata.task_type)
-        self.folds = list(self.FOLD_MAPPING.keys())
+        self.validation = validation.splits[dataset_name]
+
+
+        # keeping track of folds
+        self.folds_keys = list(range(self.validation.splits))
+        self.folds_nums = [f"fold_{f}" for f in self.folds_keys]
+        self.folds_map = dict(zip(self.folds_nums, self.folds_keys))
+
 
         self.results = RecursiveDotDict({})
-        self.is_recorded = {k: False for k in self.FOLD_MAPPING.keys()}
+        self.is_recorded = {k: False for k in self.folds_nums}
 
     def load(self):
         if self.df is None:
@@ -45,12 +52,6 @@ class MatbenchTask(MSONable):
         if not self.all_folds_recorded:
             raise ValueError(
                 f"{msg}; folds {[f for f in self.is_recorded if not self.is_recorded[f]]} not recorded!")
-    @property
-    def split_ix(self):
-        if self.df is None:
-            return None
-        else:
-            return tuple([s for s in self.kfold.split(X=self.df, y=self.df[self.metadata.target])])
 
     @property
     def scores(self):
@@ -93,7 +94,7 @@ class MatbenchTask(MSONable):
 
         """
         self._check_is_loaded()
-        ix = self.split_ix[fold_number][0]
+        ix = self.validation[fold_number].train.keys()
 
         if shuffle_seed:
             r = random.Random(shuffle_seed)
@@ -135,7 +136,6 @@ class MatbenchTask(MSONable):
         Returns:
             None
         """
-        self._check_is_loaded()
         if self.is_recorded[fold_number]:
             # todo: replace with logging critical
             raise ValueError(f"Fold number {fold_number} already recorded! Aborting...")
@@ -177,7 +177,6 @@ class MatbenchTask(MSONable):
 
     def validate(self):
         self._check_all_folds_recorded("Cannot validate unless all folds recorded!")
-        self._check_is_loaded()
         rev_fold_mapping = {v: k for k, v in self.FOLD_MAPPING.items()}
 
         for fold_name, fold in self.results.items():

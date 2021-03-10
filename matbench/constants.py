@@ -17,6 +17,13 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 MBV01_DATASET_METADATA_PATH = os.path.join(THIS_DIR, "matbench_v0.1_dataset_metadata.json")
 MBV01_VALIDATION_DATA_PATH = os.path.join(THIS_DIR, "matbench_v0.1_validation.json")
 
+
+# keys for validation files
+VALIDATION_SPLIT_KEY = "splits"
+VALIDATION_METADATA_KEY = "metadata"
+TRAIN_KEY = "train"
+TEST_KEY = "test"
+
 # universal keys
 MBID_KEY = "mbid"
 REG_KEY = "regression"

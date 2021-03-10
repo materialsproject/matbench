@@ -4,9 +4,9 @@ import json
 from monty.serialization import dumpfn
 from sklearn.model_selection import KFold, StratifiedKFold
 
-from matbench.raw import load
-from matbench.constants import REG_KEY, CLF_KEY, MBID_KEY
-from matbench.metadata import metadata
+from matbench.util import load
+from matbench.constants import REG_KEY, CLF_KEY, MBID_KEY, VALIDATION_METADATA_KEY, VALIDATION_SPLIT_KEY, TRAIN_KEY, TEST_KEY
+from matbench.metadata import mbv01_metadata
 
 import pandas as pd
 pd.set_option('display.max_rows', 500)
@@ -47,19 +47,19 @@ def matbench_v01():
         None
     """
     d = {
-        "metadata": {
+        VALIDATION_METADATA_KEY: {
             "n_splits": 5,
             "random_state": 18012019,
             "shuffle": True
         },
-        "splits": None
+        VALIDATION_SPLIT_KEY: None
     }
 
-    kfold_config = d["metadata"]
+    kfold_config = d[VALIDATION_METADATA_KEY]
 
     splits = {}
 
-    for ds, info in metadata.items():
+    for ds, info in mbv01_metadata.items():
         split = {}
         task_type = info.task_type
 
@@ -76,7 +76,7 @@ def matbench_v01():
 
         # y is needed for stratified splits
         fold = 0
-        for train_ix, test_ix in kfold.split(X=df, y=df[metadata[ds].target]):
+        for train_ix, test_ix in kfold.split(X=df, y=df[mbv01_metadata[ds].target]):
             # indices by iloc identical to loc indices for the original matbench datasets
 
             train_df = df.iloc[train_ix]
@@ -89,7 +89,7 @@ def matbench_v01():
 
             ix_mbid_map_train = dict(zip(trix, train_mbid))
             ix_mbid_map_test = dict(zip(teix, test_mbid))
-            split[f"fold_{fold}"] = {"train": ix_mbid_map_train, "test": ix_mbid_map_test}
+            split[f"fold_{fold}"] = {TRAIN_KEY: ix_mbid_map_train, TEST_KEY: ix_mbid_map_test}
 
         splits[ds] = split
 
