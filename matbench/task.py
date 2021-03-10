@@ -79,8 +79,8 @@ class MatbenchTask(MSONable):
     def all_folds_recorded(self):
         return all([v for v in self.is_recorded.values()])
 
-    def _get_data_from_df(self, ix, as_type):
-        relevant_df = self.df.iloc[ix]
+    def _get_data_from_df(self, ids, as_type):
+        relevant_df = self.df.loc[ids]
         if as_type == "df":
             return relevant_df
         elif as_type == "tuple":
@@ -101,7 +101,8 @@ class MatbenchTask(MSONable):
 
         """
         self._check_is_loaded()
-        ix = list(self.validation[fold_number].train.values())
+        fold_key = self.folds_map[fold_number]
+        ids = self.validation[fold_key].train
 
         if shuffle_seed:
             r = random.Random(shuffle_seed)
@@ -109,7 +110,7 @@ class MatbenchTask(MSONable):
             r = random
 
         r.shuffle(ix)
-        return self._get_data_from_df(ix, as_type)
+        return self._get_data_from_df(ids, as_type)
 
     def get_test_data(self, fold_number, as_type="tuple", include_target=False):
         """
@@ -123,14 +124,15 @@ class MatbenchTask(MSONable):
 
         """
         self._check_is_loaded()
-        ix = list(self.validation[fold_number].test.values())
+        fold_key = self.folds_map[fold_number]
+        ids = self.validation[fold_key].test
         if include_target:
-            return self._get_data_from_df(ix, as_type)
+            return self._get_data_from_df(ids, as_type)
         else:
             if as_type == "tuple":
-                return self._get_data_from_df(ix, as_type)[0]
+                return self._get_data_from_df(ids, as_type)[0]
             elif as_type == "df":
-                return self._get_data_from_df(ix, as_type)[self.metadata.task_type]
+                return self._get_data_from_df(ids, as_type)[self.metadata.task_type]
 
     def record(self, fold_number, predictions, params=None):
         """
@@ -151,12 +153,12 @@ class MatbenchTask(MSONable):
 
             # create map of original df index to prediction, e.g., {ix_of_original_df1: prediction1, ... etc.}
 
-            split_ix = list(self.validation[fold_number].test.values())
-            if len(predictions) != len(split):
-                raise ValueError(f"Prediction outputs must be the same length as the inputs! {len(predictions)} != {len(split)}")
+            split_ids = self.validation[fold_key].test
+            if len(predictions) != len(split_ids):
+                raise ValueError(f"Prediction outputs must be the same length as the inputs! {len(predictions)} != {len(split_ids)}")
 
-            loc_index_to_predictions = {int(split_ix[i]): p for i, p in enumerate(predictions)}
-            self.results[fold_key][DATA_KEY] = loc_index_to_predictions
+            ids_to_predictions = {split_ids[i]: p for i, p in enumerate(predictions)}
+            self.results[fold_key][DATA_KEY] = ids_to_predictions
 
             if not isinstance(params, (dict, type(None))):
                 raise TypeError(f"Parameters must be stored as a dictionary, not {type(params)}!")

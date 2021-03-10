@@ -28,8 +28,8 @@ def matbench_v01():
         "splits": {
             dataset_name_1: {
                 "fold_0": {
-                    "train": {matbenchid0: df ix 0, matbenchid1: df ix 1...}
-                    "test": {matbenchid3785: df ix 3785, ...}
+                    "train": [matbench_id 1, matbench_id 2, ...]
+                    "test": [matbench_id 3783, matbench_id 4874, ...]
                     },
                 ...
                 "fold_N": ...
@@ -77,19 +77,15 @@ def matbench_v01():
         # y is needed for stratified splits
         fold = 0
         for train_ix, test_ix in kfold.split(X=df, y=df[mbv01_metadata[ds].target]):
-            # indices by iloc identical to loc indices for the original matbench datasets
 
             train_df = df.iloc[train_ix]
             test_df = df.iloc[test_ix]
 
-            trix = train_df.index.tolist()
-            train_mbid = train_df[MBID_KEY].tolist()
-            teix = test_df.index.tolist()
-            test_mbid = test_df[MBID_KEY].tolist()
+            train_mbid = train_df.index.tolist()
+            test_mbid = test_df.index.tolist()
 
-            ix_mbid_map_train = dict(zip(train_mbid, trix))
-            ix_mbid_map_test = dict(zip(test_mbid, teix))
-            split[f"fold_{fold}"] = {TRAIN_KEY: ix_mbid_map_train, TEST_KEY: ix_mbid_map_test}
+            split[f"fold_{fold}"] = {TRAIN_KEY: train_mbid, TEST_KEY: test_mbid}
+            fold += 1
 
         splits[ds] = split
 

@@ -16,8 +16,8 @@ Final, bedrock truth results JSON format:
 
 {
     "raw": {
-        "matbench_steels": {fold0: {data: { index1: prediction1, index2: prediction2...}, params}, fold1: ...}
-        "matbench_dielectric": {fold0: {data: { index1: prediction1, index2: prediction2...}, params}, fold1: ...}
+        "matbench_steels": {fold0: {data: { matbench_id 1: prediction1, matbench_id 2: prediction2...}, params}, fold1: ...}
+        "matbench_dielectric": {fold0: {data: { matbench_id 1: prediction1, matbench_id 2: prediction2...}, params}, fold1: ...}
         ...
     },
     "processed": {
