@@ -8,8 +8,8 @@ from matminer.datasets import get_all_dataset_info
 
 from matbench.constants import DATA_KEY, PARAMS_KEY, SCORES_KEY, REG_KEY, REG_METRICS, CLF_METRICS, FOLD_DIST_METRICS
 from matbench.util import RecursiveDotDict
-from matbench.raw import get_kfold, load, score_array
-from matbench.metadata import metadata, validation_metadata
+from matbench.raw import load, score_array
+from matbench.metadata import mbv01_validation, mbv01_metadata
 
 
 class MatbenchTask(MSONable):
@@ -18,7 +18,7 @@ class MatbenchTask(MSONable):
     """
     FOLD_MAPPING = {i: f"fold_{i}" for i in range(validation_metadata.common.n_splits)}
 
-    def __init__(self, dataset_name, autoload=True):
+    def __init__(self, dataset_name, autoload=True, validation=mbv01_validation, metadata=mbv01_metadata):
         self.dataset_name = dataset_name
         self.df = load(self.dataset_name) if autoload else None
         self.info = get_all_dataset_info(dataset_name)
