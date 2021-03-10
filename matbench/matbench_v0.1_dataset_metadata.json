@@ -21,13 +21,13 @@
     "target": "gfa",
     "n_samples": 5680,
     "task_type": "classification",
+    "input_type": "composition"
+  },
   "matbench_mp_e_form": {
     "target": "e_form",
     "n_samples": 132752,
     "task_type": "regression",
     "input_type": "structure"
-  },
-    "input_type": "composition"
   },
   "matbench_jdft2d": {
     "target": "exfoliation_en",

@@ -4,7 +4,7 @@ from sklearn.model_selection import KFold, StratifiedKFold
 from matminer.datasets import load_dataset
 
 from matbench.constants import REG_KEY, CLF_KEY, METRIC_MAP, CLF_METRICS, REG_METRICS, MBID_KEY
-from matbench.metadata import metadata, validation_metadata
+from matbench.metadata import metadata
 from matbench.util import RecursiveDotDict
 
 def load(dataset_name):
@@ -45,25 +45,25 @@ def load(dataset_name):
     return df
 
 
-def get_kfold(problem_type):
-    """
-    Obtain the test/train split for a given problem type (regression or classfication).
-
-    Args:
-        problem_type (str): Either 'regression' or 'classification'
-
-    Returns:
-        (KFold or StratifiedKFold): A kfold cross validation object
-
-    """
-    kfold_config = validation_metadata.common
-
-    if problem_type == REG_KEY:
-        return KFold(**kfold_config)
-    elif problem_type == CLF_KEY:
-        return StratifiedKFold(**kfold_config)
-    else:
-        raise ValueError(f"'problem_type' must be one of {[REG_KEY, CLF_KEY]}, not '{problem_type}'.")
+# def get_kfold(problem_type):
+#     """
+#     Obtain the test/train split for a given problem type (regression or classfication).
+#
+#     Args:
+#         problem_type (str): Either 'regression' or 'classification'
+#
+#     Returns:
+#         (KFold or StratifiedKFold): A kfold cross validation object
+#
+#     """
+#     kfold_config = validation_metadata.common
+#
+#     if problem_type == REG_KEY:
+#         return KFold(**kfold_config)
+#     elif problem_type == CLF_KEY:
+#         return StratifiedKFold(**kfold_config)
+#     else:
+#         raise ValueError(f"'problem_type' must be one of {[REG_KEY, CLF_KEY]}, not '{problem_type}'.")
 
 
 def score_array(true_array, pred_array, problem_type):

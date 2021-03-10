@@ -13,8 +13,8 @@ from sklearn.metrics import \
 
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-DATASETS_JSON_PATH = os.path.join(THIS_DIR, "datasets.json")
-VALIDATION_JSON_PATH = os.path.join(THIS_DIR, "validation.json")
+DATASETS_JSON_PATH = os.path.join(THIS_DIR, "matbench_v0.1_dataset_metadata.json")
+# VALIDATION_JSON_PATH = os.path.join(THIS_DIR, "matbench_.json")
 
 MBID_KEY = "mbid"
 
