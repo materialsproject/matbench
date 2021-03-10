@@ -36,9 +36,10 @@ class MatbenchTask(MSONable):
         else:
             raise ValueError("Only matbnch_v0.1 available. No other benchmarks defined!")
 
+
         # keeping track of folds
-        self.folds_keys = list(range(self.validation.splits))
-        self.folds_nums = [f"fold_{f}" for f in self.folds_keys]
+        self.folds_keys = list(self.validation.keys())
+        self.folds_nums = list(range(len(self.folds_keys)))
         self.folds_map = dict(zip(self.folds_nums, self.folds_keys))
 
         self.results = RecursiveDotDict({})
@@ -109,7 +110,7 @@ class MatbenchTask(MSONable):
         else:
             r = random
 
-        r.shuffle(ix)
+        r.shuffle(ids)
         return self._get_data_from_df(ids, as_type)
 
     def get_test_data(self, fold_number, as_type="tuple", include_target=False):
@@ -168,7 +169,7 @@ class MatbenchTask(MSONable):
             # todo: replace with logging info
             print(f"Recorded fold {fold_number} successfully.")
 
-            truth = self._get_data_from_df(self.split_ix[fold_number][1], as_type="tuple")[1]
+            truth = self._get_data_from_df(split_ids, as_type="tuple")[1]
             self.results[fold_key][SCORES_KEY] = score_array(truth, predictions, self.metadata.task_type)
             print(f"Scored fold {fold_key} successfully.")
 
