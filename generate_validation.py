@@ -4,7 +4,7 @@ import json
 from monty.serialization import dumpfn
 from sklearn.model_selection import KFold, StratifiedKFold
 
-from matbench.util import load
+from matbench.data_ops import load
 from matbench.constants import REG_KEY, CLF_KEY, MBID_KEY, VALIDATION_METADATA_KEY, VALIDATION_SPLIT_KEY, TRAIN_KEY, TEST_KEY
 from matbench.metadata import mbv01_metadata
 
@@ -28,8 +28,8 @@ def matbench_v01():
         "splits": {
             dataset_name_1: {
                 "fold_0": {
-                    "train": {index0: matbenchid0, index1: matbenchid1...}
-                    "test": {index8367: matbenchid8367, ...}
+                    "train": {matbenchid0: df ix 0, matbenchid1: df ix 1...}
+                    "test": {matbenchid3785: df ix 3785, ...}
                     },
                 ...
                 "fold_N": ...
@@ -87,8 +87,8 @@ def matbench_v01():
             teix = test_df.index.tolist()
             test_mbid = test_df[MBID_KEY].tolist()
 
-            ix_mbid_map_train = dict(zip(trix, train_mbid))
-            ix_mbid_map_test = dict(zip(teix, test_mbid))
+            ix_mbid_map_train = dict(zip(train_mbid, trix))
+            ix_mbid_map_test = dict(zip(test_mbid, teix))
             split[f"fold_{fold}"] = {TRAIN_KEY: ix_mbid_map_train, TEST_KEY: ix_mbid_map_test}
 
         splits[ds] = split
@@ -96,7 +96,7 @@ def matbench_v01():
     d["splits"] = splits
 
     print("Writing file...")
-    dumpfn(d, "matbench/matbench_v0.1_validation.json", "w")
+    dumpfn(d, "matbench/matbench_v0.1_validation.json")
 
 
 
