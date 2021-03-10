@@ -12,12 +12,13 @@ from sklearn.metrics import \
     f1_score
 
 
+# paths for metadata and validation splits
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-DATASETS_JSON_PATH = os.path.join(THIS_DIR, "matbench_v0.1_dataset_metadata.json")
-# VALIDATION_JSON_PATH = os.path.join(THIS_DIR, "matbench_.json")
+MBV01_DATASET_METADATA_PATH = os.path.join(THIS_DIR, "matbench_v0.1_dataset_metadata.json")
+MBV01_VALIDATION_DATA_PATH = os.path.join(THIS_DIR, "matbench_v0.1_validation.json")
 
+# universal keys
 MBID_KEY = "mbid"
-
 REG_KEY = "regression"
 CLF_KEY = "classification"
 STRUCTURE_KEY = "structure"

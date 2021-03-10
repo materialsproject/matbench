@@ -1,6 +1,7 @@
 import os
 import json
 
+from monty.serialization import dumpfn
 from sklearn.model_selection import KFold, StratifiedKFold
 
 from matbench.raw import load
@@ -96,8 +97,7 @@ def matbench_v01():
     d["splits"] = splits
 
     print("Writing file...")
-    with open("matbench/matbench_v0.1_validation.json", "w") as f:
-        json.dump(d, f)
+    dumpfn(d, "matbench/matbench_v0.1_validation.json", "w")
 
 
 
