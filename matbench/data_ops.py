@@ -39,7 +39,8 @@ def load(dataset_name, dataset_metadata=mbv01_metadata):
     mpcontribs_prefix = dataset_name.replace("matbench", "mb").replace("_", "-")
     df[MBID_KEY] = [f"{mpcontribs_prefix}-{i + 1:0{id_n_zeros}d}" for i in df.index]
 
-    df = df[[MBID_KEY, dataset_metadata[dataset_name].input_type, dataset_metadata[dataset_name].target]]
+    df = df.set_index(MBID_KEY)
+    df = df[[dataset_metadata[dataset_name].input_type, dataset_metadata[dataset_name].target]]
 
     return df
 

@@ -101,7 +101,7 @@ class MatbenchTask(MSONable):
 
         """
         self._check_is_loaded()
-        ix = self.validation[fold_number].train.keys()
+        ix = list(self.validation[fold_number].train.values())
 
         if shuffle_seed:
             r = random.Random(shuffle_seed)
@@ -123,7 +123,7 @@ class MatbenchTask(MSONable):
 
         """
         self._check_is_loaded()
-        ix = self.split_ix[fold_number][1]
+        ix = list(self.validation[fold_number].test.values())
         if include_target:
             return self._get_data_from_df(ix, as_type)
         else:
@@ -137,7 +137,7 @@ class MatbenchTask(MSONable):
         Record the test data as well as parameters about the model trained on this fold.
 
         Args:
-            fold_number (int): The fold number, 0-4.
+            fold_number (int): The fold number.
             predictions ([float] or [bool] or np.ndarray): A list of predictions for fold number {fold_number}
 
         Returns:
@@ -151,11 +151,11 @@ class MatbenchTask(MSONable):
 
             # create map of original df index to prediction, e.g., {ix_of_original_df1: prediction1, ... etc.}
 
-            split = self.split_ix[fold_number][1]
+            split_ix = list(self.validation[fold_number].test.values())
             if len(predictions) != len(split):
                 raise ValueError(f"Prediction outputs must be the same length as the inputs! {len(predictions)} != {len(split)}")
 
-            loc_index_to_predictions = {int(self.split_ix[fold_number][1][i]): p for i, p in enumerate(predictions)}
+            loc_index_to_predictions = {int(split_ix[i]): p for i, p in enumerate(predictions)}
             self.results[fold_key][DATA_KEY] = loc_index_to_predictions
 
             if not isinstance(params, (dict, type(None))):
@@ -174,9 +174,9 @@ class MatbenchTask(MSONable):
         return {
             "@module": self.__class__.__module__,
             "@class": self.__class__.__name__,
-            "benchmark_name": self.benchmark_name,
+            self.BENCHMARK_KEY: self.benchmark_name,
             self.DATASET_KEY: self.dataset_name,
-            "results": dict(self.results)
+            self.RESULTS_KEY: dict(self.results)
             }
 
     def to_file(self, filename):
@@ -234,43 +234,42 @@ class MatbenchTask(MSONable):
             if k not in d:
                 raise KeyError(f"Required key '{k}' not found.")
 
+        # Ensure the benchmark key is defined
         if d[cls.BENCHMARK_KEY] == MBV01_KEY:
-            metadata = mbv01_metadata
-            validation = mbv01_validation
-            fold_mapping = {}
+            metadata = mbv01_metadata[cls.DATASET_KEY]
+            validation = mbv01_validation.splits[cls.DATASET_KEY]
+            fold_keys = set(validation.keys())
         else:
             raise ValueError(f"{d[cls.BENCHMARK_KEY]} not a defined benchmark! Only defined benchmark name is '{MBV01_KEY}'.")
 
-        df = load(d[cls.DATASET_KEY])
         extra_base_keys = [k for k in d.keys() if k not in req_base_keys]
         if extra_base_keys:
             raise KeyError(f"Extra keys {extra_base_keys} not allowed.")
         dataset_name = d[cls.DATASET_KEY]
         task_type = metadata[dataset_name].task_type
-        req_fold_keys = list(cls.FOLD_MAPPING.values())
-        extra_fold_keys = [k for k in d["results"].keys() if k not in req_fold_keys]
+        extra_fold_keys = [k for k in d[cls.RESULTS_KEY].keys() if k not in fold_keys]
         if extra_fold_keys:
             raise KeyError(f"Extra fold keys {extra_fold_keys} not allowed.")
-        for fold_key in req_fold_keys:
-            if fold_key not in d["results"]:
+        for fold_key in fold_keys:
+            if fold_key not in d[cls.RESULTS_KEY]:
                 raise KeyError(f"Required fold data for fold '{fold_key}' not found.")
             req_subfold_keys = [SCORES_KEY, DATA_KEY, PARAMS_KEY]
-            extra_subfold_keys = [k for k in d["results"][fold_key] if k not in req_subfold_keys]
+            extra_subfold_keys = [k for k in d[cls.RESULTS_KEY][fold_key] if k not in req_subfold_keys]
             if extra_subfold_keys:
                 raise KeyError(f"Extra keys {extra_subfold_keys} for fold results of '{fold_key}' not allowed.")
             for subkey in req_subfold_keys:
-                fold_results = d["results"][fold_key]
+                fold_results = d[cls.RESULTS_KEY][fold_key]
                 if subkey not in fold_results:
                     raise KeyError(f"Required key '{subkey}' not found for fold '{fold_key}'.")
                 if subkey == SCORES_KEY:
-                    scores = d["results"][fold_key][subkey]
+                    scores = d[cls.RESULTS_KEY][fold_key][subkey]
                     metrics = REG_METRICS if task_type == REG_KEY else CLF_METRICS
                     for m in metrics:
                         if m not in scores:
                             raise KeyError(f"Required score '{m}' not found for '{fold_key}'.")
                         elif not isinstance(scores[m], float):
                             raise TypeError(f"Required score '{m}' is not float-type for '{fold_key}'!")
-                    extra_metrics = [k for k in scores if k not in  metrics]
+                    extra_metrics = [k for k in scores if k not in metrics]
                     if extra_metrics:
                         raise KeyError(f"Extra keys {extra_metrics} for fold scores of '{fold_key}' not allowed.")
 
@@ -278,22 +277,21 @@ class MatbenchTask(MSONable):
                 # results data indices are cast by json to be strings, so must be converted to int
                 elif subkey == DATA_KEY:
                     try:
-                        formatted_data = {int(k): v for k, v in d["results"][fold_key][DATA_KEY].items()}
+                        formatted_data = {int(k): v for k, v in d[cls.RESULTS_KEY][fold_key][DATA_KEY].items()}
                     except TypeError:
                         raise TypeError(f"Indices for {fold_key} cannot be cast to int!")
-                    d["results"][fold_key][DATA_KEY] = formatted_data
+                    d[cls.RESULTS_KEY][fold_key][DATA_KEY] = formatted_data
 
                 # Params key has no required form; it is up to the model to determine it.
 
-        return cls._from_args(dataset_name=dataset_name, results_dict=d["results"], df=df)
+        return cls._from_args(dataset_name=dataset_name, benchmark_name=d[cls.BENCHMARK_KEY], results_dict=d[cls.RESULTS_KEY])
 
 
     @classmethod
-    def _from_args(cls, dataset_name, results_dict, df):
-        obj = cls(dataset_name, autoload=False)
+    def _from_args(cls, dataset_name, benchmark_name, results_dict):
+        obj = cls(dataset_name, autoload=False, benchmark=benchmark_name)
         obj.results = RecursiveDotDict(results_dict)
-        obj.is_recorded = {i: True for i in obj.FOLD_MAPPING.keys()}
-        obj.df = df
+        obj.is_recorded = {i: True for i in obj.folds_nums}
         obj.validate()
         return obj
 
