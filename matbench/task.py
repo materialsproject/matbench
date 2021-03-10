@@ -6,8 +6,9 @@ import numpy as np
 from monty.json import MSONable
 from matminer.datasets import get_all_dataset_info
 
-from matbench.constants import DATA_KEY, PARAMS_KEY, SCORES_KEY, REG_KEY, REG_METRICS, CLF_METRICS, FOLD_DIST_METRICS
-from matbench.util import RecursiveDotDict, load, score_array
+from matbench.constants import DATA_KEY, PARAMS_KEY, SCORES_KEY, REG_KEY, REG_METRICS, CLF_METRICS, FOLD_DIST_METRICS, MBV01_KEY
+from matbench.util import RecursiveDotDict
+from matbench.data_ops import load, score_array
 from matbench.metadata import mbv01_validation, mbv01_metadata
 
 
@@ -15,24 +16,30 @@ class MatbenchTask(MSONable):
     """
     The core interface for running a Matbench task and recording its results.
     """
+    
+    RESULTS_KEY = "results"
+    BENCHMARK_KEY = "benchmark_name"
+    DATASET_KEY = "dataset_name"
 
-    def __init__(self, dataset_name, autoload=True, validation=mbv01_validation, metadata=mbv01_metadata):
+    def __init__(self, dataset_name, autoload=True, benchmark=MBV01_KEY):
         self.dataset_name = dataset_name
         self.df = load(self.dataset_name) if autoload else None
         self.info = get_all_dataset_info(dataset_name)
 
-
-        # all static data needed for this task
+        # define all static data needed for this task
         # including citations, data size, as well as specific validation splits
-        self.metadata = metadata[dataset_name]
-        self.validation = validation.splits[dataset_name]
 
+        if benchmark == MBV01_KEY:
+            self.benchmark_name = MBV01_KEY
+            self.metadata = mbv01_metadata[dataset_name]
+            self.validation = mbv01_validation.splits[dataset_name]
+        else:
+            raise ValueError("Only matbnch_v0.1 available. No other benchmarks defined!")
 
         # keeping track of folds
         self.folds_keys = list(range(self.validation.splits))
         self.folds_nums = [f"fold_{f}" for f in self.folds_keys]
         self.folds_map = dict(zip(self.folds_nums, self.folds_keys))
-
 
         self.results = RecursiveDotDict({})
         self.is_recorded = {k: False for k in self.folds_nums}
@@ -62,7 +69,7 @@ class MatbenchTask(MSONable):
             metric = {}
 
             # scores for a metric among all folds
-            raw_metrics_on_folds = [self.results[fk][SCORES_KEY][mk] for fk in self.FOLD_MAPPING.values()]
+            raw_metrics_on_folds = [self.results[fk][SCORES_KEY][mk] for fk in self.folds_map.values()]
             for op in FOLD_DIST_METRICS:
                 metric[op] = getattr(np, op)(raw_metrics_on_folds)
             scores[mk] = metric
@@ -140,7 +147,7 @@ class MatbenchTask(MSONable):
             # todo: replace with logging critical
             raise ValueError(f"Fold number {fold_number} already recorded! Aborting...")
         else:
-            fold_key = self.FOLD_MAPPING[fold_number]
+            fold_key = self.folds_map[fold_number]
 
             # create map of original df index to prediction, e.g., {ix_of_original_df1: prediction1, ... etc.}
 
@@ -167,7 +174,8 @@ class MatbenchTask(MSONable):
         return {
             "@module": self.__class__.__module__,
             "@class": self.__class__.__name__,
-            "dataset_name": self.dataset_name,
+            "benchmark_name": self.benchmark_name,
+            self.DATASET_KEY: self.dataset_name,
             "results": dict(self.results)
             }
 
@@ -177,7 +185,7 @@ class MatbenchTask(MSONable):
 
     def validate(self):
         self._check_all_folds_recorded("Cannot validate unless all folds recorded!")
-        rev_fold_mapping = {v: k for k, v in self.FOLD_MAPPING.items()}
+        rev_fold_mapping = {v: k for k, v in self.folds_map.items()}
 
         for fold_name, fold in self.results.items():
             fold_data = fold.data
@@ -221,16 +229,23 @@ class MatbenchTask(MSONable):
     @classmethod
     def from_dict(cls, d):
 
-        req_base_keys = ["dataset_name", "results", "@module", "@class"]
+        req_base_keys = ["@module", "@class", cls.DATASET_KEY, cls.RESULTS_KEY, cls.BENCHMARK_KEY]
         for k in req_base_keys:
             if k not in d:
                 raise KeyError(f"Required key '{k}' not found.")
 
-        df = load(d["dataset_name"])
+        if d[cls.BENCHMARK_KEY] == MBV01_KEY:
+            metadata = mbv01_metadata
+            validation = mbv01_validation
+            fold_mapping = {}
+        else:
+            raise ValueError(f"{d[cls.BENCHMARK_KEY]} not a defined benchmark! Only defined benchmark name is '{MBV01_KEY}'.")
+
+        df = load(d[cls.DATASET_KEY])
         extra_base_keys = [k for k in d.keys() if k not in req_base_keys]
         if extra_base_keys:
             raise KeyError(f"Extra keys {extra_base_keys} not allowed.")
-        dataset_name = d["dataset_name"]
+        dataset_name = d[cls.DATASET_KEY]
         task_type = metadata[dataset_name].task_type
         req_fold_keys = list(cls.FOLD_MAPPING.values())
         extra_fold_keys = [k for k in d["results"].keys() if k not in req_fold_keys]

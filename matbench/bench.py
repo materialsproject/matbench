@@ -84,6 +84,9 @@ class MatbenchBenchmark(MSONable):
         else:
             available_tasks = metadata.keys()
 
+
+        #todo: add benchmark name to matbenchtasks init
+
         self.metadata = metadata
         self.user_metadata = metadata
         self.tasks = RecursiveDotDict()

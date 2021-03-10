@@ -18,6 +18,11 @@ MBV01_DATASET_METADATA_PATH = os.path.join(THIS_DIR, "matbench_v0.1_dataset_meta
 MBV01_VALIDATION_DATA_PATH = os.path.join(THIS_DIR, "matbench_v0.1_validation.json")
 
 
+
+MBV01_KEY = "matbench_v0.1"
+
+
+
 # keys for validation files
 VALIDATION_SPLIT_KEY = "splits"
 VALIDATION_METADATA_KEY = "metadata"
