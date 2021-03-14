@@ -245,53 +245,57 @@ class TestMatbenchTask(unittest.TestCase):
 
             # todo: uncomment to regenerate test files
             # todo: these can be used as the score_matbench_*_perfect.json files as well if renamed.
-            mbt.to_file(os.path.join(TEST_DIR, f"msonability_{ds}.json"))
+            # mbt.to_file(os.path.join(TEST_DIR, f"msonability_{ds}.json"))
 
 
-            # # Test ingestion from ground truth json files
-            # truth_fname = f"msonability_{ds}.json"
-            #
-            # with open(truth_fname, "r") as f:
-            #     truth = json.load(f)
-            # MatbenchTask.from_file(truth_fname)
-            # MatbenchTask.from_dict(truth)
-            #
-            #
-            # # Ensure errors are thrown for bad json
-            #
-            # missing_results = copy.deepcopy(truth)
-            # missing_results.pop("results")
-            #
-            # with self.assertRaises(KeyError):
-            #     MatbenchTask.from_dict(missing_results)
-            #
-            # for key in [PARAMS_KEY, DATA_KEY, SCORES_KEY]:
-            #     missing_key = copy.deepcopy(truth)
-            #     missing_key["results"]["fold_3"].pop(key)
-            #
-            #     with self.assertRaises(KeyError):
-            #         MatbenchTask.from_dict(missing_key)
-            #
-            # # If an otherwise perfect json is missing a required index
-            # missing_ix_fold0 = copy.deepcopy(truth)
-            # missing_ix_fold0["results"]["fold_0"]["data"].pop(mbt.split_ix[0][1][0])
-            #
-            # with self.assertRaises(ValueError):
-            #     MatbenchTask.from_dict(missing_ix_fold0)
-            #
-            # # If an otherwise perfect json has an extra index
-            # extra_ix_fold0 = copy.deepcopy(truth)
-            # extra_ix_fold0["results"]["fold_0"]["data"][310131] = 1.92
-            #
-            # with self.assertRaises(ValueError):
-            #     MatbenchTask.from_dict(extra_ix_fold0)
-            #
-            # # If an otherwise perfect json has a wrong datatype
-            # wrong_dtype = copy.deepcopy(truth)
-            # wrong_dtype["results"]["fold_2"]["data"][mbt.split_ix[2][1][4]] = "any string"
-            #
-            # with self.assertRaises(TypeError):
-            #     MatbenchTask.from_dict(wrong_dtype)
+            # Test ingestion from ground truth json files
+            truth_fname = f"msonability_{ds}.json"
+
+            with open(truth_fname, "r") as f:
+                truth = json.load(f)
+            MatbenchTask.from_file(truth_fname)
+            MatbenchTask.from_dict(truth)
+
+
+            # Ensure errors are thrown for bad json
+
+            missing_results = copy.deepcopy(truth)
+            missing_results.pop("results")
+
+            with self.assertRaises(KeyError):
+                MatbenchTask.from_dict(missing_results)
+
+            for key in [PARAMS_KEY, DATA_KEY, SCORES_KEY]:
+                missing_key = copy.deepcopy(truth)
+                missing_key["results"]["fold_3"].pop(key)
+
+                with self.assertRaises(KeyError):
+                    MatbenchTask.from_dict(missing_key)
+
+            # If an otherwise perfect json is missing a required index
+            missing_ix_fold0 = copy.deepcopy(truth)
+
+            missing_ix = mbt.validation.fold_0.test[0]
+            missing_ix_fold0["results"]["fold_0"]["data"].pop(missing_ix)
+
+            with self.assertRaises(ValueError):
+                MatbenchTask.from_dict(missing_ix_fold0)
+
+            # If an otherwise perfect json has an extra index
+            extra_ix_fold0 = copy.deepcopy(truth)
+
+            extra_viable_ix = mbt.validation.fold_0.train[0]
+            extra_ix_fold0["results"]["fold_0"]["data"][extra_viable_ix] = 1.92
+
+            with self.assertRaises(ValueError):
+                MatbenchTask.from_dict(extra_ix_fold0)
+
+            # If an otherwise perfect json has a wrong datatype
+            wrong_dtype = copy.deepcopy(truth)
+            wrong_dtype["results"]["fold_2"]["data"][mbt.validation.fold_2.test[4]] = "any string"
+
+            with self.assertRaises(TypeError):
+                MatbenchTask.from_dict(wrong_dtype)
 
     def test_autoload(self):
         mbt = MatbenchTask("matbench_steels", autoload=False)
