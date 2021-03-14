@@ -66,25 +66,24 @@ class TestMatbenchTask(unittest.TestCase):
             self.assertTrue(all([isinstance(d, input_type) for d in inputs]))
             self.assertTrue(all([isinstance(d, output_type) for d in outputs]))
 
-
             if ds == "matbench_dielectric":
-                sio2 = inputs.iloc[101].composition.reduced_formula
-                self.assertEqual(sio2, "SiO2")
-                self.assertEqual(sio2, inputs.loc[2658].composition.reduced_formula) # loc index corresponds to the iloc in the original df
-                self.assertEqual(sio2, mbt.df[STRUCTURE_KEY].iloc[2658].composition.reduced_formula)                # make sure the index matches the original df
-                n = 1.5191342929445046
-                self.assertAlmostEqual(outputs.iloc[101], n, places=10)
-                self.assertAlmostEqual(outputs.loc[2658], n, places=10)
-                self.assertAlmostEqual(mbt.df["n"].iloc[2658], n, places=10)
+                mat = inputs.loc["mb-dielectric-1985"]
+                f = mat.composition.reduced_formula
+                val = outputs.loc["mb-dielectric-1985"]
+                self.assertEqual(f, "Re3(TeBr)7")
+                self.assertEqual(inputs.iloc[0], mat)    # ensure the ordering is correct via iloc
+                n = 2.5230272821931656
+                self.assertAlmostEqual(val, n, places=10)
+                self.assertAlmostEqual(outputs.iloc[0], n, places=10)
             elif ds == "matbench_steels":
-                alloy = "Fe0.755C0.00552Mn0.00543Si0.0236Cr0.128Ni0.0188Mo0.0173V0.00380N0.00197Nb0.00244Co0.0375Al0.000615"
-                self.assertEqual(alloy, inputs.iloc[101])
-                self.assertEqual(alloy, inputs.loc[202]) # loc index corresponds to the iloc in the original df
-                self.assertEqual(alloy, mbt.df[COMPOSITION_KEY].iloc[202]) # make sure the index matches the original df
-                yield_strength = 1074.9
+                alloy = "Fe0.692C0.00968Mn0.000101Si0.0144Cr0.133Ni0.00887Mo0.0114V0.000109Nb0.000477Co0.130Al0.000616"
+                mat = inputs.loc["mb-steels-095"]
+                val = outputs.loc["mb-steels-095"]
+                self.assertEqual(alloy, mat)
+                self.assertEqual(alloy, inputs.iloc[55])
+                yield_strength = 1369.5
                 self.assertAlmostEqual(outputs.iloc[101], yield_strength, places=5)
                 self.assertAlmostEqual(outputs.loc[202], yield_strength, places=5)
-                self.assertAlmostEqual(mbt.df["yield strength"].iloc[202], yield_strength, places=5)
             elif ds == "matbench_glass":
                 alloy = "Ti19Al31"
                 self.assertEqual(alloy, inputs.iloc[101])

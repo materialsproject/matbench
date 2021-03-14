@@ -34,7 +34,7 @@ class MatbenchTask(MSONable):
             self.metadata = mbv01_metadata[dataset_name]
             self.validation = mbv01_validation.splits[dataset_name]
         else:
-            raise ValueError("Only matbnch_v0.1 available. No other benchmarks defined!")
+            raise ValueError(f"Only {MBV01_KEY} available. No other benchmarks defined!")
 
 
         # keeping track of folds
