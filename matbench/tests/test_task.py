@@ -126,30 +126,30 @@ class TestMatbenchTask(unittest.TestCase):
             if ds == "matbench_dielectric":
                 ki = inputs.iloc[12].composition.reduced_formula
                 self.assertEqual(ki, "KI")
-                self.assertEqual(ki, inputs.loc[75].composition.reduced_formula) # loc index corresponds to the iloc in the original df
-                self.assertEqual(ki, mbt.df[STRUCTURE_KEY].iloc[75].composition.reduced_formula)                # make sure the index matches the original df
+                self.assertEqual(ki, inputs.loc["mb-dielectric-0076"].composition.reduced_formula)
+                self.assertEqual(ki, mbt.df[STRUCTURE_KEY].loc["mb-dielectric-0076"].composition.reduced_formula)
                 n = 1.7655027612552967
                 self.assertAlmostEqual(outputs.iloc[12], n, places=10)
-                self.assertAlmostEqual(outputs.loc[75], n, places=10)
-                self.assertAlmostEqual(mbt.df["n"].iloc[75], n, places=10)
+                self.assertAlmostEqual(outputs.loc["mb-dielectric-0076"], n, places=10)
+                self.assertAlmostEqual(mbt.df[mbt.metadata.target].loc["mb-dielectric-0076"], n, places=10)
             elif ds == "matbench_steels":
                 alloy = "Fe0.682C0.00877Mn0.000202Si0.00967Cr0.134Ni0.00907Mo0.00861V0.00501Nb0.0000597Co0.142Al0.000616"
+                self.assertEqual(alloy, inputs.loc["mb-steels-068"])
                 self.assertEqual(alloy, inputs.iloc[12])
-                self.assertEqual(alloy, inputs.loc[67]) # loc index corresponds to the iloc in the original df
-                self.assertEqual(alloy, mbt.df[COMPOSITION_KEY].iloc[67]) # make sure the index matches the original df
+                self.assertEqual(alloy, mbt.df[COMPOSITION_KEY].loc["mb-steels-068"])
                 yield_strength = 1241.0
                 self.assertAlmostEqual(outputs.iloc[12], yield_strength, places=5)
-                self.assertAlmostEqual(outputs.loc[67], yield_strength, places=5)
-                self.assertAlmostEqual(mbt.df["yield strength"].iloc[67], yield_strength, places=5)
+                self.assertAlmostEqual(outputs.loc["mb-steels-068"], yield_strength, places=5)
+                self.assertAlmostEqual(mbt.df[mbt.metadata.target].loc["mb-steels-068"], yield_strength, places=5)
             elif ds == "matbench_glass":
                 alloy = "Al13VCu6"
                 self.assertEqual(alloy, inputs.iloc[12])
-                self.assertEqual(alloy, inputs.loc[55]) # loc index corresponds to the iloc in the original df
-                self.assertEqual(alloy, mbt.df[COMPOSITION_KEY].iloc[55]) # make sure the index matches the original df
+                self.assertEqual(alloy, inputs.loc["mb-glass-0056"])
+                self.assertEqual(alloy, mbt.df[COMPOSITION_KEY].loc["mb-glass-0056"])
                 gfa = True
                 self.assertEqual(outputs.iloc[12], gfa)
-                self.assertEqual(outputs.loc[55], gfa)
-                self.assertEqual(mbt.df["gfa"].iloc[55], gfa)
+                self.assertEqual(outputs.loc["mb-glass-0056"], gfa)
+                self.assertEqual(mbt.df[mbt.metadata.target].loc["mb-glass-0056"], gfa)
 
     def test_get_task_info(self):
         mbt = MatbenchTask("matbench_steels", autoload=False)

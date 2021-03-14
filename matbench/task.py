@@ -42,6 +42,9 @@ class MatbenchTask(MSONable):
         self.folds_nums = list(range(len(self.folds_keys)))
         self.folds_map = dict(zip(self.folds_nums, self.folds_keys))
 
+        # Alias for ease of use
+        self.folds = self.folds_nums
+
         self.results = RecursiveDotDict({})
         self.is_recorded = {k: False for k in self.folds_nums}
 
