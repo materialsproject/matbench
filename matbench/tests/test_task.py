@@ -82,17 +82,17 @@ class TestMatbenchTask(unittest.TestCase):
                 self.assertEqual(alloy, mat)
                 self.assertEqual(alloy, inputs.iloc[55])
                 yield_strength = 1369.5
-                self.assertAlmostEqual(outputs.iloc[101], yield_strength, places=5)
-                self.assertAlmostEqual(outputs.loc[202], yield_strength, places=5)
+                self.assertAlmostEqual(val, yield_strength, places=5)
+                self.assertAlmostEqual(outputs.iloc[55], yield_strength, places=5)
             elif ds == "matbench_glass":
-                alloy = "Ti19Al31"
-                self.assertEqual(alloy, inputs.iloc[101])
-                self.assertEqual(alloy, inputs.loc[4226]) # loc index corresponds to the iloc in the original df
-                self.assertEqual(alloy, mbt.df[COMPOSITION_KEY].iloc[4226]) # make sure the index matches the original df
-                gfa = True
-                self.assertEqual(outputs.iloc[101], gfa)
-                self.assertEqual(outputs.loc[4226], gfa)
-                self.assertEqual(mbt.df["gfa"].iloc[4226], gfa)
+                alloy = "Ce2Al5Cu43"
+                mat = inputs.loc["mb-glass-0600"]
+                val = outputs.loc["mb-glass-0600"]
+                self.assertEqual(alloy, mat)
+                self.assertEqual(alloy, inputs.iloc[-1])
+                gfa = False
+                self.assertEqual(val, gfa)
+                self.assertEqual(outputs.iloc[-1], gfa)
 
     def test_get_test_data(self):
         for ds in self.test_datasets:
