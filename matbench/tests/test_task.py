@@ -165,7 +165,7 @@ class TestMatbenchTask(unittest.TestCase):
                 mbt.load()
 
                 # test to make sure raw data output is correct, using a random model
-                for fold in mbt.folds:
+                for fold, fold_key in mbt.folds_map.items():
                     _, training_outputs = mbt.get_train_and_val_data(fold, as_type="tuple", shuffle_seed=self.shuffle_seed)
                     if model_is_perfect:
                         test_inputs, test_outputs = mbt.get_test_data(fold, as_type="tuple", include_target=True)
@@ -174,18 +174,20 @@ class TestMatbenchTask(unittest.TestCase):
                         test_inputs = mbt.get_test_data(fold, as_type="tuple",include_target=False)
                         model_response = model_random(training_outputs, test_inputs, response_type=mbt.metadata.task_type, seed=self.shuffle_seed)
                     mbt.record(fold, predictions=model_response, params={"test_param": 1, "other_param": "string", "hyperparam": True})
-
-                    self.assertEqual(len(mbt.results[f"fold_{fold}"].data.values()), len(test_inputs))
-                    self.assertEqual(mbt.results[f"fold_{fold}"].parameters.test_param, 1)
-                    self.assertEqual(mbt.results[f"fold_{fold}"].parameters.other_param, "string")
-                    self.assertEqual(mbt.results[f"fold_{fold}"].parameters.hyperparam, True)
+                    self.assertEqual(len(mbt.results[fold_key].data.values()), len(test_inputs))
+                    self.assertEqual(mbt.results[fold_key].parameters.test_param, 1)
+                    self.assertEqual(mbt.results[fold_key].parameters.other_param, "string")
+                    self.assertEqual(mbt.results[fold_key].parameters.hyperparam, True)
 
                 if ds == "matbench_dielectric":
                     mae = mbt.results.fold_0.scores.mae
+                    val = mbt.results.fold_0.data["mb-dielectric-0008"]
                     if model_is_perfect:
                         self.assertAlmostEqual(mae, 0.0, places=10)
+                        self.assertAlmostEqual(val, 2.0323401126123875, places=10)
                     else:
                         self.assertAlmostEqual(mae, 28.67286016140617, places=10)
+                        self.assertAlmostEqual(val, 13.417101448163713, places=10)
                 elif ds == "matbench_steels":
                     mae = mbt.results.fold_0.scores.mae
                     if model_is_perfect:
