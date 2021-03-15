@@ -285,6 +285,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             self._VERSION_KEY: self.version,
             self._TASKS_KEY: tasksd,
             self._USER_METADATA_KEY: self.user_metadata,
+            self._BENCHMARK_KEY: self.benchmark_name,
             self._DATESTAMP_KEY: datetime.datetime.utcnow().strftime(self._DATESTAMP_FMT)
         }
 
@@ -315,9 +316,9 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         # Check all tasks to make sure their benchmark name is matching in the benchmark and in the tasks
         not_matching_bench = []
-        for t in d[cls._TASKS_KEY]:
-            if t[MatbenchTask._BENCHMARK_KEY] != d[cls._BENCHMARK_KEY]:
-                not_matching_bench.append(t[MatbenchTask._DATASET_KEY])
+        for t_dict in d[cls._TASKS_KEY].values():
+            if t_dict[MatbenchTask._BENCHMARK_KEY] != d[cls._BENCHMARK_KEY]:
+                not_matching_bench.append(t_dict[MatbenchTask._DATASET_KEY])
         if not_matching_bench:
             raise ValueError(f"Tasks {not_matching_bench} do not have a benchmark name matching the benchmark ({d[cls._BENCHMARK_KEY]})!")
 
@@ -329,11 +330,11 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         # Check to see if any tasks have task names not matching their key names in the benchmark
         not_matching_tasks = []
-        for task_name, task_info in d[cls._TASKS_KEY]:
+        for task_name, task_info in d[cls._TASKS_KEY].items():
             key_as_per_task = task_info[MatbenchTask._DATASET_KEY]
             if task_name != key_as_per_task:
                 not_matching_tasks.append((task_name, key_as_per_task))
-        if not not_matching_tasks:
+        if not_matching_tasks:
             raise ValueError(f"Task names in benchmark and task names in tasks not matching: {not_matching_tasks}")
 
 
@@ -342,7 +343,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             #todo: replace with logging
             print(f"Warning! Versions not matching: (data file has version {d[cls._VERSION_KEY]}, this package is {version}).")
 
-        return cls._from_args(benchmark_name=d[cls._BENCHMARK_KEY], tasks_dict=d[cls._TASKS_KEY])
+        return cls._from_args(benchmark_name=d[cls._BENCHMARK_KEY], tasks_dict=d[cls._TASKS_KEY], user_metadata=d[cls._USER_METADATA_KEY])
 
     @classmethod
     def _from_args(cls, benchmark_name, tasks_dict, user_metadata):

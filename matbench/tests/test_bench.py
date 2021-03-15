@@ -33,6 +33,11 @@ class TestMatbenchBenchmark(unittest.TestCase):
         pass
 
     def test_MSONability(self):
+        mb = MatbenchBenchmark.from_file(os.path.join(TEST_DIR, "mb_3_tasks_random.json"))
+        print(mb.is_complete)
+        print(mb.is_valid)
+        print(mb.is_recorded)
+
         pass
 
 
@@ -40,7 +45,7 @@ class TestMatbenchBenchmark(unittest.TestCase):
 
         subset = None  # use all tasks
         # subset = ["matbench_dielectric", "matbench_steels", "matbench_glass"]
-        subset = ["matbench_expt_is_metal"]
+        # subset = ["matbench_expt_is_metal"]
 
         mb = MatbenchBenchmark(benchmark=MBV01_KEY, autoload=False, subset=subset)
 
@@ -87,3 +92,12 @@ class TestHashingDictionaryFunctions(unittest.TestCase):
     def test_hash_dictionary(self):
         self.assertEqual(hash_dictionary(self.d), hash_dictionary(self.d_same))
         self.assertNotEqual(hash_dictionary(self.d), hash_dictionary(self.d_different))
+
+    def test_jsonability(self):
+        import json
+        with open("some_file.json", "w") as f:
+            json.dump({"hex_value": hash_dictionary(self.d)}, f)
+
+        with open("some_file.json", "r") as f:
+            obj = json.load(f)
+            print(obj)
