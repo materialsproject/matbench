@@ -31,14 +31,14 @@ class RecursiveDotDict(dict):
     __setattr__, __getattr__ = __setitem__, __getitem__
 
 
-
 class MSONable2File:
     """
     Adds some very basic to_file and from_file methods common to all msonables in this package.
     """
     def to_file(self, filename):
         with open(filename, "w") as f:
-            json.dump(self.as_dict(), f)
+            d = self.as_dict()
+            json.dump(d, f)
 
     @classmethod
     def from_file(cls, filename):

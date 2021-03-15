@@ -40,6 +40,7 @@ class TestMatbenchBenchmark(unittest.TestCase):
 
         subset = None  # use all tasks
         # subset = ["matbench_dielectric", "matbench_steels", "matbench_glass"]
+        subset = ["matbench_expt_is_metal"]
 
         mb = MatbenchBenchmark(benchmark=MBV01_KEY, autoload=False, subset=subset)
 
@@ -61,12 +62,6 @@ class TestMatbenchBenchmark(unittest.TestCase):
             self.assertTrue(mb.is_recorded)
             self.assertTrue(mb.is_valid)
             self.assertTrue(mb.is_complete)
-
-
-
-
-
-
 
 
 

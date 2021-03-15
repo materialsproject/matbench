@@ -149,6 +149,10 @@ class MatbenchTask(MSONable, MSONable2File):
             # todo: replace with logging critical
             raise ValueError(f"Fold number {fold_number} already recorded! Aborting...")
         else:
+            # avoid problems with json serialization
+            if isinstance(predictions, np.ndarray):
+                predictions = predictions.tolist()
+
             fold_key = self.folds_map[fold_number]
 
             # create map of original df index to prediction, e.g., {ix_of_original_df1: prediction1, ... etc.}
