@@ -9,7 +9,7 @@ from matbench.metadata import mbv01_metadata
 from matbench.tests.util import FULL_TEST
 
 
-class TestLoad(unittest.TestCase):
+class TestDataOps(unittest.TestCase):
 
     def test_downloads_mbv01(self):
 
