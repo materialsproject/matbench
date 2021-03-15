@@ -254,7 +254,6 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         Returns:
             (bool): True if all tasks are valid
         """
-        self.load()
         if self.is_recorded:
             errors = {}
             for t, t_obj in self.tasks_map.items():

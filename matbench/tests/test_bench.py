@@ -16,7 +16,7 @@ class TestMatbenchBenchmark(unittest.TestCase):
 
 
     def test_from_preset(self):
-        for preset, n_tasks in {REG_KEY: 10, CLF_KEY: 3, STRUCTURE_KEY: 9, COMPOSITION_KEY: 4}.items():
+        for preset, n_tasks in {REG_KEY: 10, CLF_KEY: 3, STRUCTURE_KEY: 9, COMPOSITION_KEY: 4, "all": 13}.items():
             mb = MatbenchBenchmark.from_preset(benchmark=MBV01_KEY, preset_name=preset, autoload=False)
             self.assertEqual(len(mb.tasks_map.keys()), n_tasks)
 
@@ -33,7 +33,9 @@ class TestMatbenchBenchmark(unittest.TestCase):
         pass
 
     def test_MSONability(self):
-        mb = MatbenchBenchmark.from_file(os.path.join(TEST_DIR, "mb_3_tasks_random.json"))
+        # mb = MatbenchBenchmark.from_file(os.path.join(TEST_DIR, "mb_3_tasks_random.json"))
+        mb = MatbenchBenchmark.from_file(os.path.join(TEST_DIR, "mb_all_tasks_random.json"))
+
         print(mb.is_complete)
         print(mb.is_valid)
         print(mb.is_recorded)
