@@ -350,7 +350,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
 
         # Warn if versions are not matching
-        if d[cls._VERSION_KEY] != version:
+        if d[cls._VERSION_KEY] != VERSION:
             #todo: replace with logging
             print(f"Warning! Versions not matching: (data file has version {d[cls._VERSION_KEY]}, this package is {VERSION}).")
 
