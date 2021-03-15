@@ -1,5 +1,5 @@
 [run]
-source=automatminer
+source=matbench
 
 [report]
 exclude_lines =
@@ -21,7 +21,7 @@ omit =
     *__init__*
     *.egg-info*
     *docs*
-    *docs_rst*
+    *docs_src*
     tasks.py
     setup.py
     *.git*
