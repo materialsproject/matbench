@@ -94,12 +94,3 @@ class TestHashingDictionaryFunctions(unittest.TestCase):
     def test_hash_dictionary(self):
         self.assertEqual(hash_dictionary(self.d), hash_dictionary(self.d_same))
         self.assertNotEqual(hash_dictionary(self.d), hash_dictionary(self.d_different))
-
-    def test_jsonability(self):
-        import json
-        with open("some_file.json", "w") as f:
-            json.dump({"hex_value": hash_dictionary(self.d)}, f)
-
-        with open("some_file.json", "r") as f:
-            obj = json.load(f)
-            print(obj)
