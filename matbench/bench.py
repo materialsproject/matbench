@@ -293,7 +293,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         d = {
             "@module": self.__class__.__module__,
             "@class": self.__class__.__name__,
-            self._VERSION_KEY: self.version,
+            self._VERSION_KEY: VERSION,
             self._TASKS_KEY: tasksd,
             self._USER_METADATA_KEY: self.user_metadata,
             self._BENCHMARK_KEY: self.benchmark_name,
