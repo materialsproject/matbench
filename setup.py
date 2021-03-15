@@ -14,7 +14,7 @@ if __name__ == "__main__":
         description='a machine learning benchmark for materials science',
         long_description="A machine learning benchmark for materials science. "
                          "https://github.com/hackingmaterials/matbench",
-        url='https://github.com/hackingmaterials/automatminer',
+        url='https://github.com/hackingmaterials/matbench',
         author=['Alex Dunn', 'Anubhav Jain'],
         author_email='ardunn@lbl.gov',
         license='modified BSD',
@@ -25,14 +25,6 @@ if __name__ == "__main__":
         zip_safe=False,
         install_requires=requirements,
         extras_require={},
-        classifiers=['Programming Language :: Python :: 3.6',
-                     'Development Status :: 4 - Beta',
-                     'Intended Audience :: Science/Research',
-                     'Intended Audience :: System Administrators',
-                     'Intended Audience :: Information Technology',
-                     'Operating System :: OS Independent',
-                     'Topic :: Other/Nonlisted Topic',
-                     'Topic :: Scientific/Engineering'],
         test_suite='matbench',
         tests_require='tests',
         include_package_data=True

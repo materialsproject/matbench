@@ -1,3 +1,3 @@
-from matbench.version import version
+from matbench.constants import VERSION
 
-__version__ = version
+__version__ = VERSION

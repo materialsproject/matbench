@@ -1,5 +1,6 @@
 import json
 
+
 class RecursiveDotDict(dict):
     """
     Adapted from user Curt Hagenlocher from

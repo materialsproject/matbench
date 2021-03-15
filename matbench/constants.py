@@ -11,6 +11,7 @@ from sklearn.metrics import \
     balanced_accuracy_score, \
     f1_score
 
+VERSION = "0.1.0"
 
 # paths for metadata and validation splits
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))

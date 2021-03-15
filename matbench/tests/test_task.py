@@ -227,7 +227,7 @@ class TestMatbenchTask(unittest.TestCase):
 
 
             # Test ingestion from ground truth json files
-            truth_fname = f"msonability_{ds}.json"
+            truth_fname = os.path.join(TEST_DIR, f"msonability_{ds}.json")
 
             with open(truth_fname, "r") as f:
                 truth = json.load(f)
@@ -294,13 +294,13 @@ class TestMatbenchTask(unittest.TestCase):
         MatbenchTask("matbench_steels", autoload=True)
 
     def test_scores(self):
-        mbt = MatbenchTask.from_file("scores_matbench_dielectric_perfect.json")
+        mbt = MatbenchTask.from_file(os.path.join(TEST_DIR, "scores_matbench_dielectric_perfect.json"))
 
         for metric in REG_METRICS:
             for fdm in FOLD_DIST_METRICS:
                 self.assertAlmostEqual(0.0, mbt.scores[metric][fdm], places=10)
 
-        mbt = MatbenchTask.from_file("scores_matbench_glass_perfect.json")
+        mbt = MatbenchTask.from_file(os.path.join(TEST_DIR, "scores_matbench_glass_perfect.json"))
 
         for metric in CLF_METRICS:
             for fdm in FOLD_DIST_METRICS:
@@ -309,8 +309,8 @@ class TestMatbenchTask(unittest.TestCase):
 
     def test_usage(self):
         # access some common attrs
-        mbt_clf = MatbenchTask.from_file("scores_matbench_dielectric_perfect.json")
-        mbt_reg = MatbenchTask.from_file("scores_matbench_glass_perfect.json")
+        mbt_clf = MatbenchTask.from_file(os.path.join(TEST_DIR, "scores_matbench_dielectric_perfect.json"))
+        mbt_reg = MatbenchTask.from_file(os.path.join(TEST_DIR, "scores_matbench_glass_perfect.json"))
 
         for mbt in (mbt_clf, mbt_reg):
             for index, datum in mbt.results.fold_2.data.items():

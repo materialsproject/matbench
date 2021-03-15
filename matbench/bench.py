@@ -8,10 +8,9 @@ import pandas as pd
 from monty.json import MSONable
 
 from matbench.metadata import mbv01_metadata
-from matbench.constants import STRUCTURE_KEY, COMPOSITION_KEY, REG_KEY, CLF_KEY, MBV01_KEY
+from matbench.constants import STRUCTURE_KEY, COMPOSITION_KEY, REG_KEY, CLF_KEY, MBV01_KEY, VERSION
 from matbench.util import RecursiveDotDict, MSONable2File
 from matbench.task import MatbenchTask
-from matbench.version import version
 
 '''
 Core functions for benchmarking.
@@ -66,7 +65,7 @@ mb.matbench_dielectric.results.fold0.scores
 
 
 # access the individual scores of a fold
-mb.tasks.matbench_steels.scores.fold0
+mb.matbench_steels.scores.fold0
 
 '''
 
@@ -103,9 +102,6 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         for ds in available_tasks:
             self.tasks_map[ds] = MatbenchTask(ds, autoload=autoload, benchmark=self.benchmark_name)
-
-        self.version = version
-
 
     def __getattr__(self, item):
         """
@@ -180,7 +176,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         valid = self.is_valid
 
         s = ""
-        s += f"\nMatbench package {version} running benchmark '{self.benchmark_name}'"
+        s += f"\nMatbench package {VERSION} running benchmark '{self.benchmark_name}'"
         s += f"\n\tis complete: {complete}"
         s += f"\n\tis recorded: {recorded}"
         s += f"\n\tis valid: {valid}"
@@ -356,7 +352,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         # Warn if versions are not matching
         if d[cls._VERSION_KEY] != version:
             #todo: replace with logging
-            print(f"Warning! Versions not matching: (data file has version {d[cls._VERSION_KEY]}, this package is {version}).")
+            print(f"Warning! Versions not matching: (data file has version {d[cls._VERSION_KEY]}, this package is {VERSION}).")
 
         return cls._from_args(benchmark_name=d[cls._BENCHMARK_KEY], tasks_dict=d[cls._TASKS_KEY], user_metadata=d[cls._USER_METADATA_KEY])
 

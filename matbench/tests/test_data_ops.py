@@ -35,10 +35,7 @@ class TestDataOps(unittest.TestCase):
                 np.float_, np.float32, np.float64, float]
             self.assertIn(df[metadata["target"]].dtypes, test_types)
 
-
-
     def test_score_array(self):
-
         # test for regression
         true = [1, 2, 3, 4]
         test = [1, 3, 3, 4]
