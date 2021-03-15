@@ -6,7 +6,7 @@ matbench is an ImageNet for materials science; a set of 13 curated machine learn
 
 
 | Tests  |   Release |
-|:----------:||:------:|
+|:----------:|:------:|
 | ![example workflow](https://github.com/hackingmaterials/matbench/actions/workflows/python-package.yml/badge.svg) | coming soon! |
 
 - **Website (including documentation)**: <https://hackingmaterials.lbl.gov/matbench>
