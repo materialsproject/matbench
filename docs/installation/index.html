@@ -61,6 +61,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#via-github" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -186,7 +191,19 @@
 
   <li class="md-nav__item">
     <a href=".." class="md-nav__link">
-      MatBench v0.1 - Machine Learning Benchmark for Materials Science
+      Matbench v0.1 - Machine Learning Benchmark for Materials Science
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../full_benchmark_data/" class="md-nav__link">
+      Full benchmark data
     </a>
   </li>
 
@@ -203,10 +220,44 @@
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Installation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
     <a href="./" class="md-nav__link md-nav__link--active">
       Installation
     </a>
     
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#via-github" class="md-nav__link">
+    Via GitHub
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#via-pypi" class="md-nav__link">
+    Via PyPi
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
     
@@ -216,20 +267,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../leaderboard/" class="md-nav__link">
-      Leaderboard
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../matbench/" class="md-nav__link">
-      Matbench
+    <a href="../running_and_submitting_benchmarks/" class="md-nav__link">
+      Running and submitting benchmarks
     </a>
   </li>
 
@@ -240,6 +279,41 @@
                 </div>
               </div>
             
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#via-github" class="md-nav__link">
+    Via GitHub
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#via-pypi" class="md-nav__link">
+    Via PyPi
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
             
           
           <div class="md-content">
@@ -253,7 +327,19 @@
                 
                   <h1>Installation</h1>
                 
-                
+                <h2 id="via-github">Via GitHub</h2>
+<p>Clone the repository with:
+<div class="highlight"><pre><span></span><code>git clone https://github.com/hackingmaterials/matbench
+</code></pre></div></p>
+<p>To install for the current user:
+<div class="highlight"><pre><span></span><code>pip install --user ./matbench
+</code></pre></div></p>
+<p>For development, install with</p>
+<div class="highlight"><pre><span></span><code>cd matbench
+pip install -e . -r requirements.txt
+</code></pre></div>
+<h2 id="via-pypi">Via PyPi</h2>
+<p>A matbench PyPi package is currently in development. Stay tuned for announcements!</p>
                 
               
               
@@ -272,7 +358,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href=".." class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../full_benchmark_data/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -281,19 +367,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                MatBench v0.1 - Machine Learning Benchmark for Materials Science
+                Full benchmark data
               </div>
             </div>
           </a>
         
         
-          <a href="../leaderboard/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../running_and_submitting_benchmarks/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Leaderboard
+                Running and submitting benchmarks
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

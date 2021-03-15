@@ -91,7 +91,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              MatBench v0.1 - Machine Learning Benchmark for Materials Science
+              Matbench v0.1 - Machine Learning Benchmark for Materials Science
             
           </span>
         </div>
@@ -199,12 +199,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        MatBench v0.1 - Machine Learning Benchmark for Materials Science
+        Matbench v0.1 - Machine Learning Benchmark for Materials Science
         <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="." class="md-nav__link md-nav__link--active">
-      MatBench v0.1 - Machine Learning Benchmark for Materials Science
+      Matbench v0.1 - Machine Learning Benchmark for Materials Science
     </a>
     
       
@@ -221,6 +221,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#leaderboard-general-purpose-algorithms" class="md-nav__link">
+    Leaderboard - General Purpose Algorithms
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     Overview
   </a>
@@ -229,10 +236,10 @@
       
         <li class="md-nav__item">
   <a href="#what-can-matbench-offer" class="md-nav__link">
-    What can MatBench offer?
+    What can Matbench offer?
   </a>
   
-    <nav class="md-nav" aria-label="What can MatBench offer?">
+    <nav class="md-nav" aria-label="What can Matbench offer?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -244,7 +251,7 @@
         
           <li class="md-nav__item">
   <a href="#the-matbench-python-package" class="md-nav__link">
-    The MatBench Python package
+    The Matbench Python package
   </a>
   
 </li>
@@ -256,21 +263,21 @@
       
         <li class="md-nav__item">
   <a href="#summary-of-matbenchs-tasks" class="md-nav__link">
-    Summary of MatBench's Tasks
+    Summary of Matbench's Tasks
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#all-matbench-datasets" class="md-nav__link">
-    All MatBench Datasets
+    All Matbench Datasets
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#citing-matbench" class="md-nav__link">
-    Citing MatBench
+    Citing Matbench
   </a>
   
 </li>
@@ -279,6 +286,18 @@
   
 </nav>
     
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="full_benchmark_data/" class="md-nav__link">
+      Full benchmark data
+    </a>
   </li>
 
     
@@ -300,20 +319,8 @@
 
 
   <li class="md-nav__item">
-    <a href="leaderboard/" class="md-nav__link">
-      Leaderboard
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="matbench/" class="md-nav__link">
-      Matbench
+    <a href="running_and_submitting_benchmarks/" class="md-nav__link">
+      Running and submitting benchmarks
     </a>
   </li>
 
@@ -342,6 +349,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#leaderboard-general-purpose-algorithms" class="md-nav__link">
+    Leaderboard - General Purpose Algorithms
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     Overview
   </a>
@@ -350,10 +364,10 @@
       
         <li class="md-nav__item">
   <a href="#what-can-matbench-offer" class="md-nav__link">
-    What can MatBench offer?
+    What can Matbench offer?
   </a>
   
-    <nav class="md-nav" aria-label="What can MatBench offer?">
+    <nav class="md-nav" aria-label="What can Matbench offer?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -365,7 +379,7 @@
         
           <li class="md-nav__item">
   <a href="#the-matbench-python-package" class="md-nav__link">
-    The MatBench Python package
+    The Matbench Python package
   </a>
   
 </li>
@@ -377,21 +391,21 @@
       
         <li class="md-nav__item">
   <a href="#summary-of-matbenchs-tasks" class="md-nav__link">
-    Summary of MatBench's Tasks
+    Summary of Matbench's Tasks
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#all-matbench-datasets" class="md-nav__link">
-    All MatBench Datasets
+    All Matbench Datasets
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#citing-matbench" class="md-nav__link">
-    Citing MatBench
+    Citing Matbench
   </a>
   
 </li>
@@ -413,42 +427,135 @@
                   </a>
                 
                 
-                <h1 id="matbench-v01-machine-learning-benchmark-for-materials-science">MatBench v0.1 - Machine Learning Benchmark for Materials Science</h1>
+                <h1 id="matbench-v01-machine-learning-benchmark-for-materials-science">Matbench v0.1 - Machine Learning Benchmark for Materials Science</h1>
+<h2 id="leaderboard-general-purpose-algorithms">Leaderboard - General Purpose Algorithms</h2>
+<table>
+<thead>
+<tr>
+<th>task name</th>
+<th>verified top score (MAE or ROCAUC)</th>
+<th>algorithm name, config</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>matbench_dielectric</code></td>
+<td>0.299 (unitless)</td>
+<td>Automatminer express v1.0.3.2019111</td>
+<td></td>
+</tr>
+<tr>
+<td><code>matbench_expt_gap</code></td>
+<td>0.416 eV</td>
+<td>Automatminer express v1.0.3.2019111</td>
+<td></td>
+</tr>
+<tr>
+<td><code>matbench_expt_is_metal</code></td>
+<td>0.92</td>
+<td>Automatminer express v1.0.3.2019111</td>
+<td></td>
+</tr>
+<tr>
+<td><code>matbench_glass</code></td>
+<td>0.861</td>
+<td>Automatminer express v1.0.3.2019111</td>
+<td></td>
+</tr>
+<tr>
+<td><code>matbench_jdft2d</code></td>
+<td>38.6 meV/atom</td>
+<td>Automatminer express v1.0.3.2019111</td>
+<td></td>
+</tr>
+<tr>
+<td><code>matbench_log_gvrh</code></td>
+<td>0.0849 log(GPa)</td>
+<td>Automatminer express v1.0.3.2019111</td>
+<td></td>
+</tr>
+<tr>
+<td><code>matbench_log_kvrh</code></td>
+<td>0.0679 log(GPa)</td>
+<td>Automatminer express v1.0.3.2019111</td>
+<td></td>
+</tr>
+<tr>
+<td><code>matbench_mp_e_form</code></td>
+<td>0.0327 eV/atom</td>
+<td>MEGNet v0.2.2</td>
+<td>structure only</td>
+</tr>
+<tr>
+<td><code>matbench_mp_gap</code></td>
+<td>0.228 eV</td>
+<td>CGCNN (2019)</td>
+<td>structure only</td>
+</tr>
+<tr>
+<td><code>matbench_mp_is_metal</code></td>
+<td>0.977</td>
+<td>MEGNet v0.2.2</td>
+<td>structure only</td>
+</tr>
+<tr>
+<td><code>matbench_perovskites</code></td>
+<td>0.0417</td>
+<td>MEGNet v0.2.2</td>
+<td>structure only</td>
+</tr>
+<tr>
+<td><code>matbench_phonons</code></td>
+<td>36.9 cm^-1</td>
+<td>MEGNet v0.2.2</td>
+<td>structure only</td>
+</tr>
+<tr>
+<td><code>matbench_steels</code></td>
+<td>95.2 MPa</td>
+<td>Automatminer express v1.0.3.2019111</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<iframe src="static/graph.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
 <h2 id="overview">Overview</h2>
-<p><a href="https://doi.org/10.1038/s41524-020-00406-3">MatBench</a> is an <a href="http://www.image-net.org">ImageNet</a> for <strong>materials science</strong>; a
+<p><a href="https://doi.org/10.1038/s41524-020-00406-3">Matbench</a> is an <a href="http://www.image-net.org">ImageNet</a> for <strong>materials science</strong>; a
 <strong>curated set of 13 supervised, pre-cleaned, ready-to-use ML tasks</strong> for benchmarking and fair comparison. The tasks span a wide domain of
 inorganic materials science applications including electronic, thermodynamic, mechanical, and thermal properties among crystals, 2D materials,
 disordered metals, and more.  </p>
-<p><strong>The <a href="https://github.com/hackingmaterials/matbench">MatBench python package</a> provides everything needed to use MatBench with your ML algorithm in ~10 lines of code or less.</strong></p>
+<p><strong>The <a href="https://github.com/hackingmaterials/matbench">Matbench python package</a> provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.</strong></p>
 <p><img alt="infographic" src="static/infographic_matbench.png" /></p>
-<h2 id="what-can-matbench-offer">What can MatBench offer?</h2>
+<h2 id="what-can-matbench-offer">What can Matbench offer?</h2>
 <h3 id="this-website">This website</h3>
 <ul>
 <li><strong>Leaderboard of results for state-of-the-art materials ML algorithms on standardized test problems</strong></li>
-<li>Interactively explore and download the tasks on <a href="https://ml.materialsproject.org/browse">MPContribs-ML</a>, a platform hosted by <a href="https://materialsproject.org">The Materials Project</a>. See <a href="#all-matbench-datasets">All MatBench Datasets</a> for links to each dataset.</li>
+<li>Interactively explore and download the tasks on <a href="https://ml.materialsproject.org/browse">MPContribs-ML</a>, a platform hosted by <a href="https://materialsproject.org">The Materials Project</a>. See <a href="#all-matbench-datasets">All Matbench Datasets</a> for links to each dataset.</li>
 <li><strong>Each and every result is backed by a peer-reviewed publication and a jupyter notebook</strong> (similar to Papers With Code) - i.e., how were these results were obtained?</li>
-<li>Glossary of all algorithms' results on the MatBench problems</li>
+<li>Glossary of all algorithms' results on the Matbench problems</li>
 </ul>
-<h3 id="the-matbench-python-package">The MatBench Python package</h3>
+<h3 id="the-matbench-python-package">The Matbench Python package</h3>
 <ul>
 <li>Probe ML algorithms strengths and weaknesses across a wide range of materials property prediction tasks</li>
 <li>Run a full benchmark in ~10 lines of code</li>
-<li>Submit results as a PR to the <a href="https://github.com/hackingmaterials/matbench">MatBench repo</a> to compare with other algorithms and appear on the leaderboard</li>
+<li>Submit results as a PR to the <a href="https://github.com/hackingmaterials/matbench">Matbench repo</a> to compare with other algorithms and appear on the leaderboard</li>
 <li>Benchmark both <strong>general purpose</strong> ML models as well as algorithms specialized for particular domains</li>
 </ul>
-<h2 id="summary-of-matbenchs-tasks">Summary of MatBench's Tasks</h2>
-<p>MatBench's 13 tasks can be broken down into various categories; it includes both the small - less than 10,000 samples - datasets that characterize
+<h2 id="summary-of-matbenchs-tasks">Summary of Matbench's Tasks</h2>
+<p>Matbench's 13 tasks can be broken down into various categories; it includes both the small - less than 10,000 samples - datasets that characterize
 experimental materials data as well as larger datasets from computer modelling methods like density functional theory (DFT).</p>
 <p><img alt="breakdown" src="static/datasets_breakdown_inverted.png" /></p>
-<p>Each task in MatBench consists of a three things:</p>
+<p>Each task in Matbench consists of a three things:</p>
 <ol>
 <li><strong>A set of inputs:</strong> crystal structures or chemical compositions.</li>
 <li><strong>A set of outputs:</strong> target properties, such as formation energy.</li>
 <li><strong>A test procedure:</strong> a way to get a score for your algorithm</li>
 </ol>
-<p>The MatBench Python package provides functions for getting the first two (packaged together for each task as a <em>dataset</em>) as well as running 
-the test procedure. See the "How to use MatBench" documentation page to get started.</p>
-<h2 id="all-matbench-datasets">All MatBench Datasets</h2>
+<p>The Matbench Python package provides functions for getting the first two (packaged together for each task as a <em>dataset</em>) as well as running 
+the test procedure. See the "How to use Matbench" documentation page to get started.</p>
+<h2 id="all-matbench-datasets">All Matbench Datasets</h2>
 <table>
 <thead>
 <tr>
@@ -553,16 +660,16 @@ the test procedure. See the "How to use MatBench" documentation page to get star
 </tr>
 </tbody>
 </table>
-<h2 id="citing-matbench">Citing MatBench</h2>
+<h2 id="citing-matbench">Citing Matbench</h2>
 <p>You can find details and results on the benchmark in our paper <a href="https://doi.org/10.1038/s41524-020-00406-3">Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference </a>. 
 Please consider citing this paper if you use Matbench v0.1 for benchmarking, comparison, or prototyping.</p>
-<p>You can cite MatBench using this reference:</p>
-<pre><code>Dunn, A., Wang, Q., Ganose, A., Dopp, D., Jain, A. 
+<p>You can cite Matbench using this reference:</p>
+<div class="highlight"><pre><span></span><code>Dunn, A., Wang, Q., Ganose, A., Dopp, D., Jain, A. 
 Benchmarking Materials Property Prediction Methods: 
 The Matbench Test Set and Automatminer Reference Algorithm. 
 npj Computational Materials 6, 138 (2020). 
 https://doi.org/10.1038/s41524-020-00406-3
-</code></pre>
+</code></pre></div>
                 
               
               
@@ -582,13 +689,13 @@ https://doi.org/10.1038/s41524-020-00406-3
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
         
-          <a href="installation/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="full_benchmark_data/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Installation
+                Full benchmark data
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
