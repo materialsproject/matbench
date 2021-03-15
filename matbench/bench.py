@@ -189,7 +189,6 @@ class MatbenchBenchmark(MSONable, MSONable2File):
     def get_info(self):
         print(self.info)
 
-
     def add_metadata(self, metadata):
         """
         Add freeform information about this run to the object (and subsequent json),

@@ -1,19 +1,26 @@
 import os
 import unittest
+import copy
+import json
 
 import numpy as np
 
 from matbench.constants import REG_KEY, CLF_KEY, STRUCTURE_KEY, COMPOSITION_KEY, MBV01_KEY
 from matbench.bench import MatbenchBenchmark, hash_dictionary, immutify_dictionary
+from matbench.task import MatbenchTask
 from matbench.tests.util import model_random, TEST_DIR
 
+
+
+FULL_TEST = os.environ.get("MB_FULL_TESTS", False)
 
 
 class TestMatbenchBenchmark(unittest.TestCase):
 
     def setUp(self) -> None:
-        pass
-
+        self.msonability_tmp_path = os.path.join(TEST_DIR, "msonability_test_augmented.json")
+        self.static_full_bench_json = os.path.join(TEST_DIR, "mb_all_tasks_random.json")
+        self.static_3_bench_json = os.path.join(TEST_DIR, "mb_3_tasks_random.json")
 
     def test_from_preset(self):
         for preset, n_tasks in {REG_KEY: 10, CLF_KEY: 3, STRUCTURE_KEY: 9, COMPOSITION_KEY: 4, "all": 13}.items():
@@ -21,33 +28,81 @@ class TestMatbenchBenchmark(unittest.TestCase):
             self.assertEqual(len(mb.tasks_map.keys()), n_tasks)
 
     def test_scores(self):
-        pass
+        mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
 
     def test_info(self):
-        pass
+        mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
 
     def test_add_metadata(self):
-        pass
+        mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
 
     def test_complete_valid_recorded(self):
-        pass
+        mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
 
     def test_MSONability(self):
-        # mb = MatbenchBenchmark.from_file(os.path.join(TEST_DIR, "mb_3_tasks_random.json"))
-        mb = MatbenchBenchmark.from_file(os.path.join(TEST_DIR, "mb_all_tasks_random.json"))
+        # Test serialization
+        self.generate_benchmark_json_files(write=False, full_set=FULL_TEST)
 
-        print(mb.is_complete)
-        print(mb.is_valid)
-        print(mb.is_recorded)
+        # Test deserialization
+        mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
+        self.assertTrue(mb.is_complete)
+        self.assertTrue(mb.is_valid)
+        self.assertTrue(mb.is_recorded)
 
-        pass
+        # Ensure object can be added to and re/de-serialized without issue
+        example_metadata = {"some": "metadata"}
+        mb.add_metadata(example_metadata)
+        mb.to_file(self.msonability_tmp_path)
+        mb = MatbenchBenchmark.from_file(self.msonability_tmp_path)
+        self.assertTrue(mb.is_complete)
+        self.assertTrue(mb.is_valid)
+        self.assertTrue(mb.is_recorded)
+        self.assertDictEqual(example_metadata, mb.user_metadata)
 
+        with open(self.static_full_bench_json, "r") as f:
+            d_truth = json.load(f)
 
-    def test_usage(self):
+        # Test if hash is wrong (hash error should occur)
+        d_test = copy.deepcopy(d_truth)
+        d_test[MatbenchBenchmark._HASH_KEY] = "not a real hash"
+        with self.assertRaises(ValueError):
+            MatbenchBenchmark.from_dict(d_test)
 
-        subset = None  # use all tasks
-        # subset = ["matbench_dielectric", "matbench_steels", "matbench_glass"]
-        # subset = ["matbench_expt_is_metal"]
+        # Test if datetime is wrong (hash error should occur)
+        d_test = copy.deepcopy(d_truth)
+        d_test[MatbenchBenchmark._DATESTAMP_KEY] = "2021.02.02 06:33.21"
+        with self.assertRaises(ValueError):
+            MatbenchBenchmark.from_dict(d_test)
+
+        # Test if one or more task names is wrong
+        d_test = copy.deepcopy(d_truth)
+        d_test[MatbenchBenchmark._TASKS_KEY]["matbench_dielectric"][MatbenchTask._DATASET_KEY] = "matbench_expt_gap"
+        d_test[MatbenchBenchmark._TASKS_KEY]["matbench_expt_gap"][MatbenchTask._DATASET_KEY] = "matbench_dielectric"
+        with self.assertRaises(ValueError):
+            MatbenchBenchmark.from_dict(d_test)
+
+        # Test if one or more benchmark names is wrong
+        d_test = copy.deepcopy(d_truth)
+        d_test[MatbenchBenchmark._TASKS_KEY]["matbench_dielectric"][MatbenchTask._BENCHMARK_KEY] = "matbench_v0.2"
+        with self.assertRaises(ValueError):
+            MatbenchBenchmark.from_dict(d_test)
+
+    def generate_benchmark_json_files(self, write=True, full_set=False):
+        """
+        Generate new benchmark files from a random model.
+
+        Args:
+            write:
+            full_set:
+
+        Returns:
+
+        """
+
+        if full_set:
+            subset = None  # use all tasks
+        else:
+            subset = ["matbench_dielectric", "matbench_steels", "matbench_glass"]  # to generate 3 task file
 
         mb = MatbenchBenchmark(benchmark=MBV01_KEY, autoload=False, subset=subset)
 
@@ -60,12 +115,14 @@ class TestMatbenchBenchmark(unittest.TestCase):
                 task.record(fold, model_response, params={"some_param": 1, "other_param": 12.39348})
 
         if subset:
-            mb.to_file(os.path.join(TEST_DIR, "mb_3_tasks_random.json"))
+            if write:
+                mb.to_file(self.static_3_bench_json)
             self.assertTrue(mb.is_recorded)
             self.assertTrue(mb.is_valid)
             self.assertFalse(mb.is_complete)
         else:
-            mb.to_file(os.path.join(TEST_DIR, "mb_all_tasks_random.json"))
+            if write:
+                mb.to_file(self.static_full_bench_json)
             self.assertTrue(mb.is_recorded)
             self.assertTrue(mb.is_valid)
             self.assertTrue(mb.is_complete)
