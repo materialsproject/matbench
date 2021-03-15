@@ -31,6 +31,8 @@ markdown_extensions:
 #  - footnotes
 #  - toc:
 #      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
 
 repo_url: https://github.com/hackingmaterials/matbench
 #docs_dir: src
