@@ -78,7 +78,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
     _USER_METADATA_KEY = "user_metadata"
     _TASKS_KEY = "tasks"
     _DATESTAMP_KEY = "datestamp"
-    _DATESTAMP_FMT = "yyyy.MM.dd HH:mm:ss"
+    _DATESTAMP_FMT = "%Y.%m.%d %H:%M.%S"
     _HASH_KEY = "hash"
 
     def __init__(self, benchmark=MBV01_KEY, autoload=False, subset=None):
