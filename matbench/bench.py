@@ -1,5 +1,8 @@
 import datetime
+import json
 
+import numpy as np
+import pandas as pd
 from monty.json import MSONable
 
 from matbench.metadata import mbv01_metadata
@@ -67,11 +70,12 @@ mb.tasks.matbench_steels.scores.fold0
 
 class MatbenchBenchmark(MSONable):
 
-    _version_key = "version"
-    _user_metadata_key = "user_metadata"
-    _tasks_key = "tasks"
-    _datestamp_key = "datestamp"
-    _datestamp_fmt = "yyyy.MM.dd HH:mm:ss"
+    _VERSION_KEY = "version"
+    _USER_METADATA_KEY = "user_metadata"
+    _TASKS_KEY = "tasks"
+    _DATESTAMP_KEY = "datestamp"
+    _DATESTAMP_FMT = "yyyy.MM.dd HH:mm:ss"
+    _HASH_KEY = "hash"
 
     def __init__(self, benchmark=MBV01_KEY, autoload=False, subset=None):
 
@@ -217,19 +221,67 @@ class MatbenchBenchmark(MSONable):
         d = {
             "@module": self.__class__.__module__,
             "@class": self.__class__.__name__,
-            self._version_key: "something",
-            self._tasks_key: tasksd,
-            self._user_metadata_key: self.user_metadata,
-            self._datestamp_key: datetime.datetime.utcnow().strftime()
+            self._VERSION_KEY: "something",
+            self._TASKS_KEY: tasksd,
+            self._USER_METADATA_KEY: self.user_metadata,
+            self._DATESTAMP_KEY: datetime.datetime.utcnow().strftime(self._DATESTAMP_FMT)
         }
+
+        # to obtain a hash for this benchmark, immutify the dictionary and then stringify it
+        d_hashable = immutify_dictionary(d)
+        s_hashable = json.dumps(d_hashable).encode("utf-8")
+        m = hashlib.sha256(s_hashable).hexdigest()
+        d[self._HASH_KEY] = m
         return d
 
     @classmethod
     def from_dict(cls, d):
-        required_keys = [self._version_key, self._tasks_key, self._user_metadata_key, ]
+        required_keys = [cls._VERSION_KEY, cls._TASKS_KEY, cls._USER_METADATA_KEY, cls._DATESTAMP_KEY, cls._HASH_KEY]
+
+
+
+def immutify_dictionary(d):
+    d_new = {}
+    for k, v in d.items():
+        if isinstance(v, (np.ndarray, pd.Series)):
+            d_new[k] = tuple(v.tolist())
+        elif isinstance(v, list):
+            d_new[k] = tuple(v)
+        elif isinstance(v, dict):
+            d_new[k] = immutify_dictionary(v)
+        else:
+            # convert numpy types to native
+            if hasattr(v, "dtype"):
+                d_new[k] = v.item()
+            else:
+                d_new[k] = v
+    # dictionaries are ordered in python 3.6+
+    return dict(sorted(d_new.items(), key=lambda item: item[0]))
+
+
+
+if __name__ == "__main__":
+    import hashlib
+
+    d = {"q": [1,2,3], "b": {"c": "12", "d": 15, "e": np.asarray([4,5,6]), "f": {"z": 12, "a": [7, 8]}}, "c": 400}
+    d_same = {"q": [1,2,3], "b": {"c": "12", "d": 15, "e": np.asarray([4,5,6]), "f": {"a": [7, 8], "z": 12}}, "c": 400}
+    d_different = {"q": [1,2,3], "b": {"c": "12", "d": 15, "e": np.asarray([4,5,6]), "f": {"z": 12, "a": [7, 9]}}, "c": 400}
 
 
 
 
+    import pprint
+
+    # pprint.pprint(d_immut)
+
+    for d in (d, d_same, d_different):
+        d_immut = immutify_dictionary(d)
+        pprint.pprint(d_immut)
+        js = json.dumps(d_immut).encode("utf-8")
+        print(hashlib.sha256(js).hexdigest())
 
 
+
+
+    # print(hashlib.sha256(frozenset(d_immut)))
+    # print(hash(frozenset(d_immut)))
