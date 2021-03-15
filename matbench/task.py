@@ -49,7 +49,17 @@ class MatbenchTask(MSONable, MSONable2File):
         self.folds = self.folds_nums
 
         self.results = RecursiveDotDict({})
-        self.is_recorded = {k: False for k in self.folds_nums}
+        # self.is_recorded = {k: False for k in self.folds_nums}
+
+    @property
+    def is_recorded(self):
+        is_recorded = {}
+        for fnum, fkey in self.folds_map.items():
+            if self.results[fkey][self._DATA_KEY]:
+                is_recorded[fnum] = True
+            else:
+                is_recorded[fnum] = False
+        return is_recorded
 
     def load(self):
         if self.df is None:
@@ -270,7 +280,6 @@ class MatbenchTask(MSONable, MSONable2File):
     def _from_args(cls, dataset_name, benchmark_name, results_dict):
         obj = cls(dataset_name, autoload=False, benchmark=benchmark_name)
         obj.results = RecursiveDotDict(results_dict)
-        obj.is_recorded = {i: True for i in obj.folds_nums}
         obj.validate()
         return obj
 

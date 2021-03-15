@@ -8,11 +8,8 @@ import numpy as np
 from matbench.constants import REG_KEY, CLF_KEY, STRUCTURE_KEY, COMPOSITION_KEY, MBV01_KEY
 from matbench.bench import MatbenchBenchmark, hash_dictionary, immutify_dictionary
 from matbench.task import MatbenchTask
-from matbench.tests.util import model_random, TEST_DIR
+from matbench.tests.util import model_random, TEST_DIR, FULL_TEST
 
-
-
-FULL_TEST = os.environ.get("MB_FULL_TESTS", False)
 
 
 class TestMatbenchBenchmark(unittest.TestCase):
@@ -22,6 +19,11 @@ class TestMatbenchBenchmark(unittest.TestCase):
         self.static_full_bench_json = os.path.join(TEST_DIR, "mb_all_tasks_random.json")
         self.static_3_bench_json = os.path.join(TEST_DIR, "mb_3_tasks_random.json")
 
+    def tearDown(self) -> None:
+        for f in [self.msonability_tmp_path]:
+            if os.path.exists(f):
+                os.remove(f)
+
     def test_from_preset(self):
         for preset, n_tasks in {REG_KEY: 10, CLF_KEY: 3, STRUCTURE_KEY: 9, COMPOSITION_KEY: 4, "all": 13}.items():
             mb = MatbenchBenchmark.from_preset(benchmark=MBV01_KEY, preset_name=preset, autoload=False)
@@ -29,15 +31,48 @@ class TestMatbenchBenchmark(unittest.TestCase):
 
     def test_scores(self):
         mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
+        scores = mb.scores
+        self.assertAlmostEqual(14.169387576348942, scores.matbench_dielectric.mape.mean, places=10)
+        self.assertAlmostEqual(2.376419875235826, scores.matbench_mp_e_form.rmse.mean, places=10)
+        self.assertAlmostEqual(0.49560975609756097, scores.matbench_expt_is_metal.f1.min, places=10)
 
     def test_info(self):
         mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
+        mb.info
+        mb.get_info()
 
     def test_add_metadata(self):
         mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
+        example_metadata = {"some": "metadata"}
+        mb.add_metadata(example_metadata)
+        self.assertDictEqual(example_metadata, mb.user_metadata)
 
     def test_complete_valid_recorded(self):
         mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
+        self.assertTrue(mb.is_valid)
+        self.assertTrue(mb.is_recorded)
+        self.assertTrue(mb.is_complete)
+
+        # if one sample is missing from one task fold, throw error
+        mb.matbench_dielectric.results.fold_0.data.pop('mb-dielectric-0010')
+        self.assertFalse(mb.is_valid)
+        self.assertTrue(len(mb.validate().keys()), 1)
+
+        # if one task is missing one fold
+        mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
+        mb.matbench_mp_e_form.results.pop("fold_1")
+        self.assertFalse(mb.is_valid)
+        self.assertTrue(len(mb.validate().keys()), 1)
+
+        # if one fold is not recorded
+        mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
+        mb.matbench_phonons.results.fold_1 = {}
+        self.assertFalse(mb.is_recorded)
+
+        # if one or more tasks is missing
+        mb = MatbenchBenchmark.from_file(self.static_3_bench_json)
+        self.assertFalse(mb.is_complete)
+
 
     def test_MSONability(self):
         # Test serialization

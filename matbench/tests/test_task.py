@@ -247,7 +247,7 @@ class TestMatbenchTask(unittest.TestCase):
                 missing_key = copy.deepcopy(truth)
                 missing_key["results"]["fold_3"].pop(key)
 
-                with self.assertRaises(KeyError):
+                with self.assertRaises((ValueError, KeyError)):
                     MatbenchTask.from_dict(missing_key)
 
             # If an otherwise perfect json is missing a required index

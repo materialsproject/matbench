@@ -60,9 +60,9 @@ for task in mb.tasks:
 mb.scores
 
 # access the raw results of an individual test
-mb.tasks.matbench_dielectric.results.fold0.data
-mb.tasks.matbench_dielectric.results.fold0.params
-mb.tasks.matbench_dielectric.results.fold0.scores
+mb.matbench_dielectric.results.fold0.data
+mb.matbench_dielectric.results.fold0.params
+mb.matbench_dielectric.results.fold0.scores
 
 
 # access the individual scores of a fold
@@ -105,6 +105,22 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             self.tasks_map[ds] = MatbenchTask(ds, autoload=autoload, benchmark=self.benchmark_name)
 
         self.version = version
+
+
+    def __getattr__(self, item):
+        """
+        Enable MatbenchBenchmark.task_name behavior.
+
+        Args:
+            item:
+
+        Returns:
+
+        """
+        if item in self.metadata:
+            return self.tasks_map[item]
+        else:
+            return self.__getattribute__(self, item)
 
 
     @property
@@ -153,7 +169,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
     @property
     def scores(self):
-        return {t.dataset_name: t.scores for t in self.tasks_map}
+        return RecursiveDotDict({t.dataset_name: t.scores for t in self.tasks})
 
 
     @property
@@ -162,7 +178,6 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         complete = self.is_complete
         recorded = self.is_recorded
         valid = self.is_valid
-        scores = self.scores
 
         s = ""
         s += f"\nMatbench package {version} running benchmark '{self.benchmark_name}'"
@@ -182,8 +197,14 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         if valid and recorded:
             s += f"\n\nResults:\n"
-            for t in self.tasks_map:
-                s += f"\n\t- '{t.dataset_name}' MAE: {self.scores[t.dataset_name]['mae']['mean']}"
+            for t in self.tasks:
+
+                if t.metadata.task_type == REG_KEY:
+                    score_text = f"MAE mean: {self.scores[t.dataset_name].mae.mean}"
+                else:
+                    score_text = f"ROCAUC mean: {self.scores[t.dataset_name].rocauc.mean}"
+                s += f"\n\t- '{t.dataset_name}' {score_text}"
+
         return s
 
     def get_info(self):
@@ -253,24 +274,20 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         Returns:
             (bool): True if all tasks are valid
         """
-        if self.is_recorded:
-            errors = {}
-            for t, t_obj in self.tasks_map.items():
-                try:
-                    t_obj.validate()
-                except BaseException as E:
-                    errors[t] = traceback.format_exc()
-
-            if errors:
-                # todo: replace with logging
-                print("Errors found")
-                print(errors)
-                return False
-            else:
-                return True
-        else:
-            print("Not all tasks have all folds recorded!")
+        errors = self.validate()
+        if errors:
             return False
+        else:
+            return True
+
+    def validate(self):
+        errors = {}
+        for t, t_obj in self.tasks_map.items():
+            try:
+                t_obj.validate()
+            except BaseException as E:
+                errors[t] = traceback.format_exc()
+        return errors
 
     def as_dict(self):
         tasksd = {

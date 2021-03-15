@@ -7,6 +7,7 @@ from matbench.constants import REG_KEY, CLF_KEY
 
 MB_TEST_RANDOM_SEED = 1001
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
+FULL_TEST = os.environ.get("MB_FULL_TESTS", False)
 
 def model_random(training_outputs, test_inputs, response_type):
     r = random.Random(MB_TEST_RANDOM_SEED)
