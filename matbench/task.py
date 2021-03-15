@@ -165,7 +165,7 @@ class MatbenchTask(MSONable, MSONable2File):
             self.results[fold_key][self._PARAMS_KEY] = params if params else {}
             self.is_recorded[fold_number] = True
 
-            # todo: replace with logging info
+            # todo: replace with logging infomodel
             print(f"Recorded fold {fold_number} successfully.")
 
             truth = self._get_data_from_df(split_ids, as_type="tuple")[1]

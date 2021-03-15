@@ -1,5 +1,4 @@
 import unittest
-import random
 import json
 import copy
 import os
@@ -10,27 +9,8 @@ import numpy as np
 from pymatgen import Structure
 
 from matbench.task import MatbenchTask
-from matbench.metadata import mbv01_metadata, mbv01_validation
-from matbench.constants import CLF_KEY, REG_KEY, FOLD_DIST_METRICS, REG_METRICS, CLF_METRICS, COMPOSITION_KEY, STRUCTURE_KEY, MBV01_KEY, TEST_KEY
-
-
-TEST_DIR = os.path.dirname(os.path.abspath(__file__))
-
-
-def model_random(training_outputs, test_inputs, response_type):
-    r = random.Random(1001)
-
-    l = len(test_inputs)
-
-    if response_type == CLF_KEY:
-        return r.choices([True, False], k=l)
-
-    # Regression: simply sample from random distribution bounded by max and min training samples
-    pred = [None] * l
-    if response_type == REG_KEY:
-        for i in range(l):
-            pred[i] = r.uniform(max(training_outputs), min(training_outputs))
-        return pred
+from matbench.constants import REG_KEY, FOLD_DIST_METRICS, REG_METRICS, CLF_METRICS, COMPOSITION_KEY, STRUCTURE_KEY, MBV01_KEY, TEST_KEY
+from matbench.tests.util import model_random, TEST_DIR
 
 
 class TestMatbenchTask(unittest.TestCase):
@@ -183,20 +163,20 @@ class TestMatbenchTask(unittest.TestCase):
                         self.assertAlmostEqual(mae, 0.0, places=10)
                         self.assertAlmostEqual(val, 2.0323401126123875, places=10)
                     else:
-                        self.assertAlmostEqual(mae, 28.67286016140617, places=10)
-                        self.assertAlmostEqual(val, 13.417101448163713, places=10)
+                        self.assertAlmostEqual(mae, 29.790913986352297, places=10)
+                        self.assertAlmostEqual(val, 43.36354273040313, places=10)
                 elif ds == "matbench_steels":
                     mae = mbt.results.fold_0.scores.mae
                     if model_is_perfect:
                         self.assertAlmostEqual(mae, 0.0, places=10)
                     else:
-                        self.assertAlmostEqual(mae, 503.00317490820277, places=10)
+                        self.assertAlmostEqual(mae, 488.97286237333986, places=10)
                 elif ds == "matbench_glass":
                     rocauc = mbt.results.fold_0.scores.rocauc
                     if model_is_perfect:
                         self.assertAlmostEqual(rocauc, 1.0, places=10)
                     else:
-                        self.assertAlmostEqual(rocauc, 0.5061317574566012, places=10)
+                        self.assertAlmostEqual(rocauc, 0.5141975796883651, places=10)
 
                 self.assertTrue(mbt.all_folds_recorded)
 

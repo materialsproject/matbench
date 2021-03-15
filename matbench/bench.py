@@ -99,13 +99,17 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             available_tasks = self.metadata.keys()
 
         self.user_metadata = self.metadata
-        self.tasks = RecursiveDotDict()
+        self.tasks_map = RecursiveDotDict()
 
         for ds in available_tasks:
-            self.tasks[ds] = MatbenchTask(ds, autoload=autoload, benchmark=self.benchmark_name)
+            self.tasks_map[ds] = MatbenchTask(ds, autoload=autoload, benchmark=self.benchmark_name)
 
         self.version = version
 
+
+    @property
+    def tasks(self):
+        return self.tasks_map.values()
 
     @classmethod
     def from_preset(cls, benchmark, preset_name, autoload=False):
@@ -149,7 +153,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
     @property
     def scores(self):
-        return {t.dataset_name: t.scores for t in self.tasks}
+        return {t.dataset_name: t.scores for t in self.tasks_map}
 
 
     @property
@@ -173,12 +177,12 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         if not valid or not recorded:
             s += f"\n\nTasks:"
-            for t in self.tasks:
+            for t in self.tasks_map:
                 s += f"\n\t- '{t.dataset_name}: recorded={t.all_folds_recorded}"
 
         if valid and recorded:
             s += f"\n\nResults:\n"
-            for t in self.tasks:
+            for t in self.tasks_map:
                 s += f"\n\t- '{t.dataset_name}' MAE: {self.scores[t.dataset_name]['mae']['mean']}"
         return s
 
@@ -209,7 +213,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         Returns:
 
         """
-        for t in self.tasks.values():
+        for t in self.tasks:
             t.load()
 
     @property
@@ -223,10 +227,10 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         """
         for task in self.metadata:
-            if task not in self.tasks:
+            if task not in self.tasks_map:
                 return False
-            else:
-                return True
+        else:
+            return True
 
     @property
     def is_recorded(self):
@@ -237,7 +241,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             (bool): True if all tasks (even if only a subset of all matbench) for this benchmark are recorded.
 
         """
-        return all([t.all_folds_recorded for t in self.tasks.values()])
+        return all([t.all_folds_recorded for t in self.tasks_map.values()])
 
 
     @property
@@ -253,7 +257,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         self.load()
         if self.is_recorded:
             errors = {}
-            for t, t_obj in self.tasks.values():
+            for t, t_obj in self.tasks_map.items():
                 try:
                     t_obj.validate()
                 except BaseException as E:
@@ -264,6 +268,8 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                 print("Errors found")
                 print(errors)
                 return False
+            else:
+                return True
         else:
             print("Not all tasks have all folds recorded!")
             return False
@@ -342,7 +348,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
     def _from_args(cls, benchmark_name, tasks_dict, user_metadata):
         subset = list(tasks_dict.keys())
         obj = cls(benchmark=benchmark_name, autoload=False, subset=subset)
-        obj.tasks = RecursiveDotDict({t_name: MatbenchTask.from_dict(t_dict) for t_name, t_dict in tasks_dict.items()})
+        obj.tasks_map = RecursiveDotDict({t_name: MatbenchTask.from_dict(t_dict) for t_name, t_dict in tasks_dict.items()})
 
         # todo: change to logging
         print("To add new data to this benchmark, the benchmark must be loaded with .load().")
