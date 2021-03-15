@@ -186,40 +186,38 @@ class MatbenchTask(MSONable):
             json.dump(self.as_dict(), f)
 
     def validate(self):
-        self._check_all_folds_recorded("Cannot validate unless all folds recorded!")
-        
-        
+        self._check_all_folds_recorded(f"Cannot validate task {self.dataset_name} unless all folds recorded!")
         task_type = self.metadata.task_type
         
         # Check for extra fold keys
         extra_fold_keys = [k for k in self.results if k not in self.folds_keys]
         if extra_fold_keys:
-            raise KeyError(f"Extra fold keys {extra_fold_keys} not allowed.")
+            raise KeyError(f"Extra fold keys {extra_fold_keys} for task {self.dataset_name}  not allowed.")
         
         for fold_key in self.folds_keys:
             if fold_key not in self.results:
-                raise KeyError(f"Required fold data for fold '{fold_key}' not found.")
+                raise KeyError(f"Required fold data for fold '{fold_key}' for task {self.dataset_name} not found.")
             
             # Check for extra or missing keys inside each fold: need params, scores, and data.
             req_subfold_keys = [self._SCORES_KEY, self._DATA_KEY, self._PARAMS_KEY]
             extra_subfold_keys = [k for k in self.results[fold_key] if k not in req_subfold_keys]
             if extra_subfold_keys:
-                raise KeyError(f"Extra keys {extra_subfold_keys} for fold results of '{fold_key}' not allowed.")
+                raise KeyError(f"Extra keys {extra_subfold_keys} for fold results of '{fold_key}' for task {self.dataset_name}  not allowed.")
             for subkey in req_subfold_keys:
                 fold_results = self.results[fold_key]
                 if subkey not in fold_results:
-                    raise KeyError(f"Required key '{subkey}' not found for fold '{fold_key}'.")
+                    raise KeyError(f"Required key '{subkey}' for task {self.dataset_name}  not found for fold '{fold_key}'.")
                 if subkey == self._SCORES_KEY:
                     scores = self.results[fold_key][subkey]
                     metrics = REG_METRICS if task_type == REG_KEY else CLF_METRICS
                     for m in metrics:
                         if m not in scores:
-                            raise KeyError(f"Required score '{m}' not found for '{fold_key}'.")
+                            raise KeyError(f"Required score '{m}' for task {self.dataset_name}  not found for '{fold_key}'.")
                         elif not isinstance(scores[m], float):
-                            raise TypeError(f"Required score '{m}' is not float-type for '{fold_key}'!")
+                            raise TypeError(f"Required score '{m}' for task {self.dataset_name}  is not float-type for '{fold_key}'!")
                     extra_metrics = [k for k in scores if k not in metrics]
                     if extra_metrics:
-                        raise KeyError(f"Extra keys {extra_metrics} for fold scores of '{fold_key}' not allowed.")
+                        raise KeyError(f"Extra keys {extra_metrics} for fold scores of '{fold_key}' for task {self.dataset_name} not allowed.")
 
                 # results data indices are cast by json to be strings, so must be converted to int
                 elif subkey == self._DATA_KEY:
@@ -236,7 +234,7 @@ class MatbenchTask(MSONable):
                         else:
                             if not isinstance(datum, req_data_type):
                                 raise TypeError(
-                                    f"Data point '{ix}: {datum}' has data type {type(datum)} while required type is {req_data_type}!")
+                                    f"Data point '{ix}: {datum}' has data type {type(datum)} while required type is {req_data_type} for task {self.dataset_name} !")
                             remaining_indices.remove(ix)
 
                     if extra_indices and not remaining_indices:
