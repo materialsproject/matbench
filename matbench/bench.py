@@ -1,5 +1,6 @@
 import datetime
 import json
+import traceback
 
 import numpy as np
 import pandas as pd
@@ -208,10 +209,21 @@ class MatbenchBenchmark(MSONable):
         """
         self.load()
         if self.is_recorded:
-            for t in self.tasks.values():
-                t.validate()
+            errors = {}
+            for t, t_obj in self.tasks.values():
+                try:
+                    t_obj.validate()
+                except BaseException as E:
+                    errors[t] = traceback.format_exc()
+
+            if errors:
+                # todo: replace with logging
+                print("Errors found")
+                print(errors)
+                return False
         else:
-            raise ValueError("Not all tasks have all folds recorded!")
+            print("Not all tasks have all folds recorded!")
+            return False
 
 
     def as_dict(self):
@@ -254,20 +266,38 @@ class MatbenchBenchmark(MSONable):
             raise ValueError(f"Missing required keys {missing_keys} and extra keys {extra_keys} present!")
 
 
-        not_matching = []
+        # Check all tasks to make sure their benchmark name is matching in the benchmark and in the tasks
+        not_matching_bench = []
         for t in d[cls._TASKS_KEY]:
             if t[MatbenchTask._BENCHMARK_KEY] != d[cls._BENCHMARK_KEY]:
-                not_matching.append(t[MatbenchTask._DATASET_KEY])
+                not_matching_bench.append(t[MatbenchTask._DATASET_KEY])
+        if not_matching_bench:
+            raise ValueError(f"Tasks {not_matching_bench} do not have a benchmark name matching the benchmark ({d[cls._BENCHMARK_KEY]})!")
 
-        if not_matching:
-            raise ValueError(f"Tasks {not_matching} do not have a benchmark name matching the benchmark ({d[cls._BENCHMARK_KEY]})!")
+        # Ensure the hash is matching, i.e., the data was not modified after matbench got done with it
+        m_from_dict = d.pop(cls._HASH_KEY)
+        m = hash_dictionary(d)
+        if m != m_from_dict:
+            raise ValueError(f"Hash of dictionary does not match it's reported value! {m} != {m_from_dict} . Was the data modified after saving?)")
+
+
+        # Check to see if any tasks have task names not matching their key names in the benchmark
+        not_matching_tasks = []
+        for task_name, task_info in d[cls._TASKS_KEY]:
+            key_as_per_task = task_info[MatbenchTask._DATASET_KEY]
+            if task_name != key_as_per_task:
+                not_matching_tasks.append((task_name, key_as_per_task))
+        if not not_matching_tasks:
+            raise ValueError(f"Task names in benchmark and task names in tasks not matching: {not_matching_tasks}")
 
         return cls._from_args(benchmark_name=d[cls._BENCHMARK_KEY], tasks_dict=)
 
     @classmethod
-    def _from_args(cls, benchmark_name, tasks_dict):
-        subset = [t[MatbenchTask._DATASET_KEY] for t in tasks]
-        obj = cls(benchmark=benchmark_name, autoload=False)
+    def _from_args(cls, benchmark_name, tasks_dict, user_metadata):
+        subset = list(tasks_dict.keys())
+        obj = cls(benchmark=benchmark_name, autoload=False, subset=subset)
+        obj.add_metadata(user_metadata)
+
 
 
 
