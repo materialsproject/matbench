@@ -271,7 +271,7 @@ class MatbenchTask(MSONable):
         extra_base_keys = [k for k in d.keys() if k not in req_base_keys]
         if extra_base_keys:
             raise KeyError(f"Extra keys {extra_base_keys} not allowed.")
-        return cls._from_args(dataset_name=d[cls.DATASET_KEY], benchmark_name=d[cls._BENCHMARK_KEY], results_dict=d[cls.RESULTS_KEY])
+        return cls._from_args(dataset_name=d[cls._DATASET_KEY], benchmark_name=d[cls._BENCHMARK_KEY], results_dict=d[cls._RESULTS_KEY])
 
 
     @classmethod
