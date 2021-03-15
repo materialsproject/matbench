@@ -1,6 +1,7 @@
 import datetime
 import json
 import traceback
+import hashlib
 
 import numpy as np
 import pandas as pd
@@ -343,6 +344,8 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         obj = cls(benchmark=benchmark_name, autoload=False, subset=subset)
         obj.tasks = RecursiveDotDict({t_name: MatbenchTask.from_dict(t_dict) for t_name, t_dict in tasks_dict.items()})
 
+        # todo: change to logging
+        print("To add new data to this benchmark, the benchmark must be loaded with .load().")
         # MatbenchTask automatically validates files during its from_dict
         obj.user_metadata = user_metadata
         return obj
@@ -373,30 +376,3 @@ def hash_dictionary(d):
     s_hashable = json.dumps(d_hashable).encode("utf-8")
     m = hashlib.sha256(s_hashable).hexdigest()
     return m
-
-
-if __name__ == "__main__":
-    import hashlib
-
-    d = {"q": [1,2,3], "b": {"c": "12", "d": 15, "e": np.asarray([4,5,6]), "f": {"z": 12, "a": [7, 8]}}, "c": 400}
-    d_same = {"q": [1,2,3], "b": {"c": "12", "d": 15, "e": np.asarray([4,5,6]), "f": {"a": [7, 8], "z": 12}}, "c": 400}
-    d_different = {"q": [1,2,3], "b": {"c": "12", "d": 15, "e": np.asarray([4,5,6]), "f": {"z": 12, "a": [7, 9]}}, "c": 400}
-
-
-
-
-    import pprint
-
-    # pprint.pprint(d_immut)
-
-    for d in (d, d_same, d_different):
-        d_immut = immutify_dictionary(d)
-        pprint.pprint(d_immut)
-        js = json.dumps(d_immut).encode("utf-8")
-        print(hashlib.sha256(js).hexdigest())
-
-
-
-
-    # print(hashlib.sha256(frozenset(d_immut)))
-    # print(hash(frozenset(d_immut)))
