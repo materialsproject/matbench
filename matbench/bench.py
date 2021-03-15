@@ -71,6 +71,7 @@ mb.tasks.matbench_steels.scores.fold0
 class MatbenchBenchmark(MSONable):
 
     _VERSION_KEY = "version"
+    _BENCHMARK_KEY = "benchmark_name"
     _USER_METADATA_KEY = "user_metadata"
     _TASKS_KEY = "tasks"
     _DATESTAMP_KEY = "datestamp"
@@ -98,7 +99,7 @@ class MatbenchBenchmark(MSONable):
         self.tasks = RecursiveDotDict()
 
         for ds in available_tasks:
-            self.tasks[ds] = MatbenchTask(ds, autoload=autoload)
+            self.tasks[ds] = MatbenchTask(ds, autoload=autoload, benchmark=self.benchmark_name)
 
 
     @classmethod
@@ -228,15 +229,47 @@ class MatbenchBenchmark(MSONable):
         }
 
         # to obtain a hash for this benchmark, immutify the dictionary and then stringify it
-        d_hashable = immutify_dictionary(d)
-        s_hashable = json.dumps(d_hashable).encode("utf-8")
-        m = hashlib.sha256(s_hashable).hexdigest()
-        d[self._HASH_KEY] = m
+        d[self._HASH_KEY] = hash_dictionary(d)
         return d
 
     @classmethod
     def from_dict(cls, d):
-        required_keys = [cls._VERSION_KEY, cls._TASKS_KEY, cls._USER_METADATA_KEY, cls._DATESTAMP_KEY, cls._HASH_KEY]
+        required_keys = ["@module", "@class", cls._VERSION_KEY, cls._BENCHMARK_KEY, cls._TASKS_KEY, cls._USER_METADATA_KEY, cls._DATESTAMP_KEY, cls._HASH_KEY]
+
+        missing_keys = []
+        for k in required_keys:
+            if k not in d:
+                missing_keys.append(k)
+
+        extra_keys = []
+        for k in d:
+            if k not in required_keys:
+                extra_keys.append(k)
+
+        if missing_keys and not extra_keys:
+            raise ValueError(f"Required keys {missing_keys} for {cls.__class__.__name__} not found!")
+        elif not missing_keys and extra_keys:
+            raise ValueError(f"Extra keys {extra_keys} for {cls.__class__.__name__} present!")
+        elif missing_keys and extra_keys:
+            raise ValueError(f"Missing required keys {missing_keys} and extra keys {extra_keys} present!")
+
+
+        not_matching = []
+        for t in d[cls._TASKS_KEY]:
+            if t[MatbenchTask._BENCHMARK_KEY] != d[cls._BENCHMARK_KEY]:
+                not_matching.append(t[MatbenchTask._DATASET_KEY])
+
+        if not_matching:
+            raise ValueError(f"Tasks {not_matching} do not have a benchmark name matching the benchmark ({d[cls._BENCHMARK_KEY]})!")
+
+        return cls._from_args(benchmark_name=d[cls._BENCHMARK_KEY], tasks_dict=)
+
+    @classmethod
+    def _from_args(cls, benchmark_name, tasks_dict):
+        subset = [t[MatbenchTask._DATASET_KEY] for t in tasks]
+        obj = cls(benchmark=benchmark_name, autoload=False)
+
+
 
 
 
@@ -258,6 +291,12 @@ def immutify_dictionary(d):
     # dictionaries are ordered in python 3.6+
     return dict(sorted(d_new.items(), key=lambda item: item[0]))
 
+
+def hash_dictionary(d):
+    d_hashable = immutify_dictionary(d)
+    s_hashable = json.dumps(d_hashable).encode("utf-8")
+    m = hashlib.sha256(s_hashable).hexdigest()
+    return m
 
 
 if __name__ == "__main__":
