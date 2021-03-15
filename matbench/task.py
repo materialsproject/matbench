@@ -94,7 +94,7 @@ class MatbenchTask(MSONable):
     def get_task_info(self):
         print(self.info)
 
-    def get_train_and_val_data(self, fold_number, as_type="tuple", shuffle_seed=None):
+    def get_train_and_val_data(self, fold_number, as_type="tuple"):
         """
         The training + validation data. All model tuning and hyperparameter selection must be done on this data, NOT test data.
 
@@ -107,13 +107,6 @@ class MatbenchTask(MSONable):
         self._check_is_loaded()
         fold_key = self.folds_map[fold_number]
         ids = self.validation[fold_key].train
-
-        if shuffle_seed:
-            r = random.Random(shuffle_seed)
-        else:
-            r = random
-
-        r.shuffle(ids)
         return self._get_data_from_df(ids, as_type)
 
     def get_test_data(self, fold_number, as_type="tuple", include_target=False):

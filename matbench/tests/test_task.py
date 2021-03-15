@@ -17,8 +17,8 @@ from matbench.constants import CLF_KEY, REG_KEY, PARAMS_KEY, DATA_KEY, SCORES_KE
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def model_random(training_outputs, test_inputs, response_type, seed):
-    r = random.Random(seed)
+def model_random(training_outputs, test_inputs, response_type):
+    r = random.Random(1001)
 
     l = len(test_inputs)
 
@@ -36,9 +36,6 @@ def model_random(training_outputs, test_inputs, response_type, seed):
 class TestMatbenchTask(unittest.TestCase):
     test_datasets = ("matbench_dielectric", "matbench_steels", "matbench_glass")
 
-    def setUp(self) -> None:
-        self.shuffle_seed = 1001
-
     def tearDown(self) -> None:
         # remove all temporary output files
         for f in glob.glob(os.path.join(TEST_DIR, "*_output.json")):
@@ -51,12 +48,11 @@ class TestMatbenchTask(unittest.TestCase):
     def test_get_train_and_val_data(self):
         # Assuming 5-fold nested cross validation
         for ds in self.test_datasets:
-            mbt = MatbenchTask(ds, autoload=True)
+            mbt = MatbenchTask(ds, autoload=False)
             mbt.load()
             # shuffle seed must be set because it shuffles the (same) training data in a deterministic manner
-            inputs, outputs = mbt.get_train_and_val_data(fold_number=0, as_type="tuple", shuffle_seed=self.shuffle_seed)
 
-            print(inputs)
+            inputs, outputs = mbt.get_train_and_val_data(fold_number=0, as_type="tuple")
 
             self.assertListEqual(inputs.index.tolist(), outputs.index.tolist())
             self.assertEqual(inputs.shape[0], int(np.floor(mbt.df.shape[0] * 4/5)))
@@ -71,30 +67,29 @@ class TestMatbenchTask(unittest.TestCase):
                 mat = inputs.loc["mb-dielectric-1985"]
                 f = mat.composition.reduced_formula
                 val = outputs.loc["mb-dielectric-1985"]
-
                 self.assertEqual(f, "Re3(TeBr)7")
-                self.assertEqual(inputs.iloc[0], mat)    # ensure the ordering is correct via iloc
+                self.assertEqual(inputs.iloc[1621], mat)    # ensure the ordering is correct via iloc
                 n = 2.5230272821931656
                 self.assertAlmostEqual(val, n, places=10)
-                self.assertAlmostEqual(outputs.iloc[0], n, places=10)
+                self.assertAlmostEqual(outputs.iloc[1621], n, places=10)
             elif ds == "matbench_steels":
                 alloy = "Fe0.692C0.00968Mn0.000101Si0.0144Cr0.133Ni0.00887Mo0.0114V0.000109Nb0.000477Co0.130Al0.000616"
                 mat = inputs.loc["mb-steels-095"]
                 val = outputs.loc["mb-steels-095"]
                 self.assertEqual(alloy, mat)
-                self.assertEqual(alloy, inputs.iloc[55])
+                self.assertEqual(alloy, inputs.iloc[75])
                 yield_strength = 1369.5
                 self.assertAlmostEqual(val, yield_strength, places=5)
-                self.assertAlmostEqual(outputs.iloc[55], yield_strength, places=5)
+                self.assertAlmostEqual(outputs.iloc[75], yield_strength, places=5)
             elif ds == "matbench_glass":
                 alloy = "Ce2Al5Cu43"
                 mat = inputs.loc["mb-glass-0600"]
                 val = outputs.loc["mb-glass-0600"]
                 self.assertEqual(alloy, mat)
-                self.assertEqual(alloy, inputs.iloc[-1])
+                self.assertEqual(alloy, inputs.iloc[480])
                 gfa = False
                 self.assertEqual(val, gfa)
-                self.assertEqual(outputs.iloc[-1], gfa)
+                self.assertEqual(outputs.iloc[480], gfa)
 
     def test_get_test_data(self):
         for ds in self.test_datasets:
@@ -159,70 +154,70 @@ class TestMatbenchTask(unittest.TestCase):
         self.assertTrue("citations" in mbt.info.lower())
         self.assertTrue("SHA256 Hash Digest" in mbt.info)
 
-    # def test_record(self):
-    #     for ds in self.test_datasets:
-    #         # Testing two scenarios: model is perfect, and model is random
-    #         for model_is_perfect in (True, False):
-    #             mbt = MatbenchTask(ds, autoload=False)
-    #             mbt.load()
-    #
-    #             # test to make sure raw data output is correct, using a random model
-    #             for fold, fold_key in mbt.folds_map.items():
-    #                 _, training_outputs = mbt.get_train_and_val_data(fold, as_type="tuple", shuffle_seed=self.shuffle_seed)
-    #                 if model_is_perfect:
-    #                     test_inputs, test_outputs = mbt.get_test_data(fold, as_type="tuple", include_target=True)
-    #                     model_response = test_outputs
-    #                 else:
-    #                     test_inputs = mbt.get_test_data(fold, as_type="tuple",include_target=False)
-    #                     model_response = model_random(training_outputs, test_inputs, response_type=mbt.metadata.task_type, seed=self.shuffle_seed)
-    #                 mbt.record(fold, predictions=model_response, params={"test_param": 1, "other_param": "string", "hyperparam": True})
-    #                 self.assertEqual(len(mbt.results[fold_key].data.values()), len(test_inputs))
-    #                 self.assertEqual(mbt.results[fold_key].parameters.test_param, 1)
-    #                 self.assertEqual(mbt.results[fold_key].parameters.other_param, "string")
-    #                 self.assertEqual(mbt.results[fold_key].parameters.hyperparam, True)
-    #
-    #             if ds == "matbench_dielectric":
-    #                 mae = mbt.results.fold_0.scores.mae
-    #                 val = mbt.results.fold_0.data["mb-dielectric-0008"]
-    #                 if model_is_perfect:
-    #                     self.assertAlmostEqual(mae, 0.0, places=10)
-    #                     self.assertAlmostEqual(val, 2.0323401126123875, places=10)
-    #                 else:
-    #                     self.assertAlmostEqual(mae, 28.67286016140617, places=10)
-    #                     self.assertAlmostEqual(val, 13.417101448163713, places=10)
-    #             elif ds == "matbench_steels":
-    #                 mae = mbt.results.fold_0.scores.mae
-    #                 if model_is_perfect:
-    #                     self.assertAlmostEqual(mae, 0.0, places=10)
-    #                 else:
-    #                     self.assertAlmostEqual(mae, 503.00317490820277, places=10)
-    #             elif ds == "matbench_glass":
-    #                 rocauc = mbt.results.fold_0.scores.rocauc
-    #                 if model_is_perfect:
-    #                     self.assertAlmostEqual(rocauc, 1.0, places=10)
-    #                 else:
-    #                     self.assertAlmostEqual(rocauc, 0.5061317574566012, places=10)
-    #
-    #             self.assertTrue(mbt.all_folds_recorded)
-    #
-    #             with self.assertRaises(ValueError):
-    #                 mbt.record(0, predictions=np.random.random(mbt.metadata.n_samples))
-    #
-    #         mbt = MatbenchTask(self.test_datasets[0], autoload=True)
-    #         # Test to make sure bad predictions won't be recorded
-    #         with self.assertRaises(ValueError):
-    #             mbt.record(0, [0.0, 1.0])
-    #
-    #         with self.assertRaises(ValueError):
-    #             mbt.record(0, ["not", "a number"])
-    #
+    def test_record(self):
+        for ds in self.test_datasets:
+            # Testing two scenarios: model is perfect, and model is random
+            for model_is_perfect in (True, False):
+                mbt = MatbenchTask(ds, autoload=False)
+                mbt.load()
+
+                # test to make sure raw data output is correct, using a random model
+                for fold, fold_key in mbt.folds_map.items():
+                    _, training_outputs = mbt.get_train_and_val_data(fold, as_type="tuple")
+                    if model_is_perfect:
+                        test_inputs, test_outputs = mbt.get_test_data(fold, as_type="tuple", include_target=True)
+                        model_response = test_outputs
+                    else:
+                        test_inputs = mbt.get_test_data(fold, as_type="tuple",include_target=False)
+                        model_response = model_random(training_outputs, test_inputs, response_type=mbt.metadata.task_type)
+                    mbt.record(fold, predictions=model_response, params={"test_param": 1, "other_param": "string", "hyperparam": True})
+                    self.assertEqual(len(mbt.results[fold_key].data.values()), len(test_inputs))
+                    self.assertEqual(mbt.results[fold_key].parameters.test_param, 1)
+                    self.assertEqual(mbt.results[fold_key].parameters.other_param, "string")
+                    self.assertEqual(mbt.results[fold_key].parameters.hyperparam, True)
+
+                if ds == "matbench_dielectric":
+                    mae = mbt.results.fold_0.scores.mae
+                    val = mbt.results.fold_0.data["mb-dielectric-0008"]
+                    if model_is_perfect:
+                        self.assertAlmostEqual(mae, 0.0, places=10)
+                        self.assertAlmostEqual(val, 2.0323401126123875, places=10)
+                    else:
+                        self.assertAlmostEqual(mae, 28.67286016140617, places=10)
+                        self.assertAlmostEqual(val, 13.417101448163713, places=10)
+                elif ds == "matbench_steels":
+                    mae = mbt.results.fold_0.scores.mae
+                    if model_is_perfect:
+                        self.assertAlmostEqual(mae, 0.0, places=10)
+                    else:
+                        self.assertAlmostEqual(mae, 503.00317490820277, places=10)
+                elif ds == "matbench_glass":
+                    rocauc = mbt.results.fold_0.scores.rocauc
+                    if model_is_perfect:
+                        self.assertAlmostEqual(rocauc, 1.0, places=10)
+                    else:
+                        self.assertAlmostEqual(rocauc, 0.5061317574566012, places=10)
+
+                self.assertTrue(mbt.all_folds_recorded)
+
+                with self.assertRaises(ValueError):
+                    mbt.record(0, predictions=np.random.random(mbt.metadata.n_samples))
+
+            mbt = MatbenchTask(self.test_datasets[0], autoload=True)
+            # Test to make sure bad predictions won't be recorded
+            with self.assertRaises(ValueError):
+                mbt.record(0, [0.0, 1.0])
+
+            with self.assertRaises(ValueError):
+                mbt.record(0, ["not", "a number"])
+
     def test_MSONability(self):
         for ds in self.test_datasets:
             mbt = MatbenchTask(ds, autoload=False)
             mbt.load()
 
             for fold in mbt.folds:
-                _, training_outputs = mbt.get_train_and_val_data(fold, as_type="tuple", shuffle_seed=self.shuffle_seed)
+                _, training_outputs = mbt.get_train_and_val_data(fold, as_type="tuple")
                 test_inputs, test_outputs = mbt.get_test_data(fold, as_type="tuple", include_target=True)
                 mbt.record(fold, predictions=test_outputs, params={"some_param": 1, "another param": 30349.4584})
 
@@ -300,46 +295,46 @@ class TestMatbenchTask(unittest.TestCase):
             with self.assertRaises(TypeError):
                 MatbenchTask.from_dict(wrong_dtype)
     #
-    # def test_autoload(self):
-    #     mbt = MatbenchTask("matbench_steels", autoload=False)
-    #     with self.assertRaises(ValueError):
-    #         mbt._check_is_loaded()
-    #
-    #     with self.assertRaises(ValueError):
-    #         mbt.get_test_data(0)
-    #
-    #     with self.assertRaises(ValueError):
-    #         mbt.get_train_and_val_data(0)
-    #
-    #     mbt.load()
-    #     mbt._check_is_loaded()
-    #     mbt.get_test_data(0)
-    #     mbt.get_train_and_val_data(0)
-    #
-    #     MatbenchTask("matbench_steels", autoload=True)
-    #
-    # def test_scores(self):
-    #     mbt = MatbenchTask.from_file("scores_matbench_dielectric_perfect.json")
-    #
-    #     for metric in REG_METRICS:
-    #         for fdm in FOLD_DIST_METRICS:
-    #             self.assertAlmostEqual(0.0, mbt.scores[metric][fdm], places=10)
-    #
-    #     mbt = MatbenchTask.from_file("scores_matbench_glass_perfect.json")
-    #
-    #     for metric in CLF_METRICS:
-    #         for fdm in FOLD_DIST_METRICS:
-    #             test_val = 0.0 if fdm == "std" else 1.0
-    #             self.assertAlmostEqual(test_val, mbt.scores[metric][fdm], places=10)
-    #
-    # def test_usage(self):
-    #     # access some common attrs
-    #     mbt_clf = MatbenchTask.from_file("scores_matbench_dielectric_perfect.json")
-    #     mbt_reg = MatbenchTask.from_file("scores_matbench_glass_perfect.json")
-    #
-    #     for mbt in (mbt_clf, mbt_reg):
-    #         for index, datum in mbt.results.fold_2.data.items():
-    #             self.assertTrue(isinstance(datum, (bool, float)))
-    #             self.assertTrue("mb-" in index)
-    #
-    #     self.assertTrue(isinstance(mbt.results.fold_3.parameters, (dict, type(None))))
+    def test_autoload(self):
+        mbt = MatbenchTask("matbench_steels", autoload=False)
+        with self.assertRaises(ValueError):
+            mbt._check_is_loaded()
+
+        with self.assertRaises(ValueError):
+            mbt.get_test_data(0)
+
+        with self.assertRaises(ValueError):
+            mbt.get_train_and_val_data(0)
+
+        mbt.load()
+        mbt._check_is_loaded()
+        mbt.get_test_data(0)
+        mbt.get_train_and_val_data(0)
+
+        MatbenchTask("matbench_steels", autoload=True)
+
+    def test_scores(self):
+        mbt = MatbenchTask.from_file("scores_matbench_dielectric_perfect.json")
+
+        for metric in REG_METRICS:
+            for fdm in FOLD_DIST_METRICS:
+                self.assertAlmostEqual(0.0, mbt.scores[metric][fdm], places=10)
+
+        mbt = MatbenchTask.from_file("scores_matbench_glass_perfect.json")
+
+        for metric in CLF_METRICS:
+            for fdm in FOLD_DIST_METRICS:
+                test_val = 0.0 if fdm == "std" else 1.0
+                self.assertAlmostEqual(test_val, mbt.scores[metric][fdm], places=10)
+
+    def test_usage(self):
+        # access some common attrs
+        mbt_clf = MatbenchTask.from_file("scores_matbench_dielectric_perfect.json")
+        mbt_reg = MatbenchTask.from_file("scores_matbench_glass_perfect.json")
+
+        for mbt in (mbt_clf, mbt_reg):
+            for index, datum in mbt.results.fold_2.data.items():
+                self.assertTrue(isinstance(datum, (bool, float)))
+                self.assertTrue("mb-" in index)
+
+        self.assertTrue(isinstance(mbt.results.fold_3.parameters, (dict, type(None))))
