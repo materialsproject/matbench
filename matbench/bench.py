@@ -95,9 +95,9 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             else:
                 available_tasks = subset
         else:
-            available_tasks = metadata.keys()
+            available_tasks = self.metadata.keys()
 
-        self.user_metadata = metadata
+        self.user_metadata = self.metadata
         self.tasks = RecursiveDotDict()
 
         for ds in available_tasks:
@@ -152,9 +152,37 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
 
     @property
-    def summary(self):
-        print("Matbench")
+    def info(self):
 
+        complete = self.is_complete
+        recorded = self.is_recorded
+        valid = self.is_valid
+        scores = self.scores
+
+        s = ""
+        s += f"\nMatbench package {version} running benchmark '{self.benchmark_name}'"
+        s += f"\n\tis complete: {complete}"
+        s += f"\n\tis recorded: {recorded}"
+        s += f"\n\tis valid: {valid}"
+
+        if not recorded:
+            s += f"\n\n Benchmark is not fully recorded; limited information shown."
+        if not valid:
+            s += f"\n\n Benchmark is not valid; limited informatiomn shown."
+
+        if not valid or not recorded:
+            s += f"\n\nTasks:"
+            for t in self.tasks:
+                s += f"\n\t- '{t.dataset_name}: recorded={t.all_folds_recorded}"
+
+        if valid and recorded:
+            s += f"\n\nResults:\n"
+            for t in self.tasks:
+                s += f"\n\t- '{t.dataset_name}' MAE: {self.scores[t.dataset_name]['mae']['mean']}"
+        return s
+
+    def get_info(self):
+        print(self.info)
 
 
     def add_metadata(self, metadata):
