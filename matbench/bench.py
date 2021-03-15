@@ -115,8 +115,10 @@ class MatbenchBenchmark(MSONable):
             autoload:
 
         Returns:
+            (MatbenchBenchmark object)
 
         """
+        all_key = "all"
         if benchmark == MBV01_KEY:
             if preset_name == STRUCTURE_KEY:
                 available_tasks = [k for k, v in mbv01_metadata.items() if v.input_type == STRUCTURE_KEY]
@@ -126,13 +128,14 @@ class MatbenchBenchmark(MSONable):
                 available_tasks = [k for k, v in mbv01_metadata.items() if v.task_type == REG_KEY]
             elif preset_name == CLF_KEY:
                 available_tasks = [k for k, v in mbv01_metadata.items() if v.task_type == CLF_KEY]
-            elif preset_name == "all":
+            elif preset_name == all_key:
                 available_tasks = [k for k, v in mbv01_metadata.items()]
             else:
-                raise ValueError(f"Preset name '{preset_name}' not recognized for benchmark '{MBV01_KEY}'! Select from {[STRUCTURE_KEY, COMPOSITION_KEY, CLF_KEY, REG_KEY]}")
-            return cls(benchmark=benchmark, autoload=autoload, subset=available_tasks)
+                raise ValueError(f"Preset name '{preset_name}' not recognized for benchmark '{MBV01_KEY}'! Select from {[STRUCTURE_KEY, COMPOSITION_KEY, CLF_KEY, REG_KEY, all_key]}")
         else:
             raise ValueError(f"Only '{MBV01_KEY}' available. No other benchmarks defined!")
+
+        return cls(benchmark=benchmark, autoload=autoload, subset=available_tasks)
 
     def add_metadata(self, metadata):
         """
@@ -149,6 +152,7 @@ class MatbenchBenchmark(MSONable):
         if not isinstance(metadata, dict):
             raise TypeError("User metadata must be reducible to dict format.")
         self.user_metadata = metadata
+        print("User metadata added successfully!")
 
     def load(self):
         """
@@ -162,7 +166,9 @@ class MatbenchBenchmark(MSONable):
     @property
     def is_complete(self):
         """
-        All 13 available tasks are included in this benchmark.
+        Determine if all available tasks are included in this benchmark.
+
+        For matbench v0.1, this means all 13 tasks are in the benchmark.
 
         Returns:
 
@@ -176,7 +182,7 @@ class MatbenchBenchmark(MSONable):
     @property
     def is_recorded(self):
         """
-        All tasks in this benchmark (whether or not it includes all problems) are recorded.
+        All tasks in this benchmark (whether or not it includes all tasks in the benchmark set) are recorded.
 
         Returns:
             (bool): True if all tasks (even if only a subset of all matbench) for this benchmark are recorded.

@@ -6,7 +6,7 @@ import numpy as np
 from monty.json import MSONable
 from matminer.datasets import get_all_dataset_info
 
-from matbench.constants import DATA_KEY, PARAMS_KEY, SCORES_KEY, REG_KEY, REG_METRICS, CLF_METRICS, FOLD_DIST_METRICS, MBV01_KEY
+from matbench.constants import REG_KEY, REG_METRICS, CLF_METRICS, FOLD_DIST_METRICS, MBV01_KEY
 from matbench.util import RecursiveDotDict
 from matbench.data_ops import load, score_array
 from matbench.metadata import mbv01_validation, mbv01_metadata
@@ -17,9 +17,12 @@ class MatbenchTask(MSONable):
     The core interface for running a Matbench task and recording its results.
     """
     
-    RESULTS_KEY = "results"
-    BENCHMARK_KEY = "benchmark_name"
-    DATASET_KEY = "dataset_name"
+    _RESULTS_KEY = "results"
+    _BENCHMARK_KEY = "benchmark_name"
+    _DATASET_KEY = "dataset_name"
+    _DATA_KEY = "data"
+    _PARAMS_KEY = "parameters"
+    _SCORES_KEY = "scores"
 
     def __init__(self, dataset_name, autoload=True, benchmark=MBV01_KEY):
         self.dataset_name = dataset_name
@@ -73,7 +76,7 @@ class MatbenchTask(MSONable):
             metric = {}
 
             # scores for a metric among all folds
-            raw_metrics_on_folds = [self.results[fk][SCORES_KEY][mk] for fk in self.folds_map.values()]
+            raw_metrics_on_folds = [self.results[fk][self._SCORES_KEY][mk] for fk in self.folds_map.values()]
             for op in FOLD_DIST_METRICS:
                 metric[op] = getattr(np, op)(raw_metrics_on_folds)
             scores[mk] = metric
@@ -155,27 +158,27 @@ class MatbenchTask(MSONable):
                 raise ValueError(f"Prediction outputs must be the same length as the inputs! {len(predictions)} != {len(split_ids)}")
 
             ids_to_predictions = {split_ids[i]: p for i, p in enumerate(predictions)}
-            self.results[fold_key][DATA_KEY] = ids_to_predictions
+            self.results[fold_key][self._DATA_KEY] = ids_to_predictions
 
             if not isinstance(params, (dict, type(None))):
                 raise TypeError(f"Parameters must be stored as a dictionary, not {type(params)}!")
-            self.results[fold_key][PARAMS_KEY] = params if params else {}
+            self.results[fold_key][self._PARAMS_KEY] = params if params else {}
             self.is_recorded[fold_number] = True
 
             # todo: replace with logging info
             print(f"Recorded fold {fold_number} successfully.")
 
             truth = self._get_data_from_df(split_ids, as_type="tuple")[1]
-            self.results[fold_key][SCORES_KEY] = score_array(truth, predictions, self.metadata.task_type)
+            self.results[fold_key][self._SCORES_KEY] = score_array(truth, predictions, self.metadata.task_type)
             print(f"Scored fold {fold_key} successfully.")
 
     def as_dict(self):
         return {
             "@module": self.__class__.__module__,
             "@class": self.__class__.__name__,
-            self.BENCHMARK_KEY: self.benchmark_name,
-            self.DATASET_KEY: self.dataset_name,
-            self.RESULTS_KEY: dict(self.results)
+            self._BENCHMARK_KEY: self.benchmark_name,
+            self._DATASET_KEY: self.dataset_name,
+            self._RESULTS_KEY: dict(self.results)
             }
 
     def to_file(self, filename):
@@ -198,7 +201,7 @@ class MatbenchTask(MSONable):
                 raise KeyError(f"Required fold data for fold '{fold_key}' not found.")
             
             # Check for extra or missing keys inside each fold: need params, scores, and data.
-            req_subfold_keys = [SCORES_KEY, DATA_KEY, PARAMS_KEY]
+            req_subfold_keys = [self._SCORES_KEY, self._DATA_KEY, self._PARAMS_KEY]
             extra_subfold_keys = [k for k in self.results[fold_key] if k not in req_subfold_keys]
             if extra_subfold_keys:
                 raise KeyError(f"Extra keys {extra_subfold_keys} for fold results of '{fold_key}' not allowed.")
@@ -206,7 +209,7 @@ class MatbenchTask(MSONable):
                 fold_results = self.results[fold_key]
                 if subkey not in fold_results:
                     raise KeyError(f"Required key '{subkey}' not found for fold '{fold_key}'.")
-                if subkey == SCORES_KEY:
+                if subkey == self._SCORES_KEY:
                     scores = self.results[fold_key][subkey]
                     metrics = REG_METRICS if task_type == REG_KEY else CLF_METRICS
                     for m in metrics:
@@ -219,7 +222,7 @@ class MatbenchTask(MSONable):
                         raise KeyError(f"Extra keys {extra_metrics} for fold scores of '{fold_key}' not allowed.")
 
                 # results data indices are cast by json to be strings, so must be converted to int
-                elif subkey == DATA_KEY:
+                elif subkey == self._DATA_KEY:
                     fold_data = self.results[fold_key].data
                     
                     # Ensure all the indices are present with no extras for each fold
@@ -261,14 +264,14 @@ class MatbenchTask(MSONable):
 
     @classmethod
     def from_dict(cls, d):
-        req_base_keys = ["@module", "@class", cls.DATASET_KEY, cls.RESULTS_KEY, cls.BENCHMARK_KEY]
+        req_base_keys = ["@module", "@class", cls._DATASET_KEY, cls._RESULTS_KEY, cls._BENCHMARK_KEY]
         for k in req_base_keys:
             if k not in d:
                 raise KeyError(f"Required key '{k}' not found.")
         extra_base_keys = [k for k in d.keys() if k not in req_base_keys]
         if extra_base_keys:
             raise KeyError(f"Extra keys {extra_base_keys} not allowed.")
-        return cls._from_args(dataset_name=d[cls.DATASET_KEY], benchmark_name=d[cls.BENCHMARK_KEY], results_dict=d[cls.RESULTS_KEY])
+        return cls._from_args(dataset_name=d[cls.DATASET_KEY], benchmark_name=d[cls._BENCHMARK_KEY], results_dict=d[cls.RESULTS_KEY])
 
 
     @classmethod

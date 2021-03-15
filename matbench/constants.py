@@ -37,11 +37,6 @@ STRUCTURE_KEY = "structure"
 COMPOSITION_KEY = "composition"
 
 
-# per task keys
-DATA_KEY = "data"
-PARAMS_KEY = "parameters"
-SCORES_KEY = "scores"
-
 # scoring per task on a single fold
 REG_METRICS = ["mae", "rmse", "mape", "max_error"]
 CLF_METRICS = ["accuracy", "balanced_accuracy", "f1", "rocauc"]

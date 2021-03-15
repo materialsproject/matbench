@@ -11,7 +11,7 @@ from pymatgen import Structure
 
 from matbench.task import MatbenchTask
 from matbench.metadata import mbv01_metadata, mbv01_validation
-from matbench.constants import CLF_KEY, REG_KEY, PARAMS_KEY, DATA_KEY, SCORES_KEY, FOLD_DIST_METRICS, REG_METRICS, CLF_METRICS, COMPOSITION_KEY, STRUCTURE_KEY, MBV01_KEY, TEST_KEY
+from matbench.constants import CLF_KEY, REG_KEY, FOLD_DIST_METRICS, REG_METRICS, CLF_METRICS, COMPOSITION_KEY, STRUCTURE_KEY, MBV01_KEY, TEST_KEY
 
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -225,15 +225,15 @@ class TestMatbenchTask(unittest.TestCase):
 
             self.assertEqual(d["@module"], "matbench.task")
             self.assertEqual(d["@class"], "MatbenchTask")
-            self.assertEqual(d[mbt.BENCHMARK_KEY], MBV01_KEY)
-            self.assertEqual(d[mbt.DATASET_KEY], ds)
+            self.assertEqual(d[mbt._BENCHMARK_KEY], MBV01_KEY)
+            self.assertEqual(d[mbt._DATASET_KEY], ds)
             self.assertEqual(len(d["results"]), len(mbt.validation.keys()))
 
             for fold, fold_key in mbt.folds_map.items():
                 res = d["results"][fold_key]
-                self.assertIn(PARAMS_KEY, res)
-                self.assertIn(SCORES_KEY, res)
-                self.assertIn(DATA_KEY, res)
+                self.assertIn(MatbenchTask._PARAMS_KEY, res)
+                self.assertIn(MatbenchTask._SCORES_KEY, res)
+                self.assertIn(MatbenchTask._DATA_KEY, res)
 
                 # make sure test set as per MbT and the recorded predictions are the same shape inside dict
                 self.assertEqual(len(res["data"]), len(mbt.validation[fold_key][TEST_KEY]))
@@ -263,7 +263,7 @@ class TestMatbenchTask(unittest.TestCase):
             with self.assertRaises(KeyError):
                 MatbenchTask.from_dict(missing_results)
 
-            for key in [PARAMS_KEY, DATA_KEY, SCORES_KEY]:
+            for key in [MatbenchTask._PARAMS_KEY, MatbenchTask._DATA_KEY, MatbenchTask._SCORES_KEY]:
                 missing_key = copy.deepcopy(truth)
                 missing_key["results"]["fold_3"].pop(key)
 
