@@ -1,3 +1,5 @@
+import json
+
 class RecursiveDotDict(dict):
     """
     Adapted from user Curt Hagenlocher from
@@ -27,3 +29,19 @@ class RecursiveDotDict(dict):
         return found
 
     __setattr__, __getattr__ = __setitem__, __getitem__
+
+
+
+class MSONable2File:
+    """
+    Adds some very basic to_file and from_file methods common to all msonables in this package.
+    """
+    def to_file(self, filename):
+        with open(filename, "w") as f:
+            json.dump(self.as_dict(), f)
+
+    @classmethod
+    def from_file(cls, filename):
+        with open(filename, "r") as f:
+            d = json.load(f)
+        return cls.from_dict(d)

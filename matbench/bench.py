@@ -8,8 +8,9 @@ from monty.json import MSONable
 
 from matbench.metadata import mbv01_metadata
 from matbench.constants import STRUCTURE_KEY, COMPOSITION_KEY, REG_KEY, CLF_KEY, MBV01_KEY
-from matbench.util import RecursiveDotDict
+from matbench.util import RecursiveDotDict, MSONable2File
 from matbench.task import MatbenchTask
+from matbench.version import version
 
 '''
 Core functions for benchmarking.
@@ -69,7 +70,7 @@ mb.tasks.matbench_steels.scores.fold0
 '''
 
 
-class MatbenchBenchmark(MSONable):
+class MatbenchBenchmark(MSONable, MSONable2File):
 
     _VERSION_KEY = "version"
     _BENCHMARK_KEY = "benchmark_name"
@@ -101,6 +102,8 @@ class MatbenchBenchmark(MSONable):
 
         for ds in available_tasks:
             self.tasks[ds] = MatbenchTask(ds, autoload=autoload, benchmark=self.benchmark_name)
+
+        self.version = version
 
 
     @classmethod
@@ -142,6 +145,17 @@ class MatbenchBenchmark(MSONable):
             raise ValueError(f"Only '{MBV01_KEY}' available. No other benchmarks defined!")
 
         return cls(benchmark=benchmark, autoload=autoload, subset=available_tasks)
+
+    @property
+    def scores(self):
+        return {t.dataset_name: t.scores for t in self.tasks}
+
+
+    @property
+    def summary(self):
+        print("Matbench")
+
+
 
     def add_metadata(self, metadata):
         """
@@ -225,7 +239,6 @@ class MatbenchBenchmark(MSONable):
             print("Not all tasks have all folds recorded!")
             return False
 
-
     def as_dict(self):
         tasksd = {
             mbt.dataset_name: mbt.as_dict() for mbt in self.tasks
@@ -234,7 +247,7 @@ class MatbenchBenchmark(MSONable):
         d = {
             "@module": self.__class__.__module__,
             "@class": self.__class__.__name__,
-            self._VERSION_KEY: "something",
+            self._VERSION_KEY: self.version,
             self._TASKS_KEY: tasksd,
             self._USER_METADATA_KEY: self.user_metadata,
             self._DATESTAMP_KEY: datetime.datetime.utcnow().strftime(self._DATESTAMP_FMT)
@@ -265,7 +278,6 @@ class MatbenchBenchmark(MSONable):
         elif missing_keys and extra_keys:
             raise ValueError(f"Missing required keys {missing_keys} and extra keys {extra_keys} present!")
 
-
         # Check all tasks to make sure their benchmark name is matching in the benchmark and in the tasks
         not_matching_bench = []
         for t in d[cls._TASKS_KEY]:
@@ -280,7 +292,6 @@ class MatbenchBenchmark(MSONable):
         if m != m_from_dict:
             raise ValueError(f"Hash of dictionary does not match it's reported value! {m} != {m_from_dict} . Was the data modified after saving?)")
 
-
         # Check to see if any tasks have task names not matching their key names in the benchmark
         not_matching_tasks = []
         for task_name, task_info in d[cls._TASKS_KEY]:
@@ -290,16 +301,23 @@ class MatbenchBenchmark(MSONable):
         if not not_matching_tasks:
             raise ValueError(f"Task names in benchmark and task names in tasks not matching: {not_matching_tasks}")
 
-        return cls._from_args(benchmark_name=d[cls._BENCHMARK_KEY], tasks_dict=)
+
+        # Warn if versions are not matching
+        if d[cls._VERSION_KEY] != version:
+            #todo: replace with logging
+            print(f"Warning! Versions not matching: (data file has version {d[cls._VERSION_KEY]}, this package is {version}).")
+
+        return cls._from_args(benchmark_name=d[cls._BENCHMARK_KEY], tasks_dict=d[cls._TASKS_KEY])
 
     @classmethod
     def _from_args(cls, benchmark_name, tasks_dict, user_metadata):
         subset = list(tasks_dict.keys())
         obj = cls(benchmark=benchmark_name, autoload=False, subset=subset)
-        obj.add_metadata(user_metadata)
+        obj.tasks = RecursiveDotDict({t_name: MatbenchTask.from_dict(t_dict) for t_name, t_dict in tasks_dict.items()})
 
-
-
+        # MatbenchTask automatically validates files during its from_dict
+        obj.user_metadata = user_metadata
+        return obj
 
 
 

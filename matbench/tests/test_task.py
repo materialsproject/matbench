@@ -148,9 +148,9 @@ class TestMatbenchTask(unittest.TestCase):
                 self.assertEqual(outputs.loc["mb-glass-0056"], gfa)
                 self.assertEqual(mbt.df[mbt.metadata.target].loc["mb-glass-0056"], gfa)
 
-    def test_get_task_info(self):
+    def test_get_info(self):
         mbt = MatbenchTask("matbench_steels", autoload=False)
-        mbt.get_task_info()
+        mbt.get_info()
         self.assertTrue("citations" in mbt.info.lower())
         self.assertTrue("SHA256 Hash Digest" in mbt.info)
 

@@ -7,12 +7,12 @@ from monty.json import MSONable
 from matminer.datasets import get_all_dataset_info
 
 from matbench.constants import REG_KEY, REG_METRICS, CLF_METRICS, FOLD_DIST_METRICS, MBV01_KEY
-from matbench.util import RecursiveDotDict
+from matbench.util import RecursiveDotDict, MSONable2File
 from matbench.data_ops import load, score_array
 from matbench.metadata import mbv01_validation, mbv01_metadata
 
 
-class MatbenchTask(MSONable):
+class MatbenchTask(MSONable, MSONable2File):
     """
     The core interface for running a Matbench task and recording its results.
     """
@@ -94,7 +94,7 @@ class MatbenchTask(MSONable):
             # training inputs, training outputs
             return relevant_df[self.metadata.input_type], relevant_df[self.metadata.target]
 
-    def get_task_info(self):
+    def get_info(self):
         print(self.info)
 
     def get_train_and_val_data(self, fold_number, as_type="tuple"):
@@ -181,10 +181,6 @@ class MatbenchTask(MSONable):
             self._RESULTS_KEY: dict(self.results)
             }
 
-    def to_file(self, filename):
-        with open(filename, "w") as f:
-            json.dump(self.as_dict(), f)
-
     def validate(self):
         self._check_all_folds_recorded(f"Cannot validate task {self.dataset_name} unless all folds recorded!")
         task_type = self.metadata.task_type
@@ -253,12 +249,6 @@ class MatbenchTask(MSONable):
 
         print(f"Data for {self.dataset_name} successfully validated.")
 
-
-    @classmethod
-    def from_file(cls, filename):
-        with open(filename, "r") as f:
-            d = json.load(f)
-        return cls.from_dict(d)
 
     @classmethod
     def from_dict(cls, d):
