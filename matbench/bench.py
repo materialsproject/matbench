@@ -2,8 +2,8 @@ import datetime
 
 from monty.json import MSONable
 
-from matbench.metadata import metadata
-from matbench.constants import STRUCTURE_KEY, COMPOSITION_KEY, REG_KEY, CLF_KEY
+from matbench.metadata import mbv01_metadata
+from matbench.constants import STRUCTURE_KEY, COMPOSITION_KEY, REG_KEY, CLF_KEY, MBV01_KEY
 from matbench.util import RecursiveDotDict
 from matbench.task import MatbenchTask
 
@@ -73,21 +73,23 @@ class MatbenchBenchmark(MSONable):
     _datestamp_key = "datestamp"
     _datestamp_fmt = "yyyy.MM.dd HH:mm:ss"
 
-    def __init__(self, autoload=False, subset=None):
+    def __init__(self, benchmark=MBV01_KEY, autoload=False, subset=None):
+
+        if benchmark == MBV01_KEY:
+            self.benchmark_name = MBV01_KEY
+            self.metadata = mbv01_metadata
+        else:
+            raise ValueError(f"Only '{MBV01_KEY}' available. No other benchmarks defined!")
 
         if subset:
-            not_datasets = [k for k in subset if k not in metadata]
+            not_datasets = [k for k in subset if k not in self.metadata]
             if not_datasets:
-                raise KeyError(f"Some tasks in {subset} are not matbench datasets! Remove {not_datasets}.")
+                raise KeyError(f"Some tasks in {subset} are not benchmark='{self.benchmark_name}' datasets! Remove {not_datasets}.")
             else:
                 available_tasks = subset
         else:
             available_tasks = metadata.keys()
 
-
-        #todo: add benchmark name to matbenchtasks init
-
-        self.metadata = metadata
         self.user_metadata = metadata
         self.tasks = RecursiveDotDict()
 
@@ -96,18 +98,41 @@ class MatbenchBenchmark(MSONable):
 
 
     @classmethod
-    def from_preset(cls, preset_name, autoload=False):
-        if preset_name == STRUCTURE_KEY:
-            available_tasks = [k for k, v in metadata.items() if v.input_type == STRUCTURE_KEY]
-        elif preset_name == COMPOSITION_KEY:
-            available_tasks = [k for k, v in metadata.items() if v.input_type == COMPOSITION_KEY]
-        elif preset_name == REG_KEY:
-            available_tasks = [k for k, v in metadata.items() if v.task_type == REG_KEY]
-        elif preset_name == CLF_KEY:
-            available_tasks = [k for k, v in metadata.items() if v.task_type == CLF_KEY]
+    def from_preset(cls, benchmark, preset_name, autoload=False):
+        """
+        The following presets are defined for each benchmark:
+
+        benchmark: 'matbench_v0.1':
+            - preset: 'structure' - Only structure problems
+            - preset: 'composition' - Only composition problems
+            - preset: 'regression' - Only regression problems
+            - preset: 'classification' - Only classification problems
+            - preset: 'all' - All problems in matbench v0.1
+
+        Args:
+            benchmark_name
+            preset_name
+            autoload:
+
+        Returns:
+
+        """
+        if benchmark == MBV01_KEY:
+            if preset_name == STRUCTURE_KEY:
+                available_tasks = [k for k, v in mbv01_metadata.items() if v.input_type == STRUCTURE_KEY]
+            elif preset_name == COMPOSITION_KEY:
+                available_tasks = [k for k, v in mbv01_metadata.items() if v.input_type == COMPOSITION_KEY]
+            elif preset_name == REG_KEY:
+                available_tasks = [k for k, v in mbv01_metadata.items() if v.task_type == REG_KEY]
+            elif preset_name == CLF_KEY:
+                available_tasks = [k for k, v in mbv01_metadata.items() if v.task_type == CLF_KEY]
+            elif preset_name == "all":
+                available_tasks = [k for k, v in mbv01_metadata.items()]
+            else:
+                raise ValueError(f"Preset name '{preset_name}' not recognized for benchmark '{MBV01_KEY}'! Select from {[STRUCTURE_KEY, COMPOSITION_KEY, CLF_KEY, REG_KEY]}")
+            return cls(benchmark=benchmark, autoload=autoload, subset=available_tasks)
         else:
-            raise ValueError(f"Preset name '{preset_name}' not recognized! Select from {[STRUCTURE_KEY, COMPOSITION_KEY, CLF_KEY, REG_KEY]}")
-        return cls(autoload=autoload, subset=available_tasks)
+            raise ValueError(f"Only '{MBV01_KEY}' available. No other benchmarks defined!")
 
     def add_metadata(self, metadata):
         """
