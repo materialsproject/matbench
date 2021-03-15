@@ -280,6 +280,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#step-25-explore-data-optional" class="md-nav__link">
+    Step 2.5: Explore data (optional)
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2.5: Explore data (optional)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accessing-benchmark-data" class="md-nav__link">
+    Accessing benchmark data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#step-3-make-a-pr" class="md-nav__link">
     Step 3: Make a PR
   </a>
@@ -332,6 +352,26 @@
           <li class="md-nav__item">
   <a href="#note-benchmark-subsets" class="md-nav__link">
     Note: Benchmark subsets
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-25-explore-data-optional" class="md-nav__link">
+    Step 2.5: Explore data (optional)
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2.5: Explore data (optional)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accessing-benchmark-data" class="md-nav__link">
+    Accessing benchmark data
   </a>
   
 </li>
@@ -398,9 +438,75 @@ record new predictions. Recording and saving your data with matbench should take
 </code></pre></div>
 <p>The output file, in this case <code>my_models_benchmark.json</code> contains everything predicted by your 
 benchmark. <strong>Keep this file, as it is the core result that will be submitted to the leaderboard.</strong></p>
-<h4 id="note-benchmark-subsets">Note: Benchmark subsets</h4>
+<h3 id="note-benchmark-subsets">Note: Benchmark subsets</h3>
 <p>If you want to benchmark on a subset of Matbench tasks, set the <code>subset</code> argument when creating <code>MatbenchBenchmark</code>
 and use the same code as above. The repo accepts subsets of matbench tasks as well which will appear on a separate "task-specific" leaderboard.</p>
+<h2 id="step-25-explore-data-optional">Step 2.5: Explore data (optional)</h2>
+<h3 id="accessing-benchmark-data">Accessing benchmark data</h3>
+<p>Benchmarking data, including scores and dataset info, can be accessed directly through <code>MatbenchBenchmark</code>:</p>
+<p>Get info about the benchmark
+<div class="highlight"><pre><span></span><code><span class="c1"># continuing from the example above ...</span>
+<span class="n">mb</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span>
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>Matbench package 0.1.0 running benchmark &#39;matbench_v0.1&#39;
+    is complete: True
+    is recorded: True
+    is valid: True
+
+Results:
+
+    - &#39;matbench_dielectric&#39; MAE mean: 29.09435441521901
+    - &#39;matbench_expt_gap&#39; MAE mean: 5.097990146029299
+    - &#39;matbench_expt_is_metal&#39; ROCAUC mean: 0.490515739562644
+    - &#39;matbench_glass&#39; ROCAUC mean: 0.4915206231191361
+    - &#39;matbench_mp_e_form&#39; MAE mean: 1.9798749618345852
+    - &#39;matbench_jdft2d&#39; MAE mean: 624.8594821594436
+    - &#39;matbench_log_gvrh&#39; MAE mean: 0.7503117195807093
+    - &#39;matbench_log_kvrh&#39; MAE mean: 0.8337265925158915
+    - &#39;matbench_mp_gap&#39; MAE mean: 3.9947345263133185
+    - &#39;matbench_mp_is_metal&#39; ROCAUC mean: 0.4995330363104962
+    - &#39;matbench_perovskites&#39; MAE mean: 1.6494389339807394
+    - &#39;matbench_phonons&#39; MAE mean: 1442.1910745917485
+    - &#39;matbench_steels&#39; MAE mean: 514.6879431114869
+</code></pre></div>
+<p>Access score data for multiple metrics, including fold statistics, programmatically
+<div class="highlight"><pre><span></span><code><span class="n">mb</span><span class="o">.</span><span class="n">scores</span>
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>{&#39;matbench_dielectric&#39;: {&#39;mae&#39;: {&#39;mean&#39;: 29.09435441521901, &#39;max&#39;: 29.790913986352297, &#39;min&#39;: 26.50764023789047, &#39;std&#39;: 1.2938287761791334}, &#39;rmse&#39;: {&#39;mean&#39;: 33.654269974352744, &#39;max&#39;: 34.44945162692406, &#39;min&#39;: 30.707221665034698, &#39;std&#39;: 1.4740060199828717}, &#39;mape&#39;: {&#39;mean&#39;: 14.169387576348942, &#39;max&#39;: 14.56764274096521, &#39;min&#39;: 12.928095832225917, &#39;std&#39;: 0.6228030143476618}, &#39;max_error&#39;: {&#39;mean&#39;: 58.85621300050616, &#39;max&#39;: 60.1966146990726, &#39;min&#39;: 53.98208657241693, &#39;std&#39;: 2.4395502402545453}}, &#39;matbench_expt_gap&#39;: {&#39;mae&#39;: {&#39;mean&#39;: 5.097990146029299, &#39;max&#39;: 5.290261095781455, &#39;min&#39;: 4.6298670001648965, &#39;std&#39;: 0.2397514292575463}, &#39;rmse&#39;: {&#39;mean&#39;: 6.006638705150991, &#39;max&#39;: 6.226508032402611, &#39;min&#39;: 5.47028276176484, &#39;std&#39;: 0.27274122238814}, &#39;mape&#39;: {&#39;mean&#39;: 1.38641021305497e+16, &#39;max&#39;: 1.5276180519639252e+16, &#39;min&#39;: 1.2259552001352658e+16, &#39;std&#39;: 986247659935790.8}, &#39;max_error&#39;: {&#39;mean&#39;: 11.407347551284193, &#39;max&#39;: 11.688512264782567, &#39;min&#39;: 10.489690494035637, &#39;std&#39;: 0.45961704429199657}}, &#39;matbench_expt_is_metal&#39;: {&#39;accuracy&#39;: {&#39;mean&#39;: 0.4903474887540754, &#39;max&#39;: 0.5050813008130082, &#39;min&#39;: 0.47459349593495936, &#39;std&#39;: 0.013195738662206162}, &#39;balanced_accuracy&#39;: {&#39;mean&#39;: 0.490515739562644, &#39;max&#39;: 0.5052590266875981, &#39;min&#39;: 0.4747707180038007, &#39;std&#39;: 0.013195964150335589}, &#39;f1&#39;: {&#39;mean&#39;: 0.5107296153663292, &#39;max&#39;: 0.5248780487804879, &#39;min&#39;: 0.49560975609756097, &#39;std&#39;: 0.012667909247509207}, &#39;rocauc&#39;: {&#39;mean&#39;: 0.490515739562644, &#39;max&#39;: 0.5052590266875981, &#39;min&#39;: 0.4747707180038007, &#39;std&#39;: 0.013195964150335589}}, &#39;matbench_glass&#39;: {&#39;accuracy&#39;: {&#39;mean&#39;: 0.5059859154929578, &#39;max&#39;: 0.528169014084507, &#39;min&#39;: 0.477112676056338, &#39;std&#39;: 0.018718357549298598}, &#39;balanced_accuracy&#39;: {&#39;mean&#39;: 0.4915206231191361, &#39;max&#39;: 0.518476250739163, &#39;min&#39;: 0.4564355205025932, &#39;std&#39;: 0.022745473256365906}, &#39;f1&#39;: {&#39;mean&#39;: 0.6019858156028368, &#39;max&#39;: 0.6198581560283688, &#39;min&#39;: 0.5787234042553191, &#39;std&#39;: 0.015080889486527119}, &#39;rocauc&#39;: {&#39;mean&#39;: 0.4915206231191361, &#39;max&#39;: 0.518476250739163, &#39;min&#39;: 0.4564355205025932, &#39;std&#39;: 0.022745473256365906}}, &#39;matbench_mp_e_form&#39;: {&#39;mae&#39;: {&#39;mean&#39;: 1.9798749618345852, &#39;max&#39;: 1.9820103943808465, &#39;min&#39;: 1.9764313221160588, &#39;std&#39;: 0.0018588951040352502}, &#39;rmse&#39;: {&#39;mean&#39;: 2.376419875235826, &#39;max&#39;: 2.3794812432136196, &#39;min&#39;: 2.3722602233100063, &#39;std&#39;: 0.0023430849418330816}, &#39;mape&#39;: {&#39;mean&#39;: 6989111302031.963, &#39;max&#39;: 7492035787402.213, &#39;min&#39;: 6236081301418.79, &#39;std&#39;: 476980899991.28485}, &#39;max_error&#39;: {&#39;mean&#39;: 6.9650087167699155, &#39;max&#39;: 7.057955130739103, &#39;min&#39;: 6.878168095265195, &#39;std&#39;: 0.06657839974500762}}, &#39;matbench_jdft2d&#39;: {&#39;mae&#39;: {&#39;mean&#39;: 624.8594821594436, &#39;max&#39;: 662.8351790033564, &#39;min&#39;: 484.0870035426516, &#39;std&#39;: 70.41763851884579}, &#39;rmse&#39;: {&#39;mean&#39;: 754.6594168930902, &#39;max&#39;: 802.851398577492, &#39;min&#39;: 575.4212296101125, &#39;std&#39;: 89.65203353138263}, &#39;mape&#39;: {&#39;mean&#39;: 12.691214729498025, &#39;max&#39;: 22.18652735053058, &#39;min&#39;: 9.642403294653164, &#39;std&#39;: 4.833743597331997}, &#39;max_error&#39;: {&#39;mean&#39;: 1455.537803743586, &#39;max&#39;: 1532.911339763068, &#39;min&#39;: 1229.7021907932801, &#39;std&#39;: 113.62938957056699}}, &#39;matbench_log_gvrh&#39;: {&#39;mae&#39;: {&#39;mean&#39;: 0.7503117195807093, &#39;max&#39;: 0.7567499426463542, &#39;min&#39;: 0.7458321525860483, &#39;std&#39;: 0.004177000349054263}, &#39;rmse&#39;: {&#39;mean&#39;: 0.8922201073043177, &#39;max&#39;: 0.8965161788869266, &#39;min&#39;: 0.8860255812982848, &#39;std&#39;: 0.0034322474625259137}, &#39;mape&#39;: {&#39;mean&#39;: 15059325260426.266, &#39;max&#39;: 26158506009539.293, &#39;min&#39;: 4541885118479.488, &#39;std&#39;: 6978350942510.934}, &#39;max_error&#39;: {&#39;mean&#39;: 2.4294014472589063, &#39;max&#39;: 2.7078341735946374, &#39;min&#39;: 2.2460171713812693, &#39;std&#39;: 0.17276767393879686}}, &#39;matbench_log_kvrh&#39;: {&#39;mae&#39;: {&#39;mean&#39;: 0.8337265925158915, &#39;max&#39;: 0.84093059152486, &#39;min&#39;: 0.8252194857104939, &#39;std&#39;: 0.005960109281798535}, &#39;rmse&#39;: {&#39;mean&#39;: 1.0122909056359641, &#39;max&#39;: 1.0190702248693488, &#39;min&#39;: 1.0038726599443502, &#39;std&#39;: 0.005051164726815858}, &#39;mape&#39;: {&#39;mean&#39;: 5205086458416.939, &#39;max&#39;: 10062434398435.773, &#39;min&#39;: 1547244178802.9026, &#39;std&#39;: 3081512230166.448}, &#39;max_error&#39;: {&#39;mean&#39;: 2.5243586576102204, &#39;max&#39;: 2.7538971602513187, &#39;min&#39;: 2.4510034654636557, &#39;std&#39;: 0.11592723389441413}}, &#39;matbench_mp_gap&#39;: {&#39;mae&#39;: {&#39;mean&#39;: 3.9947345263133185, &#39;max&#39;: 4.040261917311839, &#39;min&#39;: 3.8419572019120563, &#39;std&#39;: 0.07657166015944829}, &#39;rmse&#39;: {&#39;mean&#39;: 4.802562096614456, &#39;max&#39;: 4.852934760261583, &#39;min&#39;: 4.621350867969822, &#39;std&#39;: 0.09070340779972745}, &#39;mape&#39;: {&#39;mean&#39;: 9376100521414580.0, &#39;max&#39;: 9530024251770120.0, &#39;min&#39;: 9017068673849420.0, &#39;std&#39;: 191246529837308.34}, &#39;max_error&#39;: {&#39;mean&#39;: 9.641818242181197, &#39;max&#39;: 9.721159283071396, &#39;min&#39;: 9.326360936678295, &#39;std&#39;: 0.15772886643823172}}, &#39;matbench_mp_is_metal&#39;: {&#39;accuracy&#39;: {&#39;mean&#39;: 0.49927909555806177, &#39;max&#39;: 0.5032513429459994, &#39;min&#39;: 0.49498185930358574, &#39;std&#39;: 0.002961735738880825}, &#39;balanced_accuracy&#39;: {&#39;mean&#39;: 0.4995330363104962, &#39;max&#39;: 0.5035756141508568, &#39;min&#39;: 0.4951605437227332, &#39;std&#39;: 0.003013293507682773}, &#39;f1&#39;: {&#39;mean&#39;: 0.465575654865608, &#39;max&#39;: 0.46982498491249247, &#39;min&#39;: 0.46097364715349026, &#39;std&#39;: 0.0031704147980028555}, &#39;rocauc&#39;: {&#39;mean&#39;: 0.4995330363104962, &#39;max&#39;: 0.5035756141508567, &#39;min&#39;: 0.4951605437227331, &#39;std&#39;: 0.0030132935076827893}}, &#39;matbench_perovskites&#39;: {&#39;mae&#39;: {&#39;mean&#39;: 1.6494389339807394, &#39;max&#39;: 1.6643604327414814, &#39;min&#39;: 1.6083671212370563, &#39;std&#39;: 0.02130042981456539}, &#39;rmse&#39;: {&#39;mean&#39;: 1.9895605050492304, &#39;max&#39;: 2.0097384860674103, &#39;min&#39;: 1.9348806762983708, &#39;std&#39;: 0.028069501175258544}, &#39;mape&#39;: {&#39;mean&#39;: 8474366075980.172, &#39;max&#39;: 17109693350693.695, &#39;min&#39;: 170695202621.18396, &#39;std&#39;: 5913986606286.262}, &#39;max_error&#39;: {&#39;mean&#39;: 5.122830203832267, &#39;max&#39;: 5.401364835279832, &#39;min&#39;: 4.933113748862263, &#39;std&#39;: 0.15432057817183506}}, &#39;matbench_phonons&#39;: {&#39;mae&#39;: {&#39;mean&#39;: 1442.1910745917485, &#39;max&#39;: 1460.5342302638428, &#39;min&#39;: 1404.6727173726108, &#39;std&#39;: 19.87835062913105}, &#39;rmse&#39;: {&#39;mean&#39;: 1739.1638204522908, &#39;max&#39;: 1748.4453111626615, &#39;min&#39;: 1714.4001958506544, &#39;std&#39;: 12.506318415067186}, &#39;mape&#39;: {&#39;mean&#39;: 4.535426963268569, &#39;max&#39;: 4.692503460859966, &#39;min&#39;: 4.356729242935622, &#39;std&#39;: 0.11577855407899913}, &#39;max_error&#39;: {&#39;mean&#39;: 3387.1756802926197, &#39;max&#39;: 3490.7322416780676, &#39;min&#39;: 3312.8239446861567, &#39;std&#39;: 60.586867518772216}}, &#39;matbench_steels&#39;: {&#39;mae&#39;: {&#39;mean&#39;: 514.6879431114869, &#39;max&#39;: 548.5353510044772, &#39;min&#39;: 488.97286237333986, &#39;std&#39;: 24.98451122832146}, &#39;rmse&#39;: {&#39;mean&#39;: 619.9832706475461, &#39;max&#39;: 651.1520235084482, &#39;min&#39;: 591.9607445092288, &#39;std&#39;: 24.183510586935057}, &#39;mape&#39;: {&#39;mean&#39;: 0.39220921441643364, &#39;max&#39;: 0.4201053232886023, &#39;min&#39;: 0.368378839458224, &#39;std&#39;: 0.02076964611162295}, &#39;max_error&#39;: {&#39;mean&#39;: 1331.6729147023618, &#39;max&#39;: 1389.1259692340998, &#39;min&#39;: 1272.982373277621, &#39;std&#39;: 40.71026078669035}}}
+</code></pre></div>
+<p>Access task metadata</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># number of samples</span>
+<span class="n">mb</span><span class="o">.</span><span class="n">matbench_dielectric</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">n_samples</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">4764</span>
+
+<span class="c1"># bibtex references for source data, intemediate repos, and this package</span>
+<span class="n">mb</span><span class="o">.</span><span class="n">matbench_dielectric</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">bibtex_refs</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;[&quot;@Article{Dunn2020,</span><span class="se">\n</span><span class="s1">author={Dunn, Alexander</span><span class="se">\n</span><span class="s1">and Wang, Qi</span><span class="se">\n</span><span class="s1">and Ganose, Alex</span><span class="se">\n</span><span class="s1">and Dopp, ...&#39;</span>
+
+<span class="c1"># human-readable description of the data</span>
+<span class="n">mb</span><span class="o">.</span><span class="n">matbench_dielectric</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">description</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;Matbench v0.1 test dataset for predicting refractive index from structure. Adapted from Materials Project database. Removed entries having a formation energy (or energy above the convex hull) more than 150meV and those having refractive indices less than 1 and those containing noble gases. Retrieved April 2, 2019. For benchmarking w/ nested cross validation, the order of the dataset must be identical to the retrieved data; refer to the Automatminer/Matbench publication for more details.&#39;</span>
+</code></pre></div>
+<p>Easily access data for each task and fold
+<div class="highlight"><pre><span></span><code><span class="c1"># Look at the raw data for the second fold test set for an example benchmark on matbench_dielectric</span>
+<span class="n">mb</span><span class="o">.</span><span class="n">matbench_dielectric</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">fold_2</span><span class="o">.</span><span class="n">data</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">{</span><span class="s1">&#39;mb-dielectric-0006&#39;</span><span class="p">:</span> <span class="mf">39.07812613512991</span><span class="p">,</span> <span class="s1">&#39;mb-dielectric-0007&#39;</span><span class="p">:</span> <span class="mf">41.33770582195621</span><span class="p">,</span> <span class="s1">&#39;mb-dielectric-0012&#39;</span><span class="p">:</span> <span class="mf">45.125030619739405</span><span class="p">,</span> <span class="o">...</span><span class="p">}</span>
+
+
+<span class="c1"># Look at the scores on the second fold test set</span>
+<span class="n">mb</span><span class="o">.</span><span class="n">matbench_dielectric</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">fold_2</span><span class="o">.</span><span class="n">scores</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">{</span><span class="s1">&#39;mae&#39;</span><span class="p">:</span> <span class="mf">26.50764023789047</span><span class="p">,</span> <span class="s1">&#39;rmse&#39;</span><span class="p">:</span> <span class="mf">30.707221665034698</span><span class="p">,</span> <span class="s1">&#39;mape&#39;</span><span class="p">:</span> <span class="mf">12.928095832225917</span><span class="p">,</span> <span class="s1">&#39;max_error&#39;</span><span class="p">:</span> <span class="mf">53.98208657241693</span><span class="p">}</span>
+
+
+<span class="c1"># Get statistics of each metric over all the folds for this problem</span>
+<span class="n">mb</span><span class="o">.</span><span class="n">matbench_dielectric</span><span class="o">.</span><span class="n">scores</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">{</span><span class="s1">&#39;mae&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="mf">29.09435441521901</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">29.790913986352297</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mf">26.50764023789047</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">:</span> <span class="mf">1.2938287761791334</span><span class="p">},</span> <span class="s1">&#39;rmse&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="mf">33.654269974352744</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">34.44945162692406</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mf">30.707221665034698</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">:</span> <span class="mf">1.4740060199828717</span><span class="p">},</span> <span class="s1">&#39;mape&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="mf">14.169387576348942</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">14.56764274096521</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mf">12.928095832225917</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">:</span> <span class="mf">0.6228030143476618</span><span class="p">},</span> <span class="s1">&#39;max_error&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="mf">58.85621300050616</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">60.1966146990726</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mf">53.98208657241693</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">:</span> <span class="mf">2.4395502402545453</span><span class="p">}}</span>
+
+
+<span class="c1"># Access individual statistics easily</span>
+<span class="n">mb</span><span class="o">.</span><span class="n">matbench_dielectric</span><span class="o">.</span><span class="n">scores</span><span class="o">.</span><span class="n">rmse</span><span class="o">.</span><span class="n">max</span>
+<span class="o">&gt;&gt;&gt;</span>  <span class="mf">34.44945162692406</span>
+</code></pre></div></p>
 <h2 id="step-3-make-a-pr">Step 3: Make a <a href="https://guides.github.com/activities/hello-world/#:~:text=Pull%20Requests%20are%20the%20heart,merge%20them%20into%20their%20branch.&amp;text=You%20can%20even%20open%20pull,repository%20and%20merge%20them%20yourself.">PR</a></h2>
 <p>Make a pull request to the <a href="https://github.com/hackingmaterials/matbench">Matbench repo</a> with the following 3 items:</p>
 <ul>
