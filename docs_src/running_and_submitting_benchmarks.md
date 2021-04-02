@@ -1,8 +1,5 @@
 
 
-*This documentation si a work in progress. Please check back later for more detailed tutorials.*
-
-
 ## Step 1: Install the python package
 
 See the [installation page](installation.md) for more details.
@@ -197,6 +194,7 @@ Please make sure the names of these files are exactly as shown here. You can inc
 
 You can find info on how to make a pull request [on GitHub's official documentation](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
+![pr example](static/pr_example.png)
 
-Your output file will be automatically validated by the workflows on the matbench repo; once it's validated, it will be merged and will
+Your submission (output file, metadata, and notebook) will be automatically validated by the workflows on the matbench repo; once it's validated, it will be merged and will
 automatically appear in the [Full Benchmark Data](full_benchmark_data.md)!

@@ -5,7 +5,7 @@ from monty.serialization import dumpfn
 from sklearn.model_selection import KFold, StratifiedKFold
 
 from matbench.data_ops import load
-from matbench.constants import REG_KEY, CLF_KEY, MBID_KEY, VALIDATION_METADATA_KEY, VALIDATION_SPLIT_KEY, TRAIN_KEY, TEST_KEY
+from matbench.constants import REG_KEY, CLF_KEY, VALIDATION_METADATA_KEY, VALIDATION_SPLIT_KEY, TRAIN_KEY, TEST_KEY
 from matbench.metadata import mbv01_metadata
 
 import pandas as pd
@@ -92,7 +92,7 @@ def matbench_v01():
     d["splits"] = splits
 
     print("Writing file...")
-    dumpfn(d, "matbench/matbench_v0.1_validation.json")
+    dumpfn(d, "../matbench/matbench_v0.1_validation.json")
 
 
 
