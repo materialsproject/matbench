@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
@@ -40,4 +40,5 @@ jobs:
         pip install -e . -r requirements.txt
         pip install -r requirements-dev.txt
         coverage run setup.py test
+
 

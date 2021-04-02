@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
@@ -30,4 +30,18 @@ jobs:
         pip install -e . -r requirements.txt
         pip install -r requirements-dev.txt
         coverage run setup.py test
+
+  coverage:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - with:
+          python-version: 3.9
+
+      - name: Check coverage
+        run: |
+          coverage json
+          python scripts/coverage.py
+
+
 
