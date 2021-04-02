@@ -40,6 +40,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Download coverage artifact
         uses: actions/download-artifact@v2
         with:
