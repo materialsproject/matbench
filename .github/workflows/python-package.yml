@@ -45,6 +45,9 @@ jobs:
         with:
           name: coverage_artifact
       - run: |
+          pwd
+          ls
+          python --version
           python scripts/coverage.py
 
 
