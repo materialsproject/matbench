@@ -11,7 +11,6 @@ from matbench.task import MatbenchTask
 from matbench.tests.util import model_random, TEST_DIR, FULL_TEST
 
 
-
 class TestMatbenchBenchmark(unittest.TestCase):
 
     def setUp(self) -> None:
@@ -72,7 +71,6 @@ class TestMatbenchBenchmark(unittest.TestCase):
         # if one or more tasks is missing
         mb = MatbenchBenchmark.from_file(self.static_3_bench_json)
         self.assertFalse(mb.is_complete)
-
 
     def test_MSONability(self):
         # Test serialization
@@ -161,7 +159,6 @@ class TestMatbenchBenchmark(unittest.TestCase):
             self.assertTrue(mb.is_recorded)
             self.assertTrue(mb.is_valid)
             self.assertTrue(mb.is_complete)
-
 
 
 class TestHashingDictionaryFunctions(unittest.TestCase):
