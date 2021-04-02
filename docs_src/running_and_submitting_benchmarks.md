@@ -35,11 +35,11 @@ for task in mb.tasks:
         predictions = my_model.predict(test_inputs)
         task.record(fold, predictions)
 
-mb.to_file("my_models_benchmark.json")
+mb.to_file("my_models_benchmark.json.gz")
 
 ```
 
-The output file, in this case `my_models_benchmark.json` contains everything predicted by your 
+The output file, in this case `my_models_benchmark.json.gz` contains everything predicted by your 
 benchmark. **Keep this file, as it is the core result that will be submitted to the leaderboard.**
 
 
@@ -139,11 +139,63 @@ mb.matbench_dielectric.scores.rmse.max
 
 ## Step 3: Make a [PR](https://guides.github.com/activities/hello-world/#:~:text=Pull%20Requests%20are%20the%20heart,merge%20them%20into%20their%20branch.&text=You%20can%20even%20open%20pull,repository%20and%20merge%20them%20yourself.)
 
-Make a pull request to the [Matbench repo](https://github.com/hackingmaterials/matbench) with the following 3 items:
+Follow each of the steps below to create a pull request to the [Matbench repo](https://github.com/hackingmaterials/matbench).
 
-- **the output file**, the .json from Step 2 which is automatically formatted.
-- **a reference** to a peer-reviewed publication or preprint describing your algorithm.
-- **a jupyter notebook** with some code for running your algorithm on Matbench
+**Note: the files must have these names exactly for your PR to go through without problems, automatically.**
+
+
+### Step 3a: Create the 3 required files
+#### 1. `results.json.gz`
+**This output file**, the .json from Step 2 which is automatically formatted.
+
+
+#### 2. `info.json`
+**A metadata file** about your algorithm, the authors, and any relevant citations. Please ensure the following keys are included, as they are required by our automated leaderboard:
+
+  - `"authors"`: The author names for this PR
+  - `"algorithm"`: The short or abbreviated name for your algorithm, e.g., `"MegNET v1.0"`.
+  - `"algorithm_long"`: A longer description of your algorithm, to be shown as details for your results.
+  - `"bibtext_refs"`: A comprehensive list of references for your algorithm, including manuscripts and preprints for the algorithm itself, formatted as bibtex.
+  - `"notes"`: Any other freeform notes you'd like to include as details for your algorithm/submission.
+
+
+#### 3. `notebook.ipynb`
+**A jupyter notebook** with some code for running your algorithm on Matbench. 
+
+
+![example_notebook](static/notebook_example.png)
+
+The notebook should generally follow the format of the example notebook `/benchmarks/matbench_v0.1_random/notebook.ipynb`. Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and **most importantly, a link to a publication for your algorithm**. 
+
+Aside from that, what goes in your notebook is pretty freeform; **put whatever is needed to
+allow someone else to train and run your algorithm on the benchmark**. Also feel free to include extra code and small supporting files (<1MB) if they are crucial to the code working.
+
+You can find an example for all of these files in the repo under `/benchmarks/matbench_v0.1_random.`
+
+
+
+### Step 3b: Put these files in a folder in the `/benchmarks` directory.
+
+You can put the files from [Step 3a](#step-3a-create-the-3-required-files) into a folder in `/benchmarks`. Name the file `<benchmark name>_<algorithm name>` according to your algorithm and the benchmark you ran (e.g., `matbench_v0.1`).
+
+
+The files should look like:
+
+```
+├── benchmarks
+│   └── matbench_v0.1_<your algorithm name>
+│       ├── info.json
+│       ├── notebook.ipynb
+│       └── results.json.gz
+```
+
+Please make sure the names of these files are exactly as shown here. You can include any other small files (no naming scheme required) for running your code in this directory. 
+
+
+
+### Step 3c: Make a PR to the [matbench repo](htttps://github.com/hackingmaterials/matbench)
+
+You can find info on how to make a pull request [on GitHub's official documentation](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
 
 Your output file will be automatically validated by the workflows on the matbench repo; once it's validated, it will be merged and will
