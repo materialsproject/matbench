@@ -11,7 +11,6 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -30,13 +29,22 @@ jobs:
         pip install -e . -r requirements.txt
         pip install -r requirements-dev.txt
         coverage run setup.py test
+        coverage json
+    - name: Upload coverage artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage_artifact
+        path: coverage.json
 
   coverage:
     needs: test
     runs-on: ubuntu-latest
     steps:
+      - name: Download coverage artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: coverage_artifact
       - run: |
-          coverage json
           python scripts/coverage.py
 
 
