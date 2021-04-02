@@ -45,10 +45,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: coverage_artifact
-      - run: |
-          pwd
-          ls
-          python --version
+      - name: Check coverage
+        run: |
+          pip install monty==4.0.2
           python scripts/coverage.py
 
 
