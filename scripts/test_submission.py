@@ -35,6 +35,8 @@ class BenchmarkSubmissionTest(TestCase):
                     self.assertFalse(os.path.exists(os.path.join(full_path, banned_file)))
 
     def test_submissions(self):
+
+        algo_names = []
         for bmark_d in os.listdir(BENCHMARKS_DIR):
             bmark_path = os.path.join(BENCHMARKS_DIR, bmark_d)
             if os.path.isdir(bmark_path):
@@ -51,9 +53,17 @@ class BenchmarkSubmissionTest(TestCase):
                         for field_must_not_be_empty in ("authors", "algorithm", "algorithm_long", "bibtex_refs"):
                             self.assertTrue(info.get(field_must_not_be_empty))
 
+                        algo_names.append(info["algorithm"])
+
                     if required_file == RESULTS_FILE:
                         mb = MatbenchBenchmark.from_file(full_path)
                         is_valid = mb.is_valid
                         self.assertTrue(is_valid)
 
                         print(f"{RESULTS_FILE} file in {bmark_path}: valid ({is_valid}), complete ({mb.is_complete}), recorded ({mb.is_recorded})")
+
+            else:
+                print(f"path {bmark_path} skipped!")
+
+        # Each algo name must be unique
+        self.assertEqual(len(algo_names), len(set(algo_names)))
