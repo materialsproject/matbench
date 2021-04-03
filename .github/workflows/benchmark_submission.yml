@@ -1,7 +1,7 @@
 name: Benchmark Submission Workflow
 on:
   pull_request:
-    types: [opened, labeled]
+    types: [labeled]
 jobs:
   test_submission:
     runs-on: ubuntu-latest
