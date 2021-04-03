@@ -127,7 +127,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         logger.info(
             f"Created benchmark '{benchmark}' "
             f"with {len(available_tasks)} tasks: \n"
-            f"{pprint.pformat(available_tasks)}"
+            f"{pprint.pformat(list(available_tasks))}"
         )
 
     def __getattr__(self, item):
