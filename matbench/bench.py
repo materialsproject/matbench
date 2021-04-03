@@ -212,198 +212,6 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         return cls(benchmark=benchmark, autoload=autoload,
                    subset=available_tasks)
 
-    @property
-    def tasks(self):
-        """Return the tasks as a list.
-
-        Returns:
-            ([MatbenchTask]): A list of matbench tasks in this benchmark
-        """
-        return self.tasks_map.values()
-
-    @property
-    def scores(self):
-        """Get all score metrics for all tasks as a dictionary.
-
-        Returns:
-            (RecursiveDotDict): A nested dictionary-like object of scores
-                for each task.
-
-        """
-        return RecursiveDotDict({t.dataset_name: t.scores for t in self.tasks})
-
-    @property
-    def info(self):
-        """Get a formatted string of into about this benchmark and its current
-        state.
-
-        Returns:
-            (str)
-
-        """
-
-        complete = self.is_complete
-        recorded = self.is_recorded
-        valid = self.is_valid
-
-        s = ""
-        s += (
-            f"\nMatbench package {VERSION} running benchmark "
-            f"'{self.benchmark_name}'"
-        )
-        s += f"\n\tis complete: {complete}"
-        s += f"\n\tis recorded: {recorded}"
-        s += f"\n\tis valid: {valid}"
-
-        if not recorded:
-            s += "\n\n Benchmark is not fully recorded; limited information " \
-                 "shown."
-        if not valid:
-            s += "\n\n Benchmark is not valid; limited information shown."
-
-        if not valid or not recorded:
-            s += "\n\nTasks:"
-            for t in self.tasks_map:
-                s += f"\n\t- '{t.dataset_name}: recorded={t.all_folds_recorded}"
-
-        if valid and recorded:
-            s += "\n\nResults:\n"
-            for t in self.tasks:
-
-                if t.metadata.task_type == REG_KEY:
-                    score_text = f"MAE mean: " \
-                                 f"{self.scores[t.dataset_name].mae.mean}"
-                else:
-                    score_text = (
-                        f"ROCAUC mean: "
-                        f"{self.scores[t.dataset_name].rocauc.mean}"
-                    )
-                s += f"\n\t- '{t.dataset_name}' {score_text}"
-
-        return s
-
-    def get_info(self):
-        """Log info about the benchmark to the respective logging handlers.
-
-        Returns:
-            None
-        """
-        logger.info(self.info)
-
-    def add_metadata(self, metadata):
-        """Add freeform information about this run to the object
-        (and subsequent json), accessible thru the
-        'user_metadata' attr.
-
-        Args:
-            metadata (dict)
-
-        Returns:
-            None
-        """
-
-        if not isinstance(metadata, dict):
-            raise TypeError("User metadata must be reducible to dict format.")
-        self.user_metadata = metadata
-        logger.info("User metadata added successfully!")
-
-    def load(self):
-        """Load all tasks in this benchmark.
-        Returns:
-            None
-        """
-        for t in self.tasks:
-            t.load()
-
-    @property
-    def is_complete(self):
-        """Determine if all available tasks are included in this benchmark.
-
-        For matbench v0.1, this means all 13 tasks are in the benchmark.
-
-        Returns:
-            (bool)
-
-        """
-        for task in self.metadata:
-            if task not in self.tasks_map:
-                return False
-        else:
-            return True
-
-    @property
-    def is_recorded(self):
-        """All tasks in this benchmark (whether or not it includes all tasks in
-        the benchmark set) are recorded.
-
-        Returns:
-            (bool): True if all tasks (even if only a subset of all matbench)
-            for this benchmark are recorded.
-
-        """
-        return all([t.all_folds_recorded for t in self.tasks_map.values()])
-
-    @property
-    def is_valid(self):
-        """Checks all tasks are recorded and valid, as per each task's
-        validation procedure.
-
-        Can take some time, especially if the tasks are not already
-        loaded into memory.
-
-        Returns:
-            (bool): True if all tasks are valid
-        """
-        errors = self.validate()
-        if errors:
-            formatted_errors = pprint.pformat(errors)
-            logger.critical(f"Benchmark has errors! "
-                            f"Errors:\n {formatted_errors}")
-            return False
-        else:
-            return True
-
-    def validate(self):
-        """Run validation on each task in this benchmark.
-
-        Returns:
-            ({str: str}): dict of errors, if they exist
-
-        """
-        errors = {}
-        for t, t_obj in self.tasks_map.items():
-            try:
-                t_obj.validate()
-            except BaseException:
-                errors[t] = traceback.format_exc()
-        return errors
-
-    def as_dict(self):
-        """Overriden from MSONable.as_dict, get dict repr of this obj
-
-        Returns:
-            (dict)
-
-        """
-        tasksd = {mbt.dataset_name: mbt.as_dict() for mbt in self.tasks}
-
-        d = {
-            "@module": self.__class__.__module__,
-            "@class": self.__class__.__name__,
-            self._VERSION_KEY: VERSION,
-            self._TASKS_KEY: tasksd,
-            self._USER_METADATA_KEY: self.user_metadata,
-            self._BENCHMARK_KEY: self.benchmark_name,
-            self._DATESTAMP_KEY: datetime.datetime.utcnow().strftime(
-                self._DATESTAMP_FMT
-            ),
-        }
-
-        # to obtain a hash for this benchmark, immutify the dictionary
-        # and then stringify it
-        d[self._HASH_KEY] = hash_dictionary(d)
-        return d
-
     @classmethod
     def from_dict(cls, d):
         """Create a MatbenchBenchmark object from a dictionary.
@@ -531,6 +339,198 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         # MatbenchTask automatically validates files during its from_dict
         obj.user_metadata = user_metadata
         return obj
+
+    def as_dict(self):
+        """Overriden from MSONable.as_dict, get dict repr of this obj
+
+        Returns:
+            (dict)
+
+        """
+        tasksd = {mbt.dataset_name: mbt.as_dict() for mbt in self.tasks}
+
+        d = {
+            "@module": self.__class__.__module__,
+            "@class": self.__class__.__name__,
+            self._VERSION_KEY: VERSION,
+            self._TASKS_KEY: tasksd,
+            self._USER_METADATA_KEY: self.user_metadata,
+            self._BENCHMARK_KEY: self.benchmark_name,
+            self._DATESTAMP_KEY: datetime.datetime.utcnow().strftime(
+                self._DATESTAMP_FMT
+            ),
+        }
+
+        # to obtain a hash for this benchmark, immutify the dictionary
+        # and then stringify it
+        d[self._HASH_KEY] = hash_dictionary(d)
+        return d
+
+    def get_info(self):
+        """Log info about the benchmark to the respective logging handlers.
+
+        Returns:
+            None
+        """
+        logger.info(self.info)
+
+    def add_metadata(self, metadata):
+        """Add freeform information about this run to the object
+        (and subsequent json), accessible thru the
+        'user_metadata' attr.
+
+        Args:
+            metadata (dict)
+
+        Returns:
+            None
+        """
+
+        if not isinstance(metadata, dict):
+            raise TypeError("User metadata must be reducible to dict format.")
+        self.user_metadata = metadata
+        logger.info("User metadata added successfully!")
+
+    def load(self):
+        """Load all tasks in this benchmark.
+        Returns:
+            None
+        """
+        for t in self.tasks:
+            t.load()
+
+    def validate(self):
+        """Run validation on each task in this benchmark.
+
+        Returns:
+            ({str: str}): dict of errors, if they exist
+
+        """
+        errors = {}
+        for t, t_obj in self.tasks_map.items():
+            try:
+                t_obj.validate()
+            except BaseException:
+                errors[t] = traceback.format_exc()
+        return errors
+
+    @property
+    def tasks(self):
+        """Return the tasks as a list.
+
+        Returns:
+            ([MatbenchTask]): A list of matbench tasks in this benchmark
+        """
+        return self.tasks_map.values()
+
+    @property
+    def scores(self):
+        """Get all score metrics for all tasks as a dictionary.
+
+        Returns:
+            (RecursiveDotDict): A nested dictionary-like object of scores
+                for each task.
+
+        """
+        return RecursiveDotDict({t.dataset_name: t.scores for t in self.tasks})
+
+    @property
+    def info(self):
+        """Get a formatted string of into about this benchmark and its current
+        state.
+
+        Returns:
+            (str)
+
+        """
+
+        complete = self.is_complete
+        recorded = self.is_recorded
+        valid = self.is_valid
+
+        s = ""
+        s += (
+            f"\nMatbench package {VERSION} running benchmark "
+            f"'{self.benchmark_name}'"
+        )
+        s += f"\n\tis complete: {complete}"
+        s += f"\n\tis recorded: {recorded}"
+        s += f"\n\tis valid: {valid}"
+
+        if not recorded:
+            s += "\n\n Benchmark is not fully recorded; limited information " \
+                 "shown."
+        if not valid:
+            s += "\n\n Benchmark is not valid; limited information shown."
+
+        if not valid or not recorded:
+            s += "\n\nTasks:"
+            for t in self.tasks_map:
+                s += f"\n\t- '{t.dataset_name}: recorded={t.all_folds_recorded}"
+
+        if valid and recorded:
+            s += "\n\nResults:\n"
+            for t in self.tasks:
+
+                if t.metadata.task_type == REG_KEY:
+                    score_text = f"MAE mean: " \
+                                 f"{self.scores[t.dataset_name].mae.mean}"
+                else:
+                    score_text = (
+                        f"ROCAUC mean: "
+                        f"{self.scores[t.dataset_name].rocauc.mean}"
+                    )
+                s += f"\n\t- '{t.dataset_name}' {score_text}"
+
+        return s
+
+    @property
+    def is_complete(self):
+        """Determine if all available tasks are included in this benchmark.
+
+        For matbench v0.1, this means all 13 tasks are in the benchmark.
+
+        Returns:
+            (bool)
+
+        """
+        for task in self.metadata:
+            if task not in self.tasks_map:
+                return False
+        else:
+            return True
+
+    @property
+    def is_recorded(self):
+        """All tasks in this benchmark (whether or not it includes all tasks in
+        the benchmark set) are recorded.
+
+        Returns:
+            (bool): True if all tasks (even if only a subset of all matbench)
+            for this benchmark are recorded.
+
+        """
+        return all([t.all_folds_recorded for t in self.tasks_map.values()])
+
+    @property
+    def is_valid(self):
+        """Checks all tasks are recorded and valid, as per each task's
+        validation procedure.
+
+        Can take some time, especially if the tasks are not already
+        loaded into memory.
+
+        Returns:
+            (bool): True if all tasks are valid
+        """
+        errors = self.validate()
+        if errors:
+            formatted_errors = pprint.pformat(errors)
+            logger.critical(f"Benchmark has errors! "
+                            f"Errors:\n {formatted_errors}")
+            return False
+        else:
+            return True
 
 
 def immutify_dictionary(d):
