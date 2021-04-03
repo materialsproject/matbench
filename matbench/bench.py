@@ -6,6 +6,8 @@ import datetime
 import hashlib
 import json
 import traceback
+import logging
+import pprint
 
 import numpy as np
 import pandas as pd
@@ -21,7 +23,9 @@ from matbench.constants import (
 )
 from matbench.metadata import mbv01_metadata
 from matbench.task import MatbenchTask
-from matbench.util import MSONable2File, RecursiveDotDict
+from matbench.util import MSONable2File, RecursiveDotDict, initialize_logger
+
+logger = initialize_logger(logger_name="matbench", level=logging.INFO)
 
 
 class MatbenchBenchmark(MSONable, MSONable2File):
@@ -118,6 +122,9 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             self.tasks_map[ds] = MatbenchTask(
                 ds, autoload=autoload, benchmark=self.benchmark_name
             )
+
+        logger.info(f"Created benchmark '{benchmark}' "
+                    f"with tasks: {available_tasks}")
 
     def __getattr__(self, item):
         """
@@ -256,7 +263,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         return s
 
     def get_info(self):
-        print(self.info)
+        logger.info(self.info)
 
     def add_metadata(self, metadata):
         """
@@ -274,7 +281,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         if not isinstance(metadata, dict):
             raise TypeError("User metadata must be reducible to dict format.")
         self.user_metadata = metadata
-        print("User metadata added successfully!")
+        logger.info("User metadata added successfully!")
 
     def load(self):
         """
@@ -328,6 +335,9 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         """
         errors = self.validate()
         if errors:
+            formatted_errors = pprint.pformat(errors)
+            logger.critical(f"Benchmark has errors! "
+                            f"Errors:\n {formatted_errors}")
             return False
         else:
             return True
@@ -437,7 +447,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         # Warn if versions are not matching
         if d[cls._VERSION_KEY] != VERSION:
-            print(
+            logger.warning(
                 f"Warning! Versions not matching: "
                 f"(data file has version {d[cls._VERSION_KEY]}, "
                 f"this package is {VERSION})."
@@ -460,7 +470,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             }
         )
 
-        print(
+        logger.warning(
             "To add new data to this benchmark, the "
             "benchmark must be loaded with .load()."
         )

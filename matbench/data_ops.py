@@ -1,4 +1,5 @@
 import math
+import logging
 
 from matminer.datasets import load_dataset
 
@@ -12,6 +13,7 @@ from matbench.constants import (
 )
 from matbench.metadata import mbv01_metadata
 
+logger = logging.getLogger(__name__)
 
 def load(dataset_name, dataset_metadata=mbv01_metadata):
     """
@@ -41,7 +43,7 @@ def load(dataset_name, dataset_metadata=mbv01_metadata):
             f"a list of the dataset names, or choose from:"
             f"\n{list(dataset_metadata.keys())}"
         )
-    print(
+    logger.debug(
         f"Loading {dataset_name} into memory; please be patient as "
         f"loading many structures can take a while to serialize."
     )

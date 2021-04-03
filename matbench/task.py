@@ -1,4 +1,5 @@
 import copy
+import logging
 
 import numpy as np
 from matminer.datasets import get_all_dataset_info
@@ -14,6 +15,9 @@ from matbench.constants import (
 from matbench.data_ops import load, score_array
 from matbench.metadata import mbv01_metadata, mbv01_validation
 from matbench.util import MSONable2File, RecursiveDotDict
+
+
+logger = logging.getLogger(__name__)
 
 
 class MatbenchTask(MSONable, MSONable2File):
@@ -68,10 +72,11 @@ class MatbenchTask(MSONable, MSONable2File):
 
     def load(self):
         if self.df is None:
-            # todo: turn into logging
+            logger.info(f"Loading dataset '{self.dataset_name}'...")
             self.df = load(self.dataset_name)
         else:
-            print("Dataset already loaded")
+            logging.info(f"Dataset {self.dataset_name} already loaded; "
+                         f"not reloading dataset.")
 
     def _check_is_loaded(self):
         if self.df is None:
@@ -126,7 +131,7 @@ class MatbenchTask(MSONable, MSONable2File):
             )
 
     def get_info(self):
-        print(self.info)
+        logger.info(self.info)
 
     def get_train_and_val_data(self, fold_number, as_type="tuple"):
         """
@@ -181,9 +186,8 @@ class MatbenchTask(MSONable, MSONable2File):
             None
         """
         if self.is_recorded[fold_number]:
-            # todo: replace with logging critical
-            raise ValueError(
-                f"Fold number {fold_number} already recorded! Aborting..."
+            logger.error(
+                f"Fold number {fold_number} already recorded! Aborting record..."
             )
         else:
             # avoid problems with json serialization
@@ -213,14 +217,13 @@ class MatbenchTask(MSONable, MSONable2File):
             self.results[fold_key][self._PARAMS_KEY] = params if params else {}
             self.is_recorded[fold_number] = True
 
-            # todo: replace with logging infomodel
-            print(f"Recorded fold {fold_number} successfully.")
+            logger.info(f"Recorded fold {fold_number} successfully.")
 
             truth = self._get_data_from_df(split_ids, as_type="tuple")[1]
             self.results[fold_key][self._SCORES_KEY] = score_array(
                 truth, predictions, self.metadata.task_type
             )
-            print(f"Scored fold {fold_key} successfully.")
+            logger.debug(f"Scored fold {fold_key} successfully.")
 
     def as_dict(self):
         return {
@@ -348,7 +351,7 @@ class MatbenchTask(MSONable, MSONable2File):
                 # Params key has no required form;
                 # it is up to the model to determine it.
 
-        print(f"Data for {self.dataset_name} successfully validated.")
+        logger.debug(f"Data for {self.dataset_name} successfully validated.")
 
     @classmethod
     def from_dict(cls, d):
