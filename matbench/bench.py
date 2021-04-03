@@ -340,7 +340,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         return obj
 
     def as_dict(self):
-        """Overriden from MSONable.as_dict, get dict repr of this obj
+        """Overridden from MSONable.as_dict, get dict repr of this obj
 
         Returns:
             (dict)

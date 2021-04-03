@@ -145,8 +145,8 @@ class TestMatbenchTask(unittest.TestCase):
                 self.assertEqual(
                     ki,
                     mbt.df[STRUCTURE_KEY]
-                        .loc["mb-dielectric-0076"]
-                        .composition.reduced_formula,
+                    .loc["mb-dielectric-0076"]
+                    .composition.reduced_formula,
                 )
                 n = 1.7655027612552967
                 self.assertAlmostEqual(outputs.iloc[12], n, places=10)
