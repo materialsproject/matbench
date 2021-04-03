@@ -3,7 +3,7 @@ on:
   pull_request:
     types: [opened, labeled]
 jobs:
-  build:
+  test_submission:
     runs-on: ubuntu-latest
     steps:
     - uses: Dreamcodeio/pr-has-label-action@master
