@@ -124,7 +124,8 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             )
 
         logger.info(f"Created benchmark '{benchmark}' "
-                    f"with tasks: {available_tasks}")
+                    f"with {len(available_tasks)} tasks: \n"
+                    f"{pprint.pformat(available_tasks)}")
 
     def __getattr__(self, item):
         """
@@ -472,7 +473,8 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         logger.warning(
             "To add new data to this benchmark, the "
-            "benchmark must be loaded with .load()."
+            "benchmark must be loaded with .load(). Alternatively, "
+            "load individual tasks with MatbenchTask.load()."
         )
 
         # MatbenchTask automatically validates files during its from_dict

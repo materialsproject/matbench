@@ -74,6 +74,7 @@ class MatbenchTask(MSONable, MSONable2File):
         if self.df is None:
             logger.info(f"Loading dataset '{self.dataset_name}'...")
             self.df = load(self.dataset_name)
+            logger.info(f"Dataset '{self.dataset_name} loaded.")
         else:
             logging.info(f"Dataset {self.dataset_name} already loaded; "
                          f"not reloading dataset.")
