@@ -1,17 +1,22 @@
 import os
+import logging
 import unittest
 
 from matbench.tests.util import TEST_DIR
-from matbench.util import MSONable2File, RecursiveDotDict
+from matbench.util import MSONable2File, RecursiveDotDict, initialize_logger
 
 
 class TestUtils(unittest.TestCase):
     def setUp(self) -> None:
         self.json_file = os.path.join(TEST_DIR, "example.json")
+        self.log_file = os.path.join(TEST_DIR, "matbench_test.log")
 
     def tearDown(self) -> None:
         if os.path.exists(self.json_file):
             os.remove(self.json_file)
+
+        if os.path.exists(self.log_file):
+            os.remove(self.log_file)
 
     def test_RecursiveDotDict(self):
 
@@ -40,3 +45,19 @@ class TestUtils(unittest.TestCase):
 
         ms2 = MSONable2FileChild.from_file(self.json_file)
         self.assertEqual(ms2.prop1, "blue")
+
+    def test_logging(self):
+        logger = initialize_logger("matbench_test", log_dir=TEST_DIR, level=logging.DEBUG)
+
+        logger.info("example msg 1")
+        logger.debug("Example msg 2")
+        logger.critical("Example msg 3")
+
+        self.assertTrue(os.path.exists(self.log_file))
+
+        with open(self.log_file, "r") as f:
+            logtxt = f.read()
+            self.assertIn("INFO", logtxt)
+            self.assertIn("DEBUG", logtxt)
+            self.assertIn("CRITICAL", logtxt)
+            self.assertEqual(len(logtxt.split('\n')), 4)

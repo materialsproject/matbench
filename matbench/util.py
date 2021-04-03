@@ -79,8 +79,6 @@ def initialize_logger(logger_name, log_dir=None, level=None) -> logging.Logger:
         datefmt="%Y-%m-%d %H:%M:%S"
     )
 
-    logger.setLevel(level)
-
     if log_dir:
         logpath = os.path.join(log_dir, logger_name)
         if os.path.exists(logpath + ".log"):
@@ -90,9 +88,13 @@ def initialize_logger(logger_name, log_dir=None, level=None) -> logging.Logger:
 
         handler = logging.FileHandler(logpath, mode="w")
         handler.setFormatter(formatter)
+        handler.setLevel(level)
         logger.addHandler(handler)
 
     screen_handler = logging.StreamHandler(stream=sys.stdout)
     screen_handler.setFormatter(formatter)
+    screen_handler.setLevel(level)
     logger.addHandler(screen_handler)
+
+    logger.setLevel(level)
     return logger
