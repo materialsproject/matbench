@@ -1,5 +1,5 @@
 """
-Core functions for benchmarking.
+Core class for benchmarking.
 """
 
 import datetime
@@ -25,6 +25,47 @@ from matbench.util import MSONable2File, RecursiveDotDict
 
 
 class MatbenchBenchmark(MSONable, MSONable2File):
+    """The core class for benchmarking with Matbench.
+
+    MatbenchBenchmark is capable of benchmarking and validating arbitrary
+    materials science benchmarks. It is a container class for sets of
+    MatbenchTasks, objects which provide predetermined sets of
+    training/validation and testing data for any algorithm to benchmark
+    with. MatbenchBenchmark can also give summaries of entire complex
+    benchmarks, including access to individual score statistics for
+    each metric.
+
+    MatbenchBenchmark can run any benchmark as long as it has a corresponding
+    benchmark name key. Matbench v0.1 ("matbench_v0.1") is the only benchmark
+    currently configured for use with MatbenchBenchmark.
+
+    MatbenchBenchmark is capable of running benchmark subsets; for example,
+    only 3 of the 13 available Matbench v0.1 problems.
+
+    See the documentation for more details.
+
+    Attributes:
+        benchmark_name (str): The benchmark name, defaults to the original
+            Matbench v0.1 "matbench_v0.1". Should have an associated
+            validation file in order for the MatbenchTasks to work
+            correctly.
+        metadata (dict): The corresponding metadata file for this benchmark,
+            which defines the basic configuration for each task. See
+            matbench_v0.1_validation for an example. Each dataset
+            has the same required keys in order to work correctly.
+        user_metadata (dict): Any metadata about the algorithm or benchmark
+            that the user wants to keep as part of the benchmark file.
+        tasks_map ({str: MatbenchTask}): A mapping of task name to the
+            corresponding MatbenchTask object.
+
+        <<task_names>> (MatbenchTask): Access any task obj via
+            MatbenchTask.<<task_name>>. For example:
+
+            mb = MatbenchBenchmark()
+            mb.matbench_dielectric
+
+            <<MatbenchTask object>>
+    """
     _VERSION_KEY = "version"
     _BENCHMARK_KEY = "benchmark_name"
     _USER_METADATA_KEY = "user_metadata"
@@ -34,6 +75,21 @@ class MatbenchBenchmark(MSONable, MSONable2File):
     _HASH_KEY = "hash"
 
     def __init__(self, benchmark=MBV01_KEY, autoload=False, subset=None):
+        """
+
+        Args:
+            benchmark (str): The name of the benchmark. Only supported benchmark
+                currently is "matbench_v0.1", though more will be added in the
+                future.
+            autoload (bool): If True, automatically load the dataset into memory
+                For a full benchmark, this can take some time. If False, you'll
+                need to load each task with .load before you can access the raw
+                data.
+            subset ([str]): A list of task names to use as a subset of a full
+                benchmark. Only the named tasks will be contained in the class.
+                Must correspond to the metadata file defined by the benchmark
+                name.
+        """
 
         if benchmark == MBV01_KEY:
             self.benchmark_name = MBV01_KEY
@@ -55,7 +111,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         else:
             available_tasks = self.metadata.keys()
 
-        self.user_metadata = self.metadata
+        self.user_metadata = {}
         self.tasks_map = RecursiveDotDict()
 
         for ds in available_tasks:
@@ -68,9 +124,11 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         Enable MatbenchBenchmark.task_name behavior.
 
         Args:
-            item:
+            item (str): The name of the attr.
 
         Returns:
+            The attr, if not in the metadata defined by the benchmark
+            If the attr is a task name, returns that MatBenchTask object.
 
         """
         if item in self.metadata:
