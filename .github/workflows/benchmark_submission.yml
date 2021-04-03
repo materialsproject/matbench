@@ -10,6 +10,12 @@ jobs:
       id: checkLabel
       with:
         label: new_benchmark
+
+    - uses: actions/checkout@v2
+    - name: Set up python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
     - name: Run submission check if contains new_benchmark label (${{ steps.checkLabel.outputs.hasLabel }})
       if: ${{ steps.checkLabel.outputs.hasLabel }}
       run: |
