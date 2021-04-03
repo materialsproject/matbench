@@ -1,4 +1,12 @@
+"""
+Utils and quality-of-life enhancements.
+"""
+
+import os
+import sys
 import json
+import logging
+import datetime
 
 
 class RecursiveDotDict(dict):
@@ -49,3 +57,42 @@ class MSONable2File:
         with open(filename, "r") as f:
             d = json.load(f)
         return cls.from_dict(d)
+
+
+def initialize_logger(logger_name, log_dir=None, level=None) -> logging.Logger:
+    """Initialize the default logger with stdout and file handlers.
+    Args:
+        logger_name (str): The package name.
+        log_dir (str, None): Path to the folder where the log file will be
+            written. If None, no file will be written.
+        level (int): The log level. For example logging.DEBUG.
+    Returns:
+        (Logger): A logging instance with customized formatter and handlers.
+    """
+    level = level or logging.INFO
+
+    logger = logging.getLogger(logger_name)
+    logger.handlers = []  # reset logging handlers if they already exist
+
+    formatter = logging.Formatter(
+        fmt="%(asctime)s %(levelname)-8s %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S"
+    )
+
+    logger.setLevel(level)
+
+    if log_dir:
+        logpath = os.path.join(log_dir, logger_name)
+        if os.path.exists(logpath + ".log"):
+            logpath += "_" + datetime.datetime.now().strftime(
+                "%Y-%m-%d_%H-%M-%S")
+        logpath += ".log"
+
+        handler = logging.FileHandler(logpath, mode="w")
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+
+    screen_handler = logging.StreamHandler(stream=sys.stdout)
+    screen_handler.setFormatter(formatter)
+    logger.addHandler(screen_handler)
+    return logger
