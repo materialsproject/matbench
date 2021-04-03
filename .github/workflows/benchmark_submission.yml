@@ -1,4 +1,4 @@
-name: CI
+name: LABEL_CHECK
 on:
   pull_request:
     types: [opened, labeled]
