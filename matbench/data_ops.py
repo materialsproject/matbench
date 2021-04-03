@@ -1,3 +1,8 @@
+"""
+Utility functions for data operations such as loading dataframes
+and scoring.
+"""
+
 import math
 import logging
 
@@ -67,6 +72,19 @@ def load(dataset_name, dataset_metadata=mbv01_metadata):
 
 
 def score_array(true_array, pred_array, task_type):
+    """
+    Score an array according to multiple metrics.
+
+    Args:
+        true_array (list or np.array): The ground truth array
+        pred_array (list or np.array): The predicted (test) array
+        task_type (str): Either regression or classification.
+
+    Returns:
+        (dict): dictionary of the scores, according to all defined
+            metrics.
+
+    """
     computed = {}
 
     if task_type == REG_KEY:
