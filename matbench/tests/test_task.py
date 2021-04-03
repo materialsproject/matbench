@@ -270,11 +270,6 @@ class TestMatbenchTask(unittest.TestCase):
 
                 self.assertTrue(mbt.all_folds_recorded)
 
-                with self.assertRaises(ValueError):
-                    mbt.record(
-                        0, predictions=np.random.random(mbt.metadata.n_samples)
-                    )
-
             mbt = MatbenchTask(self.test_datasets[0], autoload=True)
             # Test to make sure bad predictions won't be recorded
             with self.assertRaises(ValueError):

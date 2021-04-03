@@ -15,6 +15,7 @@ from matbench.metadata import mbv01_metadata
 
 logger = logging.getLogger(__name__)
 
+
 def load(dataset_name, dataset_metadata=mbv01_metadata):
     """
     Load a matbench dataset into memory as a dataframe.

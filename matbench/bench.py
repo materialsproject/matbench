@@ -144,10 +144,6 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         else:
             return self.__getattribute__(self, item)
 
-    @property
-    def tasks(self):
-        return self.tasks_map.values()
-
     @classmethod
     def from_preset(cls, benchmark, preset_name, autoload=False):
         """
@@ -217,11 +213,34 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                    subset=available_tasks)
 
     @property
+    def tasks(self):
+        """Return the tasks as a list.
+
+        Returns:
+            ([MatbenchTask]): A list of matbench tasks in this benchmark
+        """
+        return self.tasks_map.values()
+
+    @property
     def scores(self):
+        """Get all score metrics for all tasks as a dictionary.
+
+        Returns:
+            (RecursiveDotDict): A nested dictionary-like object of scores
+                for each task.
+
+        """
         return RecursiveDotDict({t.dataset_name: t.scores for t in self.tasks})
 
     @property
     def info(self):
+        """Get a formatted string of into about this benchmark and its current
+        state.
+
+        Returns:
+            (str)
+
+        """
 
         complete = self.is_complete
         recorded = self.is_recorded
@@ -264,11 +283,15 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         return s
 
     def get_info(self):
+        """Log info about the benchmark to the respective logging handlers.
+
+        Returns:
+            None
+        """
         logger.info(self.info)
 
     def add_metadata(self, metadata):
-        """
-        Add freeform information about this run to the object
+        """Add freeform information about this run to the object
         (and subsequent json), accessible thru the
         'user_metadata' attr.
 
@@ -285,22 +308,21 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         logger.info("User metadata added successfully!")
 
     def load(self):
-        """
-        Load all tasks in this benchmark.
+        """Load all tasks in this benchmark.
         Returns:
-
+            None
         """
         for t in self.tasks:
             t.load()
 
     @property
     def is_complete(self):
-        """
-        Determine if all available tasks are included in this benchmark.
+        """Determine if all available tasks are included in this benchmark.
 
         For matbench v0.1, this means all 13 tasks are in the benchmark.
 
         Returns:
+            (bool)
 
         """
         for task in self.metadata:
@@ -311,8 +333,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
     @property
     def is_recorded(self):
-        """
-        All tasks in this benchmark (whether or not it includes all tasks in
+        """All tasks in this benchmark (whether or not it includes all tasks in
         the benchmark set) are recorded.
 
         Returns:
@@ -324,8 +345,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
     @property
     def is_valid(self):
-        """
-        Checks all tasks are recorded and valid, as per each task's
+        """Checks all tasks are recorded and valid, as per each task's
         validation procedure.
 
         Can take some time, especially if the tasks are not already
@@ -344,6 +364,12 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             return True
 
     def validate(self):
+        """Run validation on each task in this benchmark.
+
+        Returns:
+            ({str: str}): dict of errors, if they exist
+
+        """
         errors = {}
         for t, t_obj in self.tasks_map.items():
             try:
@@ -353,6 +379,12 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         return errors
 
     def as_dict(self):
+        """Overriden from MSONable.as_dict, get dict repr of this obj
+
+        Returns:
+            (dict)
+
+        """
         tasksd = {mbt.dataset_name: mbt.as_dict() for mbt in self.tasks}
 
         d = {
@@ -374,6 +406,15 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
     @classmethod
     def from_dict(cls, d):
+        """Create a MatbenchBenchmark object from a dictionary.
+
+        Args:
+            d (dict):
+
+        Returns:
+            (MatbenchBenchmark)
+
+        """
         required_keys = [
             "@module",
             "@class",
@@ -462,6 +503,16 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
     @classmethod
     def _from_args(cls, benchmark_name, tasks_dict, user_metadata):
+        """Create a MatbenchBenchmark object from arguments
+
+        Args:
+            benchmark_name (str): name of the benchmark
+            tasks_dict (dict): formatted dict of task data
+            user_metadata (dict): freeform user metadata
+
+        Returns:
+            (MatbenchBenchmark)
+        """
         subset = list(tasks_dict.keys())
         obj = cls(benchmark=benchmark_name, autoload=False, subset=subset)
         obj.tasks_map = RecursiveDotDict(
@@ -483,6 +534,20 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
 
 def immutify_dictionary(d):
+    """Create a frozenset-esque deterministic, unique representation of
+    a nested dict.
+
+
+    Args:
+        d (dict): The dictionary to be immutified. Key are always strings.
+            Values can be arrays of various numpy or pandas types, strings,
+            numpy primitives, python native numbers, or dictionaries with
+            the same format.
+
+    Returns:
+        (dict): A sorted, deterministic, unique representation of the
+            dictionary.
+    """
     d_new = {}
     for k, v in d.items():
         if isinstance(v, (np.ndarray, pd.Series)):
@@ -502,6 +567,17 @@ def immutify_dictionary(d):
 
 
 def hash_dictionary(d):
+    """Hash a dictionary that can be immutified with immutify_dictionary.
+
+    Order of the keys does not matter, as dictionary becomes deterministically
+    immutified. Dictionary can be nested.
+
+    Args:
+        d (dict): The dictionary to hash.
+
+    Returns:
+        (str): base16 encoded hash of the dictionary.
+    """
     d_hashable = immutify_dictionary(d)
     s_hashable = json.dumps(d_hashable).encode("utf-8")
     m = hashlib.sha256(s_hashable).hexdigest()
