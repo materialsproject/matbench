@@ -1,12 +1,11 @@
-import unittest
 import os
+import unittest
 
-from matbench.util import RecursiveDotDict, MSONable2File
 from matbench.tests.util import TEST_DIR
+from matbench.util import MSONable2File, RecursiveDotDict
 
 
 class TestUtils(unittest.TestCase):
-
     def setUp(self) -> None:
         self.json_file = os.path.join(TEST_DIR, "example.json")
 
@@ -16,16 +15,15 @@ class TestUtils(unittest.TestCase):
 
     def test_RecursiveDotDict(self):
 
-        d = {"a": {"b": [1,2,3], "c": "string"}, "b": 12}
+        d = {"a": {"b": [1, 2, 3], "c": "string"}, "b": 12}
 
         rd = RecursiveDotDict(d)
 
-        self.assertDictEqual(rd.a, {"b": [1,2,3], "c": "string"})
-        self.assertListEqual(rd.a.b, [1,2,3])
+        self.assertDictEqual(rd.a, {"b": [1, 2, 3], "c": "string"})
+        self.assertListEqual(rd.a.b, [1, 2, 3])
         self.assertEqual(rd.b, 12)
 
     def test_MSONable2File(self):
-
         class MSONable2FileChild(MSONable2File):
             def __init__(self, prop1):
                 self.prop1 = prop1

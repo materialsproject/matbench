@@ -1,6 +1,6 @@
 import unittest
 
-from matbench.constants import REG_KEY, CLF_KEY
+from matbench.constants import CLF_KEY, REG_KEY
 from matbench.metadata import mbv01_metadata, mbv01_validation
 
 
@@ -18,7 +18,6 @@ class TestMetadata(unittest.TestCase):
                 elif key == "task_type":
                     self.assertIn(metadata[key], [REG_KEY, CLF_KEY])
         self.assertEqual(len(list(mbv01_metadata.values())), 13)
-
 
         self.assertIn("metadata", mbv01_validation)
         self.assertIn("splits", mbv01_validation)

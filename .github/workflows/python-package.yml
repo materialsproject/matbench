@@ -36,6 +36,21 @@ jobs:
         name: coverage_artifact
         path: coverage.json
 
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up python 3.8
+        uses: action/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Lint
+        run: |
+          pip install --upgrade pip
+          pip install wheel setuptools
+          pip install -r requirements-dev.txt
+          source scripts/linting_check.sh
+
   coverage:
     needs: test
     runs-on: ubuntu-latest
