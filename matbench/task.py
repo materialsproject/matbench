@@ -496,7 +496,7 @@ class MatbenchTask(MSONable, MSONable2File):
             for op in FOLD_DIST_METRICS:
                 metric[op] = getattr(np, op)(raw_metrics_on_folds)
             scores[mk] = metric
-        return scores
+        return RecursiveDotDict(scores)
 
     @property
     def is_recorded(self):
