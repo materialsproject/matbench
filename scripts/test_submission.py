@@ -15,6 +15,7 @@ INFO_FILE = "info.json"
 NOTEBOOK_FILE = "notebook.ipynb"
 RESULTS_FILE = "results.json.gz"
 
+
 class BenchmarkSubmissionTest(TestCase):
 
     def setUp(self) -> None:
