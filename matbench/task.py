@@ -16,13 +16,50 @@ from matbench.data_ops import load, score_array
 from matbench.metadata import mbv01_metadata, mbv01_validation
 from matbench.util import MSONable2File, RecursiveDotDict
 
-
 logger = logging.getLogger(__name__)
 
 
 class MatbenchTask(MSONable, MSONable2File):
-    """
-    The core interface for running a Matbench task and recording its results.
+    """The core interface for running a Matbench task and recording its results.
+
+    MatbenchTask handles creating training/validation and testing sets, as
+    well as recording and managing all data in a consistent fashion.
+    MatbenchTask also validates data according to te specifications in the
+    validation file.
+
+    MatbenchTasks have a few core methods:
+
+    - MatbenchTask.get_train_and_val_data: Get nested cross validation data to
+        be used for all training and validation.
+    - MatbenchTask.get_test_data: Get test data for nested cross validation.
+    - MatbenchTask.record: Record your predicted results for the test data.
+    - MatbenchTask.validate: Check to make sure the data you recorded for this
+        task is valid.
+
+    You can iterate through the folds of a matbench task using .folds and
+    the .get_*_data methods.
+
+    You can load the results of a task without having to load large
+    datasets themselves. However, to get training and testing data,
+    you must load the datasets. Tasks loaded from files do not
+    automatically load the dataset into memory; to load a dataset into memory,
+    use MatbenchTask.load().
+
+    See the full documentation online for more info and tutorials on
+    using MatbenchTask.
+
+    Attributes:
+        benchmark_name (str): The name of the benchmark this task belongs to.
+        df (pd.DataFrame): the dataframe of the dataset for this task
+        info (str): Info about this dataset
+        metadata (RecursiveDotDict): all metadata about this dataset
+        validation (RecursiveDotDict): The validation specification for this
+            task, including the training and testing splits for each fold.
+        folds_keys ([str]): Keys of folds, fold_i for the ith fold.
+        folds_nums ([int]): Values of folds, i for the ith fold.
+        folds_map ({int: str}): Mapping of folds_nums to folds_keys
+        folds ([int]): Alias for folds_nums
+        results (RecursiveDotDict): all raw results in dict-like form.
     """
 
     _RESULTS_KEY = "results"
@@ -33,6 +70,16 @@ class MatbenchTask(MSONable, MSONable2File):
     _SCORES_KEY = "scores"
 
     def __init__(self, dataset_name, autoload=True, benchmark=MBV01_KEY):
+        """
+        Args:
+            dataset_name (str): Name of the task. Must belong to the benchmark
+                given in the 'benchmark' argument.
+            autoload (bool): If True, will load the benchmark's raw data. This
+                includes deserializing many large structures for some datasets,
+                so loading make take some time. If False, you will need to
+                run .load() before running .get_*_data() methods.
+            benchmark (str): Name of the benchmark this task belongs to.
+        """
         self.dataset_name = dataset_name
         self.df = load(self.dataset_name) if autoload else None
         self.info = get_all_dataset_info(dataset_name)
@@ -56,30 +103,39 @@ class MatbenchTask(MSONable, MSONable2File):
 
         # Alias for ease of use
         self.folds = self.folds_nums
-
         self.results = RecursiveDotDict({})
-        # self.is_recorded = {k: False for k in self.folds_nums}
 
-    @property
-    def is_recorded(self):
-        is_recorded = {}
-        for fnum, fkey in self.folds_map.items():
-            if self.results[fkey][self._DATA_KEY]:
-                is_recorded[fnum] = True
-            else:
-                is_recorded[fnum] = False
-        return is_recorded
+    def _get_data_from_df(self, ids, as_type):
+        """Private function to get fold data from the task dataframe.
 
-    def load(self):
-        if self.df is None:
-            logger.info(f"Loading dataset '{self.dataset_name}'...")
-            self.df = load(self.dataset_name)
-            logger.info(f"Dataset '{self.dataset_name} loaded.")
-        else:
-            logger.info(f"Dataset {self.dataset_name} already loaded; "
-                         f"not reloading dataset.")
+        Args:
+            ids (list-like): List of string indices to grab from the df.
+            as_type (str): either "df" or "tuple". If "df", returns the
+                data as a subset of the task df. If "tuple", returns
+                list-likes of the inputs and outputs as a 2-tuple.
+
+        Returns:
+            (pd.DataFrame or (list-like, list-like))
+
+        """
+        relevant_df = self.df.loc[ids]
+        if as_type == "df":
+            return relevant_df
+        elif as_type == "tuple":
+            # inputs, outputs
+            return (
+                relevant_df[self.metadata.input_type],
+                relevant_df[self.metadata.target],
+            )
 
     def _check_is_loaded(self):
+        """Private method to check if the dataset is loaded.
+
+        Throws error if the dataset is not loaded.
+
+        Returns:
+            None
+        """
         if self.df is None:
             raise ValueError(
                 "Task dataset is not loaded! Run MatbenchTask.load() to "
@@ -87,6 +143,16 @@ class MatbenchTask(MSONable, MSONable2File):
             )
 
     def _check_all_folds_recorded(self, msg):
+        """Private method to check if all folds have been recorded.
+
+        Throws error if all folds have not been recorded.
+
+        Args:
+            msg (str): Error message to be displayed.
+
+        Returns:
+            None
+        """
         if not self.all_folds_recorded:
             raise ValueError(
                 f"{msg}; folds "
@@ -94,42 +160,68 @@ class MatbenchTask(MSONable, MSONable2File):
                 f"not recorded!"
             )
 
-    @property
-    def scores(self):
-        metric_keys = (
-            REG_METRICS if self.metadata.task_type == REG_KEY else CLF_METRICS
+    @classmethod
+    def from_dict(cls, d):
+        """Create a MatbenchTask from a dictionary input.
+
+        Required method from MSONable.
+
+        Args:
+            d (dict):
+
+        Returns:
+            (MatbenchTask)
+
+        """
+        req_base_keys = [
+            "@module",
+            "@class",
+            cls._DATASET_KEY,
+            cls._RESULTS_KEY,
+            cls._BENCHMARK_KEY,
+        ]
+        for k in req_base_keys:
+            if k not in d:
+                raise KeyError(f"Required key '{k}' not found.")
+        extra_base_keys = [k for k in d.keys() if k not in req_base_keys]
+        if extra_base_keys:
+            raise KeyError(f"Extra keys {extra_base_keys} not allowed.")
+        return cls._from_args(
+            dataset_name=d[cls._DATASET_KEY],
+            benchmark_name=d[cls._BENCHMARK_KEY],
+            results_dict=d[cls._RESULTS_KEY],
         )
-        scores = {}
-        self._check_all_folds_recorded(
-            "Cannot score unless all folds are recorded!"
-        )
-        for mk in metric_keys:
-            metric = {}
 
-            # scores for a metric among all folds
-            raw_metrics_on_folds = [
-                self.results[fk][self._SCORES_KEY][mk]
-                for fk in self.folds_map.values()
-            ]
-            for op in FOLD_DIST_METRICS:
-                metric[op] = getattr(np, op)(raw_metrics_on_folds)
-            scores[mk] = metric
-        return scores
+    @classmethod
+    def _from_args(cls, dataset_name, benchmark_name, results_dict):
+        """Instantiate a MatbenchTask from a arguments
 
-    @property
-    def all_folds_recorded(self):
-        return all([v for v in self.is_recorded.values()])
+        Args:
+            dataset_name (str): The name of the dataset/task
+            benchmark_name (str): The name of the corresponding benchmark
+            results_dict (dict): A formatted dictionary of raw results.
 
-    def _get_data_from_df(self, ids, as_type):
-        relevant_df = self.df.loc[ids]
-        if as_type == "df":
-            return relevant_df
-        elif as_type == "tuple":
-            # training inputs, training outputs
-            return (
-                relevant_df[self.metadata.input_type],
-                relevant_df[self.metadata.target],
-            )
+        Returns:
+            (MatbenchTask)
+        """
+        obj = cls(dataset_name, autoload=False, benchmark=benchmark_name)
+        obj.results = RecursiveDotDict(results_dict)
+        obj.validate()
+        return obj
+
+    def load(self):
+        """Load the dataset for this task into memory.
+
+        Returns:
+            None
+        """
+        if self.df is None:
+            logger.info(f"Loading dataset '{self.dataset_name}'...")
+            self.df = load(self.dataset_name)
+            logger.info(f"Dataset '{self.dataset_name} loaded.")
+        else:
+            logger.info(f"Dataset {self.dataset_name} already loaded; "
+                        f"not reloading dataset.")
 
     def get_info(self):
         logger.info(self.info)
@@ -174,14 +266,16 @@ class MatbenchTask(MSONable, MSONable2File):
                     self.metadata.task_type]
 
     def record(self, fold_number, predictions, params=None):
-        """
-        Record the test data as well as parameters about the model
+        """Record the test data as well as parameters about the model
         trained on this fold.
 
         Args:
             fold_number (int): The fold number.
             predictions ([float] or [bool] or np.ndarray): A list
                 of predictions for fold number {fold_number}
+            params (dict): Any free-form parameters for information
+                about the algorithm on this fold. For example,
+                hyperparameters determined during validation.
 
         Returns:
             None
@@ -227,6 +321,13 @@ class MatbenchTask(MSONable, MSONable2File):
             logger.debug(f"Scored fold {fold_key} successfully.")
 
     def as_dict(self):
+        """Return a MatbenchTask object as a dictionary.
+
+        Required method from MSONAble.
+
+        Returns:
+            (dict)
+        """
         return {
             "@module": self.__class__.__module__,
             "@class": self.__class__.__name__,
@@ -236,6 +337,20 @@ class MatbenchTask(MSONable, MSONable2File):
         }
 
     def validate(self):
+        """Validate a task after all folds have been recorded.
+
+        There are a few requirements for a task to be validated:
+        - Data types of each predicted sample must match those
+            specified by the validation procedure
+        - All folds must be recorded
+        - There must be no extra or missing required keys from
+            the data, including indices. Every index specified in
+            the validation procedure must be present in its
+            correct fold, and no extras may be present.
+
+        Returns:
+
+        """
         self._check_all_folds_recorded(
             f"Cannot validate task {self.dataset_name} "
             f"unless all folds recorded!"
@@ -354,30 +469,62 @@ class MatbenchTask(MSONable, MSONable2File):
 
         logger.debug(f"Data for {self.dataset_name} successfully validated.")
 
-    @classmethod
-    def from_dict(cls, d):
-        req_base_keys = [
-            "@module",
-            "@class",
-            cls._DATASET_KEY,
-            cls._RESULTS_KEY,
-            cls._BENCHMARK_KEY,
-        ]
-        for k in req_base_keys:
-            if k not in d:
-                raise KeyError(f"Required key '{k}' not found.")
-        extra_base_keys = [k for k in d.keys() if k not in req_base_keys]
-        if extra_base_keys:
-            raise KeyError(f"Extra keys {extra_base_keys} not allowed.")
-        return cls._from_args(
-            dataset_name=d[cls._DATASET_KEY],
-            benchmark_name=d[cls._BENCHMARK_KEY],
-            results_dict=d[cls._RESULTS_KEY],
-        )
+    @property
+    def scores(self):
+        """Comprehensive score metrics for this task.
 
-    @classmethod
-    def _from_args(cls, dataset_name, benchmark_name, results_dict):
-        obj = cls(dataset_name, autoload=False, benchmark=benchmark_name)
-        obj.results = RecursiveDotDict(results_dict)
-        obj.validate()
-        return obj
+        Gets means, maxes, mins, and more distribution stats (across folds)
+        for all scoring metrics defined for this task.
+
+        There will be different scores for classification problems and
+        regression problems.
+
+        Returns:
+            (dict): A dictionary of all the scores for this
+        """
+        metric_keys = (
+            REG_METRICS if self.metadata.task_type == REG_KEY else CLF_METRICS
+        )
+        scores = {}
+        self._check_all_folds_recorded(
+            "Cannot score unless all folds are recorded!"
+        )
+        for mk in metric_keys:
+            metric = {}
+
+            # scores for a metric among all folds
+            raw_metrics_on_folds = [
+                self.results[fk][self._SCORES_KEY][mk]
+                for fk in self.folds_map.values()
+            ]
+            for op in FOLD_DIST_METRICS:
+                metric[op] = getattr(np, op)(raw_metrics_on_folds)
+            scores[mk] = metric
+        return scores
+
+    @property
+    def is_recorded(self):
+        """Determine what folds in the task are recorded.
+
+        Returns:
+            ({int: bool}): Keys are fold numbers, values are whether the
+                fold is recorded or not.
+        """
+        is_recorded = {}
+        for fnum, fkey in self.folds_map.items():
+            if self.results[fkey][self._DATA_KEY]:
+                is_recorded[fnum] = True
+            else:
+                is_recorded[fnum] = False
+        return is_recorded
+
+    @property
+    def all_folds_recorded(self):
+        """Determine if all folds are recorded.
+
+        Returns:
+            (bool): True if all folds are recorded, False otherwise.
+        """
+        return all([v for v in self.is_recorded.values()])
+
+
