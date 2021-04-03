@@ -1,3 +1,7 @@
+"""
+Source of ground truth for all constants used across matbench.
+"""
+
 import math
 import os
 
