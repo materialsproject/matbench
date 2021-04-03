@@ -12,7 +12,8 @@ import datetime
 class RecursiveDotDict(dict):
     """
     Adapted from user Curt Hagenlocher from
-    https://stackoverflow.com/questions/3031219/recursively-access-dict-via-attributes-as-well-as-index-access
+    https://stackoverflow.com/questions/3031219/recursively
+    -access-dict-via-attributes-as-well-as-index-access
     """
 
     MARKER = object()

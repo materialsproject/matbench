@@ -1,3 +1,7 @@
+"""
+Metadata for matbench.
+"""
+
 from matminer.datasets.utils import _load_dataset_dict
 from monty.serialization import loadfn
 
