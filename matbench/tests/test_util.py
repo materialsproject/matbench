@@ -1,5 +1,5 @@
-import os
 import logging
+import os
 import unittest
 
 from matbench.tests.util import TEST_DIR
@@ -47,7 +47,9 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(ms2.prop1, "blue")
 
     def test_logging(self):
-        logger = initialize_logger("matbench_test", log_dir=TEST_DIR, level=logging.DEBUG)
+        logger = initialize_logger(
+            "matbench_test", log_dir=TEST_DIR, level=logging.DEBUG
+        )
 
         logger.info("example msg 1")
         logger.debug("Example msg 2")
@@ -60,4 +62,4 @@ class TestUtils(unittest.TestCase):
             self.assertIn("INFO", logtxt)
             self.assertIn("DEBUG", logtxt)
             self.assertIn("CRITICAL", logtxt)
-            self.assertEqual(len(logtxt.split('\n')), 4)
+            self.assertEqual(len(logtxt.split("\n")), 4)

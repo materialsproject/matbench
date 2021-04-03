@@ -2,11 +2,11 @@
 Utils and quality-of-life enhancements.
 """
 
-import os
-import sys
+import datetime
 import json
 import logging
-import datetime
+import os
+import sys
 
 
 class RecursiveDotDict(dict):
@@ -76,15 +76,13 @@ def initialize_logger(logger_name, log_dir=None, level=None) -> logging.Logger:
     logger.handlers = []  # reset logging handlers if they already exist
 
     formatter = logging.Formatter(
-        fmt="%(asctime)s %(levelname)-8s %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S"
+        fmt="%(asctime)s %(levelname)-8s %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
     )
 
     if log_dir:
         logpath = os.path.join(log_dir, logger_name)
         if os.path.exists(logpath + ".log"):
-            logpath += "_" + datetime.datetime.now().strftime(
-                "%Y-%m-%d_%H-%M-%S")
+            logpath += "_" + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         logpath += ".log"
 
         handler = logging.FileHandler(logpath, mode="w")

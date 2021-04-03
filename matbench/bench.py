@@ -5,9 +5,9 @@ Core class for benchmarking.
 import datetime
 import hashlib
 import json
-import traceback
 import logging
 import pprint
+import traceback
 
 import numpy as np
 import pandas as pd
@@ -70,6 +70,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
             <<MatbenchTask object>>
     """
+
     _VERSION_KEY = "version"
     _BENCHMARK_KEY = "benchmark_name"
     _USER_METADATA_KEY = "user_metadata"
@@ -123,9 +124,11 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                 ds, autoload=autoload, benchmark=self.benchmark_name
             )
 
-        logger.info(f"Created benchmark '{benchmark}' "
-                    f"with {len(available_tasks)} tasks: \n"
-                    f"{pprint.pformat(available_tasks)}")
+        logger.info(
+            f"Created benchmark '{benchmark}' "
+            f"with {len(available_tasks)} tasks: \n"
+            f"{pprint.pformat(available_tasks)}"
+        )
 
     def __getattr__(self, item):
         """
@@ -181,13 +184,11 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                 ]
             elif preset_name == REG_KEY:
                 available_tasks = [
-                    k for k, v in mbv01_metadata.items() if
-                    v.task_type == REG_KEY
+                    k for k, v in mbv01_metadata.items() if v.task_type == REG_KEY
                 ]
             elif preset_name == CLF_KEY:
                 available_tasks = [
-                    k for k, v in mbv01_metadata.items() if
-                    v.task_type == CLF_KEY
+                    k for k, v in mbv01_metadata.items() if v.task_type == CLF_KEY
                 ]
             elif preset_name == all_key:
                 available_tasks = [k for k, v in mbv01_metadata.items()]
@@ -197,7 +198,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                     COMPOSITION_KEY,
                     CLF_KEY,
                     REG_KEY,
-                    all_key
+                    all_key,
                 ]
                 raise ValueError(
                     f"Preset name '{preset_name}' not recognized for "
@@ -209,8 +210,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                 f"Only '{MBV01_KEY}' available. No other benchmarks defined!"
             )
 
-        return cls(benchmark=benchmark, autoload=autoload,
-                   subset=available_tasks)
+        return cls(benchmark=benchmark, autoload=autoload, subset=available_tasks)
 
     @classmethod
     def from_dict(cls, d):
@@ -251,8 +251,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             )
         elif not missing_keys and extra_keys:
             raise ValueError(
-                f"Extra keys {extra_keys} for {cls.__class__.__name__} "
-                f"present!"
+                f"Extra keys {extra_keys} for {cls.__class__.__name__} " f"present!"
             )
         elif missing_keys and extra_keys:
             raise ValueError(
@@ -458,8 +457,9 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         s += f"\n\tis valid: {valid}"
 
         if not recorded:
-            s += "\n\n Benchmark is not fully recorded; limited information " \
-                 "shown."
+            s += (
+                "\n\n Benchmark is not fully recorded; limited information " "shown."
+            )
         if not valid:
             s += "\n\n Benchmark is not valid; limited information shown."
 
@@ -473,12 +473,12 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             for t in self.tasks:
 
                 if t.metadata.task_type == REG_KEY:
-                    score_text = f"MAE mean: " \
-                                 f"{self.scores[t.dataset_name].mae.mean}"
+                    score_text = (
+                        f"MAE mean: " f"{self.scores[t.dataset_name].mae.mean}"
+                    )
                 else:
                     score_text = (
-                        f"ROCAUC mean: "
-                        f"{self.scores[t.dataset_name].rocauc.mean}"
+                        f"ROCAUC mean: " f"{self.scores[t.dataset_name].rocauc.mean}"
                     )
                 s += f"\n\t- '{t.dataset_name}' {score_text}"
 
@@ -526,8 +526,9 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         errors = self.validate()
         if errors:
             formatted_errors = pprint.pformat(errors)
-            logger.critical(f"Benchmark has errors! "
-                            f"Errors:\n {formatted_errors}")
+            logger.critical(
+                f"Benchmark has errors! " f"Errors:\n {formatted_errors}"
+            )
             return False
         else:
             return True

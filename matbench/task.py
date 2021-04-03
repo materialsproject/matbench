@@ -220,8 +220,10 @@ class MatbenchTask(MSONable, MSONable2File):
             self.df = load(self.dataset_name)
             logger.info(f"Dataset '{self.dataset_name} loaded.")
         else:
-            logger.info(f"Dataset {self.dataset_name} already loaded; "
-                        f"not reloading dataset.")
+            logger.info(
+                f"Dataset {self.dataset_name} already loaded; "
+                f"not reloading dataset."
+            )
 
     def get_info(self):
         logger.info(self.info)
@@ -262,8 +264,7 @@ class MatbenchTask(MSONable, MSONable2File):
             if as_type == "tuple":
                 return self._get_data_from_df(ids, as_type)[0]
             elif as_type == "df":
-                return self._get_data_from_df(ids, as_type)[
-                    self.metadata.task_type]
+                return self._get_data_from_df(ids, as_type)[self.metadata.task_type]
 
     def record(self, fold_number, predictions, params=None):
         """Record the test data as well as parameters about the model
@@ -301,8 +302,7 @@ class MatbenchTask(MSONable, MSONable2File):
                     f"inputs! {len(predictions)} != {len(split_ids)}"
                 )
 
-            ids_to_predictions = {split_ids[i]: p for i, p in
-                                  enumerate(predictions)}
+            ids_to_predictions = {split_ids[i]: p for i, p in enumerate(predictions)}
             self.results[fold_key][self._DATA_KEY] = ids_to_predictions
 
             if not isinstance(params, (dict, type(None))):
@@ -374,8 +374,7 @@ class MatbenchTask(MSONable, MSONable2File):
 
             # Check for extra or missing keys inside each fold:
             # need params, scores, and data.
-            req_subfold_keys = [self._SCORES_KEY, self._DATA_KEY,
-                                self._PARAMS_KEY]
+            req_subfold_keys = [self._SCORES_KEY, self._DATA_KEY, self._PARAMS_KEY]
             extra_subfold_keys = [
                 k for k in self.results[fold_key] if k not in req_subfold_keys
             ]
@@ -393,8 +392,7 @@ class MatbenchTask(MSONable, MSONable2File):
                     )
                 if subkey == self._SCORES_KEY:
                     scores = self.results[fold_key][subkey]
-                    metrics = REG_METRICS if task_type == REG_KEY \
-                        else CLF_METRICS
+                    metrics = REG_METRICS if task_type == REG_KEY else CLF_METRICS
                     for m in metrics:
                         if m not in scores:
                             raise KeyError(
@@ -486,9 +484,7 @@ class MatbenchTask(MSONable, MSONable2File):
             REG_METRICS if self.metadata.task_type == REG_KEY else CLF_METRICS
         )
         scores = {}
-        self._check_all_folds_recorded(
-            "Cannot score unless all folds are recorded!"
-        )
+        self._check_all_folds_recorded("Cannot score unless all folds are recorded!")
         for mk in metric_keys:
             metric = {}
 
@@ -526,5 +522,3 @@ class MatbenchTask(MSONable, MSONable2File):
             (bool): True if all folds are recorded, False otherwise.
         """
         return all([v for v in self.is_recorded.values()])
-
-

@@ -3,8 +3,8 @@ Utility functions for data operations such as loading dataframes
 and scoring.
 """
 
-import math
 import logging
+import math
 
 from matminer.datasets import load_dataset
 
@@ -57,8 +57,7 @@ def load(dataset_name, dataset_metadata=mbv01_metadata):
 
     id_n_zeros = math.floor(math.log(df.shape[0], 10)) + 1
     mpcontribs_prefix = dataset_name.replace("matbench", "mb").replace("_", "-")
-    df[MBID_KEY] = [f"{mpcontribs_prefix}-{i + 1:0{id_n_zeros}d}"
-                    for i in df.index]
+    df[MBID_KEY] = [f"{mpcontribs_prefix}-{i + 1:0{id_n_zeros}d}" for i in df.index]
 
     df = df.set_index(MBID_KEY)
     df = df[
