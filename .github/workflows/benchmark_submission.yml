@@ -1,4 +1,4 @@
-name: LABEL_CHECK
+name: Benchmark Submission Workflow
 on:
   pull_request:
     types: [opened, labeled]
@@ -10,7 +10,14 @@ jobs:
       id: checkLabel
       with:
         label: new_benchmark
-    - name: Does 'pull_request' has ${{ steps.checkLabel.outputs.checkedLabel }} label?
+    - name: Run submission check if contains new_benchmark label (${{ steps.checkLabel.outputs.hasLabel }})
       if: ${{ steps.checkLabel.outputs.hasLabel }}
-      run: echo "${{ steps.checkLabel.outputs.hasLabel }}"
+      run: |
+        pip install --upgrade pip
+        pip install wheel setuptools
+        pip install -e . -r requirements.txt
+        pip install -r requirements-dev.txt
+        python -m unittest scripts/test_submission.py
+
+
 

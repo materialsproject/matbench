@@ -8,8 +8,8 @@ from matbench.bench import MatbenchBenchmark
 
 BENCHMARKS_DIR = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir), "benchmarks")
 
-# LOCAL = False
-LOCAL = True
+LOCAL = False
+# LOCAL = True
 
 INFO_FILE = "info.json"
 NOTEBOOK_FILE = "notebook.ipynb"
@@ -42,7 +42,6 @@ class BenchmarkSubmissionTest(TestCase):
                 for required_file in (INFO_FILE, RESULTS_FILE, NOTEBOOK_FILE):
 
                     full_path = os.path.join(bmark_path, required_file)
-                    print(full_path)
                     self.assertTrue(os.path.exists(full_path))
 
                     if required_file == INFO_FILE:
