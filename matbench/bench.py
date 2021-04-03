@@ -125,7 +125,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             )
 
         logger.info(
-            f"Created benchmark '{benchmark}' "
+            f"Initialized benchmark '{benchmark}' "
             f"with {len(available_tasks)} tasks: \n"
             f"{pprint.pformat(list(available_tasks))}"
         )
@@ -347,12 +347,13 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         """
         tasksd = {mbt.dataset_name: mbt.as_dict() for mbt in self.tasks}
+        tasksd_jsonable = immutify_dictionary(tasksd)
 
         d = {
             "@module": self.__class__.__module__,
             "@class": self.__class__.__name__,
             self._VERSION_KEY: VERSION,
-            self._TASKS_KEY: tasksd,
+            self._TASKS_KEY: tasksd_jsonable,
             self._USER_METADATA_KEY: self.user_metadata,
             self._BENCHMARK_KEY: self.benchmark_name,
             self._DATESTAMP_KEY: datetime.datetime.utcnow().strftime(
@@ -469,7 +470,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                 s += f"\n\t- '{t.dataset_name}: recorded={t.all_folds_recorded}"
 
         if valid and recorded:
-            s += "\n\nResults:\n"
+            s += "\n\nResults:"
             for t in self.tasks:
 
                 if t.metadata.task_type == REG_KEY:
