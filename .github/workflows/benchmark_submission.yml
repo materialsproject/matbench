@@ -13,3 +13,4 @@ jobs:
     - name: Does 'pull_request' has ${{ steps.checkLabel.outputs.checkedLabel }} label?
       if: ${{ steps.checkLabel.outputs.hasLabel }}
       run: echo "${{ steps.checkLabel.outputs.hasLabel }}"
+
