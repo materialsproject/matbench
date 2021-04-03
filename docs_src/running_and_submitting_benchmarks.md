@@ -162,12 +162,12 @@ Follow each of the steps below to create a pull request to the [Matbench repo](h
 
 ![example_notebook](static/notebook_example.png)
 
-The notebook should generally follow the format of the example notebook `/benchmarks/matbench_v0.1_random/notebook.ipynb`. Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and **most importantly, a link to a publication for your algorithm**. 
+The notebook should generally follow the format of the example notebook `/benchmarks/matbench_v0.1_dummy/notebook.ipynb`. Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and **most importantly, a link to a publication for your algorithm**. 
 
 Aside from that, what goes in your notebook is pretty freeform; **put whatever is needed to
 allow someone else to train and run your algorithm on the benchmark**. Also feel free to include extra code and small supporting files (<1MB) if they are crucial to the code working.
 
-You can find an example for all of these files in the repo under `/benchmarks/matbench_v0.1_random.`
+You can find an example for all of these files in the repo under `/benchmarks/matbench_v0.1_dummy.`
 
 
 
