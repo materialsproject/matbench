@@ -30,6 +30,7 @@ def generate_info_pages():
     pass
 
 
+
 if __name__ == "__main__":
 
     logging.root.setLevel(logging.DEBUG)
