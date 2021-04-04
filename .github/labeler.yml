@@ -1,0 +1,13 @@
+new_benchmark:
+  - benchmarks/**/*
+
+code:
+  - matbench/*
+  - matbench/**/*
+
+docs:
+  - docs_src/*
+  - docs_src/**/*
+  - docs/*
+  - docs/**/*
+  - docs/**/**/*

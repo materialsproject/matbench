@@ -196,7 +196,5 @@ You can find info on how to make a pull request [on GitHub's official documentat
 
 ![pr example](static/pr_example.png)
 
-Please label your pr with the `new_benchmark` label! This will ensure all the automated tests are run on your submission.
-
 Your submission (output file, metadata, and notebook) will be automatically validated by the workflows on the matbench repo; once it's validated, it will be merged and will
 automatically appear in the [Full Benchmark Data](full_benchmark_data.md)!

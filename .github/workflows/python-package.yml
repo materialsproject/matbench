@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: Core Code CI Workflow
+name: CI
 
 on:
   push:
@@ -51,7 +51,7 @@ jobs:
           pip install -r requirements-dev.txt
           source scripts/linting_check.sh
 
-  coverage:
+  code_coverage:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -66,4 +66,24 @@ jobs:
           python scripts/coverage.py
 
 
+  benchmark_submission:
+    runs-on: ubuntu-latest
+    steps:
 
+    - uses: actions/checkout@v2
+    - name: Set up python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    # Label the PR as a benchmark submission
+    - uses: actions/labeler@main
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+    - name: Run submission check
+      run: |
+        pip install --upgrade pip
+        pip install wheel setuptools
+        pip install -e . -r requirements.txt
+        pip install -r requirements-dev.txt
+        python -m unittest scripts/test_submission.py
