@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 
 
 version = "0.1"
-module_dir = os.path.dirname(os.path.abspath(__file__))
-with open(os.path.join(module_dir, "requirements.txt"), "r") as f:
+MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(MODULE_DIR, "requirements.txt"), "r") as f:
     requirements = f.read().replace(" ", "").split("\n")
 
 if __name__ == "__main__":
@@ -20,7 +20,8 @@ if __name__ == "__main__":
         license='modified BSD',
         packages=find_packages(where="."),
         package_data={
-            "matbench": ["*.json"]
+            "matbench": ["*.json"],
+            "matbench.tests": ["*.json"]
         },
         zip_safe=False,
         install_requires=requirements,
