@@ -75,11 +75,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.9
-
-    # Label the PR as a benchmark submission
-    - uses: actions/labeler@main
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
     - name: Run submission check
       run: |
         pip install --upgrade pip
