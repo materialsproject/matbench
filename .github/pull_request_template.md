@@ -42,6 +42,10 @@ Example
 If you have other short/small files required for the notebook, please give a brief overview of what each one is used for and how to use it.
 
 
+### Label the pull request
+
+Label the pull request with the `new_benchmark` label.
+
 ## Core code/data/docs changes
 
 
@@ -60,3 +64,8 @@ Indicate if your code requires new tests and whether they are included with your
 ### Closed issues or PRs
 
 Indicate if your PR closes any currently open issues or supercedes any other currently open PRs.
+
+
+### Label the pull request
+
+Label the pull request with the `code` or `docs` labels, depending on which one (or both) applies.
