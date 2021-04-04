@@ -17,8 +17,6 @@ def generate_scaled_errors_plot(all_data):
 
 
 def generate_general_purpose_leaderboard(all_data, benchmark_name):
-
-
     pass
 
 
@@ -26,8 +24,21 @@ def generate_per_task_leaderboards():
     pass
 
 
-def generate_info_pages():
+def generate_info_pages(all_data, benchmark_name):
     pass
+
+
+def generate_info_page(mb: MatbenchBenchmark, info: dict):
+
+    is_complete = mb.is_complete
+
+    algo_name = info["algorithm"]
+    algo_desc = info["algorithm_long"]
+
+
+    header = "# Data page for "
+
+
 
 
 
