@@ -30,6 +30,8 @@ def mean_absolute_percentage_error(y_true, y_pred):
     Returns:
 
     """
+    y_true = np.asarray(y_true)
+    y_pred = np.asarray(y_pred)
     mask = y_true != 0
     return np.mean((np.fabs((y_true - y_pred) / y_true))[mask])
 
