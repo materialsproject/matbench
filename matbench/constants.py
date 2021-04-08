@@ -17,7 +17,7 @@ from sklearn.metrics import (
 )
 
 
-def mean_absolute_percentage_error(y_true, y_pred, threshold=1e5):
+def mean_absolute_percentage_error(y_true, y_pred, threshold=1e-5):
     """Compute mean absolute percentage error, masked
 
     Masking is for when y_true is zero (causing a
