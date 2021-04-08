@@ -57,7 +57,7 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     for task in mb.tasks:
         task_header = f"#### `{task.dataset_name}`\n\n"
 
-        fold_data_header = f"###### Scores and parameters on individual folds\n\n"
+        fold_data_header = f"###### Fold scores\n\n"
 
 
         fold_table = "| fold | " + " | ".join(task.scores.keys()) + " |\n" + \
@@ -75,7 +75,7 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
 
 
 
-        fold_dist_header = f"###### Score distributions among folds\n\n"
+        fold_dist_header = f"###### Fold score stats\n\n"
         dist_table = "| metric | mean | max | min | std |\n" \
                      "|--------|------|-----|-----|-----|\n"
         for metric_name, stats in task.scores.items():
@@ -83,7 +83,19 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
 
         dist_table += "\n\n"
 
-        task_section = task_header + fold_data_header + fold_table + fold_dist_header + dist_table + "\n\n"
+
+
+
+        params_header = "###### Fold parameters\n\n"
+        params_table = "| fold | params dict|\n" \
+                       "|------|------------|\n"
+        for fold_key, fold_data in task.results.items():
+            fold_line = f"| {fold_key} | `{fold_data.parameters}` |\n"
+            params_table += fold_line
+
+        params_table += "\n\n"
+
+        task_section = task_header + fold_data_header + fold_table + fold_dist_header + dist_table + params_header + params_table + "\n\n"
         data_txt += task_section
 
     final_txt = header + desc + refs + user_metadata + metadata_header + all_tasks_header + data_txt

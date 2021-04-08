@@ -17,11 +17,13 @@ from sklearn.metrics import (
 )
 
 
-def mean_absolute_percentage_error(y_true, y_pred):
+def mean_absolute_percentage_error(y_true, y_pred, threshold=1e5):
     """Compute mean absolute percentage error, masked
 
-    Masking is for when y_true = 0, hence causing a divide
-    by zero error.
+    Masking is for when y_true is zero (causing a
+    divide by zero error) or when y_true is very small
+    (causing a massive skewing in the absolute percentage
+    error).
 
     **Note: THIS WILL IGNORE ALL ENTRIES WHERE y_true IS
     0, hence the MAPE score is not representative of all
@@ -35,7 +37,7 @@ def mean_absolute_percentage_error(y_true, y_pred):
 
     """
     y_true = np.asarray(y_true)
-    mask = y_true != 0
+    mask = np.abs(y_true) > threshold
     y_pred = np.asarray(y_pred)
     y_true = y_true[mask]
     y_pred = y_pred[mask]
