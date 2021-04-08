@@ -59,16 +59,17 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
 
         fold_data_header = f"###### Fold scores\n\n"
 
-
-        fold_table = "| fold | " + " | ".join(task.scores.keys()) + " |\n" + \
-                     "|------ " * (len(list(task.scores.keys())) + 1) + "|\n"
+        # needed score order as the score order is not same between fold scores and task scores
+        score_order = list(task.scores.keys())
+        score_order_display = ["mape*" if s == "mape" else s for s in score_order]
+        fold_table = "| fold | " + " | ".join(score_order_display) + " |\n" + \
+                     "|------ " * (len(score_order) + 1) + "|\n"
         for fold_key, fold_data in task.results.items():
             fold_line = f" | {fold_key} "
 
-            # todo: this ordering is goofed up
-            for metric_name, metric_val in fold_data.scores.items():
-                formatted_val = format_float(metric_val)
-                fold_line += f"| {formatted_val}"
+            for metric_name in score_order:
+                metric_val = fold_data.scores[metric_name]
+                fold_line += f"| {format_float(metric_val)}"
             fold_line += " |\n"
             fold_table += fold_line
         fold_table += "\n\n"
@@ -79,7 +80,9 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
         dist_table = "| metric | mean | max | min | std |\n" \
                      "|--------|------|-----|-----|-----|\n"
         for metric_name, stats in task.scores.items():
-            dist_table += f"| {metric_name} | {format_float(stats.mean)} | {format_float(stats.max)} | {format_float(stats.min)} | {format_float(stats.std)} |\n"
+            # add an asterisk next to mape since the metric is edited to not skew data on very small magnitude values
+            display_name = metric_name + "*" if metric_name == "mape" else metric_name
+            dist_table += f"| {display_name} | {format_float(stats.mean)} | {format_float(stats.max)} | {format_float(stats.min)} | {format_float(stats.std)} |\n"
 
         dist_table += "\n\n"
 
