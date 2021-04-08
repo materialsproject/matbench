@@ -25,13 +25,17 @@ def mean_absolute_percentage_error(y_true, y_pred, threshold=1e-5):
     (causing a massive skewing in the absolute percentage
     error).
 
-    **Note: THIS WILL IGNORE ALL ENTRIES WHERE y_true IS
-    0, hence the MAPE score is not representative of all
-    entries if the truth array contains 0.**
+    **Note: THIS WILL IGNORE ALL ENTRIES WHERE y_true's
+    MAGNITUDE IS less than the threshold, hence the
+    MAPE score is not representative of all
+    entries if the truth array contains entries with
+    magnitude very close to 0.**
 
     Args:
         y_true (np.ndarray): A 1-D array of true values
         y_pred (np.ndarray): A 1-D array of predicted values
+        threshold (float): Entries with magnitude below this
+            value will be ignored in the output.
 
     Returns:
 
