@@ -152,7 +152,7 @@ Follow each of the steps below to create a pull request to the [Matbench repo](h
   - `"authors"`: The author names for this PR
   - `"algorithm"`: The short or abbreviated name for your algorithm, e.g., `"MegNET v1.0"`.
   - `"algorithm_long"`: A longer description of your algorithm, to be shown as details for your results.
-  - `"bibtext_refs"`: A comprehensive list of references for your algorithm, including manuscripts and preprints for the algorithm itself, formatted as bibtex.
+  - `"bibtex_refs"`: A comprehensive list of references for your algorithm, including manuscripts and preprints for the algorithm itself, formatted as bibtex.
   - `"notes"`: Any other freeform notes you'd like to include as details for your algorithm/submission.
 
 
