@@ -23,6 +23,10 @@ def mean_absolute_percentage_error(y_true, y_pred):
     Masking is for when y_true = 0, hence causing a divide
     by zero error.
 
+    **Note: THIS WILL IGNORE ALL ENTRIES WHERE y_true IS
+    0, hence the MAPE score is not representative of all
+    entries if the truth array contains 0.**
+
     Args:
         y_true (np.ndarray): A 1-D array of true values
         y_pred (np.ndarray): A 1-D array of predicted values
@@ -31,9 +35,11 @@ def mean_absolute_percentage_error(y_true, y_pred):
 
     """
     y_true = np.asarray(y_true)
-    y_pred = np.asarray(y_pred)
     mask = y_true != 0
-    return np.mean((np.fabs((y_true - y_pred) / y_true))[mask])
+    y_pred = np.asarray(y_pred)
+    y_true = y_true[mask]
+    y_pred = y_pred[mask]
+    return np.mean(np.fabs((y_true - y_pred) / y_true))
 
 
 VERSION = "0.1.0"
