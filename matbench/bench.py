@@ -569,7 +569,6 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         """
         return self._determine_completeness(completeness_type=STRUCTURE_KEY)
 
-
     @property
     def is_recorded(self):
         """All tasks in this benchmark (whether or not it includes all tasks in
