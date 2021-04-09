@@ -71,6 +71,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             <<MatbenchTask object>>
     """
 
+    # For serialization
     _VERSION_KEY = "version"
     _BENCHMARK_KEY = "benchmark_name"
     _USER_METADATA_KEY = "user_metadata"
@@ -78,6 +79,9 @@ class MatbenchBenchmark(MSONable, MSONable2File):
     _DATESTAMP_KEY = "datestamp"
     _DATESTAMP_FMT = "%Y.%m.%d %H:%M.%S"
     _HASH_KEY = "hash"
+
+    # For class usage
+    ALL_KEY = "all"
 
     def __init__(self, benchmark=MBV01_KEY, autoload=False, subset=None):
         """
@@ -160,15 +164,16 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             - preset: 'all' - All problems in matbench v0.1
 
         Args:
-            benchmark_name
-            preset_name
-            autoload:
+            benchmark (str): Name of the benchmark set you'd like to use. The
+                only supported benchmark set currently is "matbench_v0.1"
+            preset_name (str): The name of the preset
+            autoload (bool): If true, automatically loads all the datasets
+                upon instantiation. Be warned; this can take a while.
 
         Returns:
             (MatbenchBenchmark object)
 
         """
-        all_key = "all"
         if benchmark == MBV01_KEY:
             if preset_name == STRUCTURE_KEY:
                 available_tasks = [
@@ -190,7 +195,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                 available_tasks = [
                     k for k, v in mbv01_metadata.items() if v.task_type == CLF_KEY
                 ]
-            elif preset_name == all_key:
+            elif preset_name == cls.ALL_KEY:
                 available_tasks = [k for k, v in mbv01_metadata.items()]
             else:
                 valid_keys = [
@@ -198,7 +203,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                     COMPOSITION_KEY,
                     CLF_KEY,
                     REG_KEY,
-                    all_key,
+                    cls.ALL_KEY,
                 ]
                 raise ValueError(
                     f"Preset name '{preset_name}' not recognized for "
@@ -338,6 +343,55 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         # MatbenchTask automatically validates files during its from_dict
         obj.user_metadata = user_metadata
         return obj
+
+    def _determine_completeness(self, completeness_type):
+        """Determine the completeness of this benchmark.
+
+        Completeness means the tasks are included (but not
+        necessarily recorded yet) in the benchmark.
+
+        Supported completeness types are:
+        - "all": All tasks are included
+        - "composition": All composition tasks are included
+        - "structure": All structure tasks are included
+
+        Args:
+            completeness_type (str): One of the above completeness
+                types.
+
+        Returns:
+            (bool) True if this benchmark object is complete
+                with respect to the completeness type.
+
+        """
+
+        print("determining completeness")
+
+        if completeness_type == self.ALL_KEY:
+            required_tasks = list(self.metadata.keys())
+        elif completeness_type == COMPOSITION_KEY:
+            required_tasks = \
+                [
+                    k for k, v in self.metadata.items() if
+                    v.input_type == COMPOSITION_KEY
+                ]
+        elif completeness_type == STRUCTURE_KEY:
+            required_tasks = \
+                [
+                    k for k, v in self.metadata.items() if
+                    v.input_type == STRUCTURE_KEY
+                ]
+        else:
+            raise ValueError(
+                "Only supported completeness types are "
+                f"{[self.ALL_KEY, COMPOSITION_KEY, STRUCTURE_KEY]}"
+            )
+
+        for task in required_tasks:
+            if task not in self.tasks_map:
+                return False
+        else:
+            return True
 
     def as_dict(self):
         """Overridden from MSONable.as_dict, get dict repr of this obj
@@ -495,11 +549,26 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             (bool)
 
         """
-        for task in self.metadata:
-            if task not in self.tasks_map:
-                return False
-        else:
-            return True
+        return self._determine_completeness(completeness_type=self.ALL_KEY)
+
+    @property
+    def is_composition_complete(self):
+        """Determine if all composition tasks for this benchmark are included
+
+        Returns:
+            (bool)
+        """
+        return self._determine_completeness(completeness_type=COMPOSITION_KEY)
+
+    @property
+    def is_structure_complete(self):
+        """Determine if all structure tasks for this benchmark are included
+
+        Returns:
+            (bool)
+        """
+        return self._determine_completeness(completeness_type=STRUCTURE_KEY)
+
 
     @property
     def is_recorded(self):

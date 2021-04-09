@@ -1,13 +1,17 @@
 import os
 import json
+import copy
 import logging
 import pprint
+from operator import gt, lt
 
 import tqdm
 from monty.serialization import loadfn
 
 
 from matbench.bench import MatbenchBenchmark
+from matbench.constants import MBV01_KEY, CLF_KEY, REG_KEY
+from matbench.metadata import mbv01_metadata
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 DOCS_DIR = os.path.join(THIS_DIR, "../docs_src")
@@ -24,8 +28,77 @@ def generate_general_purpose_leaderboard(all_data, benchmark_name):
     pass
 
 
-def generate_per_task_leaderboards():
-    pass
+def generate_per_task_leaderboards(all_data):
+
+    all_data_per_benchmark = {}
+
+    prefix = "Full%20Benchmark%20Data/"
+
+
+    for data_packet in all_data.values():
+        bmark_name = data_packet["results"].benchmark_name
+        if bmark_name in all_data_per_benchmark:
+            all_data_per_benchmark.append(data_packet)
+        else:
+            all_data_per_benchmark[bmark_name] = [data_packet]
+
+
+    for bmark_name, bmarks in all_data_per_benchmark:
+        if bmark_name == MBV01_KEY:
+            metadata = mbv01_metadata
+        else:
+            raise ValueError(f"No other benchmarks configured ('{bmark_name}')")
+
+        task_leaderboards = {t: {
+            "score": None,
+            "type": None
+            "link": None,
+            "algorithm": None
+        } for t in metadata.keys()}
+
+
+        gp_leaderboards = copy.deepcopy(task_leaderboards)
+
+
+        for bmark_data in bmarks:
+            mb = bmark_data["results"]
+            info = bmark_data["info"]
+            dir_name_short = bmark_data["dir_name_short"]
+
+
+            for lea
+
+            for task in mb.tasks:
+                task_name = task.dataset_name
+
+                if task.metadata.task_type == REG_KEY:
+                    score = task.scores.mae.mean
+
+                    # Better regression tasks have lower mean mae
+                    op = lt
+                elif task.metadata.task_type == CLF_KEY:
+                    score = task.scores.rocauc.mean
+
+                    # Better classification tasks have higher mean rocauc
+                    op = gt
+                else:
+                    raise ValueError
+
+                current_best_score = task_leaderboards[task_name]["score"]
+
+                # this task's score is better or it is the first so far
+                if current_best_score is None or op(score, current_best_score):
+                    task_leaderboards[task_name]["score"] = score
+                    task_leaderboards[task_name]["link"] = prefix + dir_name_short
+                    task_leaderboards[task_name]["algorithm"] = info["algorithm"]
+                    task_leaderboards[task_name]["type"] = task.metadata.task_type
+                # the existing task score is best
+                else:
+                    pass
+
+
+
+
 
 
 def generate_info_pages(all_data):
@@ -39,6 +112,7 @@ def generate_info_pages(all_data):
         doc_path = os.path.join(FULL_DATA_DIR, f"{dir_name_short}.md")
         with open(doc_path, "w") as f:
             f.write(doc_str)
+
 
 def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     is_complete = mb.is_complete
@@ -145,4 +219,5 @@ if __name__ == "__main__":
 
 
     print("DOCS: ALL DATA ACQUIRED")
-    generate_info_pages(all_data)
+    # generate_info_pages(all_data)
+    generate_per_task_leaderboards(all_data)
