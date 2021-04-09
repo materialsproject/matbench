@@ -153,6 +153,29 @@ class TestMatbenchBenchmark(unittest.TestCase):
         with self.assertRaises(ValueError):
             MatbenchBenchmark.from_dict(d_test)
 
+    def test_completeness(self):
+        mb = MatbenchBenchmark(benchmark=MBV01_KEY, subset=["matbench_steels"])
+
+        self.assertFalse(mb.is_complete)
+        self.assertFalse(mb.is_composition_complete)
+        self.assertFalse(mb.is_structure_complete)
+
+        mb = MatbenchBenchmark.from_preset(MBV01_KEY,
+                                           preset_name=COMPOSITION_KEY)
+        self.assertFalse(mb.is_complete)
+        self.assertTrue(mb.is_composition_complete)
+        self.assertFalse(mb.is_structure_complete)
+
+        mb = MatbenchBenchmark.from_preset(MBV01_KEY, preset_name=STRUCTURE_KEY)
+        self.assertFalse(mb.is_complete)
+        self.assertFalse(mb.is_composition_complete)
+        self.assertTrue(mb.is_structure_complete)
+
+        mb = MatbenchBenchmark.from_preset(MBV01_KEY, preset_name="all")
+        self.assertTrue(mb.is_complete)
+        self.assertTrue(mb.is_composition_complete)
+        self.assertTrue(mb.is_structure_complete)
+
     def generate_benchmark_json_files(self, write=True, full_set=False):
         """
         Generate new benchmark files from a random model.

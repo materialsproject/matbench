@@ -14,8 +14,6 @@ theme:
     accent: green
   logo: static/matbench_logo.png
   favicon: static/matbench_logo_favicon.png
-#  features:
-#    - navigation.tracking
   hide:
     - natigation
     - toc
@@ -25,14 +23,7 @@ plugins:
 
 markdown_extensions:
   - meta
-#  - admonition
-#  - codehilite
-#  - attr_list
-#  - footnotes
-#  - toc:
-#      permalink: true
   - pymdownx.highlight
   - pymdownx.superfences
 
 repo_url: https://github.com/hackingmaterials/matbench
-#docs_dir: src
