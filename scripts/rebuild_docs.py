@@ -3,14 +3,17 @@ import json
 import logging
 import pprint
 
+import tqdm
 from monty.serialization import loadfn
 
 
 from matbench.bench import MatbenchBenchmark
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_DOCS_DIR = os.path.join(THIS_DIR, "../docs_src/static")
+DOCS_DIR = os.path.join(THIS_DIR, "../docs_src")
+STATIC_DOCS_DIR = os.path.join(DOCS_DIR, "static")
 BENCHMARKS_DIR = os.path.join(THIS_DIR, "../benchmarks")
+FULL_DATA_DIR = os.path.join(DOCS_DIR, "Full Benchmark Data")
 
 
 def generate_scaled_errors_plot(all_data):
@@ -25,12 +28,17 @@ def generate_per_task_leaderboards():
     pass
 
 
-def generate_info_pages(all_data, benchmark_name):
-    """
+def generate_info_pages(all_data):
+    for bmark_name, bmark_data in tqdm.tqdm(all_data.items(), desc="DOCS: FULL DATA DOCS GENERATED"):
+        info = bmark_data["info"]
+        mb = bmark_data["results"]
+        dir_name_short = bmark_data["dir_name_short"]
 
-    """
-    pass
+        doc_str = generate_info_page(mb, info, dir_name_short)
 
+        doc_path = os.path.join(FULL_DATA_DIR, f"{dir_name_short}.md")
+        with open(doc_path, "w") as f:
+            f.write(doc_str)
 
 def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     is_complete = mb.is_complete
@@ -40,8 +48,9 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     refs = info["bibtex_refs"]
     notes = info["notes"]
 
-    header = f"# Data page for {algo_name} on `{mb.benchmark_name}`\n\n"
-    desc = f"### Algorithm description: \n\n{algo_desc}\n\n{notes}\n\nRaw data download and example notebook available at https://github.com/hackingmaterials/matbench/tree/main/benchmarks/{dir_name_short}.\n\n"
+    header = f"#`{mb.benchmark_name}`: {algo_name}\n\n"
+    url = f"https://github.com/hackingmaterials/matbench/tree/main/benchmarks/{dir_name_short}"
+    desc = f"### Algorithm description: \n\n{algo_desc}\n\n{notes}\n\nRaw data download and example notebook available [on the matbench repo]({url}).\n\n"
     refs = f"### References (in bibtex format): \n\n```\n{refs}\n```\n\n"
 
     user_metadata = f"### User metadata:\n\n```\n{pprint.pformat(mb.user_metadata)}\n```\n\n"
@@ -132,8 +141,8 @@ if __name__ == "__main__":
             info = loadfn(info_path)
 
             name = info["algorithm"]
-            all_data[name] = {"results": mb, "info": info}
+            all_data[name] = {"results": mb, "info": info, "dir_name_short": d}
 
-            txt = generate_info_page(mb, info, d)
-            print(txt)
 
+    print("DOCS: ALL DATA ACQUIRED")
+    generate_info_pages(all_data)
