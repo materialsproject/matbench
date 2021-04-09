@@ -23,13 +23,13 @@ FULL_DATA_DIR = os.path.join(DOCS_DIR, "Full Benchmark Data")
 def generate_scaled_errors_plot(all_data):
     pass
 
-
-def generate_general_purpose_leaderboard(all_data, benchmark_name):
+def generate_general_purpose_leaderboard(gp_leaderboard_data_by_bmark):
     pass
 
+def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
+    pass
 
-def generate_per_task_leaderboards(all_data):
-
+def organize_task_data(all_data):
     all_data_per_benchmark = {}
 
     prefix = "Full%20Benchmark%20Data/"
@@ -43,30 +43,28 @@ def generate_per_task_leaderboards(all_data):
             all_data_per_benchmark[bmark_name] = [data_packet]
 
 
-    for bmark_name, bmarks in all_data_per_benchmark:
+    gp_leaderboard_data_by_bmark = {}
+    task_leaderboards_data_by_bmark = {}
+
+    for bmark_name, bmarks in all_data_per_benchmark.items():
         if bmark_name == MBV01_KEY:
             metadata = mbv01_metadata
         else:
             raise ValueError(f"No other benchmarks configured ('{bmark_name}')")
 
-        task_leaderboards = {t: {
+        gp_leaderboard = {t: {
             "score": None,
-            "type": None
+            "type": None,
             "link": None,
             "algorithm": None
         } for t in metadata.keys()}
 
-
-        gp_leaderboards = copy.deepcopy(task_leaderboards)
-
+        task_leaderboards = {t: [] for t in metadata.keys()}
 
         for bmark_data in bmarks:
             mb = bmark_data["results"]
             info = bmark_data["info"]
             dir_name_short = bmark_data["dir_name_short"]
-
-
-            for lea
 
             for task in mb.tasks:
                 task_name = task.dataset_name
@@ -84,18 +82,36 @@ def generate_per_task_leaderboards(all_data):
                 else:
                     raise ValueError
 
-                current_best_score = task_leaderboards[task_name]["score"]
 
-                # this task's score is better or it is the first so far
-                if current_best_score is None or op(score, current_best_score):
-                    task_leaderboards[task_name]["score"] = score
-                    task_leaderboards[task_name]["link"] = prefix + dir_name_short
-                    task_leaderboards[task_name]["algorithm"] = info["algorithm"]
-                    task_leaderboards[task_name]["type"] = task.metadata.task_type
-                # the existing task score is best
-                else:
-                    pass
+                # Include both GP and structure-required algos on
+                # GP leaderboard, as there are 9 structure problems
+                # across multiple dataset sizes
+                if mb.is_complete or mb.is_structure_complete:
+                    current_best_score = gp_leaderboard[task_name]["score"]
 
+                    # this task's score is better or it is the first so far
+                    if current_best_score is None or op(score, current_best_score):
+                        gp_leaderboard[task_name]["score"] = score
+                        gp_leaderboard[task_name]["link"] = prefix + dir_name_short
+                        gp_leaderboard[task_name]["algorithm"] = info["algorithm"]
+                        gp_leaderboard[task_name]["type"] = task.metadata.task_type
+                    # the existing task score is best
+                    else:
+                        pass
+
+                # Add it to the task-specific leaderboard, as all entries will be included
+                # there
+                task_leaderboards[task_name].append({
+                    "scores": task.scores,
+                    "link": prefix + dir_name_short,
+                    "algorithm": info["algorithm"],
+                    "type": task.metadata.task_type
+                })
+
+            gp_leaderboard_data_by_bmark[bmark_name] = gp_leaderboard
+            task_leaderboards_data_by_bmark[bmark_name] = task_leaderboards
+
+        return gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark
 
 
 
@@ -220,4 +236,9 @@ if __name__ == "__main__":
 
     print("DOCS: ALL DATA ACQUIRED")
     # generate_info_pages(all_data)
-    generate_per_task_leaderboards(all_data)
+
+    gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark = organize_task_data(all_data)
+
+
+    pprint.pprint(gp_leaderboard_data_by_bmark)
+    pprint.pprint(task_leaderboards_data_by_bmark)
