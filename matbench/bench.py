@@ -364,9 +364,6 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                 with respect to the completeness type.
 
         """
-
-        print("determining completeness")
-
         if completeness_type == self.ALL_KEY:
             required_tasks = list(self.metadata.keys())
         elif completeness_type == COMPOSITION_KEY:
