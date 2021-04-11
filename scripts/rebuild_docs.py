@@ -9,6 +9,7 @@ import tqdm
 from monty.serialization import loadfn
 import pandas as pd
 import plotly.express as px
+import numpy as np
 
 from matbench.task import MatbenchTask
 from matbench.bench import MatbenchBenchmark
@@ -25,58 +26,80 @@ STATIC_DOCS_DIR = os.path.join(DOCS_DIR, "static")
 BENCHMARKS_DIR = os.path.join(THIS_DIR, "../benchmarks")
 FULL_DATA_DIR = os.path.join(DOCS_DIR, "Full Benchmark Data")
 PER_TASK_DIR = os.path.join(DOCS_DIR, "Per-Task Leaderboards")
+PER_TASK_DIR_PREFIX = "/Full%20Benchmark%20Data/"
 METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
+METADATA_DIR_PREFIX = "/Benchmark%20Info/"
+SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
+
+
+def generate_scaled_errors_graph(task_leaderboard_data_by_bmark):
+    for bmark_name, tasks_data in task_leaderboard_data_by_bmark.items():
+
+            if bmark == MBV01_KEY:
+
+                symbols = {
+                    "matbench_steels": "σᵧ",
+                    "matbench_jdft2d": "Eˣ",
+                    "matbench_phonons": "ωᵐᵃˣ",
+                    "matbench_dielectric": "𝑛",
+                    "matbench_expt_gap": "Eᵍ",
+                    "matbench_expt_is_metal": "Expt. Metallicity",
+                    "matbench_glass": "Metallic Glass",
+                    "matbench_log_kvrh": "log₁₀Kᵛʳʰ",
+                    "matbench_log_gvrh": "log₁₀Gᵛʳʰ",
+                    "matbench_perovskites": "Eᶠ",
+                    "matbench_mp_gap": "Eᵍ",
+                    "matbench_mp_is_metal": "Metallicity",
+                    "matbench_mp_e_form": "Eᶠ"
+                }
+
+                descriptors = {
+                    "matbench_steels": "Steel alloys",
+                    "matbench_jdft2d": "2D Materials",
+                    "matbench_phonons": "Phonons",
+                    "matbench_dielectric": "",
+                    "matbench_expt_gap": "Experimental",
+                    "matbench_expt_is_metal": "Classification",
+                    "matbench_glass": "Classification",
+                    "matbench_log_gvrh": "",
+                    "matbench_log_kvrh": "",
+                    "matbench_perovskites": "Perovskites, DFT",
+                    "matbench_mp_gap": "DFT",
+                    "matbench_mp_is_metal": "DFT",
+                    "matbench_mp_e_form": "DFT"
+                }
+
+                metadata = mbv01_metadata
+
+            else:
+                raise ValueError(
+                    f"Only {MBV01_KEY} defined as valid benchmark! '{bmark}' not supported.")
+
+
+        for task, entries in tasks_data.items():
+
+            for entry in entries:
+                mae = entry["scores"].mae.mean
+                algo_name = entry["algorithm"]
+                link = entry["link"]
+                scores = entry["scores"]
+
+
 
 
 def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
     # pprint.pprint(gp_leaderboard_data_by_bmark)
 
-
     for bmark, gp_data in gp_leaderboard_data_by_bmark.items():
+
         if bmark == MBV01_KEY:
-
-            symbols = {
-                "matbench_steels": "σᵧ",
-                "matbench_jdft2d": "Eˣ",
-                "matbench_phonons": "ωᵐᵃˣ",
-                "matbench_dielectric": "𝑛",
-                "matbench_expt_gap": "Eᵍ",
-                "matbench_expt_is_metal": "Expt. Metallicity",
-                "matbench_glass": "Metallic Glass",
-                "matbench_log_kvrh": "log₁₀Kᵛʳʰ",
-                "matbench_log_gvrh": "log₁₀Gᵛʳʰ",
-                "matbench_perovskites": "Eᶠ",
-                "matbench_mp_gap": "Eᵍ",
-                "matbench_mp_is_metal": "Metallicity",
-                "matbench_mp_e_form": "Eᶠ"
-            }
-
-            descriptors = {
-                "matbench_steels": "Steel alloys",
-                "matbench_jdft2d": "2D Materials",
-                "matbench_phonons": "Phonons",
-                "matbench_dielectric": "",
-                "matbench_expt_gap": "Experimental",
-                "matbench_expt_is_metal": "Classification",
-                "matbench_glass": "Classification",
-                "matbench_log_gvrh": "",
-                "matbench_log_kvrh": "",
-                "matbench_perovskites": "Perovskites, DFT",
-                "matbench_mp_gap": "DFT",
-                "matbench_mp_is_metal": "DFT",
-                "matbench_mp_e_form": "DFT"
-            }
-
             metadata = mbv01_metadata
-
         else:
-            raise ValueError(f"Only {MBV01_KEY} defined as valid benchmark! '{bmark}' not supported.")
+            raise ValueError(f"{bmark} not a valid benchmark!")
 
         table_data = {
             "task": [k for k in gp_data.keys()],
-            "symbol": [symbols[k] for k in gp_data.keys()],
             "n_samples": [metadata[k].num_entries for k in gp_data.keys()],
-            "descriptor": [descriptors[k] for k in gp_data.keys()],
             "algorithm": [d["algorithm"] for d in gp_data.values()],
             "completeness": [d["completeness"] for d in gp_data.values()],
             "link": [d["link"] for d in gp_data.values()],
@@ -85,10 +108,8 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
         }
 
         df_src = pd.DataFrame(table_data).sort_values(by="n_samples")
-        print(df_src)
-
         table_header = f"## Leaderboard: General Purpose Algorithms on `{bmark}`\n\n"
-        table_explanation = "Find more information about this benchmark on [the benchmark info page]("
+        table_explanation = f"Find more information about this benchmark on [the benchmark info page]({METADATA_DIR_PREFIX}{bmark})\n\n"
         table = "| Task name | Samples | Algorithm | Verified MAE (unit) or ROCAUC | Notes |\n" \
                 "|------------------|---------|-----------|----------------------|-------|\n"
         # create leaderboard table
@@ -113,12 +134,18 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
             table += f"| {task_name} | {samples} | {algorithm} | {score} | {notes} |\n"
         table += "\n\n"
 
-        print(table_header + table)
+        gp_leaderboard_txt = table_header + table_explanation + table
 
 
 
+        # Load the static index from the snippets dir
+        with open(os.path.join(SNIPPETS_DIR, "index.md")) as f:
+            static_txt = f.read()
 
-        # create scaled errors board
+
+        final_txt = gp_leaderboard_txt + static_txt
+
+
 
 
 def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
@@ -171,7 +198,8 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             df = pd.DataFrame(table_data)
             df = df.set_index("algorithm")
             sorting_column = "mean rocauc" if task_type == CLF_KEY else "mean mae"
-            df = df.sort_values(by=sorting_column)
+            sorting_order = True if task_type == REG_KEY else False
+            df = df.sort_values(by=sorting_column, ascending=sorting_order)
 
             mbt = MatbenchTask(task, autoload=False, benchmark=bmark_name)
 
@@ -257,7 +285,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
 def organize_task_data(all_data):
     all_data_per_benchmark = {}
 
-    prefix = "/Full%20Benchmark%20Data/"
+    prefix = PER_TASK_DIR_PREFIX
 
     for data_packet in all_data.values():
         bmark_name = data_packet["results"].benchmark_name
@@ -378,8 +406,9 @@ def generate_metadata_pages(task_leaderboard_data_by_bmark):
 
         page = table_header + table_explanation + table
 
-        print(page)
-
+        path = os.path.join(METADATA_DIR, f"{bmark_name}.md")
+        with open(path, "w") as f:
+            f.write(page)
 
 
 def generate_info_pages(all_data):
@@ -475,6 +504,10 @@ def format_float(number):
 def format_int(number):
     return f'{number:,}'
 
+
+def nuke_docs():
+    pass
+
 if __name__ == "__main__":
 
     logging.root.setLevel(logging.DEBUG)
@@ -500,13 +533,15 @@ if __name__ == "__main__":
             all_data[name] = {"results": mb, "info": info, "dir_name_short": d}
 
 
+    gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark = organize_task_data(all_data)
+
+
     print("DOCS: ALL DATA ACQUIRED")
     # generate_info_pages(all_data)
 
-    gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark = organize_task_data(all_data)
 
     # generate_per_task_leaderboards(task_leaderboards_data_by_bmark)
 
-    generate_metadata_pages(task_leaderboards_data_by_bmark)
+    # generate_metadata_pages(task_leaderboards_data_by_bmark)
 
-    # generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark)
+    generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark)

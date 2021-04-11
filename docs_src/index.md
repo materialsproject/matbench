@@ -1,11 +1,10 @@
-# Matbench v0.1 - Machine Learning Benchmark for Materials Science
-
-
-## Leaderboard - General Purpose Algorithms
+# Leaderboard
 
 ## Leaderboard: General Purpose Algorithms on `matbench_v0.1`
 
-| Task name | Samples | Algorithm | MAE (unit) or ROCAUC | Notes |
+Find more information about this benchmark on [the benchmark info page](/Benchmark%20Info/matbench_v0.1)
+
+| Task name | Samples | Algorithm | Verified MAE (unit) or ROCAUC | Notes |
 |------------------|---------|-----------|----------------------|-------|
 | matbench_steels | 312 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **229.7445 (MPa)** |  |
 | matbench_jdft2d | 636 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **67.2851 (meV/atom)** |  |
@@ -21,6 +20,8 @@
 | matbench_mp_is_metal | 106,113 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **0.5012** |  |
 | matbench_mp_e_form | 132,752 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **1.0059 (eV/atom)** |  |
 
+
+## Leaderboard - General Purpose Algorithms
 
 | task name                | verified top score (MAE or ROCAUC) | algorithm name, config            | notes |
 | ------------------------ | ---------------------------------- | ----------------------------------- | ----------------------------------------------------------- |
@@ -50,7 +51,6 @@ disordered metals, and more.
 **The [Matbench python package](https://github.com/hackingmaterials/matbench) provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.**
 
 ![infographic](static/infographic_matbench.png)
-
 
 
 
@@ -92,27 +92,6 @@ Each task in Matbench consists of a three things:
 
 The Matbench Python package provides functions for getting the first two (packaged together for each task as a _dataset_) as well as running 
 the test procedure. See the [Runnning and Submitting Benchmarks](running_and_submitting_benchmarks.md) documentation page to get started.
-
-
-## All Matbench Datasets
-
-| task name                | target column (unit)         | number of samples | task type      | links                                                                                                                                                                |
-| ------------------------ | ---------------------------- | ----------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `matbench_dielectric`    | `n` (unitless)               | 4,764              | regression     | [download](https://ml.materialsproject.org/projects/matbench_dielectric.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_dielectric/)       |
-| `matbench_expt_gap`      | `gap expt` (eV)              | 4,604              | regression     | [download](https://ml.materialsproject.org/projects/matbench_expt_gap.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_expt_gap/)           |
-| `matbench_expt_is_metal` | `is_metal` (unitless)        | 4,921              | classification | [download](https://ml.materialsproject.org/projects/matbench_expt_is_metal.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_expt_is_metal/) |
-| `matbench_glass`         | `gfa` (unitless)             | 5,680              | classification | [download](https://ml.materialsproject.org/projects/matbench_glass.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_glass/)                 |
-| `matbench_jdft2d`        | `exfoliation_en` (meV/atom)  | 636                | regression     | [download](https://ml.materialsproject.org/projects/matbench_jdft2d.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_jdft2d/)               |
-| `matbench_log_gvrh`      | `log10(G_VRH)` (log(GPa))    | 10,987             | regression     | [download](https://ml.materialsproject.org/projects/matbench_log_gvrh.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_log_gvrh/)           |
-| `matbench_log_kvrh`      | `log10(K_VRH)` (log(GPa))    | 10,987             | regression     | [download](https://ml.materialsproject.org/projects/matbench_log_kvrh.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_log_kvrh/)           |
-| `matbench_mp_e_form`     | `e_form` (eV/atom)           | 132,752            | regression     | [download](https://ml.materialsproject.org/projects/matbench_mp_e_form.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_mp_e_form/)         |
-| `matbench_mp_gap`        | `gap pbe` (eV)               | 106,113            | regression     | [download](https://ml.materialsproject.org/projects/matbench_mp_gap.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_mp_gap/)               |
-| `matbench_mp_is_metal`   | `is_metal` (unitless)        | 106,113            | classification | [download](https://ml.materialsproject.org/projects/matbench_mp_is_metal.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_mp_is_metal/)     |
-| `matbench_perovskites`   | `e_form` (eV, per unit cell) | 18,928             | regression     | [download](https://ml.materialsproject.org/projects/matbench_perovskites.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_perovskites/)     |
-| `matbench_phonons`       | `last phdos peak` (cm^-1)    | 1,265              | regression     | [download](https://ml.materialsproject.org/projects/matbench_phonons.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_phonons/)             |
-| `matbench_steels`        | `yield strength` (MPa)       | 312                | regression     | [download](https://ml.materialsproject.org/projects/matbench_steels.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_steels/)               |
-
-
 
 
 
