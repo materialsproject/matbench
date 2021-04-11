@@ -8,6 +8,7 @@ import tqdm
 from monty.serialization import loadfn
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objs as go
 import numpy as np
 
 from matbench.task import MatbenchTask
@@ -108,13 +109,25 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
 
             scaled_df = scaled_df.T
             scaled_df["n_samples"] = [metadata[task].num_entries for task in scaled_df.index]
-            scaled_df["ix"] = [f"{symbols[task]} ({metadata[task].unit})\n{descriptors[task]}" for task in scaled_df.index]
+            scaled_df["Problem"] = [f"{symbols[task]} {descriptors[task]}" for task in scaled_df.index]
             scaled_df = scaled_df.sort_values(by="n_samples")
-            scaled_df.index = scaled_df["ix"]
-            scaled_df = scaled_df.drop(columns=["n_samples", "ix"])
+            scaled_df.index = scaled_df["Problem"]
+            scaled_df = scaled_df.drop(columns=["n_samples", "Problem"])
+
+            best_values = scaled_df.min(axis=1)
+            best_algos = scaled_df.idxmin(axis=1)
 
             fig = px.scatter(scaled_df, log_y=True)
-            # fig.update_layout(yaxis_title=r"$\text{Scaled MAE (regression) or }(1-\text{ROCAUC})/0.5 \text{ (classification) - Lower is better)}$")
+            fig.update_traces(
+                marker={'size': 10},
+                hovertemplate="<br>".join(
+                    [
+                        # "Algorithm: %{text}",
+                        "Problem: %{x}",
+                        "Scaled Error: %{y}"
+                    ]
+                )
+            )
 
             fig.update_layout(title_text="Scaled Errors",
                               title_font_size=30,
@@ -125,10 +138,27 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
                               xaxis_title="", paper_bgcolor='rgba(0,0,0,0)',
                               plot_bgcolor='rgba(0,0,0,0)',
                               font={"color": "white"})
+
+            # add scatter for the best algorithms on scaled error
+            fig.add_trace(
+                go.Scatter(
+                    mode="markers",
+                    x=best_values.index,
+                    y=best_values,
+                    marker=dict(
+                        color="yellow",
+                        size=10,
+                    ),
+                    hovertemplate= \
+                        'Algorithm: %{text}<br>Problem: %{x}<br>Scaled Error: %{y}<br>',
+                    text=best_algos,
+                    visible="legendonly",
+                    name="Best algorithms"
+                )
+            )
             fig.update_xaxes(linecolor="grey", gridcolor="grey")
             fig.update_yaxes(linecolor="grey", gridcolor="grey")
             fig.write_html(SCALED_ERRORS_PATH)
-
 
 
 # NOTE: MUST BE CALLED AFTER CREATING generate_scaled_errors_graph
@@ -185,7 +215,8 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
 
         scaled_errors_plot_txt = f'\n<iframe src="/static/{SCALED_ERRORS_FILENAME}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
 
-        final_txt = gp_leaderboard_txt + scaled_errors_plot_txt + static_txt
+        page_header = f"# Leaderboard\n\n"
+        final_txt = page_header + gp_leaderboard_txt + scaled_errors_plot_txt + static_txt
 
         with open(os.path.join(DOCS_DIR, "index.md"), "w") as f:
             print("Writing leaderboard and plot to index.md...")

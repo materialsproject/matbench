@@ -1,3 +1,5 @@
+# Leaderboard
+
 ## Leaderboard: General Purpose Algorithms on `matbench_v0.1`
 
 Find more information about this benchmark on [the benchmark info page](/Benchmark%20Info/matbench_v0.1)
