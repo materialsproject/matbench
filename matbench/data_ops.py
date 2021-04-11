@@ -7,6 +7,7 @@ import logging
 import math
 
 import numpy as np
+from matminer.datasets import load_dataset
 from sklearn.metrics import (
     accuracy_score,
     balanced_accuracy_score,
@@ -16,7 +17,6 @@ from sklearn.metrics import (
     mean_squared_error,
     roc_auc_score,
 )
-from matminer.datasets import load_dataset
 
 from matbench.constants import (
     CLF_KEY,

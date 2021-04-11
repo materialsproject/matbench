@@ -4,7 +4,7 @@ import numpy as np
 from pymatgen import Structure
 
 from matbench.constants import CLF_KEY, REG_KEY
-from matbench.data_ops import load, score_array, mean_absolute_percentage_error
+from matbench.data_ops import load, mean_absolute_percentage_error, score_array
 from matbench.metadata import mbv01_metadata
 from matbench.tests.util import FULL_TEST
 
