@@ -585,6 +585,7 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
 def format_float(number):
     return f"{number:.4f}"
 
+
 def format_int(number):
     return f'{number:,}'
 
