@@ -1,5 +1,3 @@
-# Leaderboard
-
 ## Leaderboard: General Purpose Algorithms on `matbench_v0.1`
 
 Find more information about this benchmark on [the benchmark info page](/Benchmark%20Info/matbench_v0.1)
@@ -21,25 +19,8 @@ Find more information about this benchmark on [the benchmark info page](/Benchma
 | matbench_mp_e_form | 132,752 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **1.0059 (eV/atom)** |  |
 
 
-## Leaderboard - General Purpose Algorithms
 
-| task name                | verified top score (MAE or ROCAUC) | algorithm name, config            | notes |
-| ------------------------ | ---------------------------------- | ----------------------------------- | ----------------------------------------------------------- |
-| `matbench_dielectric`    | 0.299 (unitless)                   | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_expt_gap`      | 0.416 eV                           | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_expt_is_metal` | 0.92                               | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_glass`         | 0.861                              | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_jdft2d`        | 38.6 meV/atom                      | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_log_gvrh`      | 0.0849 log(GPa)                    | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_log_kvrh`      | 0.0679 log(GPa)                    | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_mp_e_form`     | 0.0327 eV/atom                     | MEGNet v0.2.2                       | structure only                                         |
-| `matbench_mp_gap`        | 0.228 eV                           | CGCNN (2019)                        | structure only                                         |
-| `matbench_mp_is_metal`   | 0.977                              | MEGNet v0.2.2                       | structure only                                         |
-| `matbench_perovskites`   | 0.0417                             | MEGNet v0.2.2                       | structure only                                         |
-| `matbench_phonons`       | 36.9 cm^-1                         | MEGNet v0.2.2                       | structure only                                         |
-| `matbench_steels`        | 95.2 MPa                           | Automatminer express v1.0.3.2019111 |                                                         |
-
-<iframe src="static/graph.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+<iframe src="/static/scaled_errors.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
 
 ## Overview
 
@@ -51,8 +32,6 @@ disordered metals, and more.
 **The [Matbench python package](https://github.com/hackingmaterials/matbench) provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.**
 
 ![infographic](static/infographic_matbench.png)
-
-
 
 
 ## What can Matbench offer?
@@ -110,22 +89,3 @@ The Matbench Test Set and Automatminer Reference Algorithm.
 npj Computational Materials 6, 138 (2020). 
 https://doi.org/10.1038/s41524-020-00406-3
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

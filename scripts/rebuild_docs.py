@@ -1,6 +1,5 @@
 import os
-import json
-import copy
+import glob
 import logging
 import pprint
 from operator import gt, lt
@@ -30,12 +29,14 @@ PER_TASK_DIR_PREFIX = "/Full%20Benchmark%20Data/"
 METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
 METADATA_DIR_PREFIX = "/Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
+SCALED_ERRORS_FILENAME = "scaled_errors.html"
+SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_FILENAME)
 
 
-def generate_scaled_errors_graph(task_leaderboard_data_by_bmark):
-    for bmark_name, tasks_data in task_leaderboard_data_by_bmark.items():
+def generate_scaled_errors_graph(gp_graph_data_by_bmark):
+    for bmark_name, tasks_data in gp_graph_data_by_bmark.items():
 
-            if bmark == MBV01_KEY:
+            if bmark_name == MBV01_KEY:
 
                 symbols = {
                     "matbench_steels": "σᵧ",
@@ -73,23 +74,65 @@ def generate_scaled_errors_graph(task_leaderboard_data_by_bmark):
 
             else:
                 raise ValueError(
-                    f"Only {MBV01_KEY} defined as valid benchmark! '{bmark}' not supported.")
+                    f"Only {MBV01_KEY} defined as valid benchmark! '{bmark_name}' not supported.")
+
+            # should take care of missing entries (i.e., structure only) automatically
+            df = pd.DataFrame(tasks_data)
+
+            # make scaled data for heatmap coloring
+            # scale regression problems by mad/mae
+            def scale_regression_problem(series, mad):
+                mask = series > 0.0
+                mask_iix = np.where(mask)
+                series.iloc[mask_iix] = series.iloc[mask_iix] / mad
+                series.loc[~mask] = np.nan
+                return series
+
+            def scale_classification_problem(series, mad):
+                mask = series > 0.0
+                mask_iix = np.where(mask)
+                series.iloc[mask_iix] = 1 - (series.iloc[mask_iix] - 0.5) / 0.5
+                # series.iloc[mask_iix] = 1 - series.iloc[mask_iix]
+                series.loc[~mask] = np.nan
+                return series
+
+            scaled_df = df.copy(deep=True)
+            for task in scaled_df.columns:
+                if metadata[task].task_type == CLF_KEY:
+                    scaler = scale_classification_problem
+                else:
+                    scaler = scale_regression_problem
+
+                scaled_df[task] = scaler(scaled_df[task], metadata[task].mad)
 
 
-        for task, entries in tasks_data.items():
+            scaled_df = scaled_df.T
+            scaled_df["n_samples"] = [metadata[task].num_entries for task in scaled_df.index]
+            scaled_df["ix"] = [f"{symbols[task]} ({metadata[task].unit})\n{descriptors[task]}" for task in scaled_df.index]
+            scaled_df = scaled_df.sort_values(by="n_samples")
+            scaled_df.index = scaled_df["ix"]
+            scaled_df = scaled_df.drop(columns=["n_samples", "ix"])
 
-            for entry in entries:
-                mae = entry["scores"].mae.mean
-                algo_name = entry["algorithm"]
-                link = entry["link"]
-                scores = entry["scores"]
+            fig = px.scatter(scaled_df, log_y=True)
+            # fig.update_layout(yaxis_title=r"$\text{Scaled MAE (regression) or }(1-\text{ROCAUC})/0.5 \text{ (classification) - Lower is better)}$")
+
+            fig.update_layout(title_text="Scaled Errors",
+                              title_font_size=30,
+                              legend_font_size=15,
+                              legend_title_font_size=15,
+                              legend_title_text="Algorithm",
+                              yaxis_title="Scaled MAE (regression) or <br> (1-ROCAUC)/0.5 (classification)",
+                              xaxis_title="", paper_bgcolor='rgba(0,0,0,0)',
+                              plot_bgcolor='rgba(0,0,0,0)',
+                              font={"color": "white"})
+            fig.update_xaxes(linecolor="grey", gridcolor="grey")
+            fig.update_yaxes(linecolor="grey", gridcolor="grey")
+            fig.write_html(SCALED_ERRORS_PATH)
 
 
 
-
+# NOTE: MUST BE CALLED AFTER CREATING generate_scaled_errors_graph
 def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
-    # pprint.pprint(gp_leaderboard_data_by_bmark)
-
     for bmark, gp_data in gp_leaderboard_data_by_bmark.items():
 
         if bmark == MBV01_KEY:
@@ -136,16 +179,17 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
 
         gp_leaderboard_txt = table_header + table_explanation + table
 
-
-
         # Load the static index from the snippets dir
         with open(os.path.join(SNIPPETS_DIR, "index.md")) as f:
             static_txt = f.read()
 
+        scaled_errors_plot_txt = f'\n<iframe src="/static/{SCALED_ERRORS_FILENAME}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
 
-        final_txt = gp_leaderboard_txt + static_txt
+        final_txt = gp_leaderboard_txt + scaled_errors_plot_txt + static_txt
 
-
+        with open(os.path.join(DOCS_DIR, "index.md"), "w") as f:
+            print("Writing leaderboard and plot to index.md...")
+            f.write(final_txt)
 
 
 def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
@@ -279,6 +323,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
                                     metadata
             fname = os.path.join(PER_TASK_DIR, f"{bmark_name}_{task}.md")
             with open(fname, "w") as f:
+                print(f"Creating task leaderboard page {fname}")
                 f.write(task_leaderboard_page)
 
 
@@ -297,6 +342,7 @@ def organize_task_data(all_data):
 
     gp_leaderboard_data_by_bmark = {}
     task_leaderboards_data_by_bmark = {}
+    gp_graph_data_by_bmark = {}
 
     for bmark_name, bmarks in all_data_per_benchmark.items():
         if bmark_name == MBV01_KEY:
@@ -313,6 +359,8 @@ def organize_task_data(all_data):
         } for t in metadata.keys()}
 
         task_leaderboards = {t: [] for t in metadata.keys()}
+
+        gp_graph_data = {t: {} for t in metadata.keys()}
 
         for bmark_data in bmarks:
             mb = bmark_data["results"]
@@ -342,6 +390,8 @@ def organize_task_data(all_data):
                 if mb.is_complete or mb.is_structure_complete:
                     current_best_score = gp_leaderboard[task_name]["score"]
 
+                    gp_graph_data[task_name][info["algorithm"]] = score
+
                     # this task's score is better or it is the first so far
                     if current_best_score is None or op(score, current_best_score):
                         gp_leaderboard[task_name]["score"] = score
@@ -368,8 +418,9 @@ def organize_task_data(all_data):
 
             gp_leaderboard_data_by_bmark[bmark_name] = gp_leaderboard
             task_leaderboards_data_by_bmark[bmark_name] = task_leaderboards
+            gp_graph_data_by_bmark[bmark_name] = gp_graph_data
 
-        return gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark
+        return gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark, gp_graph_data_by_bmark
 
 
 def generate_metadata_pages(task_leaderboard_data_by_bmark):
@@ -408,6 +459,7 @@ def generate_metadata_pages(task_leaderboard_data_by_bmark):
 
         path = os.path.join(METADATA_DIR, f"{bmark_name}.md")
         with open(path, "w") as f:
+            print(f"Writing benchmark info page {path}")
             f.write(page)
 
 
@@ -421,6 +473,7 @@ def generate_info_pages(all_data):
 
         doc_path = os.path.join(FULL_DATA_DIR, f"{dir_name_short}.md")
         with open(doc_path, "w") as f:
+            print(f"Writing full benchmark data page {doc_path}")
             f.write(doc_str)
 
 
@@ -505,12 +558,50 @@ def format_int(number):
     return f'{number:,}'
 
 
-def nuke_docs():
-    pass
+def nuke_docs(check=True):
+    count = 0
+
+    index = os.path.join(DOCS_DIR, "index.md")
+    if os.path.exists(index):
+        if not check:
+            os.remove(index)
+        print(f"\tdeleting index md file'{index}'")
+    count += 1
+
+    html_statics = glob.glob(os.path.join(STATIC_DOCS_DIR, "*.html"))
+    for hs in html_statics:
+        if not check:
+            os.remove(hs)
+        print(f"\tdeleting static html '{hs}'")
+    count += len(html_statics)
+
+
+    per_task_leaderboards = glob.glob(os.path.join(PER_TASK_DIR, "*.md"))
+    for pl in per_task_leaderboards:
+        if not check:
+            os.remove(pl)
+        print(f"\tdeleting per task leaderboard md file '{pl}'")
+    count += len(per_task_leaderboards)
+
+
+    full_benchmark_mds = glob.glob(os.path.join(FULL_DATA_DIR, "*.md"))
+    for fb in full_benchmark_mds:
+        if not check:
+            os.remove(fb)
+        print(f"\tdeleting full benchmark md file '{fb}'")
+    count += len(full_benchmark_mds)
+
+    print(f"\tdeleted {count} files from {DOCS_DIR}")
+
+
+
 
 if __name__ == "__main__":
 
     logging.root.setLevel(logging.DEBUG)
+
+    # nuke_docs(check=True)
+    nuke_docs(check=False)
 
     all_data = {}
 
@@ -533,15 +624,20 @@ if __name__ == "__main__":
             all_data[name] = {"results": mb, "info": info, "dir_name_short": d}
 
 
-    gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark = organize_task_data(all_data)
+    gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark, gp_graph_data_by_bmark = organize_task_data(all_data)
 
 
     print("DOCS: ALL DATA ACQUIRED")
-    # generate_info_pages(all_data)
 
+    generate_info_pages(all_data)
 
-    # generate_per_task_leaderboards(task_leaderboards_data_by_bmark)
+    generate_per_task_leaderboards(task_leaderboards_data_by_bmark)
 
-    # generate_metadata_pages(task_leaderboards_data_by_bmark)
+    generate_metadata_pages(task_leaderboards_data_by_bmark)
+
+    # must be called before generating the gp leaderboard
+    generate_scaled_errors_graph(gp_graph_data_by_bmark)
 
     generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark)
+
+

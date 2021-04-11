@@ -19,6 +19,7 @@ theme:
     - toc
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
 
 plugins:
   - search
