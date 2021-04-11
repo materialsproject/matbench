@@ -7,10 +7,12 @@ with open(os.path.join(MODULE_DIR, "requirements.txt"), "r") as f:
 
 
 VERSION_FILE = os.path.join(MODULE_DIR, "matbench/constants.py")
+token = "VERSION = "
 with open(VERSION_FILE, "r") as f:
     version = None
     for line in f.readlines():
-        if
+        if token in line:
+            version = line.replace(token, "").strip()
 
 if __name__ == "__main__":
     setup(
