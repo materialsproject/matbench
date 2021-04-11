@@ -15,8 +15,10 @@ theme:
   logo: static/matbench_logo.png
   favicon: static/matbench_logo_favicon.png
   hide:
-    - natigation
+    - navigation
     - toc
+  features:
+    - navigation.tabs
 
 plugins:
   - search

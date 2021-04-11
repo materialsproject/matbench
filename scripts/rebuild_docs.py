@@ -25,13 +25,101 @@ STATIC_DOCS_DIR = os.path.join(DOCS_DIR, "static")
 BENCHMARKS_DIR = os.path.join(THIS_DIR, "../benchmarks")
 FULL_DATA_DIR = os.path.join(DOCS_DIR, "Full Benchmark Data")
 PER_TASK_DIR = os.path.join(DOCS_DIR, "Per-Task Leaderboards")
+METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
 
 
-def generate_scaled_errors_plot(all_data):
-    pass
+def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
+    # pprint.pprint(gp_leaderboard_data_by_bmark)
 
-def generate_general_purpose_leaderboard(gp_leaderboard_data_by_bmark):
-    pass
+
+    for bmark, gp_data in gp_leaderboard_data_by_bmark.items():
+        if bmark == MBV01_KEY:
+
+            symbols = {
+                "matbench_steels": "σᵧ",
+                "matbench_jdft2d": "Eˣ",
+                "matbench_phonons": "ωᵐᵃˣ",
+                "matbench_dielectric": "𝑛",
+                "matbench_expt_gap": "Eᵍ",
+                "matbench_expt_is_metal": "Expt. Metallicity",
+                "matbench_glass": "Metallic Glass",
+                "matbench_log_kvrh": "log₁₀Kᵛʳʰ",
+                "matbench_log_gvrh": "log₁₀Gᵛʳʰ",
+                "matbench_perovskites": "Eᶠ",
+                "matbench_mp_gap": "Eᵍ",
+                "matbench_mp_is_metal": "Metallicity",
+                "matbench_mp_e_form": "Eᶠ"
+            }
+
+            descriptors = {
+                "matbench_steels": "Steel alloys",
+                "matbench_jdft2d": "2D Materials",
+                "matbench_phonons": "Phonons",
+                "matbench_dielectric": "",
+                "matbench_expt_gap": "Experimental",
+                "matbench_expt_is_metal": "Classification",
+                "matbench_glass": "Classification",
+                "matbench_log_gvrh": "",
+                "matbench_log_kvrh": "",
+                "matbench_perovskites": "Perovskites, DFT",
+                "matbench_mp_gap": "DFT",
+                "matbench_mp_is_metal": "DFT",
+                "matbench_mp_e_form": "DFT"
+            }
+
+            metadata = mbv01_metadata
+
+        else:
+            raise ValueError(f"Only {MBV01_KEY} defined as valid benchmark! '{bmark}' not supported.")
+
+        table_data = {
+            "task": [k for k in gp_data.keys()],
+            "symbol": [symbols[k] for k in gp_data.keys()],
+            "n_samples": [metadata[k].num_entries for k in gp_data.keys()],
+            "descriptor": [descriptors[k] for k in gp_data.keys()],
+            "algorithm": [d["algorithm"] for d in gp_data.values()],
+            "completeness": [d["completeness"] for d in gp_data.values()],
+            "link": [d["link"] for d in gp_data.values()],
+            "score": [d["score"] for d in gp_data.values()],
+            "type": [d["type"] for d in gp_data.values()]
+        }
+
+        df_src = pd.DataFrame(table_data).sort_values(by="n_samples")
+        print(df_src)
+
+        table_header = f"## Leaderboard: General Purpose Algorithms on `{bmark}`\n\n"
+        table_explanation = "Find more information about this benchmark on [the benchmark info page]("
+        table = "| Task name | Samples | Algorithm | Verified MAE (unit) or ROCAUC | Notes |\n" \
+                "|------------------|---------|-----------|----------------------|-------|\n"
+        # create leaderboard table
+        for _, row in df_src.iterrows():
+
+            task_name = f"{row['task']}"
+            samples = format_int(row["n_samples"])
+            algorithm = f"[{row['algorithm']}]({row['link']})"
+
+            task_metadata = metadata[row['task']]
+
+            score = f"{format_float(row['score'])} ({task_metadata.unit})" if task_metadata.task_type == REG_KEY else f"{format_float(row['score'])}"
+            score = f"**{score}**"
+
+            if row["completeness"] == "structure":
+                notes = "structure required"
+            elif row["completeness"] == "all":
+                notes = ""
+            else:
+                raise ValueError(f"{row['completeness']} is not a valid type of general purpose completeness!")
+
+            table += f"| {task_name} | {samples} | {algorithm} | {score} | {notes} |\n"
+        table += "\n\n"
+
+        print(table_header + table)
+
+
+
+
+        # create scaled errors board
+
 
 def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
     for bmark_name, tasks_data in task_leaderboard_data_by_bmark.items():
@@ -131,7 +219,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             error_metric = "std rocauc" if task_type == CLF_KEY else "std mae"
             fig = px.scatter(df, error_y=error_metric, log_y=True)
 
-            metric = "MAE" if task_type == REG_KEY else "ROCAUC"
+            metric = f"MAE {mbt.metadata.unit}" if task_type == REG_KEY else "ROCAUC"
 
             target = mbt.metadata.target
             lower_or_higher = "lower" if task_type == REG_KEY else "higher"
@@ -166,7 +254,6 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
                 f.write(task_leaderboard_page)
 
 
-
 def organize_task_data(all_data):
     all_data_per_benchmark = {}
 
@@ -193,7 +280,8 @@ def organize_task_data(all_data):
             "score": None,
             "type": None,
             "link": None,
-            "algorithm": None
+            "algorithm": None,
+            "completeness": None
         } for t in metadata.keys()}
 
         task_leaderboards = {t: [] for t in metadata.keys()}
@@ -232,6 +320,11 @@ def organize_task_data(all_data):
                         gp_leaderboard[task_name]["link"] = prefix + dir_name_short
                         gp_leaderboard[task_name]["algorithm"] = info["algorithm"]
                         gp_leaderboard[task_name]["type"] = task.metadata.task_type
+
+                        if mb.is_complete:
+                            gp_leaderboard[task_name]["completeness"] = "all"
+                        else:
+                            gp_leaderboard[task_name]["completeness"] = "structure"
                     # the existing task score is best
                     else:
                         pass
@@ -249,6 +342,44 @@ def organize_task_data(all_data):
             task_leaderboards_data_by_bmark[bmark_name] = task_leaderboards
 
         return gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark
+
+
+def generate_metadata_pages(task_leaderboard_data_by_bmark):
+    for bmark_name, bmark_data in task_leaderboard_data_by_bmark.items():
+        metadata = MatbenchBenchmark(benchmark=bmark_name, autoload=False).metadata
+
+        d = {}
+        for task, infod in metadata.items():
+            d[task] = {
+                "Task name": f"`{task}`",
+                "Task type": infod.task_type,
+                "Target column (unit)": f"`{infod.target}` " + f"({infod.unit})" if infod.unit else f"`{infod.target}`",
+                "Input type": infod.input_type,
+                "Samples": infod.num_entries,
+                "MAD (regression) or Fraction True (classification)": format_float(infod.mad if infod.task_type == REG_KEY else infod.frac_true),
+                "Links": f"[download](https://ml.materialsproject.org/projects/{task}.json.gz), [interactive](https://ml.materialsproject.org/projects/{task})",
+                "Submissions": f"{len(bmark_data[task])}"
+            }
+
+        df = pd.DataFrame(d).T.sort_values(by="Samples")
+
+        df["Samples"] = [format_int(i) for i in df["Samples"]]
+        table_header = f"# Benchmark info for `{bmark_name}`\n\n"
+        table_explanation = f"The `{bmark_name}` benchmark contains {len(metadata)} tasks:\n\n"
+        table = "| " + " | ".join(df.columns) + "|\n" + \
+            "|-------" * len(df.columns) + "|\n"
+        for _, row in df.iterrows():
+            table_line = "|"
+            for c in df.columns:
+                table_line += f" {row[c]} |"
+
+            table_line += "\n"
+            table += table_line
+
+        page = table_header + table_explanation + table
+
+        print(page)
+
 
 
 def generate_info_pages(all_data):
@@ -339,9 +470,10 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
 
 
 def format_float(number):
-    return f"{number:.6f}"
+    return f"{number:.4f}"
 
-
+def format_int(number):
+    return f'{number:,}'
 
 if __name__ == "__main__":
 
@@ -373,7 +505,8 @@ if __name__ == "__main__":
 
     gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark = organize_task_data(all_data)
 
-    generate_per_task_leaderboards(task_leaderboards_data_by_bmark)
+    # generate_per_task_leaderboards(task_leaderboards_data_by_bmark)
 
-    # pprint.pprint(gp_leaderboard_data_by_bmark)
-    # pprint.pprint(task_leaderboards_data_by_bmark)
+    generate_metadata_pages(task_leaderboards_data_by_bmark)
+
+    # generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark)

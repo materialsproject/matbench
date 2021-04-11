@@ -3,6 +3,24 @@
 
 ## Leaderboard - General Purpose Algorithms
 
+## Leaderboard: General Purpose Algorithms on `matbench_v0.1`
+
+| Task name | Samples | Algorithm | MAE (unit) or ROCAUC | Notes |
+|------------------|---------|-----------|----------------------|-------|
+| matbench_steels | 312 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **229.7445 (MPa)** |  |
+| matbench_jdft2d | 636 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **67.2851 (meV/atom)** |  |
+| matbench_phonons | 1,265 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **323.9822 (cm^-1)** |  |
+| matbench_expt_gap | 4,604 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **1.1435 (eV)** |  |
+| matbench_dielectric | 4,764 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **0.8088 (unitless)** |  |
+| matbench_expt_is_metal | 4,921 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **0.4924** |  |
+| matbench_glass | 5,680 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **0.5005** |  |
+| matbench_log_gvrh | 10,987 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **0.2931 (log10(GPa))** |  |
+| matbench_log_kvrh | 10,987 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **0.2897 (log10(GPa))** |  |
+| matbench_perovskites | 18,928 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **0.5660 (eV/unit cell)** |  |
+| matbench_mp_gap | 106,113 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **1.3272 (eV)** |  |
+| matbench_mp_is_metal | 106,113 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **0.5012** |  |
+| matbench_mp_e_form | 132,752 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **1.0059 (eV/atom)** |  |
+
 
 | task name                | verified top score (MAE or ROCAUC) | algorithm name, config            | notes |
 | ------------------------ | ---------------------------------- | ----------------------------------- | ----------------------------------------------------------- |
