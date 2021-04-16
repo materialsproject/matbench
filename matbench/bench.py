@@ -345,7 +345,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         obj.user_metadata = user_metadata
 
         logger.debug(
-            f"Successfully converted dict/args to {cls.__name__}."
+            f"Successfully converted dict/args to '{cls.__name__}'."
         )
 
         return obj
