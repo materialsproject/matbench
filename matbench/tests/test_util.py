@@ -2,6 +2,8 @@ import logging
 import os
 import unittest
 
+import numpy as np
+
 from matbench.tests.util import TEST_DIR
 from matbench.util import \
     MSONable2File, \
