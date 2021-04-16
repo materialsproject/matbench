@@ -6,7 +6,7 @@ Automatminer express v1.03.20200727. Based on automatic featurization, tree-base
 
 All data was generated using the same config (express, default).
 
-Raw data download and example notebook available [on the matbench repo](https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_automatminer_expressv2019).
+Raw data download and example notebook available [on the matbench repo](https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_automatminer_expressv2020).
 
 ### References (in bibtex format): 
 
