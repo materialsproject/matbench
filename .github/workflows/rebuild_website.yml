@@ -21,6 +21,7 @@ jobs:
           pip install -e . -r requirements.txt
           pip install -r requirements-dev.txt
           pip install -r requirements-docs.txt
+          python scripts/rebuild_docs.py
           mkdocs build
 
 

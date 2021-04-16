@@ -518,7 +518,7 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     refs = info["bibtex_refs"]
     notes = info["notes"]
 
-    header = f"#`{mb.benchmark_name}`: {algo_name}\n\n"
+    header = f"# {mb.benchmark_name}: {algo_name}\n\n"
     url = f"https://github.com/hackingmaterials/matbench/tree/main/benchmarks/{dir_name_short}"
     desc = f"### Algorithm description: \n\n{algo_desc}\n\n{notes}\n\nRaw data download and example notebook available [on the matbench repo]({url}).\n\n"
     refs = f"### References (in bibtex format): \n\n```\n{refs}\n```\n\n"
