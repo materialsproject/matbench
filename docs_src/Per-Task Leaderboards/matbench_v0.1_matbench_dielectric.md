@@ -12,7 +12,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **0.8088** | 0.0718 | 1.9728 | 59.6653 | 
 
 
-<iframe src="static/task_matbench_v0.1_matbench_dielectric.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+<iframe src="../../static/task_matbench_v0.1_matbench_dielectric.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
 
 ### Dataset info
 
