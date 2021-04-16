@@ -23,7 +23,8 @@ jobs:
           pip install -r requirements-docs.txt
           python scripts/rebuild_docs.py
           mkdocs build
-      - uses: EndBug/add-and-commit@v7 # You can change this to use a specific version
+      - name: Commit
+        uses: EndBug/add-and-commit@v7 # You can change this to use a specific version
         with:
           # The arguments for the `git add` command (see the paragraph below for more info)
           # Default: '.'
@@ -70,6 +71,10 @@ jobs:
 #          tag: 'v1.0.0 --force'
 
 
-
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: main # The branch the action should deploy to.
+          folder: docs # The folder the action should deploy.
 
 
