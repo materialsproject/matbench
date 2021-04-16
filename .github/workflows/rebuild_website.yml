@@ -47,7 +47,7 @@ jobs:
 
           # The message for the commit
           # Default: 'Commit from GitHub Actions (name of the workflow)'
-          message: 'Matbench Docbot: rebuilt docs'
+          message: 'Matbench Docbot: rebuild pages'
 
           # The flag used on the pull strategy. Use NO-PULL to avoid the action pulling at all.
           # Default: '--no-rebase'
