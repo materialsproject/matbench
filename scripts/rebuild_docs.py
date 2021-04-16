@@ -213,7 +213,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
         with open(os.path.join(SNIPPETS_DIR, "index.md")) as f:
             static_txt = f.read()
 
-        scaled_errors_plot_txt = f'\n<iframe src="/static/{SCALED_ERRORS_FILENAME}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
+        scaled_errors_plot_txt = f'\n<iframe src="static/{SCALED_ERRORS_FILENAME}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
 
         page_header = f"# Leaderboard\n\n"
         final_txt = page_header + gp_leaderboard_txt + scaled_errors_plot_txt + static_txt
@@ -342,7 +342,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             fig_path = f"task_{bmark_name}_{task}.html"
             fig.write_html(os.path.join(STATIC_DOCS_DIR, fig_path))
 
-            fig_reference = f'\n<iframe src="/static/{fig_path}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
+            fig_reference = f'\n<iframe src="static/{fig_path}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
 
             task_leaderboard_page = header + \
                                     subheader + \
