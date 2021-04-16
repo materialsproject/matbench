@@ -342,7 +342,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             fig_path = f"task_{bmark_name}_{task}.html"
             fig.write_html(os.path.join(STATIC_DOCS_DIR, fig_path))
 
-            fig_reference = f'\n<iframe src="static/{fig_path}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
+            fig_reference = f'\n<iframe src="../../static/{fig_path}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
 
             task_leaderboard_page = header + \
                                     subheader + \
