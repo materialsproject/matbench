@@ -1,0 +1,27 @@
+[run]
+source=matbench
+
+[report]
+exclude_lines =
+    # Ignore coverage of code that requires the module to be executed.
+    if __name__ == .__main__.:
+ignore_errors=True
+omit =
+    *examples*
+    *.github*
+    *.circleci*
+    *site-packages*
+    *tests*
+    *versioneer.py
+    *_version.py
+    *.md
+    *.gitignore
+    *.txt
+    *setup.py
+    *__init__*
+    *.egg-info*
+    *docs*
+    *docs_src*
+    tasks.py
+    setup.py
+    *.git*

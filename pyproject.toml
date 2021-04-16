@@ -1,0 +1,4 @@
+[tool.black]
+# Ensure this is the same value as max-line-length
+# under [flake8] in setup.cfg.
+line-length = 85

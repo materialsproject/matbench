@@ -1,0 +1,106 @@
+{
+  "matbench_dielectric": {
+    "input_type": "structure",
+    "mad": 0.808534704217072,
+    "n_samples": 4764,
+    "target": "n",
+    "task_type": "regression",
+    "unit": "unitless"
+  },
+  "matbench_expt_gap": {
+    "input_type": "composition",
+    "mad": 1.1432002429044061,
+    "n_samples": 4604,
+    "target": "gap expt",
+    "task_type": "regression",
+    "unit": "eV"
+  },
+  "matbench_expt_is_metal": {
+    "frac_true": 0.4980694980694981,
+    "input_type": "composition",
+    "n_samples": 4921,
+    "target": "is_metal",
+    "task_type": "classification",
+    "unit": null
+  },
+  "matbench_glass": {
+    "frac_true": 0.710387323943662,
+    "input_type": "composition",
+    "n_samples": 5680,
+    "target": "gfa",
+    "task_type": "classification",
+    "unit": null
+  },
+  "matbench_jdft2d": {
+    "input_type": "structure",
+    "mad": 67.20200406491116,
+    "n_samples": 636,
+    "target": "exfoliation_en",
+    "task_type": "regression",
+    "unit": "meV/atom"
+  },
+  "matbench_log_gvrh": {
+    "input_type": "structure",
+    "mad": 0.29313828328604646,
+    "n_samples": 10987,
+    "target": "log10(G_VRH)",
+    "task_type": "regression",
+    "unit": "log10(GPa)"
+  },
+  "matbench_log_kvrh": {
+    "input_type": "structure",
+    "mad": 0.2896736342937069,
+    "n_samples": 10987,
+    "target": "log10(K_VRH)",
+    "task_type": "regression",
+    "unit": "log10(GPa)"
+  },
+  "matbench_mp_e_form": {
+    "input_type": "structure",
+    "mad": 1.0059220443295362,
+    "n_samples": 132752,
+    "target": "e_form",
+    "task_type": "regression",
+    "unit": "eV/atom"
+  },
+  "matbench_mp_gap": {
+    "input_type": "structure",
+    "mad": 1.3271449960162496,
+    "n_samples": 106113,
+    "target": "gap pbe",
+    "task_type": "regression",
+    "unit": "eV"
+  },
+  "matbench_mp_is_metal": {
+    "frac_true": 0.43492314796490533,
+    "input_type": "structure",
+    "n_samples": 106113,
+    "target": "is_metal",
+    "task_type": "classification",
+    "unit": null
+  },
+  "matbench_perovskites": {
+    "input_type": "structure",
+    "mad": 0.5659924184827462,
+    "n_samples": 18928,
+    "target": "e_form",
+    "task_type": "regression",
+    "unit": "eV/unit cell"
+  },
+  "matbench_phonons": {
+    "input_type": "structure",
+    "mad": 323.78696979348734,
+    "n_samples": 1265,
+    "target": "last phdos peak",
+    "task_type": "regression",
+    "unit": "cm^-1"
+  },
+  "matbench_steels": {
+    "input_type": "composition",
+    "mad": 229.37426857330706,
+    "n_samples": 312,
+    "target": "yield strength",
+    "task_type": "regression",
+    "unit": "MPa"
+  }
+}
