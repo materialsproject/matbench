@@ -6,19 +6,19 @@ Find more information about this benchmark on [the benchmark info page](/Benchma
 
 | Task name | Samples | Algorithm | Verified MAE (unit) or ROCAUC | Notes |
 |------------------|---------|-----------|----------------------|-------|
-| matbench_steels | 312 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **97.4929 (MPa)** |  |
-| matbench_jdft2d | 636 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **39.8497 (meV/atom)** |  |
-| matbench_phonons | 1,265 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **56.1706 (cm^-1)** |  |
-| matbench_expt_gap | 4,604 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.4161 (eV)** |  |
-| matbench_dielectric | 4,764 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.3150 (unitless)** |  |
-| matbench_expt_is_metal | 4,921 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.9209** |  |
-| matbench_glass | 5,680 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.8607** |  |
-| matbench_log_gvrh | 10,987 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.0874 (log10(GPa))** |  |
-| matbench_log_kvrh | 10,987 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.0647 (log10(GPa))** |  |
-| matbench_perovskites | 18,928 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.2005 (eV/unit cell)** |  |
-| matbench_mp_gap | 106,113 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.2824 (eV)** |  |
-| matbench_mp_is_metal | 106,113 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.9093** |  |
-| matbench_mp_e_form | 132,752 | [Automatminer Express v1.0.3.20200727](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.1726 (eV/atom)** |  |
+| matbench_steels | 312 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **97.4929 (MPa)** |  |
+| matbench_jdft2d | 636 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **39.8497 (meV/atom)** |  |
+| matbench_phonons | 1,265 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **56.1706 (cm^-1)** |  |
+| matbench_expt_gap | 4,604 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.4161 (eV)** |  |
+| matbench_dielectric | 4,764 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.3150 (unitless)** |  |
+| matbench_expt_is_metal | 4,921 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.9209** |  |
+| matbench_glass | 5,680 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.8607** |  |
+| matbench_log_gvrh | 10,987 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.0874 (log10(GPa))** |  |
+| matbench_log_kvrh | 10,987 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.0647 (log10(GPa))** |  |
+| matbench_perovskites | 18,928 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.2005 (eV/unit cell)** |  |
+| matbench_mp_gap | 106,113 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.2824 (eV)** |  |
+| matbench_mp_is_metal | 106,113 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.9093** |  |
+| matbench_mp_e_form | 132,752 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2019) | **0.1726 (eV/atom)** |  |
 
 
 

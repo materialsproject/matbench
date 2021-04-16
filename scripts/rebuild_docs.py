@@ -326,7 +326,9 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
 
             target = mbt.metadata.target
             lower_or_higher = "lower" if task_type == REG_KEY else "higher"
-            title = f"Errors predicting '{target}' ({lower_or_higher} is better)"
+            title_prefix = "Errors predicting" if task_type == REG_KEY else \
+                "Classification ROCAUC predicting"
+            title = f"{title_prefix} '{target}' ({lower_or_higher} is better)"
             fig.update_layout(title_text=title,
                               title_font_size=15,
                               showlegend=False,
