@@ -3,7 +3,6 @@ import json
 import os
 import unittest
 
-
 from matbench.bench import MatbenchBenchmark
 from matbench.constants import (
     CLF_KEY,

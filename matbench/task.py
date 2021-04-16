@@ -316,13 +316,15 @@ class MatbenchTask(MSONable, MSONable2File):
             self.results[fold_key][self._PARAMS_KEY] = params if params else {}
             self.is_recorded[fold_number] = True
 
-            logger.info(f"Recorded fold {self.dataset_name}-{fold_number} successfully.")
+            logger.info(f"Recorded fold "
+                        f"{self.dataset_name}-{fold_number} successfully.")
 
             truth = self._get_data_from_df(split_ids, as_type="tuple")[1]
             self.results[fold_key][self._SCORES_KEY] = score_array(
                 truth, predictions, self.metadata.task_type
             )
-            logger.debug(f"Scored fold {self.dataset_name}-{fold_key} successfully.")
+            logger.debug(f"Scored fold '"
+                         f"{self.dataset_name}-{fold_key} successfully.")
 
     def as_dict(self):
         """Return a MatbenchTask object as a dictionary.

@@ -5,12 +5,13 @@ import unittest
 import numpy as np
 
 from matbench.tests.util import TEST_DIR
-from matbench.util import \
-    MSONable2File, \
-    RecursiveDotDict, \
-    initialize_logger, \
-    immutify_dictionary, \
-    hash_dictionary
+from matbench.util import (
+    MSONable2File,
+    RecursiveDotDict,
+    hash_dictionary,
+    immutify_dictionary,
+    initialize_logger,
+)
 
 
 class TestUtils(unittest.TestCase):

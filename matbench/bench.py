@@ -19,12 +19,13 @@ from matbench.constants import (
 )
 from matbench.metadata import mbv01_metadata
 from matbench.task import MatbenchTask
-from matbench.util import \
-    MSONable2File, \
-    RecursiveDotDict, \
-    initialize_logger, \
-    immutify_dictionary, \
-    hash_dictionary
+from matbench.util import (
+    MSONable2File,
+    RecursiveDotDict,
+    hash_dictionary,
+    immutify_dictionary,
+    initialize_logger,
+)
 
 logger = initialize_logger(logger_name="matbench", level=logging.INFO)
 
@@ -535,7 +536,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         if not recorded:
             s += (
-                "\n\n Benchmark is not fully recorded; limited information " 
+                "\n\n Benchmark is not fully recorded; limited information "
                 "shown."
             )
         if not valid:
@@ -624,4 +625,3 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             return False
         else:
             return True
-
