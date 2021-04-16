@@ -4,7 +4,7 @@ import numpy as np
 from pymatgen import Structure
 
 from matbench.constants import CLF_KEY, REG_KEY
-from matbench.data_ops import load, score_array
+from matbench.data_ops import load, mean_absolute_percentage_error, score_array
 from matbench.metadata import mbv01_metadata
 from matbench.tests.util import FULL_TEST
 
@@ -68,3 +68,14 @@ class TestDataOps(unittest.TestCase):
             "rocauc": 0.5,
         }
         self.assertDictEqual(ans, true_ans)
+
+    def test_mean_absolute_percentage_error(self):
+
+        true = [1, 100, 1000, 0, 0.00000001]
+        test = [0.9, 81, 1010, 1, 0.0028933]
+
+        # make sure the small or zero values are masked
+        mape = mean_absolute_percentage_error(true, test, threshold=1e-6)
+        mape_masked = mean_absolute_percentage_error(true[:4], test[:4])
+        self.assertAlmostEqual(mape, 0.09999999999999999)
+        self.assertAlmostEqual(mape, mape_masked)

@@ -3,14 +3,10 @@ Core class for benchmarking.
 """
 
 import datetime
-import hashlib
-import json
 import logging
 import pprint
 import traceback
 
-import numpy as np
-import pandas as pd
 from monty.json import MSONable
 
 from matbench.constants import (
@@ -23,7 +19,13 @@ from matbench.constants import (
 )
 from matbench.metadata import mbv01_metadata
 from matbench.task import MatbenchTask
-from matbench.util import MSONable2File, RecursiveDotDict, initialize_logger
+from matbench.util import (
+    MSONable2File,
+    RecursiveDotDict,
+    hash_dictionary,
+    immutify_dictionary,
+    initialize_logger,
+)
 
 logger = initialize_logger(logger_name="matbench", level=logging.INFO)
 
@@ -342,6 +344,11 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         # MatbenchTask automatically validates files during its from_dict
         obj.user_metadata = user_metadata
+
+        logger.debug(
+            f"Successfully converted dict/args to '{cls.__name__}'."
+        )
+
         return obj
 
     def _determine_completeness(self, completeness_type):
@@ -415,6 +422,9 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         # to obtain a hash for this benchmark, immutify the dictionary
         # and then stringify it
         d[self._HASH_KEY] = hash_dictionary(d)
+        logger.debug(
+            f"Successfully converted {self.__class__.__name__} to dictionary."
+        )
         return d
 
     def get_info(self):
@@ -430,6 +440,20 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         (and subsequent json), accessible thru the
         'user_metadata' attr.
 
+
+        All keys must be strings.
+
+        All values must be either:
+            a. a numpy ndarray
+            b. python native types, such as bools, floats, ints, strs
+            c. a pandas series
+            d. a list/tuple of python native types (bools, floats, ints)
+
+            OR
+
+            e. A dictionary where all keys are strs and all values
+               are one of a, b, c, d, or e (recursive).
+
         Args:
             metadata (dict)
 
@@ -439,7 +463,9 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         if not isinstance(metadata, dict):
             raise TypeError("User metadata must be reducible to dict format.")
-        self.user_metadata = metadata
+
+        d = immutify_dictionary(metadata)
+        self.user_metadata = d
         logger.info("User metadata added successfully!")
 
     def load(self):
@@ -510,7 +536,8 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         if not recorded:
             s += (
-                "\n\n Benchmark is not fully recorded; limited information " "shown."
+                "\n\n Benchmark is not fully recorded; limited information "
+                "shown."
             )
         if not valid:
             s += "\n\n Benchmark is not valid; limited information shown."
@@ -598,54 +625,3 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             return False
         else:
             return True
-
-
-def immutify_dictionary(d):
-    """Create a frozenset-esque deterministic, unique representation of
-    a nested dict.
-
-
-    Args:
-        d (dict): The dictionary to be immutified. Key are always strings.
-            Values can be arrays of various numpy or pandas types, strings,
-            numpy primitives, python native numbers, or dictionaries with
-            the same format.
-
-    Returns:
-        (dict): A sorted, deterministic, unique representation of the
-            dictionary.
-    """
-    d_new = {}
-    for k, v in d.items():
-        if isinstance(v, (np.ndarray, pd.Series)):
-            d_new[k] = tuple(v.tolist())
-        elif isinstance(v, list):
-            d_new[k] = tuple(v)
-        elif isinstance(v, dict):
-            d_new[k] = immutify_dictionary(v)
-        else:
-            # convert numpy types to native
-            if hasattr(v, "dtype"):
-                d_new[k] = v.item()
-            else:
-                d_new[k] = v
-    # dictionaries are ordered in python 3.6+
-    return dict(sorted(d_new.items(), key=lambda item: item[0]))
-
-
-def hash_dictionary(d):
-    """Hash a dictionary that can be immutified with immutify_dictionary.
-
-    Order of the keys does not matter, as dictionary becomes deterministically
-    immutified. Dictionary can be nested.
-
-    Args:
-        d (dict): The dictionary to hash.
-
-    Returns:
-        (str): base16 encoded hash of the dictionary.
-    """
-    d_hashable = immutify_dictionary(d)
-    s_hashable = json.dumps(d_hashable).encode("utf-8")
-    m = hashlib.sha256(s_hashable).hexdigest()
-    return m

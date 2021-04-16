@@ -1,26 +1,28 @@
-# Matbench v0.1 - Machine Learning Benchmark for Materials Science
+# Leaderboard
+
+## Leaderboard: General Purpose Algorithms on `matbench_v0.1`
+
+Find more information about this benchmark on [the benchmark info page](/Benchmark%20Info/matbench_v0.1)
+
+| Task name | Samples | Algorithm | Verified MAE (unit) or ROCAUC | Notes |
+|------------------|---------|-----------|----------------------|-------|
+| matbench_steels | 312 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **97.4929 (MPa)** |  |
+| matbench_jdft2d | 636 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **39.8497 (meV/atom)** |  |
+| matbench_phonons | 1,265 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **56.1706 (cm^-1)** |  |
+| matbench_expt_gap | 4,604 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.4161 (eV)** |  |
+| matbench_dielectric | 4,764 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.3150 (unitless)** |  |
+| matbench_expt_is_metal | 4,921 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.9209** |  |
+| matbench_glass | 5,680 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.8607** |  |
+| matbench_log_gvrh | 10,987 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.0874 (log10(GPa))** |  |
+| matbench_log_kvrh | 10,987 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.0647 (log10(GPa))** |  |
+| matbench_perovskites | 18,928 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.2005 (eV/unit cell)** |  |
+| matbench_mp_gap | 106,113 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.2824 (eV)** |  |
+| matbench_mp_is_metal | 106,113 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.9093** |  |
+| matbench_mp_e_form | 132,752 | [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.1726 (eV/atom)** |  |
 
 
-## Leaderboard - General Purpose Algorithms
 
-
-| task name                | verified top score (MAE or ROCAUC) | algorithm name, config            | notes |
-| ------------------------ | ---------------------------------- | ----------------------------------- | ----------------------------------------------------------- |
-| `matbench_dielectric`    | 0.299 (unitless)                   | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_expt_gap`      | 0.416 eV                           | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_expt_is_metal` | 0.92                               | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_glass`         | 0.861                              | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_jdft2d`        | 38.6 meV/atom                      | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_log_gvrh`      | 0.0849 log(GPa)                    | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_log_kvrh`      | 0.0679 log(GPa)                    | Automatminer express v1.0.3.2019111 |                                                          |
-| `matbench_mp_e_form`     | 0.0327 eV/atom                     | MEGNet v0.2.2                       | structure only                                         |
-| `matbench_mp_gap`        | 0.228 eV                           | CGCNN (2019)                        | structure only                                         |
-| `matbench_mp_is_metal`   | 0.977                              | MEGNet v0.2.2                       | structure only                                         |
-| `matbench_perovskites`   | 0.0417                             | MEGNet v0.2.2                       | structure only                                         |
-| `matbench_phonons`       | 36.9 cm^-1                         | MEGNet v0.2.2                       | structure only                                         |
-| `matbench_steels`        | 95.2 MPa                           | Automatminer express v1.0.3.2019111 |                                                         |
-
-<iframe src="static/graph.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+<iframe src="/static/scaled_errors.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
 
 ## Overview
 
@@ -32,9 +34,6 @@ disordered metals, and more.
 **The [Matbench python package](https://github.com/hackingmaterials/matbench) provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.**
 
 ![infographic](static/infographic_matbench.png)
-
-
-
 
 
 ## What can Matbench offer?
@@ -76,27 +75,6 @@ The Matbench Python package provides functions for getting the first two (packag
 the test procedure. See the [Runnning and Submitting Benchmarks](running_and_submitting_benchmarks.md) documentation page to get started.
 
 
-## All Matbench Datasets
-
-| task name                | target column (unit)         | number of samples | task type      | links                                                                                                                                                                |
-| ------------------------ | ---------------------------- | ----------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `matbench_dielectric`    | `n` (unitless)               | 4,764              | regression     | [download](https://ml.materialsproject.org/projects/matbench_dielectric.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_dielectric/)       |
-| `matbench_expt_gap`      | `gap expt` (eV)              | 4,604              | regression     | [download](https://ml.materialsproject.org/projects/matbench_expt_gap.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_expt_gap/)           |
-| `matbench_expt_is_metal` | `is_metal` (unitless)        | 4,921              | classification | [download](https://ml.materialsproject.org/projects/matbench_expt_is_metal.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_expt_is_metal/) |
-| `matbench_glass`         | `gfa` (unitless)             | 5,680              | classification | [download](https://ml.materialsproject.org/projects/matbench_glass.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_glass/)                 |
-| `matbench_jdft2d`        | `exfoliation_en` (meV/atom)  | 636                | regression     | [download](https://ml.materialsproject.org/projects/matbench_jdft2d.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_jdft2d/)               |
-| `matbench_log_gvrh`      | `log10(G_VRH)` (log(GPa))    | 10,987             | regression     | [download](https://ml.materialsproject.org/projects/matbench_log_gvrh.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_log_gvrh/)           |
-| `matbench_log_kvrh`      | `log10(K_VRH)` (log(GPa))    | 10,987             | regression     | [download](https://ml.materialsproject.org/projects/matbench_log_kvrh.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_log_kvrh/)           |
-| `matbench_mp_e_form`     | `e_form` (eV/atom)           | 132,752            | regression     | [download](https://ml.materialsproject.org/projects/matbench_mp_e_form.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_mp_e_form/)         |
-| `matbench_mp_gap`        | `gap pbe` (eV)               | 106,113            | regression     | [download](https://ml.materialsproject.org/projects/matbench_mp_gap.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_mp_gap/)               |
-| `matbench_mp_is_metal`   | `is_metal` (unitless)        | 106,113            | classification | [download](https://ml.materialsproject.org/projects/matbench_mp_is_metal.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_mp_is_metal/)     |
-| `matbench_perovskites`   | `e_form` (eV, per unit cell) | 18,928             | regression     | [download](https://ml.materialsproject.org/projects/matbench_perovskites.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_perovskites/)     |
-| `matbench_phonons`       | `last phdos peak` (cm^-1)    | 1,265              | regression     | [download](https://ml.materialsproject.org/projects/matbench_phonons.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_phonons/)             |
-| `matbench_steels`        | `yield strength` (MPa)       | 312                | regression     | [download](https://ml.materialsproject.org/projects/matbench_steels.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_steels/)               |
-
-
-
-
 
 ## Citing Matbench
 
@@ -113,22 +91,3 @@ The Matbench Test Set and Automatminer Reference Algorithm.
 npj Computational Materials 6, 138 (2020). 
 https://doi.org/10.1038/s41524-020-00406-3
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,11 +1,18 @@
 import os
 from setuptools import setup, find_packages
 
-
-version = "0.1"
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(MODULE_DIR, "requirements.txt"), "r") as f:
     requirements = f.read().replace(" ", "").split("\n")
+
+# source of version is in the constants file
+VERSION_FILE = os.path.join(MODULE_DIR, "matbench/constants.py")
+token = "VERSION = "
+with open(VERSION_FILE, "r") as f:
+    version = None
+    for line in f.readlines():
+        if token in line:
+            version = line.replace(token, "").strip()
 
 if __name__ == "__main__":
     setup(

@@ -2,8 +2,16 @@ import logging
 import os
 import unittest
 
+import numpy as np
+
 from matbench.tests.util import TEST_DIR
-from matbench.util import MSONable2File, RecursiveDotDict, initialize_logger
+from matbench.util import (
+    MSONable2File,
+    RecursiveDotDict,
+    hash_dictionary,
+    immutify_dictionary,
+    initialize_logger,
+)
 
 
 class TestUtils(unittest.TestCase):
@@ -63,3 +71,52 @@ class TestUtils(unittest.TestCase):
             self.assertIn("DEBUG", logtxt)
             self.assertIn("CRITICAL", logtxt)
             self.assertEqual(len(logtxt.split("\n")), 4)
+
+
+class TestHashingDictionaryFunctions(unittest.TestCase):
+    def setUp(self) -> None:
+        self.d = {
+            "q": [1, 2, 3],
+            "b": {
+                "c": "12",
+                "d": 15,
+                "e": np.asarray([4, 5, 6]),
+                "f": {"z": 12, "a": [7, 8]},
+            },
+            "c": np.int64(400),
+        }
+        self.d_same = {
+            "q": [1, 2, 3],
+            "b": {
+                "c": "12",
+                "d": 15,
+                "e": np.asarray([4, 5, 6]),
+                "f": {"a": [7, 8], "z": 12},
+            },
+            "c": 400,
+        }
+        self.d_different = {
+            "q": [1, 2, 3],
+            "b": {
+                "c": "12",
+                "d": 15,
+                "e": np.asarray([4, 5, 6]),
+                "f": {"z": 12, "a": [7, 9]},
+            },
+            "c": 400,
+        }
+
+    def test_immutify_dictionary(self):
+        d_immutable = immutify_dictionary(self.d)
+        d_truth = {
+            "q": (1, 2, 3),
+            "b": {"c": "12", "d": 15, "e": (4, 5, 6), "f": {"z": 12, "a": (7, 8)}},
+            "c": 400,
+        }
+        self.assertDictEqual(d_immutable, d_truth)
+
+    def test_hash_dictionary(self):
+        self.assertEqual(hash_dictionary(self.d), hash_dictionary(self.d_same))
+        self.assertNotEqual(
+            hash_dictionary(self.d), hash_dictionary(self.d_different)
+        )
