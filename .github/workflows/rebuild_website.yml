@@ -71,10 +71,3 @@ jobs:
 #          tag: 'v1.0.0 --force'
 
 
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.1
-        with:
-          branch: main # The branch the action should deploy to.
-          folder: docs # The folder the action should deploy.
-
-
