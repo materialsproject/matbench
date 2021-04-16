@@ -26,9 +26,9 @@ STATIC_DOCS_DIR = os.path.join(DOCS_DIR, "static")
 BENCHMARKS_DIR = os.path.join(THIS_DIR, "../benchmarks")
 FULL_DATA_DIR = os.path.join(DOCS_DIR, "Full Benchmark Data")
 PER_TASK_DIR = os.path.join(DOCS_DIR, "Per-Task Leaderboards")
-PER_TASK_DIR_PREFIX = "/Full%20Benchmark%20Data/"
+PER_TASK_DIR_PREFIX = "Full%20Benchmark%20Data/"
 METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
-METADATA_DIR_PREFIX = "/Benchmark%20Info/"
+METADATA_DIR_PREFIX = "Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
 SCALED_ERRORS_FILENAME = "scaled_errors.html"
 SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_FILENAME)
@@ -182,7 +182,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
 
         df_src = pd.DataFrame(table_data).sort_values(by="n_samples")
         table_header = f"## Leaderboard: General Purpose Algorithms on `{bmark}`\n\n"
-        table_explanation = f"Find more information about this benchmark on [the benchmark info page]({METADATA_DIR_PREFIX}{bmark})\n\n"
+        table_explanation = f"Find more information about this benchmark on [the benchmark info page]({METADATA_DIR_PREFIX}{bmark}.md)\n\n"
         table = "| Task name | Samples | Algorithm | Verified MAE (unit) or ROCAUC | Notes |\n" \
                 "|------------------|---------|-----------|----------------------|-------|\n"
         # create leaderboard table
@@ -190,7 +190,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
 
             task_name = f"{row['task']}"
             samples = format_int(row["n_samples"])
-            algorithm = f"[{row['algorithm']}]({row['link']})"
+            algorithm = f"[{row['algorithm']}]({row['link']}.md)"
 
             task_metadata = metadata[row['task']]
 
@@ -253,7 +253,8 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
 
             for entry in entries:
                 algo_name = entry["algorithm"]
-                link = entry["link"]
+                # link must be relative, and since this is inside a dir, has to reference outside
+                link = "../" + entry["link"]
                 scores = entry["scores"]
 
                 table_data["algorithm w/ link"].append(f"[{algo_name}]({link})")
@@ -444,7 +445,7 @@ def organize_task_data(all_data):
                 # there
                 task_leaderboards[task_name].append({
                     "scores": task.scores,
-                    "link": prefix + dir_name_short,
+                    "link": prefix + dir_name_short + ".md",
                     "algorithm": info["algorithm"],
                     "type": task.metadata.task_type
                 })

@@ -8,8 +8,9 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 
 | algorithm | mean mae | std mae | mean rmse | max max_error |
 |------|------|------|------|------|
-| [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.2824** | 0.0061 | 0.5611 | 6.9105 | 
-| [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **1.3272** | 0.0060 | 1.5989 | 8.5092 | 
+| [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.2824** | 0.0061 | 0.5611 | 6.9105 | 
+| [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.3452** | 0.0033 | 0.6125 | 7.0601 | 
+| [Dummy](../Full%20Benchmark%20Data/matbench_v0.1_dummy.md) | **1.3272** | 0.0060 | 1.5989 | 8.5092 | 
 
 
 <iframe src="../../static/task_matbench_v0.1_matbench_mp_gap.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>

@@ -8,8 +8,9 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 
 | algorithm | mean rocauc | std rocauc | mean f1 | mean balanced_accuracy |
 |------|------|------|------|------|
-| [AMMExpress v2020](/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020) | **0.9093** | 0.0008 | 0.8981 | 0.9093 | 
-| [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **0.5012** | 0.0043 | 0.4353 | 0.5012 | 
+| [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.9093** | 0.0008 | 0.8981 | 0.9093 | 
+| [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.8992** | 0.0019 | 0.8866 | 0.8992 | 
+| [Dummy](../Full%20Benchmark%20Data/matbench_v0.1_dummy.md) | **0.5012** | 0.0043 | 0.4353 | 0.5012 | 
 
 
 <iframe src="../../static/task_matbench_v0.1_matbench_mp_is_metal.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
