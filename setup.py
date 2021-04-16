@@ -5,7 +5,7 @@ MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(MODULE_DIR, "requirements.txt"), "r") as f:
     requirements = f.read().replace(" ", "").split("\n")
 
-# source of version is in the constants python file in the source code
+# source of version is in the constants file
 VERSION_FILE = os.path.join(MODULE_DIR, "matbench/constants.py")
 token = "VERSION = "
 with open(VERSION_FILE, "r") as f:
