@@ -22,7 +22,7 @@ Find more information about this benchmark on [the benchmark info page](/Benchma
 
 
 
-<iframe src="/static/scaled_errors.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+<iframe src="static/scaled_errors.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
 
 ## Overview
 

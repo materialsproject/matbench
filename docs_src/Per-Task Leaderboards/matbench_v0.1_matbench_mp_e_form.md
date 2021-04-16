@@ -12,7 +12,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | [Dummy](/Full%20Benchmark%20Data/matbench_v0.1_dummy) | **1.0059** | 0.0030 | 1.1631 | 3.9096 | 
 
 
-<iframe src="/static/task_matbench_v0.1_matbench_mp_e_form.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+<iframe src="static/task_matbench_v0.1_matbench_mp_e_form.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
 
 ### Dataset info
 
