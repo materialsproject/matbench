@@ -97,3 +97,54 @@ def initialize_logger(logger_name, log_dir=None, level=None) -> logging.Logger:
 
     logger.setLevel(level)
     return logger
+
+
+def immutify_dictionary(d):
+    """Create a frozenset-esque deterministic, unique representation of
+    a nested dict.
+
+
+    Args:
+        d (dict): The dictionary to be immutified. Key are always strings.
+            Values can be arrays of various numpy or pandas types, strings,
+            numpy primitives, python native numbers, or dictionaries with
+            the same format.
+
+    Returns:
+        (dict): A sorted, deterministic, unique representation of the
+            dictionary.
+    """
+    d_new = {}
+    for k, v in d.items():
+        if isinstance(v, (np.ndarray, pd.Series)):
+            d_new[k] = tuple(v.tolist())
+        elif isinstance(v, list):
+            d_new[k] = tuple(v)
+        elif isinstance(v, dict):
+            d_new[k] = immutify_dictionary(v)
+        else:
+            # convert numpy types to native
+            if hasattr(v, "dtype"):
+                d_new[k] = v.item()
+            else:
+                d_new[k] = v
+    # dictionaries are ordered in python 3.6+
+    return dict(sorted(d_new.items(), key=lambda item: item[0]))
+
+
+def hash_dictionary(d):
+    """Hash a dictionary that can be immutified with immutify_dictionary.
+
+    Order of the keys does not matter, as dictionary becomes deterministically
+    immutified. Dictionary can be nested.
+
+    Args:
+        d (dict): The dictionary to hash.
+
+    Returns:
+        (str): base16 encoded hash of the dictionary.
+    """
+    d_hashable = immutify_dictionary(d)
+    s_hashable = json.dumps(d_hashable).encode("utf-8")
+    m = hashlib.sha256(s_hashable).hexdigest()
+    return m

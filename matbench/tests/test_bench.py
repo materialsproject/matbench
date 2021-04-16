@@ -3,13 +3,8 @@ import json
 import os
 import unittest
 
-import numpy as np
 
-from matbench.bench import (
-    MatbenchBenchmark,
-    hash_dictionary,
-    immutify_dictionary,
-)
+from matbench.bench import MatbenchBenchmark
 from matbench.constants import (
     CLF_KEY,
     COMPOSITION_KEY,
@@ -225,52 +220,3 @@ class TestMatbenchBenchmark(unittest.TestCase):
             self.assertTrue(mb.is_recorded)
             self.assertTrue(mb.is_valid)
             self.assertTrue(mb.is_complete)
-
-
-class TestHashingDictionaryFunctions(unittest.TestCase):
-    def setUp(self) -> None:
-        self.d = {
-            "q": [1, 2, 3],
-            "b": {
-                "c": "12",
-                "d": 15,
-                "e": np.asarray([4, 5, 6]),
-                "f": {"z": 12, "a": [7, 8]},
-            },
-            "c": np.int64(400),
-        }
-        self.d_same = {
-            "q": [1, 2, 3],
-            "b": {
-                "c": "12",
-                "d": 15,
-                "e": np.asarray([4, 5, 6]),
-                "f": {"a": [7, 8], "z": 12},
-            },
-            "c": 400,
-        }
-        self.d_different = {
-            "q": [1, 2, 3],
-            "b": {
-                "c": "12",
-                "d": 15,
-                "e": np.asarray([4, 5, 6]),
-                "f": {"z": 12, "a": [7, 9]},
-            },
-            "c": 400,
-        }
-
-    def test_immutify_dictionary(self):
-        d_immutable = immutify_dictionary(self.d)
-        d_truth = {
-            "q": (1, 2, 3),
-            "b": {"c": "12", "d": 15, "e": (4, 5, 6), "f": {"z": 12, "a": (7, 8)}},
-            "c": 400,
-        }
-        self.assertDictEqual(d_immutable, d_truth)
-
-    def test_hash_dictionary(self):
-        self.assertEqual(hash_dictionary(self.d), hash_dictionary(self.d_same))
-        self.assertNotEqual(
-            hash_dictionary(self.d), hash_dictionary(self.d_different)
-        )

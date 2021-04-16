@@ -14,7 +14,7 @@ from matbench.constants import (
 )
 from matbench.data_ops import load, score_array
 from matbench.metadata import mbv01_metadata, mbv01_validation
-from matbench.util import MSONable2File, RecursiveDotDict
+from matbench.util import MSONable2File, RecursiveDotDict, immutify_dictionary
 
 logger = logging.getLogger(__name__)
 
@@ -276,7 +276,10 @@ class MatbenchTask(MSONable, MSONable2File):
                 of predictions for fold number {fold_number}
             params (dict): Any free-form parameters for information
                 about the algorithm on this fold. For example,
-                hyperparameters determined during validation.
+                hyperparameters determined during validation. Parameters
+                must be a dictionary; dictionary types must adhere to
+                the same requirements as in the MatbenchBenchmark.add_metadata
+                docstring.
 
         Returns:
             None
@@ -309,6 +312,7 @@ class MatbenchTask(MSONable, MSONable2File):
                 raise TypeError(
                     f"Parameters must be stored as a dictionary, not {type(params)}!"
                 )
+            params = immutify_dictionary(params)
             self.results[fold_key][self._PARAMS_KEY] = params if params else {}
             self.is_recorded[fold_number] = True
 
