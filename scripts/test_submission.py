@@ -1,6 +1,6 @@
 import os
 import glob
-from unittest import TestCase
+import unittest
 
 from monty.serialization import loadfn
 
@@ -18,7 +18,7 @@ SRC_NB_GLOB = "*.ipynb"
 SRC_PY_GLOB = "*.py"
 
 
-class BenchmarkSubmissionTest(TestCase):
+class BenchmarkSubmissionTest(unittest.TestCase):
 
     def setUp(self) -> None:
         print(f"Running test in benchmark dir: {BENCHMARKS_DIR}")
@@ -84,3 +84,7 @@ class BenchmarkSubmissionTest(TestCase):
 
         # Each algo name must be unique
         self.assertEqual(len(algo_names), len(set(algo_names)))
+
+
+if __name__ == "__main__":
+    unittest.main()

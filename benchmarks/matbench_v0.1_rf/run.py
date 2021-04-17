@@ -14,8 +14,8 @@ from automatminer.featurization import AutoFeaturizer
 from automatminer.automl.adaptors import SinglePipelineAdaptor
 from automatminer.preprocessing import DataCleaner, FeatureReducer
 from automatminer.automl.adaptors import TPOTAdaptor, SinglePipelineAdaptor
-
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+
 from matbench.bench import MatbenchBenchmark
 
 
