@@ -41,10 +41,10 @@ The files should look like:
 
 3. Label your PR with the "new_benchmark" label.
 
-And you're done! If the tests pass, your submission will be added to the leaderboard!
 
 ![pr example](../static/pr_example.png)
 
+**And you're done! If the tests pass, your submission will be added to the leaderboard!**
 
 ---
 
