@@ -54,7 +54,7 @@ mb.to_file("my_models_benchmark.json.gz")
 The output file, in this case `my_models_benchmark.json.gz` contains everything predicted by your 
 benchmark. **Keep this file, as it is the core result that will be submitted to the leaderboard.**
 
-Please see the docs for [Submitting to leaderboard](4submit.md) to learn how to upload your data to the automated leaderboard.
+Please see the docs for [Submitting to leaderboard](3submit.md) to learn how to upload your data to the automated leaderboard.
 
 
 ### Note: Benchmark subsets
