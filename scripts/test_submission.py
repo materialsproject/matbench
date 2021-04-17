@@ -1,4 +1,5 @@
 import os
+import glob
 from unittest import TestCase
 
 from monty.serialization import loadfn
@@ -12,8 +13,9 @@ LOCAL = False
 # LOCAL = True
 
 INFO_FILE = "info.json"
-NOTEBOOK_FILE = "notebook.ipynb"
 RESULTS_FILE = "results.json.gz"
+SRC_NB_GLOB = "*.ipynb"
+SRC_PY_GLOB = "*.py"
 
 
 class BenchmarkSubmissionTest(TestCase):
@@ -42,7 +44,7 @@ class BenchmarkSubmissionTest(TestCase):
             bmark_path = os.path.join(BENCHMARKS_DIR, bmark_d)
             if os.path.isdir(bmark_path):
                 print(f"checking benchmark {bmark_path}")
-                for required_file in (INFO_FILE, RESULTS_FILE, NOTEBOOK_FILE):
+                for required_file in (INFO_FILE, RESULTS_FILE):
 
                     full_path = os.path.join(bmark_path, required_file)
                     self.assertTrue(os.path.exists(full_path))
@@ -51,7 +53,7 @@ class BenchmarkSubmissionTest(TestCase):
                         info = loadfn(full_path)
                         self.assertIn("notes", info)
 
-                        for field_must_not_be_empty in ("authors", "algorithm", "algorithm_long", "bibtex_refs"):
+                        for field_must_not_be_empty in ("authors", "algorithm", "algorithm_long", "bibtex_refs", "requirements"):
                             self.assertTrue(info.get(field_must_not_be_empty))
 
                         algo_names.append(info["algorithm"])
@@ -62,6 +64,20 @@ class BenchmarkSubmissionTest(TestCase):
                         self.assertTrue(is_valid)
 
                         print(f"{RESULTS_FILE} file in {bmark_path}: valid ({is_valid}), complete ({mb.is_complete}), recorded ({mb.is_recorded})")
+
+
+                # benchmark must either contain a notebook or at least one .py file
+                nb_paths = glob.glob(os.path.join(bmark_path, SRC_NB_GLOB))
+                py_paths = glob.glob(os.path.join(bmark_path, SRC_PY_GLOB))
+                self.assertGreater(len(nb_paths + py_paths), 0)
+
+                # ensure there are no large (10MB+) files in the submission
+                # apart from the results
+                for file in os.listdir(bmark_path):
+                    if file != RESULTS_FILE:
+                        fpath = os.path.join(bmark_path, file)
+                        fsize_mb = os.stat(fpath).st_size/1e6
+                        self.assertLessEqual(fsize_mb, 10)
 
             else:
                 print(f"path {bmark_path} skipped!")
