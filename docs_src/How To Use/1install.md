@@ -23,4 +23,13 @@ pip install -e . -r requirements.txt
 
 ## Via PyPi
 
-A matbench PyPi package is currently in development. Stay tuned for announcements!
+Install matbench with:
+
+```
+pip install matbench
+```
+
+
+## Troubleshooting
+
+Matbench is supported on all Unix systems. It does not officially support Windows installations, but may work. Please use our friendly [matsci.org help forum](https://matsci.org/c/matminer) to ask for help; we don't bite!
