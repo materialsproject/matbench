@@ -46,7 +46,7 @@ Each task in Matbench consists of a three things:
 
 
 The Matbench Python package provides functions for getting the first two (packaged together for each task as a _dataset_) as well as running 
-the test procedure. See the [Runnning and Submitting Benchmarks](running_and_submitting_benchmarks.md) documentation page to get started.
+the test procedure. See the [Runnning and Submitting Benchmarks](How%20To%20Use/running_and_submitting_benchmarks.md) documentation page to get started.
 
 
 

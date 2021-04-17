@@ -11,18 +11,20 @@ Raw data download and example notebook available [on the matbench repo](https://
 ### References (in bibtex format): 
 
 ```
-@article{Dunn2020,
-  doi = {10.1038/s41524-020-00406-3},
-  url = {https://doi.org/10.1038/s41524-020-00406-3},
-  year = {2020},
-  month = sep,
-  publisher = {Springer Science and Business Media {LLC}},
-  volume = {6},
-  number = {1},
-  author = {Alexander Dunn and Qi Wang and Alex Ganose and Daniel Dopp and Anubhav Jain},
-  title = {Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm},
-  journal = {npj Computational Materials}
-}
+('@article{Dunn2020,\n'
+ '  doi = {10.1038/s41524-020-00406-3},\n'
+ '  url = {https://doi.org/10.1038/s41524-020-00406-3},\n'
+ '  year = {2020},\n'
+ '  month = sep,\n'
+ '  publisher = {Springer Science and Business Media {LLC}},\n'
+ '  volume = {6},\n'
+ '  number = {1},\n'
+ '  author = {Alexander Dunn and Qi Wang and Alex Ganose and Daniel Dopp and '
+ 'Anubhav Jain},\n'
+ '  title = {Benchmarking materials property prediction methods: the Matbench '
+ 'test set and Automatminer reference algorithm},\n'
+ '  journal = {npj Computational Materials}\n'
+ '}')
 ```
 
 ### User metadata:

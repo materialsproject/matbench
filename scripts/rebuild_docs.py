@@ -106,7 +106,6 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
 
                 scaled_df[task] = scaler(scaled_df[task], metadata[task].mad)
 
-
             scaled_df = scaled_df.T
             scaled_df["n_samples"] = [metadata[task].num_entries for task in scaled_df.index]
             scaled_df["Problem"] = [f"{symbols[task]} {descriptors[task]}" for task in scaled_df.index]
@@ -522,7 +521,7 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     header = f"# {mb.benchmark_name}: {algo_name}\n\n"
     url = f"https://github.com/hackingmaterials/matbench/tree/main/benchmarks/{dir_name_short}"
     desc = f"### Algorithm description: \n\n{algo_desc}\n\n{notes}\n\nRaw data download and example notebook available [on the matbench repo]({url}).\n\n"
-    refs = f"### References (in bibtex format): \n\n```\n{refs}\n```\n\n"
+    refs = f"### References (in bibtex format): \n\n```\n{pprint.pformat(refs)}\n```\n\n"
 
     user_metadata = f"### User metadata:\n\n```\n{pprint.pformat(mb.user_metadata)}\n```\n\n"
 
@@ -565,9 +564,6 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
             dist_table += f"| {display_name} | {format_float(stats.mean)} | {format_float(stats.max)} | {format_float(stats.min)} | {format_float(stats.std)} |\n"
 
         dist_table += "\n\n"
-
-
-
 
         params_header = "###### Fold parameters\n\n"
         params_table = "| fold | params dict|\n" \
@@ -626,9 +622,16 @@ def nuke_docs(check=True):
         print(f"\tdeleting full benchmark md file '{fb}'")
     count += len(full_benchmark_mds)
 
+
+    benchmark_info_mds = glob.glob(os.path.join(METADATA_DIR, "*.md"))
+    for bi in benchmark_info_mds:
+        if "notes.md" not in bi:
+            if not check:
+                os.remove(bi)
+            print(f"\tdeleting benchmark info page '{bi}'")
+            count += 1
+
     print(f"\tdeleted {count} files from {DOCS_DIR}")
-
-
 
 
 if __name__ == "__main__":

@@ -160,7 +160,7 @@ Follow each of the steps below to create a pull request to the [Matbench repo](h
 **A jupyter notebook** with some code for running your algorithm on Matbench. 
 
 
-![example_notebook](static/notebook_example.png)
+![example_notebook](../static/notebook_example.png)
 
 The notebook should generally follow the format of the example notebook `/benchmarks/matbench_v0.1_dummy/notebook.ipynb`. Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and **most importantly, a link to a publication for your algorithm**. 
 
@@ -190,11 +190,11 @@ Please make sure the names of these files are exactly as shown here. You can inc
 
 
 
-### Step 3c: Make a PR to the [matbench repo](htttps://github.com/hackingmaterials/matbench)
+### Step 3c: Make a PR to the [matbench repo](https://github.com/hackingmaterials/matbench)
 
 You can find info on how to make a pull request [on GitHub's official documentation](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
-![pr example](static/pr_example.png)
+![pr example](../static/pr_example.png)
 
 Your submission (output file, metadata, and notebook) will be automatically validated by the workflows on the matbench repo; once it's validated, it will be merged and will
 automatically appear in the full benchmark data!

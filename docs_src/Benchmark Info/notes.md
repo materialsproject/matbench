@@ -20,7 +20,4 @@ a MAPE of 11% corresponds to `mape*=0.11`, and a MAPE of 11,000% corresponds to 
 
 
 
-[something](Full%20Benchmark%20Data/matbench_v0.1_dummy.md)
-
-
 
