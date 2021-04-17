@@ -86,6 +86,8 @@ At least one source file (one or more `.py` files or a Jupyter notebook `.ipynb`
 
 ### General guidelines
 
+The source file should contain all the code needed for configuring, training, and running your algorithm on all the benchmark tasks you decide to run.
+
 The easiest way to create a source file is just use the source file you used while [recording your benchmark results](2run.md).
 
 There are no naming requirements for these source files. You can also include other supporting files, like metadata, features, etc. if they are critical for the algorithm to run and they are small (<10MB). 
