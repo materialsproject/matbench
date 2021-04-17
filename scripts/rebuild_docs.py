@@ -35,6 +35,16 @@ SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_FILENAME)
 
 
 def generate_scaled_errors_graph(gp_graph_data_by_bmark):
+    """
+    Generate the scaled errors graph
+
+
+    Args:
+        gp_graph_data_by_bmark:
+
+    Returns:
+
+    """
     for bmark_name, tasks_data in gp_graph_data_by_bmark.items():
 
             if bmark_name == MBV01_KEY:
@@ -162,6 +172,24 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
 
 # NOTE: MUST BE CALLED AFTER CREATING generate_scaled_errors_graph
 def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
+    """
+    Generate both the general purpose leaderboard and scaled errors graph on the main leaderboard page.
+
+
+    THE SCALED ERRORS GRAPH MUST EXIST FOR THIS FUNCTION TO COMPLETE CORRECTLY.
+    Call generate_scaled_errors_graph to create this graph.
+
+    This function takes in the doc snippet for index.md and prepends the leaderboard to it.
+
+    So to make changes to the index.md you should change the doc snippet, not the index.md file in docs_src.
+
+
+    Args:
+        gp_leaderboard_data_by_bmark:
+
+    Returns:
+
+    """
     for bmark, gp_data in gp_leaderboard_data_by_bmark.items():
 
         if bmark == MBV01_KEY:
@@ -223,6 +251,16 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
 
 
 def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
+    """
+    Generate all .md files for the per-task leaderboards.
+
+
+    Args:
+        task_leaderboard_data_by_bmark:
+
+    Returns:
+
+    """
     for bmark_name, tasks_data in task_leaderboard_data_by_bmark.items():
         for task, entries in tasks_data.items():
 
@@ -361,6 +399,17 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
 
 
 def organize_task_data(all_data):
+    """
+    Preprocessing step for organizing all benchmark data in specific formats,
+    to be handed downstream to .md-generating functions.
+
+
+    Args:
+        all_data:
+
+    Returns:
+
+    """
     all_data_per_benchmark = {}
 
     prefix = PER_TASK_DIR_PREFIX
@@ -457,6 +506,18 @@ def organize_task_data(all_data):
 
 
 def generate_metadata_pages(task_leaderboard_data_by_bmark):
+    """
+    Generate all benchmark info pages. E.g., the table for matbench_v0.1 with all the download links.
+
+    There should be one per benchmark version - e.g., one for matbench_v0.1, one for matbench_v0.2, ...
+
+
+    Args:
+        task_leaderboard_data_by_bmark:
+
+    Returns:
+
+    """
     for bmark_name, bmark_data in task_leaderboard_data_by_bmark.items():
         metadata = MatbenchBenchmark(benchmark=bmark_name, autoload=False).metadata
 
@@ -497,6 +558,17 @@ def generate_metadata_pages(task_leaderboard_data_by_bmark):
 
 
 def generate_info_pages(all_data):
+    """
+    Generate all full data benchmarks pages. There should be one per submitted benchmark.
+
+    E.g., one for /benchmarks/matbench_v0.1_algo1, one for /benchmarks/matbench_v0.1_algo2, etc.
+
+    Args:
+        all_data:
+
+    Returns:
+
+    """
     for bmark_name, bmark_data in tqdm.tqdm(all_data.items(), desc="DOCS: FULL DATA DOCS GENERATED"):
         info = bmark_data["info"]
         mb = bmark_data["results"]
@@ -511,6 +583,18 @@ def generate_info_pages(all_data):
 
 
 def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
+    """
+    Generate a single full data benchmark page.
+
+
+    Args:
+        mb:
+        info:
+        dir_name_short:
+
+    Returns:
+
+    """
     is_complete = mb.is_complete
 
     algo_name = info["algorithm"]
@@ -590,6 +674,15 @@ def format_int(number):
 
 
 def nuke_docs(check=True):
+    """
+    Clean the source data directory.
+
+    Args:
+        check (bool): don't actually delete anything, just output the files to-be-deleted.
+
+    Returns:
+
+    """
     count = 0
 
     index = os.path.join(DOCS_DIR, "index.md")
