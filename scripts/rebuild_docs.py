@@ -603,6 +603,7 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     algo_desc = info["algorithm_long"]
     refs = info["bibtex_refs"]
     notes = info["notes"]
+    requirements = info["requirements"]
 
     header = f"# {mb.benchmark_name}: {algo_name}\n\n"
     url = f"https://github.com/hackingmaterials/matbench/tree/main/benchmarks/{dir_name_short}"
@@ -620,6 +621,9 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     if not is_complete:
         metadata_header += f"Benchmark is structure complete? {structure_complete}\n\n"
         metadata_header += f"Benchmark is composition complete? {composition_complete}\n\n"
+
+    requirements_header = f"### Software Requirements\n\n"
+    requirements_body = f"```\n{pprint.pformat(requirements)}\n```"
 
     all_tasks_header = f"### Task data:\n\n"
     data_txt = ""
@@ -667,7 +671,7 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
         task_section = task_header + fold_data_header + fold_table + fold_dist_header + dist_table + params_header + params_table + "\n\n"
         data_txt += task_section
 
-    final_txt = header + desc + refs + user_metadata + metadata_header + all_tasks_header + data_txt
+    final_txt = header + desc + refs + user_metadata + metadata_header + requirements_header + requirements_body + all_tasks_header + data_txt
     return final_txt
 
 
