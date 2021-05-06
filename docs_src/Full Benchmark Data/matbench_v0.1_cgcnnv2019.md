@@ -105,6 +105,10 @@ Tasks recorded: 9 of 13 total
 
 Benchmark is complete? False
 
+Benchmark is structure complete? True
+
+Benchmark is composition complete? False
+
 ### Task data:
 
 #### `matbench_dielectric`
