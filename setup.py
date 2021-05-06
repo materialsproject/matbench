@@ -13,6 +13,7 @@ with open(VERSION_FILE, "r") as f:
     for line in f.readlines():
         if token in line:
             version = line.replace(token, "").strip()
+# Double quotes are contained in the read line, remove them
 version = version.replace("\"", "")
 
 
