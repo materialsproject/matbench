@@ -596,6 +596,8 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
 
     """
     is_complete = mb.is_complete
+    structure_complete = mb.is_structure_complete
+    composition_complete = mb.is_composition_complete
 
     algo_name = info["algorithm"]
     algo_desc = info["algorithm_long"]
@@ -614,6 +616,10 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
 
     metadata_header = f"### Metadata:\n\nTasks recorded: {n_tasks_available} of {n_tasks_total} total\n\nBenchmark is complete? {is_complete}\n\n"
 
+    # List out the different types of completeness.
+    if not is_complete:
+        metadata_header += f"Benchmark is structure complete? {structure_complete}\n\n"
+        metadata_header += f"Benchmark is composition complete? {composition_complete}\n\n"
 
     all_tasks_header = f"### Task data:\n\n"
     data_txt = ""
