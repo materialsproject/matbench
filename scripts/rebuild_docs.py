@@ -623,7 +623,7 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
         metadata_header += f"Benchmark is composition complete? {composition_complete}\n\n"
 
     requirements_header = f"### Software Requirements\n\n"
-    requirements_body = f"```\n{pprint.pformat(requirements)}\n```"
+    requirements_body = f"```\n{pprint.pformat(requirements)}\n```\n\n"
 
     all_tasks_header = f"### Task data:\n\n"
     data_txt = ""

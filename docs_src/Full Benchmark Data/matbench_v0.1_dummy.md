@@ -41,6 +41,12 @@ Tasks recorded: 13 of 13 total
 
 Benchmark is complete? True
 
+### Software Requirements
+
+```
+{'python': ['scikit-learn==0.24.1', 'numpy==1.20.1', 'matbench==0.1.0']}
+```
+
 ### Task data:
 
 #### `matbench_dielectric`

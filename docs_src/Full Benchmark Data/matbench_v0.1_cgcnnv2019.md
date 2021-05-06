@@ -109,6 +109,14 @@ Benchmark is structure complete? True
 
 Benchmark is composition complete? False
 
+### Software Requirements
+
+```
+{'python': ['https://github.com/txie-93/cgcnn',
+            'numpy==1.20.1',
+            'matbench==0.1.0']}
+```
+
 ### Task data:
 
 #### `matbench_dielectric`

@@ -51,6 +51,12 @@ Tasks recorded: 13 of 13 total
 
 Benchmark is complete? True
 
+### Software Requirements
+
+```
+{'python': ['automatminer==1.0.3.20200727', 'matbench==0.1.0']}
+```
+
 ### Task data:
 
 #### `matbench_dielectric`
