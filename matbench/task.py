@@ -264,7 +264,9 @@ class MatbenchTask(MSONable, MSONable2File):
             if as_type == "tuple":
                 return self._get_data_from_df(ids, as_type)[0]
             elif as_type == "df":
-                return self._get_data_from_df(ids, as_type)[[self.metadata.input_type]]
+                return self._get_data_from_df(ids, as_type)[
+                    [self.metadata.input_type]
+                ]
 
     def record(self, fold_number, predictions, params=None):
         """Record the test data as well as parameters about the model
