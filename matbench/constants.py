@@ -4,7 +4,7 @@ Source of ground truth for all constants used across matbench.
 import os
 
 # single place for defining version
-VERSION = "0.1.0"
+VERSION = '0.1.1'
 
 # paths for metadata and validation splits
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
