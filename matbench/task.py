@@ -314,7 +314,7 @@ class MatbenchTask(MSONable, MSONable2File):
                 raise TypeError(
                     f"Parameters must be stored as a dictionary, not {type(params)}!"
                 )
-            params = immutify_dictionary(params)
+            params = immutify_dictionary(params) if params else params
             self.results[fold_key][self._PARAMS_KEY] = params if params else {}
             self.is_recorded[fold_number] = True
 
