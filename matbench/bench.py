@@ -460,13 +460,21 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         Returns:
             None
         """
-
+        # Use logging here so bad metadata addition does not
+        # ruin an entire run...
         if not isinstance(metadata, dict):
-            raise TypeError("User metadata must be reducible to dict format.")
+            logger.critical(
+                f"User metadata must be reducible to dict format, "
+                f"not type({type(metadata)})"
+            )
+            logger.info("User metadata not added.")
 
-        d = immutify_dictionary(metadata)
-        self.user_metadata = d
-        logger.info("User metadata added successfully!")
+        else:
+            if self.user_metadata:
+                logger.warning("User metadata already exists! Overwriting...")
+
+            self.user_metadata = immutify_dictionary(metadata)
+            logger.info("User metadata added successfully!")
 
     def load(self):
         """Load all tasks in this benchmark.

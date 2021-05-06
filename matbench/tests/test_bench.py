@@ -67,6 +67,10 @@ class TestMatbenchBenchmark(unittest.TestCase):
         mb.add_metadata(example_metadata)
         self.assertDictEqual(example_metadata, mb.user_metadata)
 
+        bad_metadata = [1, 2, 3]
+        mb.add_metadata(bad_metadata)
+        self.assertDictEqual(example_metadata, mb.user_metadata)
+
     def test_complete_valid_recorded(self):
         mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
         self.assertTrue(mb.is_valid)
