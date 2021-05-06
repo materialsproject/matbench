@@ -8,6 +8,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 
 | algorithm | mean rocauc | std rocauc | mean f1 | mean balanced_accuracy |
 |------|------|------|------|------|
+| [CGCNN v2019](../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.9520** | 0.0074 | 0.9462 | 0.9520 | 
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.9093** | 0.0008 | 0.8981 | 0.9093 | 
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.8992** | 0.0019 | 0.8866 | 0.8992 | 
 | [Dummy](../Full%20Benchmark%20Data/matbench_v0.1_dummy.md) | **0.5012** | 0.0043 | 0.4353 | 0.5012 | 
