@@ -5,7 +5,7 @@ matbench is an ImageNet for materials science; a set of 13 (with more to come!) 
 
 | Tests  |   Release |
 |:----------:|:------:|
-| ![example workflow](https://github.com/hackingmaterials/matbench/actions/workflows/python-package.yml/badge.svg) | coming soon! |
+| ![example workflow](https://github.com/hackingmaterials/matbench/actions/workflows/python-package.yml/badge.svg) | [![PyPI version](https://img.shields.io/pypi/v/matbench.svg?colorB=blue)](https://pypi.org/project/matbench/) |
 
 - **Website (including documentation)**: <https://hackingmaterials.lbl.gov/matbench>
 - **Help/Support:** <https://discuss.matsci.org/c/matminer>
@@ -19,4 +19,4 @@ Prediction Methods: The Matbench Test Set and Automatminer Reference Algorithm. 
 Computational Materials 6, 138 (2020). https://doi.org/10.1038/s41524-020-00406-3
 ```
 
-`matbench` will be `pip` installable soon. Please stay tuned for the first release!
+Matbench is pip installable! Install with `pip install matbench` or see [the installation page](https://hackingmaterials.lbl.gov/matbench/How%20To%20Use/1install/) for more details.
