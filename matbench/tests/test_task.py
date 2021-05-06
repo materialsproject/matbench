@@ -121,6 +121,22 @@ class TestMatbenchTask(unittest.TestCase):
                     all([isinstance(d, output_type) for d in outputs]))
                 folds.append((inputs, outputs))
 
+                df_test = mbt.get_test_data(
+                    fold_number=fold,
+                    as_type="df",
+                    include_target=True
+                )
+                self.assertListEqual(df_test.columns.tolist(), [mbt.metadata.input_type, mbt.metadata.target])
+
+                df_test = mbt.get_test_data(
+                    fold_number=fold,
+                    as_type="df",
+                    include_target=False
+                )
+                self.assertTrue(isinstance(df_test, pd.DataFrame))
+                self.assertListEqual(df_test.columns.tolist(), [mbt.metadata.input_type])
+
+
             # check if all entries from original df are in exactly
             # one test fold exactly once
             original_input_df = mbt.df[mbt.metadata.input_type]
