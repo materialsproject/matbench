@@ -13,6 +13,8 @@ with open(VERSION_FILE, "r") as f:
     for line in f.readlines():
         if token in line:
             version = line.replace(token, "").strip()
+version = version.replace("\"", "")
+
 
 if __name__ == "__main__":
     setup(
