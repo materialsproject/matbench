@@ -42,7 +42,7 @@ disordered metals, and more.
 
 
 - **Leaderboard of results for state-of-the-art materials ML algorithms on standardized test problems**
-- Interactively explore and download the tasks on [MPContribs-ML](https://ml.materialsproject.org/browse), a platform hosted by [The Materials Project](https://materialsproject.org). See [All Matbench Datasets](#all-matbench-datasets) for links to each dataset.
+- Interactively explore and download the tasks on [MPContribs-ML](https://ml.materialsproject.org/browse), a platform hosted by [The Materials Project](https://materialsproject.org). See [Benchmark Info](Benchmark%20Info/matbench_v0.1/) for links to each dataset.
 - **Each and every result is backed by a peer-reviewed publication and a jupyter notebook** (similar to Papers With Code) - i.e., how were these results were obtained?
 - Glossary of all algorithms' results on the Matbench problems
 
