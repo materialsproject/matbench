@@ -21,7 +21,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 
 ##### Description
 
-Matbench v0.1 test dataset for predicting DFT formation energy from structure. Adapted from Materials Project database. Removed entries having formation energy more than 3.0eV and those containing noble gases. Retrieved April 2, 2019. For benchmarking w/ nested cross validation, the order of the dataset must be identical to the retrieved data; refer to the Automatminer/Matbench publication for more details.
+Matbench v0.1 test dataset for predicting DFT formation energy from structure. Adapted from Materials Project database. Removed entries having formation energy more than 2.5eV and those containing noble gases. Retrieved April 2, 2019. For benchmarking w/ nested cross validation, the order of the dataset must be identical to the retrieved data; refer to the Automatminer/Matbench publication for more details.
 
 Number of samples: 132752
 
@@ -115,7 +115,7 @@ doi:10.1063/1.4812323`
  'description': 'Matbench v0.1 test dataset for predicting DFT formation '
                 'energy from structure. Adapted from Materials Project '
                 'database. Removed entries having formation energy more than '
-                '3.0eV and those containing noble gases. Retrieved April 2, '
+                '2.5eV and those containing noble gases. Retrieved April 2, '
                 '2019. For benchmarking w/ nested cross validation, the order '
                 'of the dataset must be identical to the retrieved data; refer '
                 'to the Automatminer/Matbench publication for more details.',

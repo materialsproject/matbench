@@ -31,7 +31,7 @@ Input type: structure
 
 ##### Dataset columns
 
-- exfoliation_en: Target variable. Exfoliation energy (meV).
+- exfoliation_en: Target variable. Exfoliation energy (meV/atom).
 - structure: Pymatgen Structure of the material.
 
 
@@ -140,7 +140,8 @@ choudhary, kamal; https://orcid.org/0000-0001-9737-8074 (2018): jdft_2d-7-7-2018
                  'materials}, publisher={figshare}, author={choudhary, kamal '
                  'and https://orcid.org/0000-0001-9737-8074}, year={2018}, '
                  'month={Jul}}'],
- 'columns': {'exfoliation_en': 'Target variable. Exfoliation energy (meV).',
+ 'columns': {'exfoliation_en': 'Target variable. Exfoliation energy '
+                               '(meV/atom).',
              'structure': 'Pymatgen Structure of the material.'},
  'description': 'Matbench v0.1 test dataset for predicting exfoliation '
                 'energies from crystal structure (computed with the OptB88vdW '

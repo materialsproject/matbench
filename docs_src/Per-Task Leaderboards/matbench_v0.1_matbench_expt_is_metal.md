@@ -90,7 +90,7 @@ Input type: composition
                  '@article{doi:10.1021/acs.jpclett.8b00124,\n'
                  'author = {Zhuo, Ya and Mansouri Tehrani, Aria and Brgoch, '
                  'Jakoah},\n'
-                 'title = {Predicting the Band Gaps of Inorganic Solids by '
+                 'title= {Predicting the Band Gaps of Inorganic Solids by '
                  'Machine Learning},\n'
                  'journal = {The Journal of Physical Chemistry Letters},\n'
                  'volume = {9},\n'
