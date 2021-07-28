@@ -383,10 +383,10 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                 ]
         elif completeness_type in (REG_KEY, CLF_KEY):
             required_tasks = \
-            [
-                k for k, v in self.metadata.items() if
-                v.task_type == completeness_type
-            ]
+                [
+                    k for k, v in self.metadata.items() if
+                    v.task_type == completeness_type
+                ]
         else:
             allowed_completeness_types = \
                 [
