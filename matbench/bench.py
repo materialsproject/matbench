@@ -361,6 +361,8 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         - "all": All tasks are included
         - "composition": All composition tasks are included
         - "structure": All structure tasks are included
+        - "regression": All regression problems
+        - "classification": All classification problems
 
         Args:
             completeness_type (str): One of the above completeness
@@ -373,22 +375,30 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         """
         if completeness_type == self.ALL_KEY:
             required_tasks = list(self.metadata.keys())
-        elif completeness_type == COMPOSITION_KEY:
+        elif completeness_type in (COMPOSITION_KEY, STRUCTURE_KEY):
             required_tasks = \
                 [
                     k for k, v in self.metadata.items() if
-                    v.input_type == COMPOSITION_KEY
+                    v.input_type == completeness_type
                 ]
-        elif completeness_type == STRUCTURE_KEY:
+        elif completeness_type in (REG_KEY, CLF_KEY):
             required_tasks = \
-                [
-                    k for k, v in self.metadata.items() if
-                    v.input_type == STRUCTURE_KEY
-                ]
+            [
+                k for k, v in self.metadata.items() if
+                v.task_type == completeness_type
+            ]
         else:
+            allowed_completeness_types = \
+                [
+                    self.ALL_KEY,
+                    COMPOSITION_KEY,
+                    STRUCTURE_KEY,
+                    REG_KEY,
+                    CLF_KEY
+                ]
             raise ValueError(
                 "Only supported completeness types are "
-                f"{[self.ALL_KEY, COMPOSITION_KEY, STRUCTURE_KEY]}"
+                f"{allowed_completeness_types}"
             )
 
         for task in required_tasks:
@@ -600,6 +610,24 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             (bool)
         """
         return self._determine_completeness(completeness_type=STRUCTURE_KEY)
+
+    @@property
+    def is_regression_complete(self):
+        """Determine if all regression tasks for this benchmark are included
+
+        Returns:
+            (bool)
+        """
+        return self._determine_completeness(completeness_type=REG_KEY)
+
+    @property
+    def is_classification_complete(self):
+        """Determine if all classification tasks for this benchmark are included
+
+        Returns:
+            (bool)
+        """
+        return self._determine_completeness(completeness_type=CLF_KEY)
 
     @property
     def is_recorded(self):

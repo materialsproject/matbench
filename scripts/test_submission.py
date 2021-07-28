@@ -9,8 +9,8 @@ from matbench.bench import MatbenchBenchmark
 
 BENCHMARKS_DIR = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir), "benchmarks")
 
-LOCAL = False
-# LOCAL = True
+# LOCAL = False
+LOCAL = True
 
 INFO_FILE = "info.json"
 RESULTS_FILE = "results.json.gz"
@@ -54,7 +54,7 @@ class BenchmarkSubmissionTest(unittest.TestCase):
                         self.assertIn("notes", info)
 
                         for field_must_not_be_empty in ("authors", "algorithm", "algorithm_long", "bibtex_refs", "requirements"):
-                            self.assertTrue(info.get(field_must_not_be_empty))
+                            self.assertIsNotNone(info.get(field_must_not_be_empty, None))
 
                         algo_names.append(info["algorithm"])
 
