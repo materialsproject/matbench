@@ -6,7 +6,7 @@ import unittest
 
 import numpy as np
 import pandas as pd
-from pymatgen import Structure
+from pymatgen.core import Structure
 
 from matbench.constants import (
     CLF_METRICS,

@@ -1,7 +1,7 @@
 import unittest
 
 import numpy as np
-from pymatgen import Structure
+from pymatgen.core import Structure
 
 from matbench.constants import CLF_KEY, REG_KEY
 from matbench.data_ops import load, mean_absolute_percentage_error, score_array
