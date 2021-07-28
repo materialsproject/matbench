@@ -611,7 +611,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         """
         return self._determine_completeness(completeness_type=STRUCTURE_KEY)
 
-    @@property
+    @property
     def is_regression_complete(self):
         """Determine if all regression tasks for this benchmark are included
 

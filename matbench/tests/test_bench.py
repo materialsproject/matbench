@@ -174,6 +174,16 @@ class TestMatbenchBenchmark(unittest.TestCase):
         self.assertTrue(mb.is_composition_complete)
         self.assertTrue(mb.is_structure_complete)
 
+        mb = MatbenchBenchmark.from_preset(MBV01_KEY, preset_name=REG_KEY)
+        self.assertFalse(mb.is_complete)
+        self.assertTrue(mb.is_regression_complete)
+        self.assertFalse(mb.is_classification_complete)
+
+        mb = MatbenchBenchmark.from_preset(MBV01_KEY, preset_name=CLF_KEY)
+        self.assertFalse(mb.is_complete)
+        self.assertFalse(mb.is_regression_complete)
+        self.assertTrue(mb.is_classification_complete)
+
     def generate_benchmark_json_files(self, write=True, full_set=False):
         """
         Generate new benchmark files from a random model.
