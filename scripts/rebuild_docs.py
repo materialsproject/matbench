@@ -466,10 +466,10 @@ def organize_task_data(all_data):
                     raise ValueError
 
 
-                # Include both GP and structure-required algos on
-                # GP leaderboard, as there are 9 structure problems
-                # across multiple dataset sizes
-                if mb.is_complete or mb.is_structure_complete:
+                # Include both GP, structure-required, and strcuture/comp regression algos on
+                # GP leaderboard, as there are 9 structure problems or 10 regresison problems
+                # across multiple dataset sizes (composition only or clf only are not included)
+                if mb.is_complete or mb.is_structure_complete or mb.is_regression_complete:
                     current_best_score = gp_leaderboard[task_name]["score"]
 
                     gp_graph_data[task_name][info["algorithm"]] = score
@@ -481,7 +481,7 @@ def organize_task_data(all_data):
                         gp_leaderboard[task_name]["algorithm"] = info["algorithm"]
                         gp_leaderboard[task_name]["type"] = task.metadata.task_type
 
-                        if mb.is_complete:
+                        if mb.is_complete or mb.is_regression_complete:
                             gp_leaderboard[task_name]["completeness"] = "all"
                         else:
                             gp_leaderboard[task_name]["completeness"] = "structure"
@@ -598,6 +598,8 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     is_complete = mb.is_complete
     structure_complete = mb.is_structure_complete
     composition_complete = mb.is_composition_complete
+    regression_complete = mb.is_regression_complete
+    classification_complete = mb.is_classification_complete
 
     algo_name = info["algorithm"]
     algo_desc = info["algorithm_long"]
@@ -621,6 +623,8 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     if not is_complete:
         metadata_header += f"Benchmark is structure complete? {structure_complete}\n\n"
         metadata_header += f"Benchmark is composition complete? {composition_complete}\n\n"
+        metadata_header += f"Benchmark is regression complete? {regression_complete}\n\n"
+        metadata_header += f"Benchmark is classification complete? {classification_complete}\n\n"
 
     requirements_header = f"### Software Requirements\n\n"
     requirements_body = f"```\n{pprint.pformat(requirements)}\n```\n\n"

@@ -8,15 +8,15 @@ Find more information about this benchmark on [the benchmark info page](Benchmar
 |------------------|---------|-----------|----------------------|-------|
 | matbench_steels | 312 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **97.4929 (MPa)** |  |
 | matbench_jdft2d | 636 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **39.8497 (meV/atom)** |  |
-| matbench_phonons | 1,265 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **56.1706 (cm^-1)** |  |
-| matbench_expt_gap | 4,604 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.4161 (eV)** |  |
+| matbench_phonons | 1,265 | [CrabNet](Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **55.1114 (cm^-1)** |  |
+| matbench_expt_gap | 4,604 | [CrabNet](Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **0.3463 (eV)** |  |
 | matbench_dielectric | 4,764 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.3150 (unitless)** |  |
 | matbench_expt_is_metal | 4,921 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.9209** |  |
 | matbench_glass | 5,680 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.8607** |  |
 | matbench_log_gvrh | 10,987 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.0874 (log10(GPa))** |  |
 | matbench_log_kvrh | 10,987 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.0647 (log10(GPa))** |  |
 | matbench_perovskites | 18,928 | [CGCNN v2019](Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.0452 (eV/unit cell)** | structure required |
-| matbench_mp_gap | 106,113 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.2824 (eV)** |  |
+| matbench_mp_gap | 106,113 | [CrabNet](Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **0.2655 (eV)** |  |
 | matbench_mp_is_metal | 106,113 | [CGCNN v2019](Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.9520** | structure required |
 | matbench_mp_e_form | 132,752 | [CGCNN v2019](Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.0337 (eV/atom)** | structure required |
 

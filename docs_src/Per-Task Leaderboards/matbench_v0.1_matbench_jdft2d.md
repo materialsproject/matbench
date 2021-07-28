@@ -9,6 +9,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | algorithm | mean mae | std mae | mean rmse | max max_error |
 |------|------|------|------|------|
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **39.8497** | 9.8835 | 106.5460 | 1552.9102 | 
+| [CrabNet](../Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **45.6104** | 12.2491 | 120.0088 | 1532.0118 | 
 | [CGCNN v2019](../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **49.2440** | 11.5865 | 112.7689 | 1516.9120 | 
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **50.0440** | 8.6271 | 112.2660 | 1538.6073 | 
 | [Dummy](../Full%20Benchmark%20Data/matbench_v0.1_dummy.md) | **67.2851** | 10.1832 | 126.8446 | 1491.7993 | 

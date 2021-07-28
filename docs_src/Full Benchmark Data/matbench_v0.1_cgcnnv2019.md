@@ -109,6 +109,10 @@ Benchmark is structure complete? True
 
 Benchmark is composition complete? False
 
+Benchmark is regression complete? False
+
+Benchmark is classification complete? False
+
 ### Software Requirements
 
 ```

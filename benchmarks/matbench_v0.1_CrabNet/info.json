@@ -1,0 +1,8 @@
+{
+    "authors": "Mohamed Salah Mahmoud, Anthony Yu-Tung Wang",
+    "algorithm": "CrabNet",
+    "algorithm_long": "Compositionally restricted attention-based network for materials property predictions. See github page for more information: https://github.com/anthony-wang/CrabNet.",
+    "bibtex_refs": "@article{Wang2021crabnet,\n author = {Wang, Anthony Yu-Tung and Kauwe, Steven K. and Murdock, Ryan J. and Sparks, Taylor D.},\n year = {2021},\n title = {Compositionally restricted attention-based network for materials property predictions},\n pages = {77},\n volume = {7},\n number = {1},\n doi = {10.1038/s41524-021-00545-1},\n publisher = {{Nature Publishing Group}},\n shortjournal = {npj Comput. Mater.},\n journal = {npj Computational Materials}\n }",
+    "requirements": "See GitHub page for CrabNet, CrabNet version: be89e92.",
+    "notes": ""
+}
