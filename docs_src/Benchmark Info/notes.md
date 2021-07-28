@@ -11,12 +11,16 @@ Others are specialized for particular domains and need a separate comparison for
 
 ### General purpose algorithms 
 
-General purpose algorithms are valid for all the tasks in a benchmark (regression, classification) **using the same human-chosen configuration**.
+General purpose algorithms are valid for all the tasks in a benchmark **using the same human-chosen configuration**.
 Beyond defining a single configuration before beginning a benchmark, a human should not be hand-tuning or informing the algorithm about architecture, parameters, or hyperparameters.
 However, general purpose algorithms can automatically determine hyperparameters and parameters as part of their fitting processes in each fold.
 
-We include algorithms that only fit on structure (not composition alone) as "general purpose" given the majority of tasks in Matbench v0.1 contain structure information. 
-These structure-complete algorithms are denoted with "requires structure" on the leaderboard. 
+
+**We include algorithms as "general purpose" to include on the general purpose leaderboard if any one of the following criteria is met for Matbench v0.1:**
+ - All 13 tasks are recorded, OR...
+ - All 10 regression tasks are recorded, OR...
+ - All 9 structure tasks are recorded. If only the 9 structure tasks are recorded, the algorithm is marked with "requires structure".
+
 
 General purpose algorithms' results will appear on both the [General Purpose Leaderboard](../index.md) as well as the Task-specific leaderboards.
 
