@@ -722,6 +722,12 @@ def nuke_docs(check=True):
         print(f"\tdeleting static html '{hs}'")
     count += len(html_statics)
 
+    json_statics = glob.glob(os.path.join(STATIC_DOCS_DIR, "*.json"))
+    for js in json_statics:
+        if not check:
+            os.remove(js)
+        print(f"\tdeleting static json '{js}'")
+    count += len(json_statics)
 
     per_task_leaderboards = glob.glob(os.path.join(PER_TASK_DIR, "*.md"))
     for pl in per_task_leaderboards:
@@ -730,14 +736,12 @@ def nuke_docs(check=True):
         print(f"\tdeleting per task leaderboard md file '{pl}'")
     count += len(per_task_leaderboards)
 
-
     full_benchmark_mds = glob.glob(os.path.join(FULL_DATA_DIR, "*.md"))
     for fb in full_benchmark_mds:
         if not check:
             os.remove(fb)
         print(f"\tdeleting full benchmark md file '{fb}'")
     count += len(full_benchmark_mds)
-
 
     benchmark_info_mds = glob.glob(os.path.join(METADATA_DIR, "*.md"))
     for bi in benchmark_info_mds:
