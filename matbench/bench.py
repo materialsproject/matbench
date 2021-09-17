@@ -531,7 +531,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
     @property
     def info(self):
-        """Get a formatted string of into about this benchmark and its current
+        """Get a formatted string of info about this benchmark and its current
         state.
 
         Returns:

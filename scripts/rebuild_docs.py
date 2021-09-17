@@ -32,6 +32,7 @@ METADATA_DIR_PREFIX = "Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
 SCALED_ERRORS_FILENAME = "scaled_errors.html"
 SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_FILENAME)
+SCALED_ERRORS_JSON_PATH = SCALED_ERRORS_PATH.replace(".html", ".json")
 
 
 def generate_scaled_errors_graph(gp_graph_data_by_bmark):
@@ -168,6 +169,7 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
             fig.update_xaxes(linecolor="grey", gridcolor="grey")
             fig.update_yaxes(linecolor="grey", gridcolor="grey")
             fig.write_html(SCALED_ERRORS_PATH)
+            fig.write_json(SCALED_ERRORS_JSON_PATH)
 
 
 # NOTE: MUST BE CALLED AFTER CREATING generate_scaled_errors_graph
