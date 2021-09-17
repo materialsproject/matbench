@@ -169,6 +169,13 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
             fig.update_xaxes(linecolor="grey", gridcolor="grey")
             fig.update_yaxes(linecolor="grey", gridcolor="grey")
             fig.write_html(SCALED_ERRORS_PATH)
+
+
+            # Update layout for showing on white background on mp website
+            fig.update_layout(
+                title_text="",
+                font={"color": "black"}
+            )
             fig.write_json(SCALED_ERRORS_JSON_PATH)
 
 
