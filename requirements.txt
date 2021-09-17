@@ -1,3 +1,3 @@
 matminer==0.7.4
-monty==2021.7.8
+monty==2021.8.17
 scikit-learn==0.24.2
