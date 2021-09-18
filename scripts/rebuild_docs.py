@@ -1,3 +1,4 @@
+import json
 import os
 import glob
 import logging
@@ -31,6 +32,9 @@ METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
 METADATA_DIR_PREFIX = "Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
 SCALED_ERRORS_FILENAME = "scaled_errors.html"
+
+
+MP_WEBSITE_STATICS = os.path.join(STATIC_DOCS_DIR, "mp_srcs")
 SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_FILENAME)
 SCALED_ERRORS_JSON_PATH = SCALED_ERRORS_PATH.replace(".html", ".json")
 
@@ -257,6 +261,11 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
         with open(os.path.join(DOCS_DIR, "index.md"), "w") as f:
             print("Writing leaderboard and plot to index.md...")
             f.write(final_txt)
+
+        with open(os.path.join(STATIC_DOCS_DIR,  "gp_table.json"), "w") as f:
+            print("Writing static gp_table json to gp_table.json...")
+            j = {"txt": gp_leaderboard_txt}
+            json.dump(j, f)
 
 
 def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):

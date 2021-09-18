@@ -23,6 +23,7 @@ jobs:
           pip install -r requirements-docs.txt
           python scripts/rebuild_docs.py
           mkdocs build
+          cp docs_src/CNAME docs/CNAME
       - uses: EndBug/add-and-commit@v7 # You can change this to use a specific version
         with:
           # The arguments for the `git add` command (see the paragraph below for more info)
@@ -47,7 +48,7 @@ jobs:
 
           # The message for the commit
           # Default: 'Commit from GitHub Actions (name of the workflow)'
-          message: 'Matbench Docbot: rebuild pages'
+          message: 'matbench docbot: rebuild pages'
 
           # The flag used on the pull strategy. Use NO-PULL to avoid the action pulling at all.
           # Default: '--no-rebase'
