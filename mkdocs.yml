@@ -1,6 +1,6 @@
 site_name: MatBench
 site_description: A benchmark and leaderboard for predicting materials properties
-copyright: HackingMaterials
+copyright: Materials Project (Maintained by Alex Dunn of HackingMaterials Group)
 
 docs_dir: docs_src
 site_dir: docs
