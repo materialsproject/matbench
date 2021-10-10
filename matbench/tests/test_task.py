@@ -461,3 +461,7 @@ class TestMatbenchTask(unittest.TestCase):
             trdf = mbt.get_test_data(fold, as_type="df")
             pred = np.random.random(len(trdf))
             mbt.record(fold, pred)
+
+        # With random sampling it should almost never exceed
+        # ROCAUC of 0.6
+        self.assertLess(mbt.scores["rocauc"]["mean"], 0.6)
