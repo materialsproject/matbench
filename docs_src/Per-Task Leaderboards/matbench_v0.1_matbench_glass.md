@@ -10,7 +10,6 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 |------|------|------|------|------|
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.8607** | 0.0199 | 0.9043 | 0.8607 | 
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.8587** | 0.0158 | 0.9278 | 0.8587 | 
-| [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.8107** | 0.0212 | 0.9104 | 0.8107 | 
 | [Dummy](../Full%20Benchmark%20Data/matbench_v0.1_dummy.md) | **0.5005** | 0.0178 | 0.7127 | 0.5005 | 
 
 
