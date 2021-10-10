@@ -24,6 +24,7 @@ from matbench.constants import (
     MBID_KEY,
     REG_KEY,
     REG_METRICS,
+    CLF_THRESH,
 )
 from matbench.metadata import mbv01_metadata
 
@@ -157,7 +158,7 @@ def homogenize_clf_array(
         array,
         to_probs=False,
         to_labels=False,
-        thresh=0.5
+        thresh=CLF_THRESH
 ):
     """
     Homogenize an array of either:
