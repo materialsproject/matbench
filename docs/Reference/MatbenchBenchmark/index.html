@@ -1,0 +1,2586 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A benchmark and leaderboard for predicting materials properties">
+      
+      
+      
+      
+      <link rel="icon" href="../../static/matbench_logo_favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
+    
+    
+      
+        <title>MatbenchBenchmark - MatBench</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.24c991ad.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#757575">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="green">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#matbenchbenchmark" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="MatBench" class="md-header__button md-logo" aria-label="MatBench" data-md-component="logo">
+      
+  <img src="../../static/matbench_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MatBench
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MatbenchBenchmark
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/hackingmaterials/matbench/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      Leaderboard
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Benchmark%20Info/matbench_v0.1/" class="md-tabs__link">
+        Benchmark Info
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_CrabNet/" class="md-tabs__link">
+        Full Benchmark Data
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../How%20To%20Use/1install/" class="md-tabs__link">
+        How To Use
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_dielectric/" class="md-tabs__link">
+        Per Task Leaderboards
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
+        Reference
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MatBench" class="md-nav__button md-logo" aria-label="MatBench" data-md-component="logo">
+      
+  <img src="../../static/matbench_logo.png" alt="logo">
+
+    </a>
+    MatBench
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/hackingmaterials/matbench/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Leaderboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Benchmark Info
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Benchmark Info" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Benchmark Info
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Benchmark%20Info/matbench_v0.1/" class="md-nav__link">
+        Benchmark info for `matbench_v0.1`
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Benchmark%20Info/notes/" class="md-nav__link">
+        Notes on Benchmarking
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Full Benchmark Data
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Full Benchmark Data" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Full Benchmark Data
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_CrabNet/" class="md-nav__link">
+        matbench_v0.1: CrabNet
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020/" class="md-nav__link">
+        matbench_v0.1: AMMExpress v2020
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019/" class="md-nav__link">
+        matbench_v0.1: CGCNN v2019
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_dummy/" class="md-nav__link">
+        matbench_v0.1: Dummy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_rf/" class="md-nav__link">
+        matbench_v0.1: RF-SCM/Magpie
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          How To Use
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How To Use" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          How To Use
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/1install/" class="md-nav__link">
+        1 - Install matbench
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/2run/" class="md-nav__link">
+        2 - Run benchmark on algorithm
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/3submit/" class="md-nav__link">
+        3 - Submit to leaderboard
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/advanced/" class="md-nav__link">
+        Advanced usage
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Per Task Leaderboards
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Per Task Leaderboards" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Per Task Leaderboards
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_dielectric/" class="md-nav__link">
+        matbench_v0.1 matbench_dielectric
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_expt_gap/" class="md-nav__link">
+        matbench_v0.1 matbench_expt_gap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_expt_is_metal/" class="md-nav__link">
+        matbench_v0.1 matbench_expt_is_metal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_glass/" class="md-nav__link">
+        matbench_v0.1 matbench_glass
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_jdft2d/" class="md-nav__link">
+        matbench_v0.1 matbench_jdft2d
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_log_gvrh/" class="md-nav__link">
+        matbench_v0.1 matbench_log_gvrh
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_log_kvrh/" class="md-nav__link">
+        matbench_v0.1 matbench_log_kvrh
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_mp_e_form/" class="md-nav__link">
+        matbench_v0.1 matbench_mp_e_form
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_mp_gap/" class="md-nav__link">
+        matbench_v0.1 matbench_mp_gap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_mp_is_metal/" class="md-nav__link">
+        matbench_v0.1 matbench_mp_is_metal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_perovskites/" class="md-nav__link">
+        matbench_v0.1 matbench_perovskites
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_phonons/" class="md-nav__link">
+        matbench_v0.1 matbench_phonons
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_steels/" class="md-nav__link">
+        matbench_v0.1 matbench_steels
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          MatbenchBenchmark
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        MatbenchBenchmark
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark" class="md-nav__link">
+    matbench.bench.MatbenchBenchmark
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.info" class="md-nav__link">
+    info
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_classification_complete" class="md-nav__link">
+    is_classification_complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_complete" class="md-nav__link">
+    is_complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_composition_complete" class="md-nav__link">
+    is_composition_complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_recorded" class="md-nav__link">
+    is_recorded
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_regression_complete" class="md-nav__link">
+    is_regression_complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_structure_complete" class="md-nav__link">
+    is_structure_complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_valid" class="md-nav__link">
+    is_valid
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.scores" class="md-nav__link">
+    scores
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.tasks" class="md-nav__link">
+    tasks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.__getattr__" class="md-nav__link">
+    __getattr__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.add_metadata" class="md-nav__link">
+    add_metadata()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.as_dict" class="md-nav__link">
+    as_dict()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.from_dict" class="md-nav__link">
+    from_dict()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.from_preset" class="md-nav__link">
+    from_preset()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.get_info" class="md-nav__link">
+    get_info()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.load" class="md-nav__link">
+    load()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.validate" class="md-nav__link">
+    validate()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MatbenchTask/" class="md-nav__link">
+        MatbenchTask
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark" class="md-nav__link">
+    matbench.bench.MatbenchBenchmark
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.info" class="md-nav__link">
+    info
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_classification_complete" class="md-nav__link">
+    is_classification_complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_complete" class="md-nav__link">
+    is_complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_composition_complete" class="md-nav__link">
+    is_composition_complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_recorded" class="md-nav__link">
+    is_recorded
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_regression_complete" class="md-nav__link">
+    is_regression_complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_structure_complete" class="md-nav__link">
+    is_structure_complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.is_valid" class="md-nav__link">
+    is_valid
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.scores" class="md-nav__link">
+    scores
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.tasks" class="md-nav__link">
+    tasks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.__getattr__" class="md-nav__link">
+    __getattr__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.add_metadata" class="md-nav__link">
+    add_metadata()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.as_dict" class="md-nav__link">
+    as_dict()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.from_dict" class="md-nav__link">
+    from_dict()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.from_preset" class="md-nav__link">
+    from_preset()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.get_info" class="md-nav__link">
+    get_info()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.load" class="md-nav__link">
+    load()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.bench.MatbenchBenchmark.validate" class="md-nav__link">
+    validate()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/hackingmaterials/matbench/edit/master/docs/Reference/MatbenchBenchmark.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="matbenchbenchmark">MatbenchBenchmark</h1>
+
+
+  <div class="doc doc-object doc-class">
+
+<a id="matbench.bench.MatbenchBenchmark"></a>
+    <div class="doc doc-contents first">
+
+      <p>The core class for benchmarking with Matbench.</p>
+<p>MatbenchBenchmark is capable of benchmarking and validating arbitrary
+materials science benchmarks. It is a container class for sets of
+MatbenchTasks, objects which provide predetermined sets of
+training/validation and testing data for any algorithm to benchmark
+with. MatbenchBenchmark can also give summaries of entire complex
+benchmarks, including access to individual score statistics for
+each metric.</p>
+<p>MatbenchBenchmark can run any benchmark as long as it has a corresponding
+benchmark name key. Matbench v0.1 ("matbench_v0.1") is the only benchmark
+currently configured for use with MatbenchBenchmark.</p>
+<p>MatbenchBenchmark is capable of running benchmark subsets; for example,
+only 3 of the 13 available Matbench v0.1 problems.</p>
+<p>See the documentation for more details.</p>
+
+<p><strong>Attributes:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>benchmark_name</code></td>
+        <td><code>str</code></td>
+        <td><p>The benchmark name, defaults to the original
+Matbench v0.1 "matbench_v0.1". Should have an associated
+validation file in order for the MatbenchTasks to work
+correctly.</p></td>
+      </tr>
+      <tr>
+        <td><code>metadata</code></td>
+        <td><code>dict</code></td>
+        <td><p>The corresponding metadata file for this benchmark,
+which defines the basic configuration for each task. See
+matbench_v0.1_validation for an example. Each dataset
+has the same required keys in order to work correctly.</p></td>
+      </tr>
+      <tr>
+        <td><code>user_metadata</code></td>
+        <td><code>dict</code></td>
+        <td><p>Any metadata about the algorithm or benchmark
+that the user wants to keep as part of the benchmark file.</p></td>
+      </tr>
+      <tr>
+        <td><code>tasks_map</code></td>
+        <td><code>{str</code></td>
+        <td><p>MatbenchTask}): A mapping of task name to the
+corresponding MatbenchTask object.</p></td>
+      </tr>
+      <tr>
+        <td><code>&lt;&lt;task_names&gt;&gt;</code></td>
+        <td><code>MatbenchTask</code></td>
+        <td><p>Access any task obj via
+MatbenchTask.&lt;<task_name>&gt;. For example:</p>
+<p>mb = MatbenchBenchmark()
+mb.matbench_dielectric</p>
+<p>&lt;<MatbenchTask object>&gt;</p></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.info" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">info</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Get a formatted string of info about this benchmark and its current
+state.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>(str)</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.is_classification_complete" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">is_classification_complete</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Determine if all classification tasks for this benchmark are included</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>(bool)</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.is_complete" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">is_complete</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Determine if all available tasks are included in this benchmark.</p>
+<p>For matbench v0.1, this means all 13 tasks are in the benchmark.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>(bool)</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.is_composition_complete" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">is_composition_complete</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Determine if all composition tasks for this benchmark are included</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>(bool)</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.is_recorded" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">is_recorded</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>All tasks in this benchmark (whether or not it includes all tasks in
+the benchmark set) are recorded.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(bool)</code></td>
+      <td><p>True if all tasks (even if only a subset of all matbench)
+for this benchmark are recorded.</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.is_regression_complete" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">is_regression_complete</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Determine if all regression tasks for this benchmark are included</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>(bool)</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.is_structure_complete" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">is_structure_complete</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Determine if all structure tasks for this benchmark are included</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>(bool)</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.is_valid" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">is_valid</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Checks all tasks are recorded and valid, as per each task's
+validation procedure.</p>
+<p>Can take some time, especially if the tasks are not already
+loaded into memory.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(bool)</code></td>
+      <td><p>True if all tasks are valid</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.scores" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">scores</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Get all score metrics for all tasks as a dictionary.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(RecursiveDotDict)</code></td>
+      <td><p>A nested dictionary-like object of scores
+    for each task.</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.tasks" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tasks</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Return the tasks as a list.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>([MatbenchTask])</code></td>
+      <td><p>A list of matbench tasks in this benchmark</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.__getattr__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Enable MatbenchBenchmark.task_name behavior.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>item</code></td>
+        <td><code>str</code></td>
+        <td><p>The name of the attr.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>The attr, if not in the metadata defined by the benchmark
+If the attr is a task name, returns that MatBenchTask object.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>matbench/bench.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enable MatbenchBenchmark.task_name behavior.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        item (str): The name of the attr.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The attr, if not in the metadata defined by the benchmark</span>
+<span class="sd">        If the attr is a task name, returns that MatBenchTask object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks_map</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="s1">&#39;matbench_v0.1&#39;</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>benchmark</code></td>
+        <td><code>str</code></td>
+        <td><p>The name of the benchmark. Only supported benchmark
+currently is "matbench_v0.1", though more will be added in the
+future.</p></td>
+        <td><code>&#39;matbench_v0.1&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>autoload</code></td>
+        <td><code>bool</code></td>
+        <td><p>If True, automatically load the dataset into memory
+For a full benchmark, this can take some time. If False, you'll
+need to load each task with .load before you can access the raw
+data.</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>subset</code></td>
+        <td><code>[str]</code></td>
+        <td><p>A list of task names to use as a subset of a full
+benchmark. Only the named tasks will be contained in the class.
+Must correspond to the metadata file defined by the benchmark
+name.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>matbench/bench.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">MBV01_KEY</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        benchmark (str): The name of the benchmark. Only supported benchmark</span>
+<span class="sd">            currently is &quot;matbench_v0.1&quot;, though more will be added in the</span>
+<span class="sd">            future.</span>
+<span class="sd">        autoload (bool): If True, automatically load the dataset into memory</span>
+<span class="sd">            For a full benchmark, this can take some time. If False, you&#39;ll</span>
+<span class="sd">            need to load each task with .load before you can access the raw</span>
+<span class="sd">            data.</span>
+<span class="sd">        subset ([str]): A list of task names to use as a subset of a full</span>
+<span class="sd">            benchmark. Only the named tasks will be contained in the class.</span>
+<span class="sd">            Must correspond to the metadata file defined by the benchmark</span>
+<span class="sd">            name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">benchmark</span> <span class="o">==</span> <span class="n">MBV01_KEY</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span> <span class="o">=</span> <span class="n">MBV01_KEY</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">mbv01_metadata</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Only &#39;</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">&#39; available. No other benchmarks defined!&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">subset</span><span class="p">:</span>
+        <span class="n">not_datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">subset</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">not_datasets</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Some tasks in </span><span class="si">{</span><span class="n">subset</span><span class="si">}</span><span class="s2"> are not benchmark=&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="si">}</span><span class="s2">&#39; datasets! Remove </span><span class="si">{</span><span class="n">not_datasets</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">available_tasks</span> <span class="o">=</span> <span class="n">subset</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">available_tasks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">user_metadata</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tasks_map</span> <span class="o">=</span> <span class="n">RecursiveDotDict</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">available_tasks</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tasks_map</span><span class="p">[</span><span class="n">ds</span><span class="p">]</span> <span class="o">=</span> <span class="n">MatbenchTask</span><span class="p">(</span>
+            <span class="n">ds</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="n">autoload</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span>
+        <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Initialized benchmark &#39;</span><span class="si">{</span><span class="n">benchmark</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">available_tasks</span><span class="p">)</span><span class="si">}</span><span class="s2"> tasks: </span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">available_tasks</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.add_metadata" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">add_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Add freeform information about this run to the object
+(and subsequent json), accessible thru the
+'user_metadata' attr.</p>
+<p>All keys must be strings.</p>
+<p>All values must be either:
+    a. a numpy ndarray
+    b. python native types, such as bools, floats, ints, strs
+    c. a pandas series
+    d. a list/tuple of python native types (bools, floats, ints)</p>
+<div class="highlight"><pre><span></span><code>OR
+
+e. A dictionary where all keys are strs and all values
+   are one of a, b, c, d, or e (recursive).
+</code></pre></div>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>None</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>matbench/bench.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add freeform information about this run to the object</span>
+<span class="sd">    (and subsequent json), accessible thru the</span>
+<span class="sd">    &#39;user_metadata&#39; attr.</span>
+
+
+<span class="sd">    All keys must be strings.</span>
+
+<span class="sd">    All values must be either:</span>
+<span class="sd">        a. a numpy ndarray</span>
+<span class="sd">        b. python native types, such as bools, floats, ints, strs</span>
+<span class="sd">        c. a pandas series</span>
+<span class="sd">        d. a list/tuple of python native types (bools, floats, ints)</span>
+
+<span class="sd">        OR</span>
+
+<span class="sd">        e. A dictionary where all keys are strs and all values</span>
+<span class="sd">           are one of a, b, c, d, or e (recursive).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        metadata (dict)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Use logging here so bad metadata addition does not</span>
+    <span class="c1"># ruin an entire run...</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;User metadata must be reducible to dict format, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;not type(</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User metadata not added.&quot;</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_metadata</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;User metadata already exists! Overwriting...&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_metadata</span> <span class="o">=</span> <span class="n">immutify_dictionary</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User metadata added successfully!&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.as_dict" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Overridden from MSONable.as_dict, get dict repr of this obj</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>(dict)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>matbench/bench.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Overridden from MSONable.as_dict, get dict repr of this obj</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (dict)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tasksd</span> <span class="o">=</span> <span class="p">{</span><span class="n">mbt</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">:</span> <span class="n">mbt</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">mbt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">}</span>
+    <span class="n">tasksd_jsonable</span> <span class="o">=</span> <span class="n">immutify_dictionary</span><span class="p">(</span><span class="n">tasksd</span><span class="p">)</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;@module&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
+        <span class="s2">&quot;@class&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">:</span> <span class="n">VERSION</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_TASKS_KEY</span><span class="p">:</span> <span class="n">tasksd_jsonable</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_USER_METADATA_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_metadata</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_DATESTAMP_KEY</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_DATESTAMP_FMT</span>
+        <span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="c1"># to obtain a hash for this benchmark, immutify the dictionary</span>
+    <span class="c1"># and then stringify it</span>
+    <span class="n">d</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_HASH_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">hash_dictionary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Successfully converted </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> to dictionary.&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.from_dict" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Create a MatbenchBenchmark object from a dictionary.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>d</code></td>
+        <td><code>dict</code></td>
+        <td></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>(MatbenchBenchmark)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>matbench/bench.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a MatbenchBenchmark object from a dictionary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        d (dict):</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (MatbenchBenchmark)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">required_keys</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;@module&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;@class&quot;</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_TASKS_KEY</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_USER_METADATA_KEY</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_DATESTAMP_KEY</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_HASH_KEY</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">missing_keys</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">required_keys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+            <span class="n">missing_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="n">extra_keys</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">required_keys</span><span class="p">:</span>
+            <span class="n">extra_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">missing_keys</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">extra_keys</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Required keys </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;not found!&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">missing_keys</span> <span class="ow">and</span> <span class="n">extra_keys</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Extra keys </span><span class="si">{</span><span class="n">extra_keys</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span> <span class="sa">f</span><span class="s2">&quot;present!&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">missing_keys</span> <span class="ow">and</span> <span class="n">extra_keys</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Missing required keys </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2"> and extra keys &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">extra_keys</span><span class="si">}</span><span class="s2"> present!&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Check all tasks to make sure their benchmark name is matching in the</span>
+    <span class="c1"># benchmark and in the tasks</span>
+    <span class="n">not_matching_bench</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">t_dict</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_TASKS_KEY</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">t_dict</span><span class="p">[</span><span class="n">MatbenchTask</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">]</span> <span class="o">!=</span> <span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">]:</span>
+            <span class="n">not_matching_bench</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t_dict</span><span class="p">[</span><span class="n">MatbenchTask</span><span class="o">.</span><span class="n">_DATASET_KEY</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">not_matching_bench</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Tasks </span><span class="si">{</span><span class="n">not_matching_bench</span><span class="si">}</span><span class="s2"> do not have a benchmark name &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;matching the benchmark (</span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">]</span><span class="si">}</span><span class="s2">)!&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Ensure the hash is matching, i.e., the data was not modified after</span>
+    <span class="c1"># matbench got done with it</span>
+    <span class="n">m_from_dict</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_HASH_KEY</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">hash_dictionary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">!=</span> <span class="n">m_from_dict</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Hash of dictionary does not match it&#39;s reported value! </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;!= </span><span class="si">{</span><span class="n">m_from_dict</span><span class="si">}</span><span class="s2"> . Was the data modified after saving?)&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Check to see if any tasks have task names not matching their key</span>
+    <span class="c1"># names in the benchmark</span>
+    <span class="n">not_matching_tasks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">task_name</span><span class="p">,</span> <span class="n">task_info</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_TASKS_KEY</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">key_as_per_task</span> <span class="o">=</span> <span class="n">task_info</span><span class="p">[</span><span class="n">MatbenchTask</span><span class="o">.</span><span class="n">_DATASET_KEY</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">task_name</span> <span class="o">!=</span> <span class="n">key_as_per_task</span><span class="p">:</span>
+            <span class="n">not_matching_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">task_name</span><span class="p">,</span> <span class="n">key_as_per_task</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">not_matching_tasks</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Task names in benchmark and task names in tasks not &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;matching: </span><span class="si">{</span><span class="n">not_matching_tasks</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Warn if versions are not matching</span>
+    <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">]</span> <span class="o">!=</span> <span class="n">VERSION</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Warning! Versions not matching: &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;(data file has version </span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;this package is </span><span class="si">{</span><span class="n">VERSION</span><span class="si">}</span><span class="s2">).&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_from_args</span><span class="p">(</span>
+        <span class="n">benchmark_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">],</span>
+        <span class="n">tasks_dict</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_TASKS_KEY</span><span class="p">],</span>
+        <span class="n">user_metadata</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_USER_METADATA_KEY</span><span class="p">],</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.from_preset" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">from_preset</span><span class="p">(</span><span class="n">benchmark</span><span class="p">,</span> <span class="n">preset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>The following presets are defined for each benchmark:</p>
+<p>benchmark: 'matbench_v0.1':</p>
+<div class="highlight"><pre><span></span><code>- preset: &#39;structure&#39; - Only structure problems
+- preset: &#39;composition&#39; - Only composition problems
+- preset: &#39;regression&#39; - Only regression problems
+- preset: &#39;classification&#39; - Only classification problems
+- preset: &#39;all&#39; - All problems in matbench v0.1
+</code></pre></div>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>benchmark</code></td>
+        <td><code>str</code></td>
+        <td><p>Name of the benchmark set you'd like to use. The
+only supported benchmark set currently is "matbench_v0.1"</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>preset_name</code></td>
+        <td><code>str</code></td>
+        <td><p>The name of the preset</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>autoload</code></td>
+        <td><code>bool</code></td>
+        <td><p>If true, automatically loads all the datasets
+upon instantiation. Be warned; this can take a while.</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>(MatbenchBenchmark object)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>matbench/bench.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">from_preset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">,</span> <span class="n">preset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The following presets are defined for each benchmark:</span>
+
+<span class="sd">    benchmark: &#39;matbench_v0.1&#39;:</span>
+
+<span class="sd">        - preset: &#39;structure&#39; - Only structure problems</span>
+<span class="sd">        - preset: &#39;composition&#39; - Only composition problems</span>
+<span class="sd">        - preset: &#39;regression&#39; - Only regression problems</span>
+<span class="sd">        - preset: &#39;classification&#39; - Only classification problems</span>
+<span class="sd">        - preset: &#39;all&#39; - All problems in matbench v0.1</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        benchmark (str): Name of the benchmark set you&#39;d like to use. The</span>
+<span class="sd">            only supported benchmark set currently is &quot;matbench_v0.1&quot;</span>
+<span class="sd">        preset_name (str): The name of the preset</span>
+<span class="sd">        autoload (bool): If true, automatically loads all the datasets</span>
+<span class="sd">            upon instantiation. Be warned; this can take a while.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (MatbenchBenchmark object)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">benchmark</span> <span class="o">==</span> <span class="n">MBV01_KEY</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">preset_name</span> <span class="o">==</span> <span class="n">STRUCTURE_KEY</span><span class="p">:</span>
+            <span class="n">available_tasks</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">k</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mbv01_metadata</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">input_type</span> <span class="o">==</span> <span class="n">STRUCTURE_KEY</span>
+            <span class="p">]</span>
+        <span class="k">elif</span> <span class="n">preset_name</span> <span class="o">==</span> <span class="n">COMPOSITION_KEY</span><span class="p">:</span>
+            <span class="n">available_tasks</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">k</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mbv01_metadata</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">input_type</span> <span class="o">==</span> <span class="n">COMPOSITION_KEY</span>
+            <span class="p">]</span>
+        <span class="k">elif</span> <span class="n">preset_name</span> <span class="o">==</span> <span class="n">REG_KEY</span><span class="p">:</span>
+            <span class="n">available_tasks</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mbv01_metadata</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="n">REG_KEY</span>
+            <span class="p">]</span>
+        <span class="k">elif</span> <span class="n">preset_name</span> <span class="o">==</span> <span class="n">CLF_KEY</span><span class="p">:</span>
+            <span class="n">available_tasks</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mbv01_metadata</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="n">CLF_KEY</span>
+            <span class="p">]</span>
+        <span class="k">elif</span> <span class="n">preset_name</span> <span class="o">==</span> <span class="bp">cls</span><span class="o">.</span><span class="n">ALL_KEY</span><span class="p">:</span>
+            <span class="n">available_tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mbv01_metadata</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">valid_keys</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">STRUCTURE_KEY</span><span class="p">,</span>
+                <span class="n">COMPOSITION_KEY</span><span class="p">,</span>
+                <span class="n">CLF_KEY</span><span class="p">,</span>
+                <span class="n">REG_KEY</span><span class="p">,</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">ALL_KEY</span><span class="p">,</span>
+            <span class="p">]</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Preset name &#39;</span><span class="si">{</span><span class="n">preset_name</span><span class="si">}</span><span class="s2">&#39; not recognized for &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;benchmark &#39;</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">&#39;! Select from &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">valid_keys</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Only &#39;</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">&#39; available. No other benchmarks defined!&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">benchmark</span><span class="o">=</span><span class="n">benchmark</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="n">autoload</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="n">available_tasks</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.get_info" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Log info about the benchmark to the respective logging handlers.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>None</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>matbench/bench.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Log info about the benchmark to the respective logging handlers.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.load" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Load all tasks in this benchmark.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>None</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>matbench/bench.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load all tasks in this benchmark.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">:</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="matbench.bench.MatbenchBenchmark.validate" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Run validation on each task in this benchmark.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>({str</code></td>
+      <td><p>str}): dict of errors, if they exist</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>matbench/bench.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run validation on each task in this benchmark.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ({str: str}): dict of errors, if they exist</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">t_obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">t_obj</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">BaseException</span><span class="p">:</span>
+            <span class="n">errors</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">errors</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_steels/" class="md-footer__link md-footer__link--prev" aria-label="Previous: matbench_v0.1 matbench_steels" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              matbench_v0.1 matbench_steels
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../MatbenchTask/" class="md-footer__link md-footer__link--next" aria-label="Next: MatbenchTask" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              MatbenchTask
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Materials Project (Maintained by Alex Dunn of HackingMaterials Group)
+          </div>
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.bc35569b.min.js"></script>
+      
+    
+  </body>
+</html>
