@@ -8,7 +8,7 @@ class TestMetadata(unittest.TestCase):
     def test_mbv01_metadata(self):
 
         # for matbench v0.1
-        for metadata in mbv01_metadata.values():
+        for ds, metadata in mbv01_metadata.items():
             for key in ["task_type", "n_samples", "input_type", "target"]:
                 self.assertIn(key, metadata.keys())
 

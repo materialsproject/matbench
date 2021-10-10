@@ -475,4 +475,4 @@ class TestMatbenchTask(unittest.TestCase):
             mbt.record(fold, pred)
 
         self.assertAlmostEqual(mbt.scores["rocauc"]["mean"], 1.0, places=5)
-        self.assertAlmostEqual(mbt.scores["roc"]["std"], 0.0, places=5)
+        self.assertAlmostEqual(mbt.scores["rocauc"]["std"], 0.0, places=5)
