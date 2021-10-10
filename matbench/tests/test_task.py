@@ -436,7 +436,6 @@ class TestMatbenchTask(unittest.TestCase):
                 test_val = 0.0 if fdm == "std" else 1.0
                 self.assertAlmostEqual(test_val, mbt.scores[metric][fdm],
                                        places=10)
-
     def test_usage(self):
         # access some common attrs
         mbt_clf = MatbenchTask.from_file(
@@ -454,3 +453,11 @@ class TestMatbenchTask(unittest.TestCase):
         self.assertTrue(
             isinstance(mbt.results.fold_3.parameters, (dict, type(None)))
         )
+
+    def test_clf_conversion(self):
+        mbt = MatbenchTask("matbench_glass", autoload=True)
+
+        for fold in mbt.folds:
+            trdf = mbt.get_test_data(fold, as_type="df")
+            pred = np.random.random(len(trdf))
+            mbt.record(fold, pred)
