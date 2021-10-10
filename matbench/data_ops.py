@@ -21,6 +21,7 @@ from sklearn.metrics import (
 from matbench.constants import (
     CLF_KEY,
     CLF_METRICS,
+    CLF_THRESH,
     MBID_KEY,
     REG_KEY,
     REG_METRICS,
@@ -106,6 +107,18 @@ def score_array(true_array, pred_array, task_type):
 
     for metric in metrics:
         mfunc = METRIC_MAP[metric]
+
+        if metric == "rocauc":
+            # Both arrays must be in probability form
+            # if pred. array is given in probabilities
+            if isinstance(pred_array[0], float):
+                true_array = homogenize_clf_array(true_array, to_probs=True)
+
+        # Other clf metrics always be converted to labels
+        elif metric in CLF_METRICS:
+            if isinstance(pred_array[0], float):
+                pred_array = homogenize_clf_array(pred_array, to_labels=True)
+
         computed[metric] = mfunc(true_array, pred_array)
     return computed
 
@@ -139,6 +152,58 @@ def mean_absolute_percentage_error(y_true, y_pred, threshold=1e-5):
     y_true = y_true[mask]
     y_pred = y_pred[mask]
     return np.mean(np.fabs((y_true - y_pred) / y_true))
+
+
+def homogenize_clf_array(
+        array,
+        to_probs=False,
+        to_labels=False,
+        thresh=CLF_THRESH
+):
+    """
+    Homogenize an array of either:
+
+    1. labels (True, False) to probabilities (1.0, 0.0)
+    2. probabilities (between 0 and 1) to labels (True, False)
+        based on a threshold float
+
+    Args:
+        array ([bool], [float]): A list of bools or a list of floats 0-1.
+        to_probs (bool): Convert the input array to all probabilities
+        to_labels (bool): Convert the input array to all labels based on
+            the threshold value thresh.
+        thresh (float): A number 0-1, which will decide the threshold
+            of probabilities if to_labels is True
+
+    Returns:
+        list
+    """
+    if sum([to_probs, to_labels]) != 1:
+        raise ValueError(
+            "Set ONE of to_probs or to_labels to True to define "
+            "the conversion, NOT both."
+        )
+
+    if to_probs:
+        if all([isinstance(i, bool) for i in array]):
+            # The source array is bools
+            homogenized = [1.0 if i is True else 0.0 for i in array]
+            return homogenized
+        else:
+            raise TypeError(
+                "Cannot convert non-bool type in clf array to "
+                "probabilities."
+            )
+    elif to_labels:
+        if all([isinstance(i, float) for i in array]):
+            # The source array is probabilities
+            homogenized = np.asarray(array) > thresh
+            return homogenized.tolist()
+        else:
+            raise TypeError(
+                "Cannot convert non-float types in clf array to"
+                "labels."
+            )
 
 
 METRIC_MAP = {

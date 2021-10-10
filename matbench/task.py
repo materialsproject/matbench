@@ -6,6 +6,7 @@ from matminer.datasets import get_all_dataset_info
 from monty.json import MSONable
 
 from matbench.constants import (
+    CLF_KEY,
     CLF_METRICS,
     FOLD_DIST_METRICS,
     MBV01_KEY,
@@ -432,20 +433,31 @@ class MatbenchTask(MSONable, MSONable2File):
                     req_indices = set(self.validation[fold_key].test)
                     remaining_indices = copy.deepcopy(req_indices)
                     extra_indices = {}
-                    req_data_type = (
-                        float if self.metadata.task_type == REG_KEY else bool
-                    )
+                    if self.metadata.task_type == REG_KEY:
+                        allowed_types = (float, )
+                    else:
+                        allowed_types = (bool, float)
+
                     for ix, datum in fold_data.items():
                         if ix not in req_indices:
                             extra_indices[ix] = datum
                         else:
-                            if not isinstance(datum, req_data_type):
+                            if not isinstance(datum, allowed_types):
                                 raise TypeError(
                                     f"Data point '{ix}: {datum}' has data type "
                                     f"{type(datum)} while required type is "
-                                    f"{req_data_type} for task "
+                                    f"{allowed_types} for task "
                                     f"{self.dataset_name} !"
                                 )
+                            if self.metadata.task_type == CLF_KEY:
+                                if isinstance(datum, float):
+                                    if datum < 0 or datum > 1:
+                                        raise ValueError(
+                                            f"Probability estimate '{ix}': {datum}"
+                                            f"for task {self.dataset_name} outside "
+                                            f"of range [0, 1]."
+                                        )
+
                             remaining_indices.remove(ix)
 
                     if extra_indices and not remaining_indices:

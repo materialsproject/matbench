@@ -33,5 +33,8 @@ COMPOSITION_KEY = "composition"
 REG_METRICS = ["mae", "rmse", "mape", "max_error"]
 CLF_METRICS = ["accuracy", "balanced_accuracy", "f1", "rocauc"]
 
+# threshold for converting probabilities to labels
+CLF_THRESH = 0.5
+
 # scoring on a single task among folds
 FOLD_DIST_METRICS = ["mean", "max", "min", "std"]

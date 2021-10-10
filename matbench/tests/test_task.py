@@ -454,3 +454,26 @@ class TestMatbenchTask(unittest.TestCase):
         self.assertTrue(
             isinstance(mbt.results.fold_3.parameters, (dict, type(None)))
         )
+
+    def test_clf_conversion(self):
+        mbt = MatbenchTask("matbench_glass", autoload=True)
+
+        for fold in mbt.folds:
+            trdf = mbt.get_test_data(fold, as_type="df")
+            pred = np.random.random(len(trdf))
+            mbt.record(fold, pred)
+
+        # With random sampling it should almost never exceed
+        # ROCAUC of 0.6
+        self.assertLess(mbt.scores["rocauc"]["mean"], 0.6)
+
+        # Try the same model as perfect
+        mbt = MatbenchTask("matbench_glass", autoload=True)
+
+        for fold in mbt.folds:
+            inputs, targets = mbt.get_test_data(fold, include_target=True)
+            pred = [1.0 if i else 0.0 for i in targets]
+            mbt.record(fold, pred)
+
+        self.assertAlmostEqual(mbt.scores["rocauc"]["mean"], 1.0, places=5)
+        self.assertAlmostEqual(mbt.scores["rocauc"]["std"], 0.0, places=5)
