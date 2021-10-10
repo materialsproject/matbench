@@ -78,7 +78,7 @@ the test procedure. See the [How to use](How%20To%20Use/) documentation page to 
 
 ## Citing Matbench
 
-You can find details and results on the benchmark in our paper [Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference ](https://doi.org/10.1038/s41524-020-00406-3). 
+You can find details and results on the benchmark in our paper [Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm](https://doi.org/10.1038/s41524-020-00406-3). 
 Please consider citing this paper if you use Matbench v0.1 for benchmarking, comparison, or prototyping.
 
 
