@@ -436,6 +436,7 @@ class TestMatbenchTask(unittest.TestCase):
                 test_val = 0.0 if fdm == "std" else 1.0
                 self.assertAlmostEqual(test_val, mbt.scores[metric][fdm],
                                        places=10)
+
     def test_usage(self):
         # access some common attrs
         mbt_clf = MatbenchTask.from_file(

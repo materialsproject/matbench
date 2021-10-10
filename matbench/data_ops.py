@@ -21,10 +21,10 @@ from sklearn.metrics import (
 from matbench.constants import (
     CLF_KEY,
     CLF_METRICS,
+    CLF_THRESH,
     MBID_KEY,
     REG_KEY,
     REG_METRICS,
-    CLF_THRESH,
 )
 from matbench.metadata import mbv01_metadata
 

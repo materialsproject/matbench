@@ -5,10 +5,10 @@ from pymatgen.core import Structure
 
 from matbench.constants import CLF_KEY, REG_KEY
 from matbench.data_ops import (
+    homogenize_clf_array,
     load,
     mean_absolute_percentage_error,
     score_array,
-    homogenize_clf_array
 )
 from matbench.metadata import mbv01_metadata
 from matbench.tests.util import FULL_TEST

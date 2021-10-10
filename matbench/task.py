@@ -6,11 +6,11 @@ from matminer.datasets import get_all_dataset_info
 from monty.json import MSONable
 
 from matbench.constants import (
+    CLF_KEY,
     CLF_METRICS,
     FOLD_DIST_METRICS,
     MBV01_KEY,
     REG_KEY,
-    CLF_KEY,
     REG_METRICS,
 )
 from matbench.data_ops import load, score_array
