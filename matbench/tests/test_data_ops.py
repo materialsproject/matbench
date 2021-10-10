@@ -4,7 +4,12 @@ import numpy as np
 from pymatgen.core import Structure
 
 from matbench.constants import CLF_KEY, REG_KEY
-from matbench.data_ops import load, mean_absolute_percentage_error, score_array
+from matbench.data_ops import (
+    load,
+    mean_absolute_percentage_error,
+    score_array,
+    homogenize_clf_array
+)
 from matbench.metadata import mbv01_metadata
 from matbench.tests.util import FULL_TEST
 
@@ -79,3 +84,34 @@ class TestDataOps(unittest.TestCase):
         mape_masked = mean_absolute_percentage_error(true[:4], test[:4])
         self.assertAlmostEqual(mape, 0.09999999999999999)
         self.assertAlmostEqual(mape, mape_masked)
+
+    def test_homogenize_clf_array(self):
+
+        bools = [True, False, True, True]
+        floats = [1.0, 0.3, 0.5001, 0.9]
+
+        probs = homogenize_clf_array(bools, to_probs=True)
+        self.assertAlmostEqual(probs[0], 1.0, places=5)
+        self.assertAlmostEqual(probs[1], 0.0, places=5)
+        self.assertAlmostEqual(probs[2], 1.0, places=5)
+        self.assertAlmostEqual(probs[3], 1.0, places=5)
+
+        labels = homogenize_clf_array(
+            floats,
+            to_labels=True,
+            thresh=0.5
+        )
+        self.assertTrue(labels[0])
+        self.assertFalse(labels[1])
+        self.assertTrue(labels[2])
+        self.assertTrue(labels[3])
+
+        labels2 = homogenize_clf_array(
+            floats,
+            to_labels=True,
+            thresh=0.91
+        )
+        self.assertTrue(labels2[0])
+        self.assertFalse(labels2[1])
+        self.assertFalse(labels2[2])
+        self.assertFalse(labels2[3])
