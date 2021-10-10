@@ -74,6 +74,12 @@ class TestDataOps(unittest.TestCase):
         }
         self.assertDictEqual(ans, true_ans)
 
+        # test for probability clf
+        true = [True, False]
+        test = [0.7, 0.65]
+        ans = score_array(true, test, task_type=CLF_KEY)
+        self.assertDictEqual(ans, true_ans)
+
     def test_mean_absolute_percentage_error(self):
 
         true = [1, 100, 1000, 0, 0.00000001]
