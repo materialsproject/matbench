@@ -23,8 +23,8 @@ if __name__ == "__main__":
         version=version,
         description='a machine learning benchmark for materials science',
         long_description="A machine learning benchmark for materials science. "
-                         "https://github.com/hackingmaterials/matbench",
-        url='https://github.com/hackingmaterials/matbench',
+                         "https://github.com/materialsproject/matbench",
+        url='https://github.com/materialsproject/matbench',
         author=['Alex Dunn', 'Anubhav Jain'],
         author_email='ardunn@lbl.gov',
         license='modified BSD',
