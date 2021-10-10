@@ -10,6 +10,7 @@ from matbench.constants import (
     FOLD_DIST_METRICS,
     MBV01_KEY,
     REG_KEY,
+    CLF_KEY,
     REG_METRICS,
 )
 from matbench.data_ops import load, score_array
@@ -448,6 +449,15 @@ class MatbenchTask(MSONable, MSONable2File):
                                     f"{allowed_types} for task "
                                     f"{self.dataset_name} !"
                                 )
+                            if self.metadata.task_type == CLF_KEY:
+                                if isinstance(datum, float):
+                                    if datum < 0 or datum > 1:
+                                        raise ValueError(
+                                            f"Probability estimate '{ix}': {datum}"
+                                            f"for task {self.dataset_name} outside "
+                                            f"of range [0, 1]."
+                                        )
+
                             remaining_indices.remove(ix)
 
                     if extra_indices and not remaining_indices:
