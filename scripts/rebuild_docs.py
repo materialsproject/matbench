@@ -687,7 +687,7 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
         for fold_key, fold_data in task.results.items():
             params_short = f"{fold_data.parameters}"[:200]
             params_short = params_short + "..." if len(params_short) == 200 else params_short
-            fold_line = f"| {fold_key} | ```{params_short}``` |\n"
+            fold_line = f"| {fold_key} | `{params_short}` |\n"
             params_table += fold_line
 
         params_table += "\n\n"

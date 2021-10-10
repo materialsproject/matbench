@@ -86,11 +86,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.006, score_func=<function f_regression at 0x2aaaef1a0840>))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true...``` |
-| fold_1 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(zerocount, ZeroCount())', '(gradientboostingregressor, GradientBoostingRegressor(alpha=0.75, criterion=friedman_mse, in...``` |
-| fold_2 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.001))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(gradientboostingregressor, GradientBoostingRegressor(al...``` |
-| fold_3 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.023, score_func=<function f_regression at 0x2aaaef19f950>))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(gradient...``` |
-| fold_4 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.034, score_func=<function f_regression at 0x2aaaf35a08c8>))', '(zerocount, ZeroCount())', '(gradientboostingregressor, GradientBoostingRegressor(alpha...``` |
+| fold_0 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.006, score_func=<function f_regression at 0x2aaaef1a0840>))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true...` |
+| fold_1 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(zerocount, ZeroCount())', '(gradientboostingregressor, GradientBoostingRegressor(alpha=0.75, criterion=friedman_mse, in...` |
+| fold_2 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.001))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(gradientboostingregressor, GradientBoostingRegressor(al...` |
+| fold_3 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.023, score_func=<function f_regression at 0x2aaaef19f950>))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(gradient...` |
+| fold_4 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.034, score_func=<function f_regression at 0x2aaaf35a08c8>))', '(zerocount, ZeroCount())', '(gradientboostingregressor, GradientBoostingRegressor(alpha...` |
 
 
 
@@ -122,11 +122,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.035, score_func=<function f_regression at 0x2aaaf35a18c8>))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(gradient...``` |
-| fold_1 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.046, score_func=<function f_regression at 0x2aaaef19f8c8>))', '(onehotencoder, OneHotEncoder(categorical_features=[false, false, false, false, false, ...``` |
-| fold_2 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0005))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true,\n             with_scaling=true...``` |
-| fold_3 | ```{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=85,\n                 score_func=<function f_regression at 0x2aaaf39a38c8>))', '(onehotencoder, OneHotEncoder(categorical_features=[f...``` |
-| fold_4 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0005))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(randomforestregressor, RandomForestRegressor(bootstrap=false, criterion=mse,...``` |
+| fold_0 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.035, score_func=<function f_regression at 0x2aaaf35a18c8>))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(gradient...` |
+| fold_1 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.046, score_func=<function f_regression at 0x2aaaef19f8c8>))', '(onehotencoder, OneHotEncoder(categorical_features=[false, false, false, false, false, ...` |
+| fold_2 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0005))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true,\n             with_scaling=true...` |
+| fold_3 | `{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=85,\n                 score_func=<function f_regression at 0x2aaaf39a38c8>))', '(onehotencoder, OneHotEncoder(categorical_features=[f...` |
+| fold_4 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0005))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(randomforestregressor, RandomForestRegressor(bootstrap=false, criterion=mse,...` |
 
 
 
@@ -158,11 +158,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.009000000000000001,\n          score_func=<function f_classif at 0x2aaaf35a16a8>))', '(onehotencoder, OneHotEncoder(categorical_features=[false, false...``` |
-| fold_1 | ```{'best_pipeline': ['(rfe, RFE(estimator=ExtraTreesClassifier(bootstrap=false, class_weight=null,\n                                   criterion=gini, max_depth=null,\n                                  ...``` |
-| fold_2 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.001))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(gradientboostingclassifier, GradientBoostingClassifier(criterion=friedman_mse...``` |
-| fold_3 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.03, score_func=<function f_classif at 0x2aaaf35a0730>))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(gradientboostingclassifier, GradientBoostingCla...``` |
-| fold_4 | ```{'best_pipeline': ['(rfe, RFE(estimator=ExtraTreesClassifier(bootstrap=false, class_weight=null,\n                                   criterion=entropy, max_depth=null,\n                               ...``` |
+| fold_0 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.009000000000000001,\n          score_func=<function f_classif at 0x2aaaf35a16a8>))', '(onehotencoder, OneHotEncoder(categorical_features=[false, false...` |
+| fold_1 | `{'best_pipeline': ['(rfe, RFE(estimator=ExtraTreesClassifier(bootstrap=false, class_weight=null,\n                                   criterion=gini, max_depth=null,\n                                  ...` |
+| fold_2 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.001))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(gradientboostingclassifier, GradientBoostingClassifier(criterion=friedman_mse...` |
+| fold_3 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.03, score_func=<function f_classif at 0x2aaaf35a0730>))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(gradientboostingclassifier, GradientBoostingCla...` |
+| fold_4 | `{'best_pipeline': ['(rfe, RFE(estimator=ExtraTreesClassifier(bootstrap=false, class_weight=null,\n                                   criterion=entropy, max_depth=null,\n                               ...` |
 
 
 
@@ -194,11 +194,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(selectfrommodel, SelectFromModel(estimator=ExtraTreesClassifier(bootstrap=false,\n                                               class_weight=null,\n                              ...``` |
-| fold_1 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(extratreesclassifier, ExtraTreesClassifie...``` |
-| fold_2 | ```{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=74,\n                 score_func=<function f_classif at 0x2aaaf35a0730>))', '(onehotencoder, OneHotEncoder(categorical_features=[fals...``` |
-| fold_3 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(gradientboostingclassifier, GradientBoost...``` |
-| fold_4 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(gradientboostingclassifier, GradientBoost...``` |
+| fold_0 | `{'best_pipeline': ['(selectfrommodel, SelectFromModel(estimator=ExtraTreesClassifier(bootstrap=false,\n                                               class_weight=null,\n                              ...` |
+| fold_1 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(extratreesclassifier, ExtraTreesClassifie...` |
+| fold_2 | `{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=74,\n                 score_func=<function f_classif at 0x2aaaf35a0730>))', '(onehotencoder, OneHotEncoder(categorical_features=[fals...` |
+| fold_3 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(gradientboostingclassifier, GradientBoost...` |
+| fold_4 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(gradientboostingclassifier, GradientBoost...` |
 
 
 
@@ -230,11 +230,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(gradientboostingregressor, GradientBoostingRegressor(alph...``` |
-| fold_1 | ```{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=40,\n                 score_func=<function f_regression at 0x2aaaf35a08c8>))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(gradientb...``` |
-| fold_2 | ```{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=62,\n                 score_func=<function f_regression at 0x2aaaf35a08c8>))', '(onehotencoder, OneHotEncoder(categorical_features=[f...``` |
-| fold_3 | ```{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=82,\n                 score_func=<function f_regression at 0x2aab561f6620>))', '(robustscaler, RobustScaler(copy=true, quantile_range...``` |
-| fold_4 | ```{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=62,\n                 score_func=<function f_regression at 0x2aaaf35a08c8>))', '(zerocount, ZeroCount())', '(gradientboostingregresso...``` |
+| fold_0 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(gradientboostingregressor, GradientBoostingRegressor(alph...` |
+| fold_1 | `{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=40,\n                 score_func=<function f_regression at 0x2aaaf35a08c8>))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(gradientb...` |
+| fold_2 | `{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=62,\n                 score_func=<function f_regression at 0x2aaaf35a08c8>))', '(onehotencoder, OneHotEncoder(categorical_features=[f...` |
+| fold_3 | `{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=82,\n                 score_func=<function f_regression at 0x2aab561f6620>))', '(robustscaler, RobustScaler(copy=true, quantile_range...` |
+| fold_4 | `{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=62,\n                 score_func=<function f_regression at 0x2aaaf35a08c8>))', '(zerocount, ZeroCount())', '(gradientboostingregresso...` |
 
 
 
@@ -266,11 +266,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.2))', '(zerocount, ZeroCount())', '(gradientboostingregressor, GradientBoostingRegressor(alpha=0.99, criterion=friedman_mse, init=...``` |
-| fold_1 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.01))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true,\n             with_scaling=true))...``` |
-| fold_2 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.01, score_func=<function f_regression at 0x2aaaef19e8c8>))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(randomforestregressor,...``` |
-| fold_3 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(gradientboostingregressor, GradientBoosti...``` |
-| fold_4 | ```{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=96,\n                 score_func=<function f_regression at 0x2aaaf35a08c8>))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(extratree...``` |
+| fold_0 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.2))', '(zerocount, ZeroCount())', '(gradientboostingregressor, GradientBoostingRegressor(alpha=0.99, criterion=friedman_mse, init=...` |
+| fold_1 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.01))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true,\n             with_scaling=true))...` |
+| fold_2 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.01, score_func=<function f_regression at 0x2aaaef19e8c8>))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(randomforestregressor,...` |
+| fold_3 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(standardscaler, StandardScaler(copy=true, with_mean=true, with_std=true))', '(gradientboostingregressor, GradientBoosti...` |
+| fold_4 | `{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=96,\n                 score_func=<function f_regression at 0x2aaaf35a08c8>))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(extratree...` |
 
 
 
@@ -302,11 +302,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.032, score_func=<function f_regression at 0x2aaaf35a2840>))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(extratreesregressor, ...``` |
-| fold_1 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.029, score_func=<function f_regression at 0x2aaaf35a08c8>))', '(zerocount, ZeroCount())', '(gradientboostingregressor, GradientBoostingRegressor(alpha...``` |
-| fold_2 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.2))', '(onehotencoder, OneHotEncoder(categorical_features=[false, false, false, false, false, false,\n                            ...``` |
-| fold_3 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.016, score_func=<function f_regression at 0x2aaaf79a28c8>))', '(onehotencoder, OneHotEncoder(categorical_features=[false, false, false, false, false, ...``` |
-| fold_4 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(extratreesregressor, ExtraTreesRegressor(bootstrap=fal...``` |
+| fold_0 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.032, score_func=<function f_regression at 0x2aaaf35a2840>))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(extratreesregressor, ...` |
+| fold_1 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.029, score_func=<function f_regression at 0x2aaaf35a08c8>))', '(zerocount, ZeroCount())', '(gradientboostingregressor, GradientBoostingRegressor(alpha...` |
+| fold_2 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.2))', '(onehotencoder, OneHotEncoder(categorical_features=[false, false, false, false, false, false,\n                            ...` |
+| fold_3 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.016, score_func=<function f_regression at 0x2aaaf79a28c8>))', '(onehotencoder, OneHotEncoder(categorical_features=[false, false, false, false, false, ...` |
+| fold_4 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(extratreesregressor, ExtraTreesRegressor(bootstrap=fal...` |
 
 
 
@@ -338,11 +338,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(gradientboostingregressor, GradientBoostingRegressor(alpha=0.75, criterion=friedman_mse, init=null,\n             learning_rate=0.5, loss=huber, max_depth=5,\n             max_fea...``` |
-| fold_1 | ```{'best_pipeline': ['(polynomialfeatures, PolynomialFeatures(degree=2, include_bias=false, interaction_only=false))', '(pca, PCA(copy=true, iterated_power=3, n_components=null, random_state=null,\n  sv...``` |
-| fold_2 | ```{'best_pipeline': ['(stackingestimator, StackingEstimator(estimator=GradientBoostingRegressor(alpha=0.9, criterion=friedman_mse, init=null,\n             learning_rate=0.5, loss=huber, max_depth=4,\n ...``` |
-| fold_3 | ```{'best_pipeline': ['(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(selectfwe, SelectFwe(alpha=0.027, score_func=<function f_regression at 0x2b2eb18422f0>))', '(stackingestimator, St...``` |
-| fold_4 | ```{'best_pipeline': ['(xgbregressor, XGBRegressor(base_score=0.5, booster=gbtree, colsample_bylevel=1,\n       colsample_bytree=1, gamma=0, learning_rate=0.5, max_delta_step=0,\n       max_depth=5, min_...``` |
+| fold_0 | `{'best_pipeline': ['(gradientboostingregressor, GradientBoostingRegressor(alpha=0.75, criterion=friedman_mse, init=null,\n             learning_rate=0.5, loss=huber, max_depth=5,\n             max_fea...` |
+| fold_1 | `{'best_pipeline': ['(polynomialfeatures, PolynomialFeatures(degree=2, include_bias=false, interaction_only=false))', '(pca, PCA(copy=true, iterated_power=3, n_components=null, random_state=null,\n  sv...` |
+| fold_2 | `{'best_pipeline': ['(stackingestimator, StackingEstimator(estimator=GradientBoostingRegressor(alpha=0.9, criterion=friedman_mse, init=null,\n             learning_rate=0.5, loss=huber, max_depth=4,\n ...` |
+| fold_3 | `{'best_pipeline': ['(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(selectfwe, SelectFwe(alpha=0.027, score_func=<function f_regression at 0x2b2eb18422f0>))', '(stackingestimator, St...` |
+| fold_4 | `{'best_pipeline': ['(xgbregressor, XGBRegressor(base_score=0.5, booster=gbtree, colsample_bylevel=1,\n       colsample_bytree=1, gamma=0, learning_rate=0.5, max_delta_step=0,\n       max_depth=5, min_...` |
 
 
 
@@ -374,11 +374,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(stackingestimator-1, StackingEstimator(estimator=RandomForestRegressor(bootstrap=false, criterion=mse, max_depth=null,\n           max_features=0.4, max_leaf_nodes=null,\n        ...``` |
-| fold_1 | ```{'best_pipeline': ['(stackingestimator-1, StackingEstimator(estimator=RandomForestRegressor(bootstrap=true, criterion=mse, max_depth=null,\n           max_features=0.35000000000000003, max_leaf_nodes=...``` |
-| fold_2 | ```{'best_pipeline': ['(stackingestimator-1, StackingEstimator(estimator=RandomForestRegressor(bootstrap=false, criterion=mse, max_depth=null,\n           max_features=0.45, max_leaf_nodes=null,\n       ...``` |
-| fold_3 | ```{'best_pipeline': ['(stackingestimator-1, StackingEstimator(estimator=ExtraTreesRegressor(bootstrap=false, criterion=mse, max_depth=null,\n          max_features=0.45, max_leaf_nodes=null,\n          ...``` |
-| fold_4 | ```{'best_pipeline': ['(stackingestimator-1, StackingEstimator(estimator=GradientBoostingRegressor(alpha=0.85, criterion=friedman_mse, init=null,\n             learning_rate=0.01, loss=lad, max_depth=1,\...``` |
+| fold_0 | `{'best_pipeline': ['(stackingestimator-1, StackingEstimator(estimator=RandomForestRegressor(bootstrap=false, criterion=mse, max_depth=null,\n           max_features=0.4, max_leaf_nodes=null,\n        ...` |
+| fold_1 | `{'best_pipeline': ['(stackingestimator-1, StackingEstimator(estimator=RandomForestRegressor(bootstrap=true, criterion=mse, max_depth=null,\n           max_features=0.35000000000000003, max_leaf_nodes=...` |
+| fold_2 | `{'best_pipeline': ['(stackingestimator-1, StackingEstimator(estimator=RandomForestRegressor(bootstrap=false, criterion=mse, max_depth=null,\n           max_features=0.45, max_leaf_nodes=null,\n       ...` |
+| fold_3 | `{'best_pipeline': ['(stackingestimator-1, StackingEstimator(estimator=ExtraTreesRegressor(bootstrap=false, criterion=mse, max_depth=null,\n          max_features=0.45, max_leaf_nodes=null,\n          ...` |
+| fold_4 | `{'best_pipeline': ['(stackingestimator-1, StackingEstimator(estimator=GradientBoostingRegressor(alpha=0.85, criterion=friedman_mse, init=null,\n             learning_rate=0.01, loss=lad, max_depth=1,\...` |
 
 
 
@@ -410,11 +410,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(randomforestclassifier, RandomForestClassifier(bootstrap=false, class_weight=null,\n            criterion=entropy,...``` |
-| fold_1 | ```{'best_pipeline': ['(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(randomforestclassifier, RandomForestClassifier(bootstrap=false, class_weight=null,\n            criterion=entropy,...``` |
-| fold_2 | ```{'best_pipeline': ['(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(randomforestclassifier, RandomForestClassifier(bootstrap=false, class_weight=null,\n            criterion=entropy,...``` |
-| fold_3 | ```{'best_pipeline': ['(stackingestimator, StackingEstimator(estimator=RandomForestClassifier(bootstrap=false, class_weight=null,\n            criterion=entropy, max_depth=null, max_features=0.5,\n      ...``` |
-| fold_4 | ```{'best_pipeline': ['(featureunion, FeatureUnion(n_jobs=null,\n       transformer_list=[(functiontransformer, FunctionTransformer(accept_sparse=false, check_inverse=true,\n          func=<function copy...``` |
+| fold_0 | `{'best_pipeline': ['(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(randomforestclassifier, RandomForestClassifier(bootstrap=false, class_weight=null,\n            criterion=entropy,...` |
+| fold_1 | `{'best_pipeline': ['(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(randomforestclassifier, RandomForestClassifier(bootstrap=false, class_weight=null,\n            criterion=entropy,...` |
+| fold_2 | `{'best_pipeline': ['(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(randomforestclassifier, RandomForestClassifier(bootstrap=false, class_weight=null,\n            criterion=entropy,...` |
+| fold_3 | `{'best_pipeline': ['(stackingestimator, StackingEstimator(estimator=RandomForestClassifier(bootstrap=false, class_weight=null,\n            criterion=entropy, max_depth=null, max_features=0.5,\n      ...` |
+| fold_4 | `{'best_pipeline': ['(featureunion, FeatureUnion(n_jobs=null,\n       transformer_list=[(functiontransformer, FunctionTransformer(accept_sparse=false, check_inverse=true,\n          func=<function copy...` |
 
 
 
@@ -446,11 +446,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true,\n             with_scaling=true))'...``` |
-| fold_1 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(zerocount, ZeroCount())', '(randomforestregressor, RandomForestRegressor(bootstrap=false, criterion=mse, max_depth=null,\n...``` |
-| fold_2 | ```{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.03, score_func=<function f_regression at 0x2aaaf35a08c8>))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(gradientboostingregres...``` |
-| fold_3 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true,\n             with_scaling=true))'...``` |
-| fold_4 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.05))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(randomforestregressor, RandomForestRegressor(bootstrap=false, criterion=mse, m...``` |
+| fold_0 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true,\n             with_scaling=true))'...` |
+| fold_1 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(zerocount, ZeroCount())', '(randomforestregressor, RandomForestRegressor(bootstrap=false, criterion=mse, max_depth=null,\n...` |
+| fold_2 | `{'best_pipeline': ['(selectfwe, SelectFwe(alpha=0.03, score_func=<function f_regression at 0x2aaaf35a08c8>))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(gradientboostingregres...` |
+| fold_3 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true,\n             with_scaling=true))'...` |
+| fold_4 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.05))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(randomforestregressor, RandomForestRegressor(bootstrap=false, criterion=mse, m...` |
 
 
 
@@ -482,11 +482,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.01))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true,\n             with_scaling=true))...``` |
-| fold_1 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.005))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(gradientboostingregressor, GradientBoostingRegressor(alpha=0.8, criterion=fri...``` |
-| fold_2 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(extratreesregressor, ExtraTreesRegressor(bootstrap=false,...``` |
-| fold_3 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(onehotencoder, OneHotEncoder(categorical_features=[false, false, false, false, false, false,\n                         ...``` |
-| fold_4 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.2))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(extratreesregressor, ExtraTreesRegressor(bootstrap=false,...``` |
+| fold_0 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.01))', '(robustscaler, RobustScaler(copy=true, quantile_range=(25.0, 75.0), with_centering=true,\n             with_scaling=true))...` |
+| fold_1 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.005))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(gradientboostingregressor, GradientBoostingRegressor(alpha=0.8, criterion=fri...` |
+| fold_2 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(extratreesregressor, ExtraTreesRegressor(bootstrap=false,...` |
+| fold_3 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.0001))', '(onehotencoder, OneHotEncoder(categorical_features=[false, false, false, false, false, false,\n                         ...` |
+| fold_4 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.2))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(extratreesregressor, ExtraTreesRegressor(bootstrap=false,...` |
 
 
 
@@ -518,11 +518,11 @@ Benchmark is complete? True
 
 | fold | params dict|
 |------|------------|
-| fold_0 | ```{'best_pipeline': ['(selectfrommodel, SelectFromModel(estimator=ExtraTreesRegressor(bootstrap=false, criterion=mse,\n                                              max_depth=null,\n                    ...``` |
-| fold_1 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(fastica, FastICA(algorithm=parallel, fun=logcosh, fun_args=null, max_iter=200,\n        n_components=null, random_state=nu...``` |
-| fold_2 | ```{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=53,\n                 score_func=<function f_regression at 0x2aaaf79a38c8>))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=...``` |
-| fold_3 | ```{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(kneighborsregressor, KNeighborsRegressor(algorithm=auto, ...``` |
-| fold_4 | ```{'best_pipeline': ['(selectfrommodel, SelectFromModel(estimator=ExtraTreesRegressor(bootstrap=false, criterion=mse,\n                                              max_depth=null,\n                    ...``` |
+| fold_0 | `{'best_pipeline': ['(selectfrommodel, SelectFromModel(estimator=ExtraTreesRegressor(bootstrap=false, criterion=mse,\n                                              max_depth=null,\n                    ...` |
+| fold_1 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(fastica, FastICA(algorithm=parallel, fun=logcosh, fun_args=null, max_iter=200,\n        n_components=null, random_state=nu...` |
+| fold_2 | `{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=53,\n                 score_func=<function f_regression at 0x2aaaf79a38c8>))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=...` |
+| fold_3 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(kneighborsregressor, KNeighborsRegressor(algorithm=auto, ...` |
+| fold_4 | `{'best_pipeline': ['(selectfrommodel, SelectFromModel(estimator=ExtraTreesRegressor(bootstrap=false, criterion=mse,\n                                              max_depth=null,\n                    ...` |
 
 
 

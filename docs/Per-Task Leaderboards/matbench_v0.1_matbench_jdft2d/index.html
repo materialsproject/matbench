@@ -1,0 +1,1139 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A benchmark and leaderboard for predicting materials properties">
+      
+      
+      
+      <link rel="shortcut icon" href="../../static/matbench_logo_favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.0">
+    
+    
+      
+        <title>matbench_v0.1 matbench_jdft2d - MatBench</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bc7e593a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab28b872.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#757575">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="green">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#matbench_v01-matbench_jdft2d" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="MatBench" class="md-header-nav__button md-logo" aria-label="MatBench">
+      
+  <img src="../../static/matbench_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            MatBench
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              matbench_v0.1 matbench_jdft2d
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/hackingmaterials/matbench/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+
+  
+
+<nav class="md-tabs md-tabs--active" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Leaderboard
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Benchmark%20Info/matbench_v0.1/" class="md-tabs__link">
+          Benchmark Info
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Full%20Benchmark%20Data/matbench_v0.1_CrabNet/" class="md-tabs__link">
+          Full Benchmark Data
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../How%20To%20Use/1install/" class="md-tabs__link">
+          How To Use
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../matbench_v0.1_matbench_dielectric/" class="md-tabs__link md-tabs__link--active">
+          Per Task Leaderboards
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MatBench" class="md-nav__button md-logo" aria-label="MatBench">
+      
+  <img src="../../static/matbench_logo.png" alt="logo">
+
+    </a>
+    MatBench
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/hackingmaterials/matbench/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Leaderboard
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Benchmark Info
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Benchmark Info" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Benchmark Info
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Benchmark%20Info/matbench_v0.1/" class="md-nav__link">
+      Benchmark info for `matbench_v0.1`
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Benchmark%20Info/notes/" class="md-nav__link">
+      Notes on Benchmarking
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Full Benchmark Data
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Full Benchmark Data" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        Full Benchmark Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Full%20Benchmark%20Data/matbench_v0.1_CrabNet/" class="md-nav__link">
+      matbench_v0.1: CrabNet
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020/" class="md-nav__link">
+      matbench_v0.1: AMMExpress v2020
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019/" class="md-nav__link">
+      matbench_v0.1: CGCNN v2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Full%20Benchmark%20Data/matbench_v0.1_dummy/" class="md-nav__link">
+      matbench_v0.1: Dummy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Full%20Benchmark%20Data/matbench_v0.1_rf/" class="md-nav__link">
+      matbench_v0.1: RF-SCM/Magpie
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      How To Use
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="How To Use" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        How To Use
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../How%20To%20Use/1install/" class="md-nav__link">
+      1 - Install matbench
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../How%20To%20Use/2run/" class="md-nav__link">
+      2 - Run benchmark on algorithm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../How%20To%20Use/3submit/" class="md-nav__link">
+      3 - Submit to leaderboard
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../How%20To%20Use/advanced/" class="md-nav__link">
+      Advanced usage
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Per Task Leaderboards
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Per Task Leaderboards" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Per Task Leaderboards
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_dielectric/" class="md-nav__link">
+      matbench_v0.1 matbench_dielectric
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_expt_gap/" class="md-nav__link">
+      matbench_v0.1 matbench_expt_gap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_expt_is_metal/" class="md-nav__link">
+      matbench_v0.1 matbench_expt_is_metal
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_glass/" class="md-nav__link">
+      matbench_v0.1 matbench_glass
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        matbench_v0.1 matbench_jdft2d
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      matbench_v0.1 matbench_jdft2d
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#individual-task-leaderboard-for-matbench_jdft2d" class="md-nav__link">
+    Individual Task Leaderboard for matbench_jdft2d
+  </a>
+  
+    <nav class="md-nav" aria-label="Individual Task Leaderboard for matbench_jdft2d">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leaderboard" class="md-nav__link">
+    Leaderboard
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataset-info" class="md-nav__link">
+    Dataset info
+  </a>
+  
+    <nav class="md-nav" aria-label="Dataset info">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    Description
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataset-columns" class="md-nav__link">
+    Dataset columns
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataset-reference" class="md-nav__link">
+    Dataset reference
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata" class="md-nav__link">
+    Metadata
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_log_gvrh/" class="md-nav__link">
+      matbench_v0.1 matbench_log_gvrh
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_log_kvrh/" class="md-nav__link">
+      matbench_v0.1 matbench_log_kvrh
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_mp_e_form/" class="md-nav__link">
+      matbench_v0.1 matbench_mp_e_form
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_mp_gap/" class="md-nav__link">
+      matbench_v0.1 matbench_mp_gap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_mp_is_metal/" class="md-nav__link">
+      matbench_v0.1 matbench_mp_is_metal
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_perovskites/" class="md-nav__link">
+      matbench_v0.1 matbench_perovskites
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_phonons/" class="md-nav__link">
+      matbench_v0.1 matbench_phonons
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matbench_v0.1_matbench_steels/" class="md-nav__link">
+      matbench_v0.1 matbench_steels
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#individual-task-leaderboard-for-matbench_jdft2d" class="md-nav__link">
+    Individual Task Leaderboard for matbench_jdft2d
+  </a>
+  
+    <nav class="md-nav" aria-label="Individual Task Leaderboard for matbench_jdft2d">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leaderboard" class="md-nav__link">
+    Leaderboard
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataset-info" class="md-nav__link">
+    Dataset info
+  </a>
+  
+    <nav class="md-nav" aria-label="Dataset info">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    Description
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataset-columns" class="md-nav__link">
+    Dataset columns
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataset-reference" class="md-nav__link">
+    Dataset reference
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata" class="md-nav__link">
+    Metadata
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/hackingmaterials/matbench/edit/master/docs/Per-Task Leaderboards/matbench_v0.1_matbench_jdft2d.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="matbench_v01-matbench_jdft2d">matbench_v0.1 matbench_jdft2d</h1>
+<h2 id="individual-task-leaderboard-for-matbench_jdft2d">Individual Task Leaderboard for <code>matbench_jdft2d</code></h2>
+<p><em>Leaderboard for an individual task. Algorithms shown here may include both general purpose and specialized algorithms (i.e., algorithms which are only valid for a subset of tasks in the benchmark.</em></p>
+<h3 id="leaderboard">Leaderboard</h3>
+<table>
+<thead>
+<tr>
+<th>algorithm</th>
+<th>mean mae</th>
+<th>std mae</th>
+<th>mean rmse</th>
+<th>max max_error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020/">AMMExpress v2020</a></td>
+<td><strong>39.8497</strong></td>
+<td>9.8835</td>
+<td>106.5460</td>
+<td>1552.9102</td>
+</tr>
+<tr>
+<td><a href="../../Full%20Benchmark%20Data/matbench_v0.1_CrabNet/">CrabNet</a></td>
+<td><strong>45.6104</strong></td>
+<td>12.2491</td>
+<td>120.0088</td>
+<td>1532.0118</td>
+</tr>
+<tr>
+<td><a href="../../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019/">CGCNN v2019</a></td>
+<td><strong>49.2440</strong></td>
+<td>11.5865</td>
+<td>112.7689</td>
+<td>1516.9120</td>
+</tr>
+<tr>
+<td><a href="../../Full%20Benchmark%20Data/matbench_v0.1_rf/">RF-SCM/Magpie</a></td>
+<td><strong>50.0440</strong></td>
+<td>8.6271</td>
+<td>112.2660</td>
+<td>1538.6073</td>
+</tr>
+<tr>
+<td><a href="../../Full%20Benchmark%20Data/matbench_v0.1_dummy/">Dummy</a></td>
+<td><strong>67.2851</strong></td>
+<td>10.1832</td>
+<td>126.8446</td>
+<td>1491.7993</td>
+</tr>
+</tbody>
+</table>
+<iframe src="../../static/task_matbench_v0.1_matbench_jdft2d.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
+<h3 id="dataset-info">Dataset info</h3>
+<h5 id="description">Description</h5>
+<p>Matbench v0.1 test dataset for predicting exfoliation energies from crystal structure (computed with the OptB88vdW and TBmBJ functionals). Adapted from the JARVIS DFT database. For benchmarking w/ nested cross validation, the order of the dataset must be identical to the retrieved data; refer to the Automatminer/Matbench publication for more details.</p>
+<p>Number of samples: 636</p>
+<p>Task type: regression</p>
+<p>Input type: structure</p>
+<h5 id="dataset-columns">Dataset columns</h5>
+<ul>
+<li>exfoliation_en: Target variable. Exfoliation energy (meV/atom).</li>
+<li>structure: Pymatgen Structure of the material.</li>
+</ul>
+<h5 id="dataset-reference">Dataset reference</h5>
+<p><code>2D Dataset discussed in:
+High-throughput Identification and Characterization of Two dimensional Materials using Density functional theory Kamal Choudhary, Irina Kalish, Ryan Beams &amp; Francesca Tavazza Scientific Reports volume 7, Article number: 5179 (2017)
+Original 2D Data file sourced from:
+choudhary, kamal; https://orcid.org/0000-0001-9737-8074 (2018): jdft_2d-7-7-2018.json. figshare. Dataset.</code></p>
+<h3 id="metadata">Metadata</h3>
+<div class="highlight"><pre><span></span><code>{&#39;bibtex_refs&#39;: [&#39;@Article{Dunn2020,\n&#39;
+                 &#39;author={Dunn, Alexander\n&#39;
+                 &#39;and Wang, Qi\n&#39;
+                 &#39;and Ganose, Alex\n&#39;
+                 &#39;and Dopp, Daniel\n&#39;
+                 &#39;and Jain, Anubhav},\n&#39;
+                 &#39;title={Benchmarking materials property prediction methods: &#39;
+                 &#39;the Matbench test set and Automatminer reference &#39;
+                 &#39;algorithm},\n&#39;
+                 &#39;journal={npj Computational Materials},\n&#39;
+                 &#39;year={2020},\n&#39;
+                 &#39;month={Sep},\n&#39;
+                 &#39;day={15},\n&#39;
+                 &#39;volume={6},\n&#39;
+                 &#39;number={1},\n&#39;
+                 &#39;pages={138},\n&#39;
+                 &#39;abstract={We present a benchmark test suite and an automated &#39;
+                 &#39;machine learning procedure for evaluating supervised machine &#39;
+                 &#39;learning (ML) models for predicting properties of inorganic &#39;
+                 &#39;bulk materials. The test suite, Matbench, is a set of &#39;
+                 &#39;13{\\thinspace}ML tasks that range in size from 312 to 132k &#39;
+                 &#39;samples and contain data from 10 density functional &#39;
+                 &#39;theory-derived and experimental sources. Tasks include &#39;
+                 &#39;predicting optical, thermal, electronic, thermodynamic, &#39;
+                 &quot;tensile, and elastic properties given a material&#39;s &quot;
+                 &#39;composition and/or crystal structure. The reference &#39;
+                 &#39;algorithm, Automatminer, is a highly-extensible, fully &#39;
+                 &#39;automated ML pipeline for predicting materials properties &#39;
+                 &#39;from materials primitives (such as composition and crystal &#39;
+                 &#39;structure) without user intervention or hyperparameter &#39;
+                 &#39;tuning. We test Automatminer on the Matbench test suite and &#39;
+                 &#39;compare its predictive power with state-of-the-art crystal &#39;
+                 &#39;graph neural networks and a traditional descriptor-based &#39;
+                 &#39;Random Forest model. We find Automatminer achieves the best &#39;
+                 &#39;performance on 8 of 13 tasks in the benchmark. We also show &#39;
+                 &#39;our test suite is capable of exposing predictive advantages &#39;
+                 &#39;of each algorithm---namely, that crystal graph methods &#39;
+                 &#39;appear to outperform traditional machine learning methods &#39;
+                 &#39;given {\\textasciitilde}104 or greater data points. We &#39;
+                 &#39;encourage evaluating materials ML algorithms on the Matbench &#39;
+                 &#39;benchmark and comparing them against the latest version of &#39;
+                 &#39;Automatminer.},\n&#39;
+                 &#39;issn={2057-3960},\n&#39;
+                 &#39;doi={10.1038/s41524-020-00406-3},\n&#39;
+                 &#39;url={https://doi.org/10.1038/s41524-020-00406-3}\n&#39;
+                 &#39;}\n&#39;,
+                 &#39;@Article{Choudhary2017,\n&#39;
+                 &#39;author={Choudhary, Kamal\n&#39;
+                 &#39;and Kalish, Irina\n&#39;
+                 &#39;and Beams, Ryan\n&#39;
+                 &#39;and Tavazza, Francesca},\n&#39;
+                 &#39;title={High-throughput Identification and Characterization &#39;
+                 &#39;of Two-dimensional Materials using Density functional &#39;
+                 &#39;theory},\n&#39;
+                 &#39;journal={Scientific Reports},\n&#39;
+                 &#39;year={2017},\n&#39;
+                 &#39;volume={7},\n&#39;
+                 &#39;number={1},\n&#39;
+                 &#39;pages={5179},\n&#39;
+                 &#39;abstract={We introduce a simple criterion to identify &#39;
+                 &#39;two-dimensional (2D) materials based on the comparison &#39;
+                 &#39;between experimental lattice constants and lattice constants &#39;
+                 &#39;mainly obtained from Materials-Project (MP) density &#39;
+                 &#39;functional theory (DFT) calculation repository. &#39;
+                 &#39;Specifically, if the relative difference between the two &#39;
+                 &#39;lattice constants for a specific material is greater than or &#39;
+                 &#39;equal to 5%, we predict them to be good candidates for 2D &#39;
+                 &#39;materials. We have predicted at least 1356 such 2D &#39;
+                 &#39;materials. For all the systems satisfying our criterion, we &#39;
+                 &#39;manually create single layer systems and calculate their &#39;
+                 &#39;energetics, structural, electronic, and elastic properties &#39;
+                 &#39;for both the bulk and the single layer cases. Currently the &#39;
+                 &#39;database consists of 1012 bulk and 430 single layer &#39;
+                 &#39;materials, of which 371 systems are common to bulk and &#39;
+                 &#39;single layer. The rest of calculations are underway. To &#39;
+                 &#39;validate our criterion, we calculated the exfoliation energy &#39;
+                 &#39;of the suggested layered materials, and we found that in &#39;
+                 &#39;88.9% of the cases the currently accepted criterion for &#39;
+                 &#39;exfoliation was satisfied. Also, using molybdenum telluride &#39;
+                 &#39;as a test case, we performed X-ray diffraction and Raman &#39;
+                 &#39;scattering experiments to benchmark our calculations and &#39;
+                 &#39;understand their applicability and limitations. The data is &#39;
+                 &#39;publicly available at the website &#39;
+                 &#39;http://www.ctcms.nist.gov/{\t&#39;
+                 &#39;extasciitilde}knc6/JVASP.html.},\n&#39;
+                 &#39;issn={2045-2322},\n&#39;
+                 &#39;doi={10.1038/s41598-017-05402-0},\n&#39;
+                 &#39;url={https://doi.org/10.1038/s41598-017-05402-0}\n&#39;
+                 &#39;}&#39;,
+                 &#39;@misc{choudhary__2018, title={jdft_2d-7-7-2018.json}, &#39;
+                 &#39;url={https://figshare.com/articles/jdft_2d-7-7-2018_json/6815705/1}, &#39;
+                 &#39;DOI={10.6084/m9.figshare.6815705.v1}, abstractNote={2D &#39;
+                 &#39;materials}, publisher={figshare}, author={choudhary, kamal &#39;
+                 &#39;and https://orcid.org/0000-0001-9737-8074}, year={2018}, &#39;
+                 &#39;month={Jul}}&#39;],
+ &#39;columns&#39;: {&#39;exfoliation_en&#39;: &#39;Target variable. Exfoliation energy &#39;
+                               &#39;(meV/atom).&#39;,
+             &#39;structure&#39;: &#39;Pymatgen Structure of the material.&#39;},
+ &#39;description&#39;: &#39;Matbench v0.1 test dataset for predicting exfoliation &#39;
+                &#39;energies from crystal structure (computed with the OptB88vdW &#39;
+                &#39;and TBmBJ functionals). Adapted from the JARVIS DFT database. &#39;
+                &#39;For benchmarking w/ nested cross validation, the order of the &#39;
+                &#39;dataset must be identical to the retrieved data; refer to the &#39;
+                &#39;Automatminer/Matbench publication for more details.&#39;,
+ &#39;file_type&#39;: &#39;json.gz&#39;,
+ &#39;hash&#39;: &#39;26057dc4524e193e32abffb296ce819b58b6e11d1278cae329a2f97817a4eddf&#39;,
+ &#39;input_type&#39;: &#39;structure&#39;,
+ &#39;mad&#39;: 67.20200406491116,
+ &#39;n_samples&#39;: 636,
+ &#39;num_entries&#39;: 636,
+ &#39;reference&#39;: &#39;2D Dataset discussed in:\n&#39;
+              &#39;High-throughput Identification and Characterization of Two &#39;
+              &#39;dimensional Materials using Density functional theory Kamal &#39;
+              &#39;Choudhary, Irina Kalish, Ryan Beams &amp; Francesca Tavazza &#39;
+              &#39;Scientific Reports volume 7, Article number: 5179 (2017)\n&#39;
+              &#39;Original 2D Data file sourced from:\n&#39;
+              &#39;choudhary, kamal; https://orcid.org/0000-0001-9737-8074 (2018): &#39;
+              &#39;jdft_2d-7-7-2018.json. figshare. Dataset.&#39;,
+ &#39;target&#39;: &#39;exfoliation_en&#39;,
+ &#39;task_type&#39;: &#39;regression&#39;,
+ &#39;unit&#39;: &#39;meV/atom&#39;,
+ &#39;url&#39;: &#39;https://ml.materialsproject.org/projects/matbench_jdft2d.json.gz&#39;}
+</code></pre></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../matbench_v0.1_matbench_glass/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                matbench_v0.1 matbench_glass
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../matbench_v0.1_matbench_log_gvrh/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                matbench_v0.1 matbench_log_gvrh
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Materials Project (Maintained by Alex Dunn of HackingMaterials Group)
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.6a3d08fc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.71201edf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['navigation.tabs', 'navigation.tabs.sticky'],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
