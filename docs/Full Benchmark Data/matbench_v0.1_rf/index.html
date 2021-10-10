@@ -478,6 +478,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_modnet_v0.1.10/" class="md-nav__link">
+        matbench_v0.1: MODNet (v0.1.10)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -516,6 +530,19 @@
   <a href="#algorithm-description" class="md-nav__link">
     Algorithm description:
   </a>
+  
+    <nav class="md-nav" aria-label="Algorithm description:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1415,6 +1442,19 @@
     Algorithm description:
   </a>
   
+    <nav class="md-nav" aria-label="Algorithm description:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1920,6 +1960,7 @@
                 <h1 id="matbench_v01-rf-scmmagpie">matbench_v0.1: RF-SCM/Magpie</h1>
 <h3 id="algorithm-description">Algorithm description:</h3>
 <p>A random forest using features from the Sine Coulomb Matrix and MagPie featurization algorthims. Sine Coulomb Matrix creates structural features based on Coulombic interactions inside a periodic boundary condition (i.e., for crystalline materials with known structure). MagPie features are weighted elemental features based on elemental data such as electronegativity, melting point, and electron affinity. Algorithms were run inside of the Automatminer v1.0.3.20191111 framework for convenience, though no auto-featurization or AutoML were run. Data cleaning dropped features with more than 1% nan samples, imputing missing samples using the mean of the training data. No feature reduction was performed. Both featurization techniques were applied to structure problems, only MagPie features were applied to problems without structure. Random forest uses 500 estimators.</p>
+<h4 id="notes">Notes:</h4>
 <p>No hyperparameter tuning was performed on the RF, as a large, constant number of trees were used in constructing each fold's model; the entire training+validation set was used as training data for the RF.</p>
 <p>Raw data download and example notebook available <a href="https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_rf">on the matbench repo</a>.</p>
 <h3 id="references-in-bibtex-format">References (in bibtex format):</h3>
@@ -4071,7 +4112,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../matbench_v0.1_dummy/" class="md-footer__link md-footer__link--prev" aria-label="Previous: matbench_v0.1: Dummy" rel="prev">
+        <a href="../matbench_v0.1_modnet_v0.1.10/" class="md-footer__link md-footer__link--prev" aria-label="Previous: matbench_v0.1: MODNet (v0.1.10)" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -4080,7 +4121,7 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              matbench_v0.1: Dummy
+              matbench_v0.1: MODNet (v0.1.10)
             </div>
           </div>
         </a>

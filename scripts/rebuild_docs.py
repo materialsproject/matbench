@@ -27,7 +27,8 @@ STATIC_DOCS_DIR = os.path.join(DOCS_DIR, "static")
 BENCHMARKS_DIR = os.path.join(THIS_DIR, "../benchmarks")
 FULL_DATA_DIR = os.path.join(DOCS_DIR, "Full Benchmark Data")
 PER_TASK_DIR = os.path.join(DOCS_DIR, "Per-Task Leaderboards")
-PER_TASK_DIR_PREFIX = "Full%20Benchmark%20Data/"
+PER_TASK_DIR_PREFIX = "Per-Task%20Leaderboards/"
+FULL_DATA_DIR_PREFIX = "Full%20Benchmark%20Data/"
 METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
 METADATA_DIR_PREFIX = "Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
@@ -229,6 +230,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
         for _, row in df_src.iterrows():
 
             task_name = f"{row['task']}"
+            task_name_link = f"[{task_name}]({PER_TASK_DIR_PREFIX}/matbench_v0.1_{task_name})"
             samples = format_int(row["n_samples"])
             algorithm = f"[{row['algorithm']}]({row['link']}.md)"
 
@@ -244,7 +246,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
             else:
                 raise ValueError(f"{row['completeness']} is not a valid type of general purpose completeness!")
 
-            table += f"| {task_name} | {samples} | {algorithm} | {score} | {notes} |\n"
+            table += f"| {task_name_link} | {samples} | {algorithm} | {score} | {notes} |\n"
         table += "\n\n"
 
         gp_leaderboard_txt = table_header + table_explanation + table
@@ -430,7 +432,7 @@ def organize_task_data(all_data):
     """
     all_data_per_benchmark = {}
 
-    prefix = PER_TASK_DIR_PREFIX
+    prefix = FULL_DATA_DIR_PREFIX
 
     for data_packet in all_data.values():
         bmark_name = data_packet["results"].benchmark_name
@@ -627,7 +629,7 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
 
     header = f"# {mb.benchmark_name}: {algo_name}\n\n"
     url = f"https://github.com/hackingmaterials/matbench/tree/main/benchmarks/{dir_name_short}"
-    desc = f"### Algorithm description: \n\n{algo_desc}\n\n{notes}\n\nRaw data download and example notebook available [on the matbench repo]({url}).\n\n"
+    desc = f"### Algorithm description: \n\n{algo_desc}\n\n#### Notes:\n{notes}\n\nRaw data download and example notebook available [on the matbench repo]({url}).\n\n"
     refs = f"### References (in bibtex format): \n\n```\n{pprint.pformat(refs)}\n```\n\n"
 
     user_metadata = f"### User metadata:\n\n```\n{pprint.pformat(mb.user_metadata)}\n```\n\n"

@@ -151,7 +151,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         if item in self.metadata:
             return self.tasks_map[item]
         else:
-            return self.__getattribute__(self, item)
+            return self.__getattribute__(item)
 
     @classmethod
     def from_preset(cls, benchmark, preset_name, autoload=False):
@@ -563,7 +563,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         if not valid or not recorded:
             s += "\n\nTasks:"
-            for t in self.tasks_map:
+            for t in self.tasks_map.values():
                 s += f"\n\t- '{t.dataset_name}: recorded={t.all_folds_recorded}"
 
         if valid and recorded:

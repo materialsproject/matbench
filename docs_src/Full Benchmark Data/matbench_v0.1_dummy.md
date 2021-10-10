@@ -4,6 +4,7 @@
 
 Dummy regressor, using strategy 'mean', and Dummy regressor, using strategy 'stratified'.
 
+#### Notes:
 No notes.
 
 Raw data download and example notebook available [on the matbench repo](https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_dummy).

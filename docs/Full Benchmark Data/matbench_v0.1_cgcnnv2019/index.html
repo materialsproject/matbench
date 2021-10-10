@@ -489,6 +489,19 @@
     Algorithm description:
   </a>
   
+    <nav class="md-nav" aria-label="Algorithm description:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -855,6 +868,20 @@
     <li class="md-nav__item">
       <a href="../matbench_v0.1_dummy/" class="md-nav__link">
         matbench_v0.1: Dummy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_modnet_v0.1.10/" class="md-nav__link">
+        matbench_v0.1: MODNet (v0.1.10)
       </a>
     </li>
   
@@ -1279,6 +1306,19 @@
     Algorithm description:
   </a>
   
+    <nav class="md-nav" aria-label="Algorithm description:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1648,6 +1688,7 @@
                 <h1 id="matbench_v01-cgcnn-v2019">matbench_v0.1: CGCNN v2019</h1>
 <h3 id="algorithm-description">Algorithm description:</h3>
 <p>Convolutional graph neural network, in it's original implementation as in https://github.com/txie-93/cgcnn. Utility modifications were made in order to run CGCNN without error across all structure tasks. Adapted from data originally taken from Dunn et. al 'Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm' (2020). Training was performed using one NVIDIA 1080Ti GPU using CUDA (accompanied by two Intel Xeon E5-2623 CPUs with 60GB RAM). Each outer NCV training set was split 75/25 for train/validation; thus the final split for each fold was 60% train, 20% validation, 20% test. Each model is trained in epochs of 128-structure batches by optimizing according to mean squared error loss (regression) or binary cross-entropy (classification). After each epoch, the validation loss is computed with the same scoring functions as the final evaluation: MAE for regression or ROC-AUC for classification (made negative so that higher loss represents worse performance). To prevent overfitting, the training is stopped early when the validation loss does not improve over a period of at least 500 epochs.</p>
+<h4 id="notes">Notes:</h4>
 <p>Raw data download and example notebook available <a href="https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_cgcnnv2019">on the matbench repo</a>.</p>
 <h3 id="references-in-bibtex-format">References (in bibtex format):</h3>
 <div class="highlight"><pre><span></span><code>[&#39;@article{Xie2018,\n&#39;

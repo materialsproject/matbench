@@ -4,6 +4,7 @@
 
 Convolutional graph neural network, in it's original implementation as in https://github.com/txie-93/cgcnn. Utility modifications were made in order to run CGCNN without error across all structure tasks. Adapted from data originally taken from Dunn et. al 'Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm' (2020). Training was performed using one NVIDIA 1080Ti GPU using CUDA (accompanied by two Intel Xeon E5-2623 CPUs with 60GB RAM). Each outer NCV training set was split 75/25 for train/validation; thus the final split for each fold was 60% train, 20% validation, 20% test. Each model is trained in epochs of 128-structure batches by optimizing according to mean squared error loss (regression) or binary cross-entropy (classification). After each epoch, the validation loss is computed with the same scoring functions as the final evaluation: MAE for regression or ROC-AUC for classification (made negative so that higher loss represents worse performance). To prevent overfitting, the training is stopped early when the validation loss does not improve over a period of at least 500 epochs.
 
+#### Notes:
 
 
 Raw data download and example notebook available [on the matbench repo](https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_cgcnnv2019).

@@ -4,6 +4,7 @@
 
 Compositionally restricted attention-based network for materials property predictions. See github page for more information: https://github.com/anthony-wang/CrabNet.
 
+#### Notes:
 
 
 Raw data download and example notebook available [on the matbench repo](https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_CrabNet).

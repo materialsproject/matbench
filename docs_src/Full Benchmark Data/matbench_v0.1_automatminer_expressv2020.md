@@ -4,6 +4,7 @@
 
 Automatminer express v1.03.20200727. Based on automatic featurization, tree-based feature reduction, and genetic-algorithm based AutoML with the TPOT package.
 
+#### Notes:
 All data was generated using the same config (express, default). The automatminer version requirement specifies the versions of many dependent packages, such as matminer, which are required for the algorithm to work in your virtualenv.
 
 Raw data download and example notebook available [on the matbench repo](https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_automatminer_expressv2020).
