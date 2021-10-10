@@ -1,0 +1,3 @@
+# MatbenchBenchmark
+
+::: matbench.bench.MatbenchBenchmark

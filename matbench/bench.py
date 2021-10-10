@@ -159,6 +159,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         The following presets are defined for each benchmark:
 
         benchmark: 'matbench_v0.1':
+
             - preset: 'structure' - Only structure problems
             - preset: 'composition' - Only composition problems
             - preset: 'regression' - Only regression problems

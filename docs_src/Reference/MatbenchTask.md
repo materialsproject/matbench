@@ -1,0 +1,3 @@
+# MatbenchTask
+
+::: matbench.task.MatbenchTask

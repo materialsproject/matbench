@@ -23,6 +23,7 @@ theme:
 
 plugins:
   - search
+  - mkdocstrings
 
 markdown_extensions:
   - meta
