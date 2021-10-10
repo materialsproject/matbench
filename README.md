@@ -12,7 +12,9 @@ matbench is an ImageNet for materials science; a set of 13 (with more to come!) 
     - [**Per-task leaderboards**](https://matbench.materialsproject.org/Per-Task%20Leaderboards/matbench_v0.1_matbench_dielectric/)
     - [**Documentation**](https://matbench.materialsproject.org/How%20To%20Use/1install/)
     - [**Full benchmark data**](https://matbench.materialsproject.org/Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020/)
-    
+    - [**Code reference**](https://matbench.materialsproject.org/Reference/MatbenchBenchmark/)
+
+
 - [**Help/Support:**](https://discuss.matsci.org/c/matminer)
 - [**Source**](https://github.com/materialsproject/matbench)
 
