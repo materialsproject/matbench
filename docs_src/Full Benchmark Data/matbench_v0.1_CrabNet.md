@@ -35,17 +35,13 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 ### Metadata:
 
-Tasks recorded: 10 of 13 total
-
-Benchmark is complete? False
-
-Benchmark is structure complete? False
-
-Benchmark is composition complete? False
-
-Benchmark is regression complete? True
-
-Benchmark is classification complete? False
+| tasks recorded | 10/13 |
+|----------------|-------------------------------------|
+| complete? | ✗ | 
+| composition complete? | ✗ | 
+| structure complete? | ✗ | 
+| regression complete? | ✓ | 
+| classification complete? | ✗ | 
 
 ### Software Requirements
 

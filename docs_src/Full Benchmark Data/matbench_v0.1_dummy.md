@@ -37,9 +37,13 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 ### Metadata:
 
-Tasks recorded: 13 of 13 total
-
-Benchmark is complete? True
+| tasks recorded | 13/13 |
+|----------------|-------------------------------------|
+| complete? | ✓ | 
+| composition complete? | ✓ | 
+| structure complete? | ✓ | 
+| regression complete? | ✓ | 
+| classification complete? | ✓ | 
 
 ### Software Requirements
 

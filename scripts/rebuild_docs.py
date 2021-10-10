@@ -613,11 +613,11 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     Returns:
 
     """
-    is_complete = mb.is_complete
-    structure_complete = mb.is_structure_complete
-    composition_complete = mb.is_composition_complete
-    regression_complete = mb.is_regression_complete
-    classification_complete = mb.is_classification_complete
+    is_complete = convert_bool_to_unicode_check(mb.is_complete)
+    structure_complete = convert_bool_to_unicode_check(mb.is_structure_complete)
+    composition_complete = convert_bool_to_unicode_check(mb.is_composition_complete)
+    regression_complete = convert_bool_to_unicode_check(mb.is_regression_complete)
+    classification_complete = convert_bool_to_unicode_check(mb.is_classification_complete)
 
     algo_name = info["algorithm"]
     algo_desc = info["algorithm_long"]
@@ -635,14 +635,17 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     n_tasks_available = len(mb.tasks)
     n_tasks_total = len(mb.metadata.keys())
 
-    metadata_header = f"### Metadata:\n\nTasks recorded: {n_tasks_available} of {n_tasks_total} total\n\nBenchmark is complete? {is_complete}\n\n"
+    metadata_header = f"### Metadata:\n\n"
 
-    # List out the different types of completeness.
-    if not is_complete:
-        metadata_header += f"Benchmark is structure complete? {structure_complete}\n\n"
-        metadata_header += f"Benchmark is composition complete? {composition_complete}\n\n"
-        metadata_header += f"Benchmark is regression complete? {regression_complete}\n\n"
-        metadata_header += f"Benchmark is classification complete? {classification_complete}\n\n"
+    metadata_table = f"| tasks recorded | {n_tasks_available}/{n_tasks_total} |\n" \
+                     f"|----------------|-------------------------------------|\n" \
+                     f"| complete? | {is_complete} | \n" \
+                     f"| composition complete? | {composition_complete} | \n" \
+                     f"| structure complete? | {structure_complete} | \n" \
+                     f"| regression complete? | {regression_complete} | \n" \
+                     f"| classification complete? | {classification_complete} | \n\n"
+
+    metadata_header += metadata_table
 
     requirements_header = f"### Software Requirements\n\n"
     requirements_body = f"```\n{pprint.pformat(requirements)}\n```\n\n"
@@ -763,6 +766,10 @@ def nuke_docs(check=True):
             count += 1
 
     print(f"\tdeleted {count} files from {DOCS_DIR}")
+
+
+def convert_bool_to_unicode_check(t_or_f):
+    return "✓" if t_or_f else "✗"
 
 
 if __name__ == "__main__":
