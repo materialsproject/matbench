@@ -16,7 +16,7 @@
     
     
       
-        <title>matbench_v0.1: RF-SCM/Magpie - MatBench</title>
+        <title>matbench_v0.1: MODNet (v0.1.10) - MatBench</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#matbench_v01-rf-scmmagpie" class="md-skip">
+        <a href="#matbench_v01-modnet-v0110" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              matbench_v0.1: RF-SCM/Magpie
+              matbench_v0.1: MODNet (v0.1.10)
             
           </span>
         </div>
@@ -478,20 +478,6 @@
               
   
   
-  
-    <li class="md-nav__item">
-      <a href="../matbench_v0.1_modnet_v0.1.10/" class="md-nav__link">
-        matbench_v0.1: MODNet (v0.1.10)
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -504,12 +490,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          matbench_v0.1: RF-SCM/Magpie
+          matbench_v0.1: MODNet (v0.1.10)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        matbench_v0.1: RF-SCM/Magpie
+        matbench_v0.1: MODNet (v0.1.10)
       </a>
       
         
@@ -1033,6 +1019,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_rf/" class="md-nav__link">
+        matbench_v0.1: RF-SCM/Magpie
+      </a>
     </li>
   
 
@@ -1952,509 +1952,54 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/hackingmaterials/matbench/edit/master/docs/Full Benchmark Data/matbench_v0.1_rf.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/hackingmaterials/matbench/edit/master/docs/Full Benchmark Data/matbench_v0.1_modnet_v0.1.10.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="matbench_v01-rf-scmmagpie">matbench_v0.1: RF-SCM/Magpie</h1>
+                <h1 id="matbench_v01-modnet-v0110">matbench_v0.1: MODNet (v0.1.10)</h1>
 <h3 id="algorithm-description">Algorithm description:</h3>
-<p>A random forest using features from the Sine Coulomb Matrix and MagPie featurization algorthims. Sine Coulomb Matrix creates structural features based on Coulombic interactions inside a periodic boundary condition (i.e., for crystalline materials with known structure). MagPie features are weighted elemental features based on elemental data such as electronegativity, melting point, and electron affinity. Algorithms were run inside of the Automatminer v1.0.3.20191111 framework for convenience, though no auto-featurization or AutoML were run. Data cleaning dropped features with more than 1% nan samples, imputing missing samples using the mean of the training data. No feature reduction was performed. Both featurization techniques were applied to structure problems, only MagPie features were applied to problems without structure. Random forest uses 500 estimators.</p>
+<p>MODNet, the Materials Optimal Descriptor Network (v0.1.10). A feed-forward neural network, using all compatible matminer features and a relevance-redundancy based feature selection algorithm. Hyperparameter optimisation is performed with a nested grid search. Benchmark results were loaded from https://github.com/ml-evs/modnet-matbench.</p>
 <h4 id="notes">Notes:</h4>
-<p>No hyperparameter tuning was performed on the RF, as a large, constant number of trees were used in constructing each fold's model; the entire training+validation set was used as training data for the RF.</p>
-<p>Raw data download and example notebook available <a href="https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_rf">on the matbench repo</a>.</p>
+<p>None</p>
+<p>Raw data download and example notebook available <a href="https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_modnet_v0.1.10">on the matbench repo</a>.</p>
 <h3 id="references-in-bibtex-format">References (in bibtex format):</h3>
-<div class="highlight"><pre><span></span><code>[&#39;@article{Dunn2020,\n&#39;
- &#39;  doi = {10.1038/s41524-020-00406-3},\n&#39;
- &#39;  url = {https://doi.org/10.1038/s41524-020-00406-3},\n&#39;
- &#39;  year = {2020},\n&#39;
- &#39;  month = sep,\n&#39;
- &#39;  publisher = {Springer Science and Business Media {LLC}},\n&#39;
- &#39;  volume = {6},\n&#39;
- &#39;  number = {1},\n&#39;
- &#39;  author = {Alexander Dunn and Qi Wang and Alex Ganose and Daniel Dopp and &#39;
- &#39;Anubhav Jain},\n&#39;
- &#39;  title = {Benchmarking materials property prediction methods: the Matbench &#39;
- &#39;test set and Automatminer reference algorithm},\n&#39;
- &#39;  journal = {npj Computational Materials}\n&#39;
- &#39;}&#39;,
- &#39;@article{Breiman2001,\n&#39;
- &#39;  doi = {10.1023/a:1010933404324},\n&#39;
- &#39;  url = {https://doi.org/10.1023/a:1010933404324},\n&#39;
- &#39;  year = {2001},\n&#39;
- &#39;  publisher = {Springer Science and Business Media {LLC}},\n&#39;
- &#39;  volume = {45},\n&#39;
- &#39;  number = {1},\n&#39;
- &#39;  pages = {5--32},\n&#39;
- &#39;  author = {Leo Breiman},\n&#39;
- &#39;  journal = {Machine Learning}\n&#39;
- &#39;}&#39;,
- &#39;@article{Ward2016,\n&#39;
- &#39;  doi = {10.1038/npjcompumats.2016.28},\n&#39;
- &#39;  url = {https://doi.org/10.1038/npjcompumats.2016.28},\n&#39;
- &#39;  year = {2016},\n&#39;
- &#39;  month = aug,\n&#39;
- &#39;  publisher = {Springer Science and Business Media {LLC}},\n&#39;
- &#39;  volume = {2},\n&#39;
- &#39;  number = {1},\n&#39;
- &#39;  author = {Logan Ward and Ankit Agrawal and Alok Choudhary and Christopher &#39;
- &#39;Wolverton},\n&#39;
- &#39;  title = {A general-purpose machine learning framework for predicting &#39;
- &#39;properties of inorganic materials},\n&#39;
- &#39;  journal = {npj Computational Materials}\n&#39;
- &#39;}&#39;,
- &#39;@article {QUA:QUA24917,author = {Faber, Felix and Lindmaa, Alexander and von &#39;
- &#39;Lilienfeld, O. Anatole and Armiento, Rickard},title = {Crystal structure &#39;
- &#39;representations for machine learning models of formation energies},journal = &#39;
- &#39;{International Journal of Quantum Chemistry},volume = {115},number = &#39;
- &#39;{16},issn = {1097-461X},url = {http://dx.doi.org/10.1002/qua.24917},doi = &#39;
- &#39;{10.1002/qua.24917},pages = {1094--1101},keywords = {machine learning, &#39;
- &#39;formation energies, representations, crystal structure, periodic &#39;
- &#39;systems},year = {2015},}&#39;]
+<div class="highlight"><pre><span></span><code>(&#39;@article{De_Breuck_2021, doi = {10.1088/1361-648x/ac1280}, url = &#39;
+ &#39;{https://doi.org/10.1088/1361-648x/ac1280}, year = 2021, month = {jul}, &#39;
+ &#39;publisher = {{IOP} Publishing}, volume = {33}, number = {40}, pages = &#39;
+ &#39;{404002}, author = {Pierre-Paul De Breuck and Matthew L Evans and Gian-Marco &#39;
+ &#39;Rignanese}, title = {Robust model benchmarking and bias-imbalance in &#39;
+ &#39;data-driven materials science: a case study on {MODNet}}, journal = {Journal &#39;
+ &#39;of Physics: Condensed Matter}, abstract = {As the number of novel &#39;
+ &#39;data-driven approaches to material science continues to grow, it is crucial &#39;
+ &#39;to perform consistent quality, reliability and applicability assessments of &#39;
+ &#39;model performance. In this paper, we benchmark the Materials Optimal &#39;
+ &#39;Descriptor Network (MODNet) method and architecture against the recently &#39;
+ &#39;released MatBench v0.1, a curated test suite of materials datasets. MODNet &#39;
+ &#39;is shown to outperform current leaders on 6 of the 13 tasks, while closely &#39;
+ &#39;matching the current leaders on a further 2 tasks; MODNet performs &#39;
+ &#39;particularly well when the number of samples is below 10\xa0000. Attention &#39;
+ &#39;is paid to two topics of concern when benchmarking models. First, we &#39;
+ &#39;encourage the reporting of a more diverse set of metrics as it leads to a &#39;
+ &#39;more comprehensive and holistic comparison of model performance. Second, an &#39;
+ &#39;equally important task is the uncertainty assessment of a model towards a &#39;
+ &#39;target domain. Significant variations in validation errors can be observed, &#39;
+ &#39;depending on the imbalance and bias in the training set (i.e., similarity &#39;
+ &#39;between training and application space). By using an ensemble MODNet model, &#39;
+ &#39;confidence intervals can be built and the uncertainty on individual &#39;
+ &#39;predictions can be quantified. Imbalance and bias issues are often &#39;
+ &#39;overlooked, and yet are important for successful real-world applications of &#39;
+ &#39;machine learning in materials science and condensed matter.}}, &#39;
+ &#39;@article{DeBreuck2021, doi = {10.1038/s41524-021-00552-2}, url = &#39;
+ &#39;{https://doi.org/10.1038/s41524-021-00552-2}, year = {2021}, month = jun, &#39;
+ &#39;publisher = {Springer Science and Business Media {LLC}}, volume = {7}, &#39;
+ &#39;number = {1}, author = {Pierre-Paul De Breuck and Geoffroy Hautier and &#39;
+ &#39;Gian-Marco Rignanese}, title = {Materials property prediction for limited &#39;
+ &#39;datasets enabled by feature selection and joint learning with {MODNet}}, &#39;
+ &#39;journal = {npj Computational Materials}}&#39;)
 </code></pre></div>
 <h3 id="user-metadata">User metadata:</h3>
-<div class="highlight"><pre><span></span><code>{&#39;__deepcopy__&#39;: {},
- &#39;__getstate__&#39;: {},
- &#39;_ipython_canary_method_should_not_exist_&#39;: {&#39;__deepcopy__&#39;: {},
-                                              &#39;__getstate__&#39;: {}},
- &#39;autofeaturizer_kwargs&#39;: {&#39;n_jobs&#39;: 10, &#39;preset&#39;: &#39;debug&#39;},
- &#39;best_pipeline&#39;: &#39;RandomForestRegressor(bootstrap=true, criterion=mse, &#39;
-                  &#39;max_depth=null,\n&#39;
-                  &#39;           max_features=auto, max_leaf_nodes=null,\n&#39;
-                  &#39;           min_impurity_decrease=0.0, &#39;
-                  &#39;min_impurity_split=null,\n&#39;
-                  &#39;           min_samples_leaf=1, min_samples_split=2,\n&#39;
-                  &#39;           min_weight_fraction_leaf=0.0, n_estimators=500, &#39;
-                  &#39;n_jobs=null,\n&#39;
-                  &#39;           oob_score=false, random_state=null, verbose=0, &#39;
-                  &#39;warm_start=false)&#39;,
- &#39;cleaner_kwargs&#39;: {&#39;feature_na_method&#39;: &#39;mean&#39;,
-                    &#39;max_na_frac&#39;: 0.01,
-                    &#39;na_method_fit&#39;: &#39;drop&#39;,
-                    &#39;na_method_transform&#39;: &#39;mean&#39;},
- &#39;features_all&#39;: [&#39;MagpieData minimum Number&#39;,
-                  &#39;MagpieData maximum Number&#39;,
-                  &#39;MagpieData range Number&#39;,
-                  &#39;MagpieData mean Number&#39;,
-                  &#39;MagpieData avg_dev Number&#39;,
-                  &#39;MagpieData mode Number&#39;,
-                  &#39;MagpieData minimum MendeleevNumber&#39;,
-                  &#39;MagpieData maximum MendeleevNumber&#39;,
-                  &#39;MagpieData range MendeleevNumber&#39;,
-                  &#39;MagpieData mean MendeleevNumber&#39;,
-                  &#39;MagpieData avg_dev MendeleevNumber&#39;,
-                  &#39;MagpieData mode MendeleevNumber&#39;,
-                  &#39;MagpieData minimum AtomicWeight&#39;,
-                  &#39;MagpieData maximum AtomicWeight&#39;,
-                  &#39;MagpieData range AtomicWeight&#39;,
-                  &#39;MagpieData mean AtomicWeight&#39;,
-                  &#39;MagpieData avg_dev AtomicWeight&#39;,
-                  &#39;MagpieData mode AtomicWeight&#39;,
-                  &#39;MagpieData minimum MeltingT&#39;,
-                  &#39;MagpieData maximum MeltingT&#39;,
-                  &#39;MagpieData range MeltingT&#39;,
-                  &#39;MagpieData mean MeltingT&#39;,
-                  &#39;MagpieData avg_dev MeltingT&#39;,
-                  &#39;MagpieData mode MeltingT&#39;,
-                  &#39;MagpieData minimum Column&#39;,
-                  &#39;MagpieData maximum Column&#39;,
-                  &#39;MagpieData range Column&#39;,
-                  &#39;MagpieData mean Column&#39;,
-                  &#39;MagpieData avg_dev Column&#39;,
-                  &#39;MagpieData mode Column&#39;,
-                  &#39;MagpieData minimum Row&#39;,
-                  &#39;MagpieData maximum Row&#39;,
-                  &#39;MagpieData range Row&#39;,
-                  &#39;MagpieData mean Row&#39;,
-                  &#39;MagpieData avg_dev Row&#39;,
-                  &#39;MagpieData mode Row&#39;,
-                  &#39;MagpieData minimum CovalentRadius&#39;,
-                  &#39;MagpieData maximum CovalentRadius&#39;,
-                  &#39;MagpieData range CovalentRadius&#39;,
-                  &#39;MagpieData mean CovalentRadius&#39;,
-                  &#39;MagpieData avg_dev CovalentRadius&#39;,
-                  &#39;MagpieData mode CovalentRadius&#39;,
-                  &#39;MagpieData minimum Electronegativity&#39;,
-                  &#39;MagpieData maximum Electronegativity&#39;,
-                  &#39;MagpieData range Electronegativity&#39;,
-                  &#39;MagpieData mean Electronegativity&#39;,
-                  &#39;MagpieData avg_dev Electronegativity&#39;,
-                  &#39;MagpieData mode Electronegativity&#39;,
-                  &#39;MagpieData minimum NsValence&#39;,
-                  &#39;MagpieData maximum NsValence&#39;,
-                  &#39;MagpieData range NsValence&#39;,
-                  &#39;MagpieData mean NsValence&#39;,
-                  &#39;MagpieData avg_dev NsValence&#39;,
-                  &#39;MagpieData mode NsValence&#39;,
-                  &#39;MagpieData minimum NpValence&#39;,
-                  &#39;MagpieData maximum NpValence&#39;,
-                  &#39;MagpieData range NpValence&#39;,
-                  &#39;MagpieData mean NpValence&#39;,
-                  &#39;MagpieData avg_dev NpValence&#39;,
-                  &#39;MagpieData mode NpValence&#39;,
-                  &#39;MagpieData minimum NdValence&#39;,
-                  &#39;MagpieData maximum NdValence&#39;,
-                  &#39;MagpieData range NdValence&#39;,
-                  &#39;MagpieData mean NdValence&#39;,
-                  &#39;MagpieData avg_dev NdValence&#39;,
-                  &#39;MagpieData mode NdValence&#39;,
-                  &#39;MagpieData minimum NfValence&#39;,
-                  &#39;MagpieData maximum NfValence&#39;,
-                  &#39;MagpieData range NfValence&#39;,
-                  &#39;MagpieData mean NfValence&#39;,
-                  &#39;MagpieData avg_dev NfValence&#39;,
-                  &#39;MagpieData mode NfValence&#39;,
-                  &#39;MagpieData minimum NValence&#39;,
-                  &#39;MagpieData maximum NValence&#39;,
-                  &#39;MagpieData range NValence&#39;,
-                  &#39;MagpieData mean NValence&#39;,
-                  &#39;MagpieData avg_dev NValence&#39;,
-                  &#39;MagpieData mode NValence&#39;,
-                  &#39;MagpieData minimum NsUnfilled&#39;,
-                  &#39;MagpieData maximum NsUnfilled&#39;,
-                  &#39;MagpieData range NsUnfilled&#39;,
-                  &#39;MagpieData mean NsUnfilled&#39;,
-                  &#39;MagpieData avg_dev NsUnfilled&#39;,
-                  &#39;MagpieData mode NsUnfilled&#39;,
-                  &#39;MagpieData minimum NpUnfilled&#39;,
-                  &#39;MagpieData maximum NpUnfilled&#39;,
-                  &#39;MagpieData range NpUnfilled&#39;,
-                  &#39;MagpieData mean NpUnfilled&#39;,
-                  &#39;MagpieData avg_dev NpUnfilled&#39;,
-                  &#39;MagpieData mode NpUnfilled&#39;,
-                  &#39;MagpieData minimum NdUnfilled&#39;,
-                  &#39;MagpieData maximum NdUnfilled&#39;,
-                  &#39;MagpieData range NdUnfilled&#39;,
-                  &#39;MagpieData mean NdUnfilled&#39;,
-                  &#39;MagpieData avg_dev NdUnfilled&#39;,
-                  &#39;MagpieData mode NdUnfilled&#39;,
-                  &#39;MagpieData minimum NfUnfilled&#39;,
-                  &#39;MagpieData maximum NfUnfilled&#39;,
-                  &#39;MagpieData range NfUnfilled&#39;,
-                  &#39;MagpieData mean NfUnfilled&#39;,
-                  &#39;MagpieData avg_dev NfUnfilled&#39;,
-                  &#39;MagpieData mode NfUnfilled&#39;,
-                  &#39;MagpieData minimum NUnfilled&#39;,
-                  &#39;MagpieData maximum NUnfilled&#39;,
-                  &#39;MagpieData range NUnfilled&#39;,
-                  &#39;MagpieData mean NUnfilled&#39;,
-                  &#39;MagpieData avg_dev NUnfilled&#39;,
-                  &#39;MagpieData mode NUnfilled&#39;,
-                  &#39;MagpieData minimum GSvolume_pa&#39;,
-                  &#39;MagpieData maximum GSvolume_pa&#39;,
-                  &#39;MagpieData range GSvolume_pa&#39;,
-                  &#39;MagpieData mean GSvolume_pa&#39;,
-                  &#39;MagpieData avg_dev GSvolume_pa&#39;,
-                  &#39;MagpieData mode GSvolume_pa&#39;,
-                  &#39;MagpieData minimum GSbandgap&#39;,
-                  &#39;MagpieData maximum GSbandgap&#39;,
-                  &#39;MagpieData range GSbandgap&#39;,
-                  &#39;MagpieData mean GSbandgap&#39;,
-                  &#39;MagpieData avg_dev GSbandgap&#39;,
-                  &#39;MagpieData mode GSbandgap&#39;,
-                  &#39;MagpieData minimum GSmagmom&#39;,
-                  &#39;MagpieData maximum GSmagmom&#39;,
-                  &#39;MagpieData range GSmagmom&#39;,
-                  &#39;MagpieData mean GSmagmom&#39;,
-                  &#39;MagpieData avg_dev GSmagmom&#39;,
-                  &#39;MagpieData mode GSmagmom&#39;,
-                  &#39;MagpieData minimum SpaceGroupNumber&#39;,
-                  &#39;MagpieData maximum SpaceGroupNumber&#39;,
-                  &#39;MagpieData range SpaceGroupNumber&#39;,
-                  &#39;MagpieData mean SpaceGroupNumber&#39;,
-                  &#39;MagpieData avg_dev SpaceGroupNumber&#39;,
-                  &#39;MagpieData mode SpaceGroupNumber&#39;,
-                  &#39;sine coulomb matrix eig 0&#39;,
-                  &#39;sine coulomb matrix eig 1&#39;,
-                  &#39;sine coulomb matrix eig 2&#39;,
-                  &#39;sine coulomb matrix eig 3&#39;,
-                  &#39;sine coulomb matrix eig 4&#39;,
-                  &#39;sine coulomb matrix eig 5&#39;,
-                  &#39;sine coulomb matrix eig 6&#39;,
-                  &#39;sine coulomb matrix eig 7&#39;,
-                  &#39;sine coulomb matrix eig 8&#39;,
-                  &#39;sine coulomb matrix eig 9&#39;,
-                  &#39;sine coulomb matrix eig 10&#39;,
-                  &#39;sine coulomb matrix eig 11&#39;,
-                  &#39;sine coulomb matrix eig 12&#39;,
-                  &#39;sine coulomb matrix eig 13&#39;,
-                  &#39;sine coulomb matrix eig 14&#39;,
-                  &#39;sine coulomb matrix eig 15&#39;,
-                  &#39;sine coulomb matrix eig 16&#39;,
-                  &#39;sine coulomb matrix eig 17&#39;,
-                  &#39;sine coulomb matrix eig 18&#39;,
-                  &#39;sine coulomb matrix eig 19&#39;,
-                  &#39;sine coulomb matrix eig 20&#39;,
-                  &#39;sine coulomb matrix eig 21&#39;,
-                  &#39;sine coulomb matrix eig 22&#39;,
-                  &#39;sine coulomb matrix eig 23&#39;,
-                  &#39;sine coulomb matrix eig 24&#39;,
-                  &#39;sine coulomb matrix eig 25&#39;,
-                  &#39;sine coulomb matrix eig 26&#39;,
-                  &#39;sine coulomb matrix eig 27&#39;,
-                  &#39;sine coulomb matrix eig 28&#39;,
-                  &#39;sine coulomb matrix eig 29&#39;,
-                  &#39;sine coulomb matrix eig 30&#39;,
-                  &#39;sine coulomb matrix eig 31&#39;,
-                  &#39;sine coulomb matrix eig 32&#39;,
-                  &#39;sine coulomb matrix eig 33&#39;,
-                  &#39;sine coulomb matrix eig 34&#39;,
-                  &#39;sine coulomb matrix eig 35&#39;,
-                  &#39;sine coulomb matrix eig 36&#39;,
-                  &#39;sine coulomb matrix eig 37&#39;,
-                  &#39;sine coulomb matrix eig 38&#39;,
-                  &#39;sine coulomb matrix eig 39&#39;,
-                  &#39;sine coulomb matrix eig 40&#39;,
-                  &#39;sine coulomb matrix eig 41&#39;,
-                  &#39;sine coulomb matrix eig 42&#39;,
-                  &#39;sine coulomb matrix eig 43&#39;,
-                  &#39;sine coulomb matrix eig 44&#39;,
-                  &#39;sine coulomb matrix eig 45&#39;,
-                  &#39;sine coulomb matrix eig 46&#39;,
-                  &#39;sine coulomb matrix eig 47&#39;,
-                  &#39;sine coulomb matrix eig 48&#39;,
-                  &#39;sine coulomb matrix eig 49&#39;,
-                  &#39;sine coulomb matrix eig 50&#39;,
-                  &#39;sine coulomb matrix eig 51&#39;,
-                  &#39;sine coulomb matrix eig 52&#39;,
-                  &#39;sine coulomb matrix eig 53&#39;,
-                  &#39;sine coulomb matrix eig 54&#39;,
-                  &#39;sine coulomb matrix eig 55&#39;,
-                  &#39;sine coulomb matrix eig 56&#39;,
-                  &#39;sine coulomb matrix eig 57&#39;,
-                  &#39;sine coulomb matrix eig 58&#39;,
-                  &#39;sine coulomb matrix eig 59&#39;,
-                  &#39;sine coulomb matrix eig 60&#39;,
-                  &#39;sine coulomb matrix eig 61&#39;,
-                  &#39;sine coulomb matrix eig 62&#39;,
-                  &#39;sine coulomb matrix eig 63&#39;,
-                  &#39;sine coulomb matrix eig 64&#39;,
-                  &#39;sine coulomb matrix eig 65&#39;,
-                  &#39;sine coulomb matrix eig 66&#39;,
-                  &#39;sine coulomb matrix eig 67&#39;,
-                  &#39;sine coulomb matrix eig 68&#39;,
-                  &#39;sine coulomb matrix eig 69&#39;,
-                  &#39;sine coulomb matrix eig 70&#39;,
-                  &#39;sine coulomb matrix eig 71&#39;,
-                  &#39;sine coulomb matrix eig 72&#39;,
-                  &#39;sine coulomb matrix eig 73&#39;,
-                  &#39;sine coulomb matrix eig 74&#39;,
-                  &#39;sine coulomb matrix eig 75&#39;,
-                  &#39;sine coulomb matrix eig 76&#39;,
-                  &#39;sine coulomb matrix eig 77&#39;,
-                  &#39;sine coulomb matrix eig 78&#39;,
-                  &#39;sine coulomb matrix eig 79&#39;,
-                  &#39;sine coulomb matrix eig 80&#39;,
-                  &#39;sine coulomb matrix eig 81&#39;,
-                  &#39;sine coulomb matrix eig 82&#39;,
-                  &#39;sine coulomb matrix eig 83&#39;,
-                  &#39;sine coulomb matrix eig 84&#39;,
-                  &#39;sine coulomb matrix eig 85&#39;,
-                  &#39;sine coulomb matrix eig 86&#39;,
-                  &#39;sine coulomb matrix eig 87&#39;,
-                  &#39;sine coulomb matrix eig 88&#39;,
-                  &#39;sine coulomb matrix eig 89&#39;,
-                  &#39;sine coulomb matrix eig 90&#39;,
-                  &#39;sine coulomb matrix eig 91&#39;,
-                  &#39;sine coulomb matrix eig 92&#39;,
-                  &#39;sine coulomb matrix eig 93&#39;,
-                  &#39;sine coulomb matrix eig 94&#39;,
-                  &#39;sine coulomb matrix eig 95&#39;,
-                  &#39;sine coulomb matrix eig 96&#39;,
-                  &#39;sine coulomb matrix eig 97&#39;,
-                  &#39;sine coulomb matrix eig 98&#39;,
-                  &#39;sine coulomb matrix eig 99&#39;,
-                  &#39;sine coulomb matrix eig 100&#39;,
-                  &#39;sine coulomb matrix eig 101&#39;,
-                  &#39;sine coulomb matrix eig 102&#39;,
-                  &#39;sine coulomb matrix eig 103&#39;,
-                  &#39;sine coulomb matrix eig 104&#39;,
-                  &#39;sine coulomb matrix eig 105&#39;,
-                  &#39;sine coulomb matrix eig 106&#39;,
-                  &#39;sine coulomb matrix eig 107&#39;,
-                  &#39;sine coulomb matrix eig 108&#39;,
-                  &#39;sine coulomb matrix eig 109&#39;,
-                  &#39;sine coulomb matrix eig 110&#39;,
-                  &#39;sine coulomb matrix eig 111&#39;,
-                  &#39;sine coulomb matrix eig 112&#39;,
-                  &#39;sine coulomb matrix eig 113&#39;,
-                  &#39;sine coulomb matrix eig 114&#39;,
-                  &#39;sine coulomb matrix eig 115&#39;,
-                  &#39;sine coulomb matrix eig 116&#39;,
-                  &#39;sine coulomb matrix eig 117&#39;,
-                  &#39;sine coulomb matrix eig 118&#39;,
-                  &#39;sine coulomb matrix eig 119&#39;,
-                  &#39;sine coulomb matrix eig 120&#39;,
-                  &#39;sine coulomb matrix eig 121&#39;,
-                  &#39;sine coulomb matrix eig 122&#39;,
-                  &#39;sine coulomb matrix eig 123&#39;,
-                  &#39;sine coulomb matrix eig 124&#39;,
-                  &#39;sine coulomb matrix eig 125&#39;,
-                  &#39;sine coulomb matrix eig 126&#39;,
-                  &#39;sine coulomb matrix eig 127&#39;,
-                  &#39;sine coulomb matrix eig 128&#39;,
-                  &#39;sine coulomb matrix eig 129&#39;,
-                  &#39;sine coulomb matrix eig 130&#39;,
-                  &#39;sine coulomb matrix eig 131&#39;,
-                  &#39;sine coulomb matrix eig 132&#39;,
-                  &#39;sine coulomb matrix eig 133&#39;,
-                  &#39;sine coulomb matrix eig 134&#39;,
-                  &#39;sine coulomb matrix eig 135&#39;,
-                  &#39;sine coulomb matrix eig 136&#39;,
-                  &#39;sine coulomb matrix eig 137&#39;,
-                  &#39;sine coulomb matrix eig 138&#39;,
-                  &#39;sine coulomb matrix eig 139&#39;,
-                  &#39;sine coulomb matrix eig 140&#39;,
-                  &#39;sine coulomb matrix eig 141&#39;,
-                  &#39;sine coulomb matrix eig 142&#39;,
-                  &#39;sine coulomb matrix eig 143&#39;,
-                  &#39;sine coulomb matrix eig 144&#39;,
-                  &#39;sine coulomb matrix eig 145&#39;,
-                  &#39;sine coulomb matrix eig 146&#39;,
-                  &#39;sine coulomb matrix eig 147&#39;,
-                  &#39;sine coulomb matrix eig 148&#39;,
-                  &#39;sine coulomb matrix eig 149&#39;,
-                  &#39;sine coulomb matrix eig 150&#39;,
-                  &#39;sine coulomb matrix eig 151&#39;,
-                  &#39;sine coulomb matrix eig 152&#39;,
-                  &#39;sine coulomb matrix eig 153&#39;,
-                  &#39;sine coulomb matrix eig 154&#39;,
-                  &#39;sine coulomb matrix eig 155&#39;,
-                  &#39;sine coulomb matrix eig 156&#39;,
-                  &#39;sine coulomb matrix eig 157&#39;,
-                  &#39;sine coulomb matrix eig 158&#39;,
-                  &#39;sine coulomb matrix eig 159&#39;,
-                  &#39;sine coulomb matrix eig 160&#39;,
-                  &#39;sine coulomb matrix eig 161&#39;,
-                  &#39;sine coulomb matrix eig 162&#39;,
-                  &#39;sine coulomb matrix eig 163&#39;,
-                  &#39;sine coulomb matrix eig 164&#39;,
-                  &#39;sine coulomb matrix eig 165&#39;,
-                  &#39;sine coulomb matrix eig 166&#39;,
-                  &#39;sine coulomb matrix eig 167&#39;,
-                  &#39;sine coulomb matrix eig 168&#39;,
-                  &#39;sine coulomb matrix eig 169&#39;,
-                  &#39;sine coulomb matrix eig 170&#39;,
-                  &#39;sine coulomb matrix eig 171&#39;,
-                  &#39;sine coulomb matrix eig 172&#39;,
-                  &#39;sine coulomb matrix eig 173&#39;,
-                  &#39;sine coulomb matrix eig 174&#39;,
-                  &#39;sine coulomb matrix eig 175&#39;,
-                  &#39;sine coulomb matrix eig 176&#39;,
-                  &#39;sine coulomb matrix eig 177&#39;,
-                  &#39;sine coulomb matrix eig 178&#39;,
-                  &#39;sine coulomb matrix eig 179&#39;,
-                  &#39;sine coulomb matrix eig 180&#39;,
-                  &#39;sine coulomb matrix eig 181&#39;,
-                  &#39;sine coulomb matrix eig 182&#39;,
-                  &#39;sine coulomb matrix eig 183&#39;,
-                  &#39;sine coulomb matrix eig 184&#39;,
-                  &#39;sine coulomb matrix eig 185&#39;,
-                  &#39;sine coulomb matrix eig 186&#39;,
-                  &#39;sine coulomb matrix eig 187&#39;,
-                  &#39;sine coulomb matrix eig 188&#39;,
-                  &#39;sine coulomb matrix eig 189&#39;,
-                  &#39;sine coulomb matrix eig 190&#39;,
-                  &#39;sine coulomb matrix eig 191&#39;,
-                  &#39;sine coulomb matrix eig 192&#39;,
-                  &#39;sine coulomb matrix eig 193&#39;,
-                  &#39;sine coulomb matrix eig 194&#39;,
-                  &#39;sine coulomb matrix eig 195&#39;,
-                  &#39;sine coulomb matrix eig 196&#39;,
-                  &#39;sine coulomb matrix eig 197&#39;,
-                  &#39;sine coulomb matrix eig 198&#39;,
-                  &#39;sine coulomb matrix eig 199&#39;,
-                  &#39;sine coulomb matrix eig 200&#39;,
-                  &#39;sine coulomb matrix eig 201&#39;,
-                  &#39;sine coulomb matrix eig 202&#39;,
-                  &#39;sine coulomb matrix eig 203&#39;,
-                  &#39;sine coulomb matrix eig 204&#39;,
-                  &#39;sine coulomb matrix eig 205&#39;,
-                  &#39;sine coulomb matrix eig 206&#39;,
-                  &#39;sine coulomb matrix eig 207&#39;,
-                  &#39;sine coulomb matrix eig 208&#39;,
-                  &#39;sine coulomb matrix eig 209&#39;,
-                  &#39;sine coulomb matrix eig 210&#39;,
-                  &#39;sine coulomb matrix eig 211&#39;,
-                  &#39;sine coulomb matrix eig 212&#39;,
-                  &#39;sine coulomb matrix eig 213&#39;,
-                  &#39;sine coulomb matrix eig 214&#39;,
-                  &#39;sine coulomb matrix eig 215&#39;,
-                  &#39;sine coulomb matrix eig 216&#39;,
-                  &#39;sine coulomb matrix eig 217&#39;,
-                  &#39;sine coulomb matrix eig 218&#39;,
-                  &#39;sine coulomb matrix eig 219&#39;,
-                  &#39;sine coulomb matrix eig 220&#39;,
-                  &#39;sine coulomb matrix eig 221&#39;,
-                  &#39;sine coulomb matrix eig 222&#39;,
-                  &#39;sine coulomb matrix eig 223&#39;,
-                  &#39;sine coulomb matrix eig 224&#39;,
-                  &#39;sine coulomb matrix eig 225&#39;,
-                  &#39;sine coulomb matrix eig 226&#39;,
-                  &#39;sine coulomb matrix eig 227&#39;,
-                  &#39;sine coulomb matrix eig 228&#39;,
-                  &#39;sine coulomb matrix eig 229&#39;,
-                  &#39;sine coulomb matrix eig 230&#39;,
-                  &#39;sine coulomb matrix eig 231&#39;,
-                  &#39;sine coulomb matrix eig 232&#39;,
-                  &#39;sine coulomb matrix eig 233&#39;,
-                  &#39;sine coulomb matrix eig 234&#39;,
-                  &#39;sine coulomb matrix eig 235&#39;,
-                  &#39;sine coulomb matrix eig 236&#39;,
-                  &#39;sine coulomb matrix eig 237&#39;,
-                  &#39;sine coulomb matrix eig 238&#39;,
-                  &#39;sine coulomb matrix eig 239&#39;,
-                  &#39;sine coulomb matrix eig 240&#39;,
-                  &#39;sine coulomb matrix eig 241&#39;,
-                  &#39;sine coulomb matrix eig 242&#39;,
-                  &#39;sine coulomb matrix eig 243&#39;,
-                  &#39;sine coulomb matrix eig 244&#39;,
-                  &#39;sine coulomb matrix eig 245&#39;,
-                  &#39;sine coulomb matrix eig 246&#39;,
-                  &#39;sine coulomb matrix eig 247&#39;,
-                  &#39;sine coulomb matrix eig 248&#39;,
-                  &#39;sine coulomb matrix eig 249&#39;,
-                  &#39;sine coulomb matrix eig 250&#39;,
-                  &#39;sine coulomb matrix eig 251&#39;,
-                  &#39;sine coulomb matrix eig 252&#39;,
-                  &#39;sine coulomb matrix eig 253&#39;,
-                  &#39;sine coulomb matrix eig 254&#39;,
-                  &#39;sine coulomb matrix eig 255&#39;,
-                  &#39;sine coulomb matrix eig 256&#39;,
-                  &#39;sine coulomb matrix eig 257&#39;,
-                  &#39;sine coulomb matrix eig 258&#39;,
-                  &#39;sine coulomb matrix eig 259&#39;,
-                  &#39;sine coulomb matrix eig 260&#39;,
-                  &#39;sine coulomb matrix eig 261&#39;,
-                  &#39;sine coulomb matrix eig 262&#39;,
-                  &#39;sine coulomb matrix eig 263&#39;,
-                  &#39;sine coulomb matrix eig 264&#39;,
-                  &#39;sine coulomb matrix eig 265&#39;,
-                  &#39;sine coulomb matrix eig 266&#39;,
-                  &#39;sine coulomb matrix eig 267&#39;,
-                  &#39;sine coulomb matrix eig 268&#39;,
-                  &#39;sine coulomb matrix eig 269&#39;,
-                  &#39;sine coulomb matrix eig 270&#39;,
-                  &#39;sine coulomb matrix eig 271&#39;,
-                  &#39;sine coulomb matrix eig 272&#39;,
-                  &#39;sine coulomb matrix eig 273&#39;,
-                  &#39;sine coulomb matrix eig 274&#39;,
-                  &#39;sine coulomb matrix eig 275&#39;,
-                  &#39;sine coulomb matrix eig 276&#39;,
-                  &#39;sine coulomb matrix eig 277&#39;,
-                  &#39;sine coulomb matrix eig 278&#39;,
-                  &#39;sine coulomb matrix eig 279&#39;,
-                  &#39;sine coulomb matrix eig 280&#39;,
-                  &#39;sine coulomb matrix eig 281&#39;,
-                  &#39;sine coulomb matrix eig 282&#39;,
-                  &#39;sine coulomb matrix eig 283&#39;,
-                  &#39;sine coulomb matrix eig 284&#39;,
-                  &#39;sine coulomb matrix eig 285&#39;,
-                  &#39;sine coulomb matrix eig 286&#39;,
-                  &#39;sine coulomb matrix eig 287&#39;],
- &#39;learner_kwargs&#39;: {&#39;n_estimators&#39;: 500},
- &#39;learner_name&#39;: &#39;rf&#39;,
- &#39;reducer_kwargs&#39;: {&#39;reducers&#39;: []}}
+<div class="highlight"><pre><span></span><code>{}
 </code></pre></div>
 <h3 id="metadata">Metadata:</h3>
 <table>
@@ -2488,10 +2033,7 @@
 </tbody>
 </table>
 <h3 id="software-requirements">Software Requirements</h3>
-<div class="highlight"><pre><span></span><code>{&#39;python&#39;: [&#39;scikit-learn==0.24.1&#39;,
-            &#39;numpy==1.20.1&#39;,
-            &#39;matbench==0.1.0&#39;,
-            &#39;automatminer==v1.0.3.20191111&#39;]}
+<div class="highlight"><pre><span></span><code>{&#39;python&#39;: [&#39;modnet==0.1.10&#39;, &#39;matbench==0.2.0&#39;]}
 </code></pre></div>
 <h3 id="task-data">Task data:</h3>
 <h4 id="matbench_dielectric"><code>matbench_dielectric</code></h4>
@@ -2509,38 +2051,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.3042</td>
-<td>0.7850</td>
-<td>0.1176</td>
-<td>14.5979</td>
+<td>0.1939</td>
+<td>0.7043</td>
+<td>0.0657</td>
+<td>13.9549</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.4079</td>
-<td>1.2316</td>
-<td>0.1509</td>
-<td>20.1279</td>
+<td>0.2669</td>
+<td>1.0559</td>
+<td>0.0897</td>
+<td>19.4132</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.5220</td>
-<td>2.9832</td>
-<td>0.1370</td>
-<td>59.1201</td>
+<td>0.4138</td>
+<td>2.9360</td>
+<td>0.0873</td>
+<td>58.9519</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.3879</td>
-<td>2.1680</td>
-<td>0.1057</td>
-<td>49.4924</td>
+<td>0.2880</td>
+<td>2.2447</td>
+<td>0.0593</td>
+<td>52.4648</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.4760</td>
-<td>2.1012</td>
-<td>0.1886</td>
-<td>31.0645</td>
+<td>0.3223</td>
+<td>1.6518</td>
+<td>0.1040</td>
+<td>28.0662</td>
 </tr>
 </tbody>
 </table>
@@ -2558,31 +2100,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>0.4196</td>
-<td>0.5220</td>
-<td>0.3042</td>
-<td>0.0750</td>
+<td>0.2970</td>
+<td>0.4138</td>
+<td>0.1939</td>
+<td>0.0720</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>1.8538</td>
-<td>2.9832</td>
-<td>0.7850</td>
-<td>0.7700</td>
+<td>1.7185</td>
+<td>2.9360</td>
+<td>0.7043</td>
+<td>0.8039</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.1400</td>
-<td>0.1886</td>
-<td>0.1057</td>
-<td>0.0289</td>
+<td>0.0812</td>
+<td>0.1040</td>
+<td>0.0593</td>
+<td>0.0164</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>34.8806</td>
-<td>59.1201</td>
-<td>14.5979</td>
-<td>16.9980</td>
+<td>34.5702</td>
+<td>58.9519</td>
+<td>13.9549</td>
+<td>17.9539</td>
 </tr>
 </tbody>
 </table>
@@ -2597,23 +2139,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.06733036786317825], [0.0744570940732956], [0.4551847279071808], [0.6979547739028931], [0.05083160847425461], [0.09550821781158447], [0.19389964640140533], [0.45796462893486023], [0.0457437...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.072625070810318], [0.20568081736564636], [0.06122368574142456], [0.1985706239938736], [0.13508345186710358], [0.5729472637176514], [0.18508531153202057], [0.36901697516441345], [0.15902499...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.07455231994390488], [0.40818431973457336], [0.17178542912006378], [0.1756463497877121], [0.05205323547124863], [0.18280482292175293], [0.029979035258293152], [0.13881000876426697], [0.1849...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.07038000971078873], [0.052069056779146194], [0.11985469609498978], [0.2917916774749756], [0.07153098285198212], [0.16248461604118347], [0.03178466856479645], [0.06994788348674774], [0.0775...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.062172286212444305], [0.1020524799823761], [0.046170447021722794], [0.2582769989967346], [0.5205304622650146], [0.09285475313663483], [0.04396134242415428], [0.1190856322646141], [0.159720...</code></td>
 </tr>
 </tbody>
 </table>
@@ -2632,38 +2174,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.4360</td>
-<td>0.7985</td>
-<td>0.3380</td>
-<td>5.1654</td>
+<td>0.3272</td>
+<td>0.7062</td>
+<td>0.3510</td>
+<td>6.3096</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.4387</td>
-<td>0.7819</td>
-<td>0.3044</td>
-<td>4.7122</td>
+<td>0.3594</td>
+<td>0.7340</td>
+<td>0.3187</td>
+<td>6.3544</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.4812</td>
-<td>0.9435</td>
-<td>0.4019</td>
-<td>9.5428</td>
+<td>0.3845</td>
+<td>0.8563</td>
+<td>0.3841</td>
+<td>9.8567</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.4345</td>
-<td>0.8059</td>
-<td>0.3647</td>
-<td>5.2288</td>
+<td>0.3259</td>
+<td>0.6888</td>
+<td>0.3231</td>
+<td>5.1081</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.4400</td>
-<td>0.7918</td>
-<td>0.4385</td>
-<td>5.5833</td>
+<td>0.3382</td>
+<td>0.7334</td>
+<td>0.4075</td>
+<td>6.5141</td>
 </tr>
 </tbody>
 </table>
@@ -2681,31 +2223,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>0.4461</td>
-<td>0.4812</td>
-<td>0.4345</td>
-<td>0.0177</td>
+<td>0.3470</td>
+<td>0.3845</td>
+<td>0.3259</td>
+<td>0.0222</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>0.8243</td>
-<td>0.9435</td>
-<td>0.7819</td>
-<td>0.0601</td>
+<td>0.7437</td>
+<td>0.8563</td>
+<td>0.6888</td>
+<td>0.0588</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.3695</td>
-<td>0.4385</td>
-<td>0.3044</td>
-<td>0.0470</td>
+<td>0.3569</td>
+<td>0.4075</td>
+<td>0.3187</td>
+<td>0.0345</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>6.0465</td>
-<td>9.5428</td>
-<td>4.7122</td>
-<td>1.7700</td>
+<td>6.8286</td>
+<td>9.8567</td>
+<td>5.1081</td>
+<td>1.5952</td>
 </tr>
 </tbody>
 </table>
@@ -2720,23 +2262,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.3934377431869507], [0.6812934875488281], [0.46057939529418945], [0.21048687398433685], [0.39122024178504944], [2.184469699859619], [1.0323148965835571], [1.1202787160873413], [0.8973723649...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.42153677344322205], [0.10141757875680923], [0.2717689573764801], [0.0055972738191485405], [0.12942852079868317], [0.19773989915847778], [0.1537284404039383], [0.152150496840477], [0.127241...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.5310537219047546], [0.09472547471523285], [0.6016039848327637], [0.7606176137924194], [0.2108703851699829], [0.3892253637313843], [0.8048807382583618], [0.058867525309324265], [0.236589178...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.4957612454891205], [0.24328213930130005], [1.1489912271499634], [0.4026401937007904], [0.38004472851753235], [0.235760897397995], [0.2802310287952423], [0.23525512218475342], [0.9116547703...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.17024394869804382], [1.0889294147491455], [0.0037015366833657026], [0.45974406599998474], [0.7000935673713684], [1.2791191339492798], [1.037060260772705], [1.1216192245483398], [1.26752507...</code></td>
 </tr>
 </tbody>
 </table>
@@ -2755,38 +2297,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.9249</td>
-<td>0.9248</td>
-<td>0.9236</td>
-<td>0.9248</td>
+<td>0.9269</td>
+<td>0.9269</td>
+<td>0.9255</td>
+<td>0.9269</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.9167</td>
-<td>0.9166</td>
-<td>0.9156</td>
-<td>0.9166</td>
+<td>0.9136</td>
+<td>0.9136</td>
+<td>0.9121</td>
+<td>0.9136</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.9096</td>
-<td>0.9095</td>
-<td>0.9076</td>
-<td>0.9095</td>
+<td>0.9177</td>
+<td>0.9177</td>
+<td>0.9173</td>
+<td>0.9177</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.9228</td>
-<td>0.9227</td>
-<td>0.9221</td>
-<td>0.9227</td>
+<td>0.9177</td>
+<td>0.9177</td>
+<td>0.9169</td>
+<td>0.9177</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.9096</td>
-<td>0.9096</td>
-<td>0.9104</td>
-<td>0.9096</td>
+<td>0.9045</td>
+<td>0.9045</td>
+<td>0.9049</td>
+<td>0.9045</td>
 </tr>
 </tbody>
 </table>
@@ -2804,31 +2346,31 @@
 <tbody>
 <tr>
 <td>accuracy</td>
-<td>0.9167</td>
-<td>0.9249</td>
-<td>0.9096</td>
-<td>0.0064</td>
+<td>0.9161</td>
+<td>0.9269</td>
+<td>0.9045</td>
+<td>0.0073</td>
 </tr>
 <tr>
 <td>balanced_accuracy</td>
-<td>0.9167</td>
-<td>0.9248</td>
-<td>0.9095</td>
-<td>0.0064</td>
+<td>0.9161</td>
+<td>0.9269</td>
+<td>0.9045</td>
+<td>0.0072</td>
 </tr>
 <tr>
 <td>f1</td>
-<td>0.9159</td>
-<td>0.9236</td>
-<td>0.9076</td>
-<td>0.0063</td>
+<td>0.9153</td>
+<td>0.9255</td>
+<td>0.9049</td>
+<td>0.0068</td>
 </tr>
 <tr>
 <td>rocauc</td>
-<td>0.9167</td>
-<td>0.9248</td>
-<td>0.9095</td>
-<td>0.0064</td>
+<td>0.9161</td>
+<td>0.9269</td>
+<td>0.9045</td>
+<td>0.0072</td>
 </tr>
 </tbody>
 </table>
@@ -2843,23 +2385,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.17845642566680908, 0.1784563958644867], [0.38880154490470886, 0.38880154490470886], [0.11527526378631592, 0.11527524888515472], [0.29507318139076233, 0.29507318139076233], [0.4294841885566...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.250985711812973, 0.250985711812973], [0.15300564467906952, 0.15300562977790833], [0.11072004586458206, 0.11072004586458206], [0.07669822871685028, 0.07669822126626968], [0.1074658855795860...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.16936197876930237, 0.16936197876930237], [0.28381362557411194, 0.2838136553764343], [0.3199393153190613, 0.3199393153190613], [0.14618311822414398, 0.1461830586194992], [0.1249608173966407...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.13702887296676636, 0.13702887296676636], [0.1351342797279358, 0.1351342648267746], [0.40080583095550537, 0.40080583095550537], [0.1579451709985733, 0.1579451709985733], [0.1655253022909164...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.28618890047073364, 0.28618890047073364], [0.27044594287872314, 0.27044594287872314], [0.29565274715423584, 0.29565274715423584], [0.29736053943634033, 0.29736053943634033], [0.237021714448...</code></td>
 </tr>
 </tbody>
 </table>
@@ -2878,38 +2420,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.9199</td>
-<td>0.8860</td>
-<td>0.9449</td>
-<td>0.8860</td>
+<td>0.8759</td>
+<td>0.8262</td>
+<td>0.9153</td>
+<td>0.8262</td>
 </tr>
 <tr>
 <td>fold_1</td>
+<td>0.8539</td>
+<td>0.7783</td>
+<td>0.9030</td>
+<td>0.7783</td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td>0.8565</td>
+<td>0.8063</td>
+<td>0.9016</td>
+<td>0.8063</td>
+</tr>
+<tr>
+<td>fold_3</td>
 <td>0.8856</td>
 <td>0.8402</td>
 <td>0.9217</td>
 <td>0.8402</td>
 </tr>
 <tr>
-<td>fold_2</td>
-<td>0.8847</td>
-<td>0.8495</td>
-<td>0.9200</td>
-<td>0.8495</td>
-</tr>
-<tr>
-<td>fold_3</td>
-<td>0.8891</td>
-<td>0.8526</td>
-<td>0.9233</td>
-<td>0.8526</td>
-</tr>
-<tr>
 <td>fold_4</td>
-<td>0.8979</td>
-<td>0.8651</td>
-<td>0.9292</td>
-<td>0.8651</td>
+<td>0.8662</td>
+<td>0.8023</td>
+<td>0.9102</td>
+<td>0.8023</td>
 </tr>
 </tbody>
 </table>
@@ -2927,31 +2469,31 @@
 <tbody>
 <tr>
 <td>accuracy</td>
-<td>0.8954</td>
-<td>0.9199</td>
-<td>0.8847</td>
-<td>0.0131</td>
+<td>0.8676</td>
+<td>0.8856</td>
+<td>0.8539</td>
+<td>0.0119</td>
 </tr>
 <tr>
 <td>balanced_accuracy</td>
-<td>0.8587</td>
-<td>0.8860</td>
+<td>0.8107</td>
 <td>0.8402</td>
-<td>0.0158</td>
+<td>0.7783</td>
+<td>0.0212</td>
 </tr>
 <tr>
 <td>f1</td>
-<td>0.9278</td>
-<td>0.9449</td>
-<td>0.9200</td>
-<td>0.0091</td>
+<td>0.9104</td>
+<td>0.9217</td>
+<td>0.9016</td>
+<td>0.0075</td>
 </tr>
 <tr>
 <td>rocauc</td>
-<td>0.8587</td>
-<td>0.8860</td>
+<td>0.8107</td>
 <td>0.8402</td>
-<td>0.0158</td>
+<td>0.7783</td>
+<td>0.0212</td>
 </tr>
 </tbody>
 </table>
@@ -2966,23 +2508,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.1912706196308136, 0.1912706196308136], [0.3220626413822174, 0.3220626413822174], [0.38618433475494385, 0.38618433475494385], [0.3689897954463959, 0.36898982524871826], [0.296833336353302, ...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.3554098606109619, 0.3554098606109619], [0.19303181767463684, 0.19303181767463684], [0.2967971861362457, 0.2967972159385681], [0.3302050232887268, 0.3302050232887268], [0.2770985960960388, ...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.3961077332496643, 0.39610767364501953], [0.19110238552093506, 0.19110238552093506], [0.22688446938991547, 0.22688449919223785], [0.34065985679626465, 0.3406599164009094], [0.25127366185188...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.18866945803165436, 0.18866944313049316], [0.17435620725154877, 0.17435620725154877], [0.18012933433055878, 0.1801293045282364], [0.11812251806259155, 0.11812251806259155], [0.1196716576814...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.16088004410266876, 0.16088005900382996], [0.2377340942621231, 0.2377340942621231], [0.3177623748779297, 0.3177623748779297], [0.3061956465244293, 0.3061956465244293], [0.2921837270259857, ...</code></td>
 </tr>
 </tbody>
 </table>
@@ -3001,38 +2543,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>42.7473</td>
-<td>72.7391</td>
-<td>23.7625</td>
-<td>295.7437</td>
+<td>27.5769</td>
+<td>49.7512</td>
+<td>21.3632</td>
+<td>243.2504</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>45.7510</td>
-<td>94.3771</td>
-<td>0.4382</td>
-<td>581.4859</td>
+<td>27.9722</td>
+<td>63.3103</td>
+<td>0.2282</td>
+<td>364.1909</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>66.2421</td>
-<td>153.0635</td>
-<td>0.8747</td>
-<td>836.6225</td>
+<td>51.3402</td>
+<td>142.7963</td>
+<td>0.6111</td>
+<td>845.7528</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>44.0340</td>
-<td>81.5112</td>
-<td>0.4818</td>
-<td>337.7693</td>
+<td>26.9141</td>
+<td>52.8447</td>
+<td>0.2724</td>
+<td>311.7558</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>51.4457</td>
-<td>159.6390</td>
-<td>0.6384</td>
-<td>1538.6073</td>
+<td>38.8806</td>
+<td>152.4413</td>
+<td>0.4853</td>
+<td>1534.9797</td>
 </tr>
 </tbody>
 </table>
@@ -3050,31 +2592,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>50.0440</td>
-<td>66.2421</td>
-<td>42.7473</td>
-<td>8.6271</td>
+<td>34.5368</td>
+<td>51.3402</td>
+<td>26.9141</td>
+<td>9.4959</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>112.2660</td>
-<td>159.6390</td>
-<td>72.7391</td>
-<td>36.7066</td>
+<td>92.2288</td>
+<td>152.4413</td>
+<td>49.7512</td>
+<td>45.5508</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>5.2391</td>
-<td>23.7625</td>
-<td>0.4382</td>
-<td>9.2629</td>
+<td>4.5920</td>
+<td>21.3632</td>
+<td>0.2282</td>
+<td>8.3868</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>718.0457</td>
-<td>1538.6073</td>
-<td>295.7437</td>
-<td>453.6473</td>
+<td>659.9859</td>
+<td>1534.9797</td>
+<td>243.2504</td>
+<td>486.3231</td>
 </tr>
 </tbody>
 </table>
@@ -3089,23 +2631,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[9.497343063354492], [15.862295150756836], [74.97210693359375], [25.96040916442871], [47.26897048950195], [14.80854606628418], [22.77548599243164], [10.362432479858398], [8.255328178405762], ...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[5.382687568664551], [25.67997932434082], [16.605792999267578], [7.763948917388916], [10.631340026855469], [36.21831512451172], [12.867671012878418], [3.2303359508514404], [38.958377838134766...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[71.73993682861328], [18.688243865966797], [7.084332466125488], [16.097488403320312], [83.72747802734375], [12.528894424438477], [16.004690170288086], [14.574416160583496], [7.346397399902344...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[2.2033019065856934], [17.148666381835938], [6.929365634918213], [3.3733177185058594], [19.175621032714844], [9.659783363342285], [2.456592321395874], [13.089242935180664], [44.94028091430664...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[24.92951202392578], [17.333660125732422], [10.269680976867676], [4.752265453338623], [3.5876128673553467], [4.854499340057373], [12.900960922241211], [6.644251823425293], [9.120869636535645]...</code></td>
 </tr>
 </tbody>
 </table>
@@ -3124,38 +2666,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.1046</td>
-<td>0.1515</td>
-<td>0.0817</td>
-<td>1.1754</td>
+<td>0.0731</td>
+<td>0.1089</td>
+<td>0.0576</td>
+<td>0.9014</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.1024</td>
-<td>0.1557</td>
-<td>0.0815</td>
-<td>1.6942</td>
+<td>0.0738</td>
+<td>0.1111</td>
+<td>0.0579</td>
+<td>1.1745</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.1025</td>
-<td>0.1533</td>
-<td>0.0798</td>
-<td>1.0668</td>
+<td>0.0731</td>
+<td>0.1101</td>
+<td>0.0587</td>
+<td>0.9076</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.1037</td>
-<td>0.1495</td>
-<td>0.0777</td>
-<td>0.9041</td>
+<td>0.0738</td>
+<td>0.1115</td>
+<td>0.0567</td>
+<td>0.9225</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.1067</td>
-<td>0.1601</td>
-<td>0.0832</td>
-<td>0.9480</td>
+<td>0.0718</td>
+<td>0.1101</td>
+<td>0.0560</td>
+<td>0.8007</td>
 </tr>
 </tbody>
 </table>
@@ -3173,31 +2715,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>0.1040</td>
-<td>0.1067</td>
-<td>0.1024</td>
-<td>0.0016</td>
+<td>0.0731</td>
+<td>0.0738</td>
+<td>0.0718</td>
+<td>0.0007</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>0.1540</td>
-<td>0.1601</td>
-<td>0.1495</td>
-<td>0.0037</td>
+<td>0.1103</td>
+<td>0.1115</td>
+<td>0.1089</td>
+<td>0.0009</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.0808</td>
-<td>0.0832</td>
-<td>0.0777</td>
-<td>0.0019</td>
+<td>0.0574</td>
+<td>0.0587</td>
+<td>0.0560</td>
+<td>0.0009</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>1.1577</td>
-<td>1.6942</td>
-<td>0.9041</td>
-<td>0.2845</td>
+<td>0.9413</td>
+<td>1.1745</td>
+<td>0.8007</td>
+<td>0.1243</td>
 </tr>
 </tbody>
 </table>
@@ -3212,23 +2754,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [0.06334669888019562, 0.04876908287405968, 0.0713210254907608, 0.06149518862366676, 0.05233978480100632, 0.053833525627851486, 0.045166339725255966, 0.09107258170843124, 0.08312246203422546, 0...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [0.04058562591671944, 0.09664303809404373, 0.06196340546011925, 0.07074710726737976, 0.05361659824848175, 0.05300111323595047, 0.04533914476633072, 0.060226064175367355, 0.15155699849128723, 0...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [0.04066888242959976, 0.05564378947019577, 0.05513373762369156, 0.03629153221845627, 0.08530019223690033, 0.0363982692360878, 0.07014258950948715, 0.07834821194410324, 0.056601572781801224, 0....</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [0.06376504898071289, 0.2838374972343445, 0.025865282863378525, 0.04888685792684555, 0.18576562404632568, 0.045733798295259476, 0.047175027430057526, 0.04196206107735634, 0.06469003856182098, ...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [0.06425822526216507, 0.07589271664619446, 0.04857879504561424, 0.07567392289638519, 0.07976284623146057, 0.05443073436617851, 0.0474713109433651, 0.08143744617700577, 0.10169852524995804, 0.0...</code></td>
 </tr>
 </tbody>
 </table>
@@ -3247,38 +2789,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.0809</td>
-<td>0.1415</td>
-<td>0.0522</td>
-<td>1.4432</td>
+<td>0.0536</td>
+<td>0.1013</td>
+<td>0.0356</td>
+<td>1.5366</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.0808</td>
-<td>0.1503</td>
-<td>0.0532</td>
-<td>1.7642</td>
+<td>0.0559</td>
+<td>0.1079</td>
+<td>0.0366</td>
+<td>1.2998</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.0783</td>
-<td>0.1383</td>
-<td>0.0509</td>
-<td>1.1189</td>
+<td>0.0510</td>
+<td>0.0949</td>
+<td>0.0340</td>
+<td>1.1808</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.0863</td>
-<td>0.1478</td>
-<td>0.0608</td>
-<td>1.1620</td>
+<td>0.0585</td>
+<td>0.1126</td>
+<td>0.0418</td>
+<td>1.1355</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.0836</td>
-<td>0.1489</td>
-<td>0.0558</td>
-<td>1.3775</td>
+<td>0.0549</td>
+<td>0.1046</td>
+<td>0.0370</td>
+<td>1.3202</td>
 </tr>
 </tbody>
 </table>
@@ -3296,31 +2838,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>0.0820</td>
-<td>0.0863</td>
-<td>0.0783</td>
-<td>0.0027</td>
+<td>0.0548</td>
+<td>0.0585</td>
+<td>0.0510</td>
+<td>0.0025</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>0.1454</td>
-<td>0.1503</td>
-<td>0.1383</td>
-<td>0.0046</td>
+<td>0.1043</td>
+<td>0.1126</td>
+<td>0.0949</td>
+<td>0.0060</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.0546</td>
-<td>0.0608</td>
-<td>0.0509</td>
-<td>0.0035</td>
+<td>0.0370</td>
+<td>0.0418</td>
+<td>0.0340</td>
+<td>0.0026</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>1.3732</td>
-<td>1.7642</td>
-<td>1.1189</td>
-<td>0.2311</td>
+<td>1.2946</td>
+<td>1.5366</td>
+<td>1.1355</td>
+<td>0.1397</td>
 </tr>
 </tbody>
 </table>
@@ -3335,23 +2877,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [0.03473027050495148, 0.05344022810459137, 0.04392522946000099, 0.09693300724029541, 0.0621185339987278, 0.0515923835337162, 0.034392938017845154, 0.0368841215968132, 0.09843463450670242, 0.03...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [0.037284620106220245, 0.0660589188337326, 0.05483892932534218, 0.05504067987203598, 0.045397065579891205, 0.053156472742557526, 0.04068203642964363, 0.04492218419909477, 0.1503378003835678, 0...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [0.04053986072540283, 0.039209164679050446, 0.04213540256023407, 0.036292385309934616, 0.06385202705860138, 0.032488591969013214, 0.0784469023346901, 0.0694998949766159, 0.050309233367443085, ...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [0.04948587343096733, 0.11705353856086731, 0.025648461654782295, 0.03585298731923103, 0.11334579437971115, 0.03046250157058239, 0.040365662425756454, 0.03331249952316284, 0.038164108991622925,...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [0.04571979492902756, 0.0366676039993763, 0.036114685237407684, 0.06556463986635208, 0.07480020076036453, 0.03638936206698418, 0.05547630041837692, 0.10959770530462265, 0.16662324965000153, 0....</code></td>
 </tr>
 </tbody>
 </table>
@@ -3370,38 +2912,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.1158</td>
-<td>0.2386</td>
-<td>0.9331</td>
-<td>4.2469</td>
+<td>0.0402</td>
+<td>0.0817</td>
+<td>0.3786</td>
+<td>4.0438</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.1160</td>
-<td>0.2459</td>
-<td>0.5068</td>
-<td>5.4382</td>
+<td>0.0497</td>
+<td>0.1018</td>
+<td>0.3121</td>
+<td>4.8803</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.1179</td>
-<td>0.2443</td>
-<td>0.5549</td>
-<td>4.0782</td>
+<td>0.0475</td>
+<td>0.0905</td>
+<td>0.2562</td>
+<td>1.6230</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.1159</td>
-<td>0.2373</td>
-<td>0.7206</td>
-<td>2.9374</td>
+<td>0.0464</td>
+<td>0.0889</td>
+<td>0.3515</td>
+<td>1.5189</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.1166</td>
-<td>0.2435</td>
-<td>0.6836</td>
-<td>3.8910</td>
+<td>0.0400</td>
+<td>0.0812</td>
+<td>0.2882</td>
+<td>3.3787</td>
 </tr>
 </tbody>
 </table>
@@ -3419,31 +2961,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>0.1165</td>
-<td>0.1179</td>
-<td>0.1158</td>
-<td>0.0008</td>
+<td>0.0448</td>
+<td>0.0497</td>
+<td>0.0400</td>
+<td>0.0039</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>0.2419</td>
-<td>0.2459</td>
-<td>0.2373</td>
-<td>0.0034</td>
+<td>0.0888</td>
+<td>0.1018</td>
+<td>0.0812</td>
+<td>0.0075</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.6798</td>
-<td>0.9331</td>
-<td>0.5068</td>
-<td>0.1492</td>
+<td>0.3173</td>
+<td>0.3786</td>
+<td>0.2562</td>
+<td>0.0436</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>4.1183</td>
-<td>5.4382</td>
-<td>2.9374</td>
-<td>0.8008</td>
+<td>3.0889</td>
+<td>4.8803</td>
+<td>1.5189</td>
+<td>1.3281</td>
 </tr>
 </tbody>
 </table>
@@ -3458,23 +3000,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.0636366754770279], [0.02924380451440811], [0.11916627734899521], [0.11677506566047668], [0.1760452687740326], [0.1811746507883072], [0.08742818236351013], [0.1322329342365265], [0.14015400...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.10467445850372314], [0.2568114399909973], [0.08591523766517639], [0.11847899109125137], [1.0217572450637817], [0.2770746350288391], [0.20971281826496124], [0.19037210941314697], [0.0730839...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.07034026086330414], [0.07515157759189606], [0.1308293640613556], [0.23308764398097992], [0.2118426114320755], [0.1338074803352356], [0.17896589636802673], [0.09289371967315674], [0.0988285...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.17922396957874298], [0.21060164272785187], [0.04639369249343872], [0.0925942063331604], [0.06210273131728172], [0.28422462940216064], [0.2840571105480194], [0.2760363817214966], [0.1231188...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.1517249494791031], [0.13391436636447906], [0.40770843625068665], [0.13683228194713593], [0.124815434217453], [0.042988162487745285], [0.13916344940662384], [0.06709353625774384], [0.053676...</code></td>
 </tr>
 </tbody>
 </table>
@@ -3493,38 +3035,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.3456</td>
-<td>0.6097</td>
-<td>5.6881</td>
-<td>6.3322</td>
+<td>0.2147</td>
+<td>0.4441</td>
+<td>2.8966</td>
+<td>5.0558</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.3417</td>
-<td>0.6104</td>
-<td>4.3547</td>
-<td>7.0601</td>
+<td>0.2161</td>
+<td>0.4484</td>
+<td>2.6899</td>
+<td>6.2874</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.3445</td>
-<td>0.6047</td>
-<td>6.9303</td>
-<td>5.9201</td>
+<td>0.2165</td>
+<td>0.4433</td>
+<td>4.1912</td>
+<td>7.5685</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.3427</td>
-<td>0.6101</td>
-<td>11.9090</td>
-<td>6.6456</td>
+<td>0.2309</td>
+<td>0.4705</td>
+<td>4.6749</td>
+<td>6.9325</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.3512</td>
-<td>0.6276</td>
-<td>9.2752</td>
-<td>6.0212</td>
+<td>0.2211</td>
+<td>0.4564</td>
+<td>4.9590</td>
+<td>4.9406</td>
 </tr>
 </tbody>
 </table>
@@ -3542,31 +3084,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>0.3452</td>
-<td>0.3512</td>
-<td>0.3417</td>
-<td>0.0033</td>
+<td>0.2199</td>
+<td>0.2309</td>
+<td>0.2147</td>
+<td>0.0059</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>0.6125</td>
-<td>0.6276</td>
-<td>0.6047</td>
-<td>0.0079</td>
+<td>0.4525</td>
+<td>0.4705</td>
+<td>0.4433</td>
+<td>0.0101</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>7.6315</td>
-<td>11.9090</td>
-<td>4.3547</td>
-<td>2.6835</td>
+<td>3.8823</td>
+<td>4.9590</td>
+<td>2.6899</td>
+<td>0.9248</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>6.3958</td>
-<td>7.0601</td>
-<td>5.9201</td>
-<td>0.4182</td>
+<td>6.1570</td>
+<td>7.5685</td>
+<td>4.9406</td>
+<td>1.0299</td>
 </tr>
 </tbody>
 </table>
@@ -3581,23 +3123,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.2779600918292999], [0.1588134467601776], [0.0013879217440262437], [0.0013879217440262437], [0.0013879217440262437], [0.15315547585487366], [0.4301016926765442], [0.19215451180934906], [0.0...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.0023871688172221184], [0.0023871688172221184], [0.0023871688172221184], [0.0023871688172221184], [0.0023871688172221184], [0.0023871688172221184], [0.35058045387268066], [0.439932823181152...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.17874807119369507], [0.0015997957671061158], [0.0015997957671061158], [0.35170578956604004], [0.0015997957671061158], [0.0015997957671061158], [0.0015997957671061158], [0.00156632636208087...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.004137647803872824], [0.004137647803872824], [0.004137647803872824], [0.004137647803872824], [0.004137647803872824], [0.004137647803872824], [0.004137647803872824], [0.004137647803872824],...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.4364481568336487], [0.0038157568778842688], [0.003807253669947386], [0.003807792905718088], [0.003815052565187216], [0.0038899907376617193], [0.0038147747982293367], [0.19303250312805176],...</code></td>
 </tr>
 </tbody>
 </table>
@@ -3616,38 +3158,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.9080</td>
-<td>0.9025</td>
-<td>0.8905</td>
-<td>0.9025</td>
+<td>0.8515</td>
+<td>0.8415</td>
+<td>0.8175</td>
+<td>0.8415</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.9027</td>
-<td>0.8968</td>
-<td>0.8839</td>
-<td>0.8968</td>
+<td>0.8824</td>
+<td>0.8709</td>
+<td>0.8526</td>
+<td>0.8709</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.9049</td>
-<td>0.8987</td>
-<td>0.8862</td>
-<td>0.8987</td>
+<td>0.5650</td>
+<td>0.5000</td>
+<td>0.0000</td>
+<td>0.5000</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.9051</td>
-<td>0.8994</td>
-<td>0.8869</td>
-<td>0.8994</td>
+<td>0.8575</td>
+<td>0.8447</td>
+<td>0.8200</td>
+<td>0.8447</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.9047</td>
-<td>0.8984</td>
-<td>0.8858</td>
-<td>0.8984</td>
+<td>0.8588</td>
+<td>0.8453</td>
+<td>0.8203</td>
+<td>0.8453</td>
 </tr>
 </tbody>
 </table>
@@ -3665,31 +3207,31 @@
 <tbody>
 <tr>
 <td>accuracy</td>
-<td>0.9051</td>
-<td>0.9080</td>
-<td>0.9027</td>
-<td>0.0017</td>
+<td>0.8031</td>
+<td>0.8824</td>
+<td>0.5650</td>
+<td>0.1195</td>
 </tr>
 <tr>
 <td>balanced_accuracy</td>
-<td>0.8992</td>
-<td>0.9025</td>
-<td>0.8968</td>
-<td>0.0019</td>
+<td>0.7805</td>
+<td>0.8709</td>
+<td>0.5000</td>
+<td>0.1406</td>
 </tr>
 <tr>
 <td>f1</td>
-<td>0.8866</td>
-<td>0.8905</td>
-<td>0.8839</td>
-<td>0.0022</td>
+<td>0.6621</td>
+<td>0.8526</td>
+<td>0.0000</td>
+<td>0.3313</td>
 </tr>
 <tr>
 <td>rocauc</td>
-<td>0.8992</td>
-<td>0.9025</td>
-<td>0.8968</td>
-<td>0.0019</td>
+<td>0.7805</td>
+<td>0.8709</td>
+<td>0.5000</td>
+<td>0.1406</td>
 </tr>
 </tbody>
 </table>
@@ -3704,23 +3246,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.0416233129799366, 0.041623327881097794], [0.06803157180547714, 0.06803156435489655], [0.008189204148948193, 0.008189203217625618], [0.0037693644408136606, 0.003769365604966879], [0.0107376...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.2837996482849121, 0.2837996482849121], [0.28376519680023193, 0.28376519680023193], [0.2669283449649811, 0.2669283449649811], [0.2666773200035095, 0.2666773200035095], [0.3405170142650604, ...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.1777520626783371, 0.1777520775794983], [0.1777520626783371, 0.1777520775794983], [0.1777520626783371, 0.1777520775794983], [0.1777520626783371, 0.1777520775794983], [0.1777520626783371, 0....</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.22140955924987793, 0.22140958905220032], [0.2370903342962265, 0.2370903342962265], [0.2370903342962265, 0.2370903342962265], [0.2370903342962265, 0.2370903342962265], [0.2370903342962265, ...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.09707242995500565, 0.09707243740558624], [0.259949266910553, 0.2599492371082306], [0.09707242995500565, 0.09707243740558624], [0.23583407700061798, 0.2358340471982956], [0.2358340770006179...</code></td>
 </tr>
 </tbody>
 </table>
@@ -3739,38 +3281,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.2357</td>
-<td>0.3292</td>
-<td>0.2634</td>
-<td>2.8870</td>
+<td>0.0932</td>
+<td>0.1304</td>
+<td>0.0970</td>
+<td>0.8705</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.2367</td>
-<td>0.3394</td>
-<td>0.2888</td>
-<td>2.2083</td>
+<td>0.0939</td>
+<td>0.1283</td>
+<td>0.1058</td>
+<td>1.0063</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.2365</td>
-<td>0.3382</td>
-<td>0.2631</td>
-<td>2.5900</td>
+<td>0.0861</td>
+<td>0.1216</td>
+<td>0.0939</td>
+<td>0.9432</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.2395</td>
-<td>0.3369</td>
-<td>0.2827</td>
-<td>2.6112</td>
+<td>0.0892</td>
+<td>0.1274</td>
+<td>0.0995</td>
+<td>0.8501</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.2291</td>
-<td>0.3293</td>
-<td>0.2411</td>
-<td>2.4921</td>
+<td>0.0914</td>
+<td>0.1310</td>
+<td>0.0894</td>
+<td>1.1780</td>
 </tr>
 </tbody>
 </table>
@@ -3788,31 +3330,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>0.2355</td>
-<td>0.2395</td>
-<td>0.2291</td>
-<td>0.0034</td>
+<td>0.0908</td>
+<td>0.0939</td>
+<td>0.0861</td>
+<td>0.0028</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>0.3346</td>
-<td>0.3394</td>
-<td>0.3292</td>
-<td>0.0044</td>
+<td>0.1277</td>
+<td>0.1310</td>
+<td>0.1216</td>
+<td>0.0033</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.2678</td>
-<td>0.2888</td>
-<td>0.2411</td>
-<td>0.0168</td>
+<td>0.0971</td>
+<td>0.1058</td>
+<td>0.0894</td>
+<td>0.0055</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>2.5577</td>
-<td>2.8870</td>
-<td>2.2083</td>
-<td>0.2185</td>
+<td>0.9696</td>
+<td>1.1780</td>
+<td>0.8501</td>
+<td>0.1180</td>
 </tr>
 </tbody>
 </table>
@@ -3827,23 +3369,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.10714199393987656], [0.0770525336265564], [0.07103670388460159], [0.047520048916339874], [0.09854762256145477], [0.054435212165117264], [0.06670265644788742], [0.12760771811008453], [0.110...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.06410787999629974], [0.09309504926204681], [0.07608579844236374], [0.08194778114557266], [0.11951383203268051], [0.07481898367404938], [0.04808051139116287], [0.08761747926473618], [0.0603...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.10084810853004456], [0.10042519122362137], [0.10863561928272247], [0.11654899269342422], [0.08363119512796402], [0.11726558208465576], [0.12616018950939178], [0.104669950902462], [0.083491...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.0883394405245781], [0.0751652866601944], [0.07409299165010452], [0.12206761538982391], [0.10416710376739502], [0.11867869645357132], [0.15680250525474548], [0.07212385535240173], [0.066893...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[0.15121375024318695], [0.09383570402860641], [0.10639220476150513], [0.09952569007873535], [0.060146454721689224], [0.0721314549446106], [0.09489388763904572], [0.0831003338098526], [0.09796...</code></td>
 </tr>
 </tbody>
 </table>
@@ -3862,38 +3404,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>82.3863</td>
-<td>171.1524</td>
-<td>0.1348</td>
-<td>1004.2770</td>
+<td>40.2218</td>
+<td>99.9366</td>
+<td>0.0661</td>
+<td>1031.8168</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>72.8871</td>
-<td>172.8015</td>
-<td>0.1172</td>
-<td>2024.7301</td>
+<td>41.1190</td>
+<td>83.0600</td>
+<td>0.0680</td>
+<td>721.2376</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>59.2712</td>
-<td>128.7871</td>
-<td>0.1040</td>
-<td>1206.8703</td>
+<td>38.8526</td>
+<td>70.0409</td>
+<td>0.0705</td>
+<td>452.0254</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>58.6036</td>
-<td>122.1566</td>
-<td>0.1167</td>
-<td>861.9005</td>
+<td>37.1039</td>
+<td>78.3636</td>
+<td>0.0710</td>
+<td>662.8152</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>64.9149</td>
-<td>136.4846</td>
-<td>0.1197</td>
-<td>1255.6664</td>
+<td>36.4648</td>
+<td>59.7092</td>
+<td>0.0665</td>
+<td>342.3226</td>
 </tr>
 </tbody>
 </table>
@@ -3911,31 +3453,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>67.6126</td>
-<td>82.3863</td>
-<td>58.6036</td>
-<td>8.9900</td>
+<td>38.7524</td>
+<td>41.1190</td>
+<td>36.4648</td>
+<td>1.7732</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>146.2764</td>
-<td>172.8015</td>
-<td>122.1566</td>
-<td>21.4752</td>
+<td>78.2220</td>
+<td>99.9366</td>
+<td>59.7092</td>
+<td>13.4507</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.1185</td>
-<td>0.1348</td>
-<td>0.1040</td>
-<td>0.0098</td>
+<td>0.0684</td>
+<td>0.0710</td>
+<td>0.0661</td>
+<td>0.0020</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>1270.6889</td>
-<td>2024.7301</td>
-<td>861.9005</td>
-<td>402.7307</td>
+<td>642.0435</td>
+<td>1031.8168</td>
+<td>342.3226</td>
+<td>238.5648</td>
 </tr>
 </tbody>
 </table>
@@ -3950,23 +3492,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[26.26407814025879], [175.91537475585938], [15.736849784851074], [16.808921813964844], [18.036314010620117], [16.40987777709961], [31.393617630004883], [26.229381561279297], [16.6152362823486...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[32.547828674316406], [18.21637535095215], [34.24558639526367], [27.42135238647461], [23.881690979003906], [151.67642211914062], [18.94878578186035], [19.094982147216797], [16.469425201416016...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[21.542694091796875], [21.627588272094727], [15.593945503234863], [67.26934814453125], [11.872613906860352], [11.879145622253418], [12.56555461883545], [24.557519912719727], [22.6404819488525...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[30.841398239135742], [17.576093673706055], [20.379390716552734], [24.910297393798828], [13.184524536132812], [24.256025314331055], [26.51211166381836], [18.35163116455078], [17.3094120025634...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[11.17216968536377], [16.963390350341797], [32.19032287597656], [16.677236557006836], [27.273052215576172], [28.90708351135254], [25.442333221435547], [21.135835647583008], [16.36865615844726...</code></td>
 </tr>
 </tbody>
 </table>
@@ -3985,38 +3527,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>114.6331</td>
-<td>196.3586</td>
-<td>0.0731</td>
-<td>1121.1276</td>
+<td>112.2905</td>
+<td>189.8130</td>
+<td>0.0707</td>
+<td>931.3261</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>85.6694</td>
-<td>113.1549</td>
-<td>0.0654</td>
-<td>362.6630</td>
+<td>81.9908</td>
+<td>115.9188</td>
+<td>0.0604</td>
+<td>404.5644</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>110.0055</td>
-<td>150.1283</td>
-<td>0.0807</td>
-<td>448.9038</td>
+<td>99.3739</td>
+<td>139.4921</td>
+<td>0.0699</td>
+<td>411.7195</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>111.5273</td>
-<td>153.4522</td>
-<td>0.0801</td>
-<td>633.6092</td>
+<td>93.2877</td>
+<td>152.1443</td>
+<td>0.0672</td>
+<td>827.5305</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>95.7271</td>
-<td>133.8257</td>
-<td>0.0730</td>
-<td>408.6042</td>
+<td>94.1265</td>
+<td>152.3995</td>
+<td>0.0709</td>
+<td>672.9292</td>
 </tr>
 </tbody>
 </table>
@@ -4034,31 +3576,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>103.5125</td>
-<td>114.6331</td>
-<td>85.6694</td>
-<td>11.0368</td>
+<td>96.2139</td>
+<td>112.2905</td>
+<td>81.9908</td>
+<td>9.8352</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>149.3839</td>
-<td>196.3586</td>
-<td>113.1549</td>
-<td>27.4893</td>
+<td>149.9535</td>
+<td>189.8130</td>
+<td>115.9188</td>
+<td>23.9473</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.0745</td>
-<td>0.0807</td>
-<td>0.0654</td>
-<td>0.0056</td>
+<td>0.0678</td>
+<td>0.0709</td>
+<td>0.0604</td>
+<td>0.0039</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>594.9816</td>
-<td>1121.1276</td>
-<td>362.6630</td>
-<td>278.7002</td>
+<td>649.6139</td>
+<td>931.3261</td>
+<td>404.5644</td>
+<td>213.6365</td>
 </tr>
 </tbody>
 </table>
@@ -4073,23 +3615,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[181.11865234375], [192.23825073242188], [42.135902404785156], [54.896053314208984], [164.36167907714844], [53.29085159301758], [41.6890869140625], [68.6667709350586], [96.96005249023438], [3...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[69.18898010253906], [72.29112243652344], [54.083961486816406], [66.05774688720703], [51.890892028808594], [41.604408264160156], [207.0948028564453], [56.53154373168945], [111.53943634033203]...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[179.28602600097656], [267.37554931640625], [125.63412475585938], [117.67745971679688], [43.56736755371094], [56.37009811401367], [37.02374267578125], [116.51256561279297], [162.7328186035156...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[264.0724182128906], [320.3443603515625], [69.12999725341797], [98.54374694824219], [102.41849517822266], [85.94804382324219], [39.834190368652344], [159.82240295410156], [59.77300262451172],...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'note': 'single config; see benchmark user metadata'}</code></td>
+<td><code>{'std': [[172.47418212890625], [83.7674560546875], [355.5929260253906], [119.87616729736328], [59.057350158691406], [119.39688873291016], [50.491127014160156], [79.44507598876953], [93.9663314819336],...</code></td>
 </tr>
 </tbody>
 </table>
@@ -4112,7 +3654,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../matbench_v0.1_modnet_v0.1.10/" class="md-footer__link md-footer__link--prev" aria-label="Previous: matbench_v0.1: MODNet (v0.1.10)" rel="prev">
+        <a href="../matbench_v0.1_dummy/" class="md-footer__link md-footer__link--prev" aria-label="Previous: matbench_v0.1: Dummy" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -4121,20 +3663,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              matbench_v0.1: MODNet (v0.1.10)
+              matbench_v0.1: Dummy
             </div>
           </div>
         </a>
       
       
         
-        <a href="../../How%20To%20Use/1install/" class="md-footer__link md-footer__link--next" aria-label="Next: 1 - Install matbench" rel="next">
+        <a href="../matbench_v0.1_rf/" class="md-footer__link md-footer__link--next" aria-label="Next: matbench_v0.1: RF-SCM/Magpie" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              1 - Install matbench
+              matbench_v0.1: RF-SCM/Magpie
             </div>
           </div>
           <div class="md-footer__button md-icon">
