@@ -3,6 +3,10 @@ import logging
 
 import numpy as np
 from matminer.datasets import get_all_dataset_info
+from matminer.featurizers.conversions import (
+    StrToComposition,
+    StructureToComposition,
+)
 from monty.json import MSONable
 
 from matbench.constants import (
@@ -319,15 +323,17 @@ class MatbenchTask(MSONable, MSONable2File):
             self.results[fold_key][self._PARAMS_KEY] = params if params else {}
             self.is_recorded[fold_number] = True
 
-            logger.info(f"Recorded fold "
-                        f"{self.dataset_name}-{fold_number} successfully.")
+            logger.info(
+                f"Recorded fold " f"{self.dataset_name}-{fold_number} successfully."
+            )
 
             truth = self._get_data_from_df(split_ids, as_type="tuple")[1]
             self.results[fold_key][self._SCORES_KEY] = score_array(
                 truth, predictions, self.metadata.task_type
             )
-            logger.debug(f"Scored fold '"
-                         f"{self.dataset_name}-{fold_key} successfully.")
+            logger.debug(
+                f"Scored fold '" f"{self.dataset_name}-{fold_key} successfully."
+            )
 
     def as_dict(self):
         """Return a MatbenchTask object as a dictionary.
@@ -434,7 +440,7 @@ class MatbenchTask(MSONable, MSONable2File):
                     remaining_indices = copy.deepcopy(req_indices)
                     extra_indices = {}
                     if self.metadata.task_type == REG_KEY:
-                        allowed_types = (float, )
+                        allowed_types = (float,)
                     else:
                         allowed_types = (bool, float)
 
@@ -542,3 +548,32 @@ class MatbenchTask(MSONable, MSONable2File):
             (bool): True if all folds are recorded, False otherwise.
         """
         return all([v for v in self.is_recorded.values()])
+
+    @property
+    def has_polymorphs(self):
+        """Determine if a task's raw data contains polymorphs.
+
+        Returns:
+            (bool) If true, contains polymorphs.
+        """
+        checker_key = "pmg_composition"
+        self._check_is_loaded()
+        if self.metadata.input_type == "composition":
+            stc = StrToComposition(target_col_id=checker_key, reduce=True)
+            comps = stc.featurize_dataframe(self.df, "composition")[
+                checker_key
+            ].values
+        elif self.metadata.input_type == "structure":
+            stc = StructureToComposition(target_col_id=checker_key, reduce=True)
+            comps = stc.featurize_dataframe(self.df, "structure")[checker_key].values
+        else:
+            raise ValueError(
+                "Cannot check for polymorphs without input type in "
+                "(structure, composition)!"
+            )
+
+        unique_comps = set(comps)
+        if len(unique_comps) != len(comps):
+            return True
+        else:
+            return False

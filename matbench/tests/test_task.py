@@ -47,8 +47,7 @@ class TestMatbenchTask(unittest.TestCase):
             )
 
             self.assertListEqual(inputs.index.tolist(), outputs.index.tolist())
-            self.assertEqual(inputs.shape[0],
-                             int(np.floor(mbt.df.shape[0] * 4 / 5)))
+            self.assertEqual(inputs.shape[0], int(np.floor(mbt.df.shape[0] * 4 / 5)))
             self.assertEqual(
                 outputs.shape[0], int(np.floor(mbt.df.shape[0] * 4 / 5))
             )
@@ -82,8 +81,7 @@ class TestMatbenchTask(unittest.TestCase):
                 self.assertEqual(alloy, inputs.iloc[75])
                 yield_strength = 1369.5
                 self.assertAlmostEqual(val, yield_strength, places=5)
-                self.assertAlmostEqual(outputs.iloc[75], yield_strength,
-                                       places=5)
+                self.assertAlmostEqual(outputs.iloc[75], yield_strength, places=5)
             elif ds == "matbench_glass":
                 alloy = "Ce2Al5Cu43"
                 mat = inputs.loc["mb-glass-0600"]
@@ -104,8 +102,7 @@ class TestMatbenchTask(unittest.TestCase):
                     fold_number=fold, as_type="tuple", include_target=True
                 )
 
-                self.assertListEqual(inputs.index.tolist(),
-                                     outputs.index.tolist())
+                self.assertListEqual(inputs.index.tolist(), outputs.index.tolist())
 
                 upper_bound = int(np.ceil(mbt.df.shape[0] / 5))
                 allowed_fold_sizes = (upper_bound - 1, upper_bound)
@@ -115,35 +112,31 @@ class TestMatbenchTask(unittest.TestCase):
                     Structure if mbt.metadata.input_type == STRUCTURE_KEY else str
                 )
                 output_type = float if mbt.metadata.task_type == REG_KEY else bool
-                self.assertTrue(
-                    all([isinstance(d, input_type) for d in inputs]))
-                self.assertTrue(
-                    all([isinstance(d, output_type) for d in outputs]))
+                self.assertTrue(all([isinstance(d, input_type) for d in inputs]))
+                self.assertTrue(all([isinstance(d, output_type) for d in outputs]))
                 folds.append((inputs, outputs))
 
                 df_test = mbt.get_test_data(
-                    fold_number=fold,
-                    as_type="df",
-                    include_target=True
+                    fold_number=fold, as_type="df", include_target=True
                 )
-                self.assertListEqual(df_test.columns.tolist(),
-                                     [mbt.metadata.input_type, mbt.metadata.target])
+                self.assertListEqual(
+                    df_test.columns.tolist(),
+                    [mbt.metadata.input_type, mbt.metadata.target],
+                )
 
                 df_test = mbt.get_test_data(
-                    fold_number=fold,
-                    as_type="df",
-                    include_target=False
+                    fold_number=fold, as_type="df", include_target=False
                 )
                 self.assertTrue(isinstance(df_test, pd.DataFrame))
-                self.assertListEqual(df_test.columns.tolist(),
-                                     [mbt.metadata.input_type])
+                self.assertListEqual(
+                    df_test.columns.tolist(), [mbt.metadata.input_type]
+                )
 
             # check if all entries from original df are in exactly
             # one test fold exactly once
             original_input_df = mbt.df[mbt.metadata.input_type]
             inputs_from_folds = pd.concat([f[0] for f in folds])
-            self.assertEqual(inputs_from_folds.shape[0],
-                             original_input_df.shape[0])
+            self.assertEqual(inputs_from_folds.shape[0], original_input_df.shape[0])
             self.assertTrue(
                 original_input_df.apply(
                     lambda i: i in inputs_from_folds.tolist()
@@ -156,8 +149,7 @@ class TestMatbenchTask(unittest.TestCase):
                 ki = inputs.iloc[12].composition.reduced_formula
                 self.assertEqual(ki, "KI")
                 self.assertEqual(
-                    ki,
-                    inputs.loc["mb-dielectric-0076"].composition.reduced_formula
+                    ki, inputs.loc["mb-dielectric-0076"].composition.reduced_formula
                 )
                 self.assertEqual(
                     ki,
@@ -182,11 +174,9 @@ class TestMatbenchTask(unittest.TestCase):
                 )
                 self.assertEqual(alloy, inputs.loc["mb-steels-068"])
                 self.assertEqual(alloy, inputs.iloc[12])
-                self.assertEqual(alloy,
-                                 mbt.df[COMPOSITION_KEY].loc["mb-steels-068"])
+                self.assertEqual(alloy, mbt.df[COMPOSITION_KEY].loc["mb-steels-068"])
                 yield_strength = 1241.0
-                self.assertAlmostEqual(outputs.iloc[12], yield_strength,
-                                       places=5)
+                self.assertAlmostEqual(outputs.iloc[12], yield_strength, places=5)
                 self.assertAlmostEqual(
                     outputs.loc["mb-steels-068"], yield_strength, places=5
                 )
@@ -199,8 +189,7 @@ class TestMatbenchTask(unittest.TestCase):
                 alloy = "Al13VCu6"
                 self.assertEqual(alloy, inputs.iloc[12])
                 self.assertEqual(alloy, inputs.loc["mb-glass-0056"])
-                self.assertEqual(alloy,
-                                 mbt.df[COMPOSITION_KEY].loc["mb-glass-0056"])
+                self.assertEqual(alloy, mbt.df[COMPOSITION_KEY].loc["mb-glass-0056"])
                 gfa = True
                 self.assertEqual(outputs.iloc[12], gfa)
                 self.assertEqual(outputs.loc["mb-glass-0056"], gfa)
@@ -251,11 +240,9 @@ class TestMatbenchTask(unittest.TestCase):
                         },
                     )
                     self.assertEqual(
-                        len(mbt.results[fold_key].data.values()),
-                        len(test_inputs)
+                        len(mbt.results[fold_key].data.values()), len(test_inputs)
                     )
-                    self.assertEqual(
-                        mbt.results[fold_key].parameters.test_param, 1)
+                    self.assertEqual(mbt.results[fold_key].parameters.test_param, 1)
                     self.assertEqual(
                         mbt.results[fold_key].parameters.other_param, "string"
                     )
@@ -268,27 +255,22 @@ class TestMatbenchTask(unittest.TestCase):
                     val = mbt.results.fold_0.data["mb-dielectric-0008"]
                     if model_is_perfect:
                         self.assertAlmostEqual(mae, 0.0, places=10)
-                        self.assertAlmostEqual(val, 2.0323401126123875,
-                                               places=10)
+                        self.assertAlmostEqual(val, 2.0323401126123875, places=10)
                     else:
-                        self.assertAlmostEqual(mae, 29.790913986352297,
-                                               places=10)
-                        self.assertAlmostEqual(val, 43.36354273040313,
-                                               places=10)
+                        self.assertAlmostEqual(mae, 29.790913986352297, places=10)
+                        self.assertAlmostEqual(val, 43.36354273040313, places=10)
                 elif ds == "matbench_steels":
                     mae = mbt.results.fold_0.scores.mae
                     if model_is_perfect:
                         self.assertAlmostEqual(mae, 0.0, places=10)
                     else:
-                        self.assertAlmostEqual(mae, 488.97286237333986,
-                                               places=10)
+                        self.assertAlmostEqual(mae, 488.97286237333986, places=10)
                 elif ds == "matbench_glass":
                     rocauc = mbt.results.fold_0.scores.rocauc
                     if model_is_perfect:
                         self.assertAlmostEqual(rocauc, 1.0, places=10)
                     else:
-                        self.assertAlmostEqual(rocauc, 0.5141975796883651,
-                                               places=10)
+                        self.assertAlmostEqual(rocauc, 0.5141975796883651, places=10)
 
                 self.assertTrue(mbt.all_folds_recorded)
 
@@ -434,8 +416,7 @@ class TestMatbenchTask(unittest.TestCase):
         for metric in CLF_METRICS:
             for fdm in FOLD_DIST_METRICS:
                 test_val = 0.0 if fdm == "std" else 1.0
-                self.assertAlmostEqual(test_val, mbt.scores[metric][fdm],
-                                       places=10)
+                self.assertAlmostEqual(test_val, mbt.scores[metric][fdm], places=10)
 
     def test_usage(self):
         # access some common attrs
@@ -477,3 +458,23 @@ class TestMatbenchTask(unittest.TestCase):
 
         self.assertAlmostEqual(mbt.scores["rocauc"]["mean"], 1.0, places=5)
         self.assertAlmostEqual(mbt.scores["rocauc"]["std"], 0.0, places=5)
+
+    def test_has_polymorphs(self):
+        # Test a composition input type
+        mbt = MatbenchTask("matbench_steels", autoload=True)
+        self.assertFalse(mbt.has_polymorphs)
+
+        # Test similarly for a composition dataframe with polymorphs
+        df_comp_poly = pd.DataFrame(
+            {"composition": ["Al2O3", "Cr2O3", "Al4O6"], "property": [1.0, 1.1, 1.2]}
+        )
+        mbt.df = df_comp_poly
+        self.assertTrue(mbt.has_polymorphs)
+
+        # Test a structure input type
+        mbt = MatbenchTask("matbench_dielectric", autoload=True)
+        self.assertTrue(mbt.has_polymorphs)
+
+        # Test similarly for a structure dataframe without polymorphs
+        mbt.df = mbt.df.iloc[:10]
+        self.assertFalse(mbt.has_polymorphs)
