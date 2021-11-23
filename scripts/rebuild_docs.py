@@ -230,7 +230,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
         for _, row in df_src.iterrows():
 
             task_name = f"{row['task']}"
-            task_name_link = f"[{task_name}]({PER_TASK_DIR_PREFIX}/matbench_v0.1_{task_name})"
+            task_name_link = f"[{task_name}]({PER_TASK_DIR_PREFIX}matbench_v0.1_{task_name}.md)"
             samples = format_int(row["n_samples"])
             algorithm = f"[{row['algorithm']}]({row['link']}.md)"
 
