@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="../../static/matbench_logo_favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.2">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.24c991ad.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a57b2b03.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
@@ -881,6 +881,8 @@
       </a>
       
         
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -904,6 +906,13 @@
         <li class="md-nav__item">
   <a href="#matbench.task.MatbenchTask.all_folds_recorded" class="md-nav__link">
     all_folds_recorded
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.task.MatbenchTask.has_polymorphs" class="md-nav__link">
+    has_polymorphs
   </a>
   
 </li>
@@ -1005,6 +1014,8 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -1028,6 +1039,13 @@
         <li class="md-nav__item">
   <a href="#matbench.task.MatbenchTask.all_folds_recorded" class="md-nav__link">
     all_folds_recorded
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matbench.task.MatbenchTask.has_polymorphs" class="md-nav__link">
+    has_polymorphs
   </a>
   
 </li>
@@ -1254,6 +1272,44 @@ task, including the training and testing splits for each fold.</p></td>
     <tr>
       <td><code>(bool)</code></td>
       <td><p>True if all folds are recorded, False otherwise.</p></td>
+    </tr>
+  </tbody>
+</table>    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="matbench.task.MatbenchTask.has_polymorphs" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">has_polymorphs</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Determine if a task's raw data contains polymorphs.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>(bool) If true, contains polymorphs.</p></td>
     </tr>
   </tbody>
 </table>    </div>
@@ -1889,15 +1945,17 @@ docstring.</p></td>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_PARAMS_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recorded fold &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_number</span><span class="si">}</span><span class="s2"> successfully.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Recorded fold &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_number</span><span class="si">}</span><span class="s2"> successfully.&quot;</span>
+        <span class="p">)</span>
 
         <span class="n">truth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">split_ids</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">&quot;tuple&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_SCORES_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">score_array</span><span class="p">(</span>
             <span class="n">truth</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span>
         <span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scored fold &#39;&quot;</span>
-                     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2"> successfully.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Scored fold &#39;&quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2"> successfully.&quot;</span>
+        <span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -2019,7 +2077,7 @@ docstring.</p></td>
                 <span class="n">remaining_indices</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">req_indices</span><span class="p">)</span>
                 <span class="n">extra_indices</span> <span class="o">=</span> <span class="p">{}</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="n">REG_KEY</span><span class="p">:</span>
-                    <span class="n">allowed_types</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="p">)</span>
+                    <span class="n">allowed_types</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">,)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">allowed_types</span> <span class="o">=</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
 
@@ -2147,10 +2205,10 @@ docstring.</p></td>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.bc35569b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b1047164.min.js"></script>
       
     
   </body>

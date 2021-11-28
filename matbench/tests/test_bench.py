@@ -158,8 +158,7 @@ class TestMatbenchBenchmark(unittest.TestCase):
         self.assertFalse(mb.is_composition_complete)
         self.assertFalse(mb.is_structure_complete)
 
-        mb = MatbenchBenchmark.from_preset(MBV01_KEY,
-                                           preset_name=COMPOSITION_KEY)
+        mb = MatbenchBenchmark.from_preset(MBV01_KEY, preset_name=COMPOSITION_KEY)
         self.assertFalse(mb.is_complete)
         self.assertTrue(mb.is_composition_complete)
         self.assertFalse(mb.is_structure_complete)
