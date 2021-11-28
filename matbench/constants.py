@@ -11,8 +11,7 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 MBV01_DATASET_METADATA_PATH = os.path.join(
     THIS_DIR, "matbench_v0.1_dataset_metadata.json"
 )
-MBV01_VALIDATION_DATA_PATH = os.path.join(THIS_DIR,
-                                          "matbench_v0.1_validation.json")
+MBV01_VALIDATION_DATA_PATH = os.path.join(THIS_DIR, "matbench_v0.1_validation.json")
 
 MBV01_KEY = "matbench_v0.1"
 

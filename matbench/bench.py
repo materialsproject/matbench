@@ -346,9 +346,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         # MatbenchTask automatically validates files during its from_dict
         obj.user_metadata = user_metadata
 
-        logger.debug(
-            f"Successfully converted dict/args to '{cls.__name__}'."
-        )
+        logger.debug(f"Successfully converted dict/args to '{cls.__name__}'.")
 
         return obj
 
@@ -377,26 +375,25 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         if completeness_type == self.ALL_KEY:
             required_tasks = list(self.metadata.keys())
         elif completeness_type in (COMPOSITION_KEY, STRUCTURE_KEY):
-            required_tasks = \
-                [
-                    k for k, v in self.metadata.items() if
-                    v.input_type == completeness_type
-                ]
+            required_tasks = [
+                k
+                for k, v in self.metadata.items()
+                if v.input_type == completeness_type
+            ]
         elif completeness_type in (REG_KEY, CLF_KEY):
-            required_tasks = \
-                [
-                    k for k, v in self.metadata.items() if
-                    v.task_type == completeness_type
-                ]
+            required_tasks = [
+                k
+                for k, v in self.metadata.items()
+                if v.task_type == completeness_type
+            ]
         else:
-            allowed_completeness_types = \
-                [
-                    self.ALL_KEY,
-                    COMPOSITION_KEY,
-                    STRUCTURE_KEY,
-                    REG_KEY,
-                    CLF_KEY
-                ]
+            allowed_completeness_types = [
+                self.ALL_KEY,
+                COMPOSITION_KEY,
+                STRUCTURE_KEY,
+                REG_KEY,
+                CLF_KEY,
+            ]
             raise ValueError(
                 "Only supported completeness types are "
                 f"{allowed_completeness_types}"
@@ -555,8 +552,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         if not recorded:
             s += (
-                "\n\n Benchmark is not fully recorded; limited information "
-                "shown."
+                "\n\n Benchmark is not fully recorded; limited information " "shown."
             )
         if not valid:
             s += "\n\n Benchmark is not valid; limited information shown."

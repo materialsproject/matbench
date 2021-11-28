@@ -154,12 +154,7 @@ def mean_absolute_percentage_error(y_true, y_pred, threshold=1e-5):
     return np.mean(np.fabs((y_true - y_pred) / y_true))
 
 
-def homogenize_clf_array(
-        array,
-        to_probs=False,
-        to_labels=False,
-        thresh=CLF_THRESH
-):
+def homogenize_clf_array(array, to_probs=False, to_labels=False, thresh=CLF_THRESH):
     """
     Homogenize an array of either:
 
@@ -191,8 +186,7 @@ def homogenize_clf_array(
             return homogenized
         else:
             raise TypeError(
-                "Cannot convert non-bool type in clf array to "
-                "probabilities."
+                "Cannot convert non-bool type in clf array to " "probabilities."
             )
     elif to_labels:
         if all([isinstance(i, float) for i in array]):
@@ -201,8 +195,7 @@ def homogenize_clf_array(
             return homogenized.tolist()
         else:
             raise TypeError(
-                "Cannot convert non-float types in clf array to"
-                "labels."
+                "Cannot convert non-float types in clf array to" "labels."
             )
 
 

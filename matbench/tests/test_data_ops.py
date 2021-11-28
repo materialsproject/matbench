@@ -102,21 +102,13 @@ class TestDataOps(unittest.TestCase):
         self.assertAlmostEqual(probs[2], 1.0, places=5)
         self.assertAlmostEqual(probs[3], 1.0, places=5)
 
-        labels = homogenize_clf_array(
-            floats,
-            to_labels=True,
-            thresh=0.5
-        )
+        labels = homogenize_clf_array(floats, to_labels=True, thresh=0.5)
         self.assertTrue(labels[0])
         self.assertFalse(labels[1])
         self.assertTrue(labels[2])
         self.assertTrue(labels[3])
 
-        labels2 = homogenize_clf_array(
-            floats,
-            to_labels=True,
-            thresh=0.91
-        )
+        labels2 = homogenize_clf_array(floats, to_labels=True, thresh=0.91)
         self.assertTrue(labels2[0])
         self.assertFalse(labels2[1])
         self.assertFalse(labels2[2])
