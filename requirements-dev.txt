@@ -1,6 +1,6 @@
 coverage==6.1.2
 wheel==0.37.0
 monty==2021.7.8
-isort==5.9.3
+isort==5.10.1
 black==21.11b1
 flake8==4.0.1
