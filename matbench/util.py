@@ -59,8 +59,9 @@ class MSONable2File:
             d = self.as_dict()
             json.dump(d, f)
 
-        logger.info(f"Successfully wrote {self.__class__.__name__} "
-                    f"to file '{filename}'.")
+        logger.info(
+            f"Successfully wrote {self.__class__.__name__} " f"to file '{filename}'."
+        )
 
     @classmethod
     def from_file(cls, filename):
