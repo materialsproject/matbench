@@ -1,4 +1,4 @@
-coverage==6.1.2
+coverage==6.2
 wheel==0.37.0
 monty==2021.8.17
 isort==5.10.1
