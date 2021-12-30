@@ -17,20 +17,22 @@ import numpy as np
 mb = MatbenchBenchmark(
     autoload=False,
     subset=[
-        #'matbench_dielectric',
-        # "matbench_log_gvrh",
-        #'matbench_log_kvrh',
         "matbench_jdft2d",
+        #'matbench_phonons',
+        #'matbench_dielectric',
+        #'matbench_perovskites',
         #'matbench_mp_e_form',
         #'matbench_mp_gap',
-        #'matbench_phonons',
+        # "matbench_log_gvrh",
+        #'matbench_log_kvrh',
         #'matbench_glass',
-        #'matbench_perovskites',
     ],
 )
-
 config_template = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "config_example.json")
+)
+config_template = (
+    "/wrk/knc6/matbench/benchmarks/matbench_v0.1_alignn/config_example.json"
 )
 file_format = "poscar"
 for task in mb.tasks:
@@ -74,11 +76,9 @@ for task in mb.tasks:
                 val = j[target]
                 line = str(pos_name) + "," + str(val) + "\n"
                 f.write(line)
-
             # There is no pre-defined validation splt, so we will use
             # a portion of training set as validation set, and
             # keep test set intact
-
             val_df = train_df[0 : len(test_df)]
             for jj, j in val_df.iterrows():
                 # for jj, j in test_df.iterrows():
@@ -97,7 +97,6 @@ for task in mb.tasks:
                 val = j[target]
                 line = str(pos_name) + "," + str(val) + "\n"
                 f.write(line)
-
             n_train = len(train_df)
             n_val = len(val_df)
             n_test = len(test_df)
@@ -107,12 +106,10 @@ for task in mb.tasks:
             config["n_test"] = n_test
             config["keep_data_order"] = True
             config["batch_size"] = 32
-            config["epochs"] = 500
-
+            config["epochs"] = 2
             fname = "config_fold_" + str(ii) + ".json"
             dumpjson(data=config, filename=fname)
             f.close()
-
             os.chdir("..")
             outdir_name = (
                 task.dataset_name
@@ -130,10 +127,10 @@ for task in mb.tasks:
                 + fname
                 + " --file_format="
                 + file_format
+                + " --keep_data_order=True"
                 + " --output_dir="
                 + outdir_name
             )
-
             print(cmd)
             os.system(cmd)
             test_csv = outdir_name + "/prediction_results_test_set.csv"
@@ -143,9 +140,17 @@ for task in mb.tasks:
             pred_vals = df.prediction.values
             mae = mean_absolute_error(target_vals, pred_vals)
             maes.append(mae)
-            print("MAE", mean_absolute_error(target_vals, pred_vals))
+            task.record(fold, pred_vals, params=config)
+            print(
+                "Dataset_name, Fold, MAE=",
+                task.dataset_name,
+                fold,
+                mean_absolute_error(target_vals, pred_vals),
+            )
         maes = np.array(maes)
         print(maes, np.mean(maes), np.std(maes))
         print()
         print()
         print()
+mb.add_metadata({"algorithm": "ALIGNN"})
+mb.to_file("results.json.gz")
