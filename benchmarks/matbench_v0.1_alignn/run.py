@@ -4,7 +4,6 @@
 # conda create --name matbench_test python=3.8
 # conda activate matbench_test
 # pip install alignn matbench dgl-cu111
-# https://github.com/usnistgov/alignn/blob/main/alignn/examples/sample_data/config_example.json
 
 from matbench.bench import MatbenchBenchmark
 from matbench.constants import CLF_KEY
@@ -19,20 +18,21 @@ mb = MatbenchBenchmark(
     autoload=False,
     subset=[
         #'matbench_dielectric',
-        "matbench_jdft2d",
-        #'matbench_phonons',
-        #'matbench_log_gvrh',
+        # "matbench_log_gvrh",
         #'matbench_log_kvrh',
-        #'matbench_glass',
-        #'matbench_perovskites',
+        "matbench_jdft2d",
         #'matbench_mp_e_form',
         #'matbench_mp_gap',
+        #'matbench_phonons',
+        #'matbench_glass',
+        #'matbench_perovskites',
     ],
 )
 
 config_template = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "config_example.json")
 )
+file_format = "poscar"
 for task in mb.tasks:
     task.load()
     if task.metadata.task_type == CLF_KEY:
@@ -46,36 +46,44 @@ for task in mb.tasks:
             test_df = task.get_test_data(
                 fold, include_target=True, as_type="df"
             )
+            # Name of the target property
             target = [
                 col
                 for col in train_df.columns
                 if col not in ("id", "structure", "composition")
             ][0]
+            # Making sure there are spaces or parenthesis which
+            # can cause issue while creating folder
             fold_name = (
                 task.dataset_name
                 + "_"
-                + target.replace(" ", "_")
+                + target.replace(" ", "_").replace("(", "-").replace(")", "-")
                 + "_fold_"
                 + str(ii)
             )
             if not os.path.exists(fold_name):
                 os.makedirs(fold_name)
             os.chdir(fold_name)
+            # ALIGNN requires the id_prop.csv file
             f = open("id_prop.csv", "w")
             for jj, j in train_df.iterrows():
                 id = j.name
                 atoms = pmg_to_atoms(j.structure)
                 pos_name = id
-                # pos_name = "POSCAR-" + id + ".vasp"
                 atoms.write_poscar(pos_name)
                 val = j[target]
                 line = str(pos_name) + "," + str(val) + "\n"
                 f.write(line)
 
-            for jj, j in test_df.iterrows():
+            # There is no pre-defined validation splt, so we will use
+            # a portion of training set as validation set, and
+            # keep test set intact
+
+            val_df = train_df[0 : len(test_df)]
+            for jj, j in val_df.iterrows():
+                # for jj, j in test_df.iterrows():
                 id = j.name
                 atoms = pmg_to_atoms(j.structure)
-                # pos_name = "POSCAR-" + id + ".vasp"
                 pos_name = id
                 atoms.write_poscar(pos_name)
                 val = j[target]
@@ -84,7 +92,6 @@ for task in mb.tasks:
             for jj, j in test_df.iterrows():
                 id = j.name
                 atoms = pmg_to_atoms(j.structure)
-                # pos_name = "POSCAR-" + id + ".vasp"
                 pos_name = id
                 atoms.write_poscar(pos_name)
                 val = j[target]
@@ -92,7 +99,7 @@ for task in mb.tasks:
                 f.write(line)
 
             n_train = len(train_df)
-            n_val = len(test_df)
+            n_val = len(val_df)
             n_test = len(test_df)
             config = loadjson(config_template)
             config["n_train"] = n_train
@@ -100,7 +107,7 @@ for task in mb.tasks:
             config["n_test"] = n_test
             config["keep_data_order"] = True
             config["batch_size"] = 32
-            config["epochs"] = 100
+            config["epochs"] = 500
 
             fname = "config_fold_" + str(ii) + ".json"
             dumpjson(data=config, filename=fname)
@@ -110,7 +117,7 @@ for task in mb.tasks:
             outdir_name = (
                 task.dataset_name
                 + "_"
-                + target.replace(" ", "_")
+                + target.replace(" ", "_").replace("(", "-").replace(")", "-")
                 + "_outdir_"
                 + str(ii)
             )
@@ -121,6 +128,8 @@ for task in mb.tasks:
                 + fold_name
                 + "/"
                 + fname
+                + " --file_format="
+                + file_format
                 + " --output_dir="
                 + outdir_name
             )
