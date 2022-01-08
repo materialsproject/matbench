@@ -8,17 +8,17 @@ Find more information about this benchmark on [the benchmark info page](Benchmar
 |------------------|---------|-----------|----------------------|-------|
 | [matbench_steels](Per-Task%20Leaderboards/matbench_v0.1_matbench_steels.md) | 312 | [MODNet (v0.1.10)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **96.2139 (MPa)** |  |
 | [matbench_jdft2d](Per-Task%20Leaderboards/matbench_v0.1_matbench_jdft2d.md) | 636 | [MODNet (v0.1.10)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **34.5368 (meV/atom)** |  |
-| [matbench_phonons](Per-Task%20Leaderboards/matbench_v0.1_matbench_phonons.md) | 1,265 | [MODNet (v0.1.10)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **38.7524 (cm^-1)** |  |
+| [matbench_phonons](Per-Task%20Leaderboards/matbench_v0.1_matbench_phonons.md) | 1,265 | [ALIGNN](Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **29.5385 (cm^-1)** | structure required |
 | [matbench_expt_gap](Per-Task%20Leaderboards/matbench_v0.1_matbench_expt_gap.md) | 4,604 | [CrabNet](Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **0.3463 (eV)** |  |
 | [matbench_dielectric](Per-Task%20Leaderboards/matbench_v0.1_matbench_dielectric.md) | 4,764 | [MODNet (v0.1.10)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.2970 (unitless)** |  |
 | [matbench_expt_is_metal](Per-Task%20Leaderboards/matbench_v0.1_matbench_expt_is_metal.md) | 4,921 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.9209** |  |
 | [matbench_glass](Per-Task%20Leaderboards/matbench_v0.1_matbench_glass.md) | 5,680 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.8607** |  |
-| [matbench_log_gvrh](Per-Task%20Leaderboards/matbench_v0.1_matbench_log_gvrh.md) | 10,987 | [MODNet (v0.1.10)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.0731 (log10(GPa))** |  |
+| [matbench_log_gvrh](Per-Task%20Leaderboards/matbench_v0.1_matbench_log_gvrh.md) | 10,987 | [ALIGNN](Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0715 (log10(GPa))** | structure required |
 | [matbench_log_kvrh](Per-Task%20Leaderboards/matbench_v0.1_matbench_log_kvrh.md) | 10,987 | [MODNet (v0.1.10)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.0548 (log10(GPa))** |  |
-| [matbench_perovskites](Per-Task%20Leaderboards/matbench_v0.1_matbench_perovskites.md) | 18,928 | [CGCNN v2019](Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.0452 (eV/unit cell)** | structure required |
-| [matbench_mp_gap](Per-Task%20Leaderboards/matbench_v0.1_matbench_mp_gap.md) | 106,113 | [MODNet (v0.1.10)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.2199 (eV)** |  |
+| [matbench_perovskites](Per-Task%20Leaderboards/matbench_v0.1_matbench_perovskites.md) | 18,928 | [ALIGNN](Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0288 (eV/unit cell)** | structure required |
+| [matbench_mp_gap](Per-Task%20Leaderboards/matbench_v0.1_matbench_mp_gap.md) | 106,113 | [ALIGNN](Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.1861 (eV)** | structure required |
 | [matbench_mp_is_metal](Per-Task%20Leaderboards/matbench_v0.1_matbench_mp_is_metal.md) | 106,113 | [CGCNN v2019](Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.9520** | structure required |
-| [matbench_mp_e_form](Per-Task%20Leaderboards/matbench_v0.1_matbench_mp_e_form.md) | 132,752 | [CGCNN v2019](Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.0337 (eV/atom)** | structure required |
+| [matbench_mp_e_form](Per-Task%20Leaderboards/matbench_v0.1_matbench_mp_e_form.md) | 132,752 | [ALIGNN](Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0215 (eV/atom)** | structure required |
 
 
 
