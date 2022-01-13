@@ -17,6 +17,7 @@ However, general purpose algorithms can automatically determine hyperparameters 
 
 
 **We include algorithms as "general purpose" to include on the general purpose leaderboard if any one of the following criteria is met for Matbench v0.1:**
+
  - All 13 tasks are recorded, OR...
  - All 10 regression tasks are recorded, OR...
  - All 9 structure tasks are recorded. If only the 9 structure tasks are recorded, the algorithm is marked with "requires structure".

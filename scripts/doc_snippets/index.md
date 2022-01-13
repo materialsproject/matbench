@@ -10,6 +10,10 @@ disordered metals, and more.
 ![infographic](static/infographic_matbench.png)
 
 
+Scaled error is assessed as:
+
+
+
 ## What can Matbench offer?
 
 ### This website
@@ -36,6 +40,12 @@ experimental materials data as well as larger datasets from computer modelling m
 
 
 ![breakdown](static/datasets_breakdown_inverted.png)
+
+Where scaled error refers to mean absolute error divided by mean absolute deviation:
+
+$$
+\text{Scaled Error} = \frac{\sum_i^N | y_i - y_i^{pred} |}{\sum_i^N | y_i - \bar{y} | }
+$$
 
 
 Each task in Matbench consists of a three things:
