@@ -10,6 +10,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 |------|------|------|------|------|
 | [CrabNet](../Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **0.3463** | 0.0088 | 0.8504 | 9.8002 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.3470** | 0.0222 | 0.7437 | 9.8567 | 
+| [Ax+CrabNet v1.2.1](../Full%20Benchmark%20Data/matbench_v0.1_Ax_CrabNet_v1.2.1.md) | **0.3566** | 0.0248 | 0.8673 | 11.0998 | 
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.4161** | 0.0194 | 0.9918 | 12.7533 | 
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.4461** | 0.0177 | 0.8243 | 9.5428 | 
 | [Dummy](../Full%20Benchmark%20Data/matbench_v0.1_dummy.md) | **1.1435** | 0.0310 | 1.4438 | 10.7354 | 
