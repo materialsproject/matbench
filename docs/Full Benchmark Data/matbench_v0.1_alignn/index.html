@@ -1,0 +1,3050 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A benchmark and leaderboard for predicting materials properties">
+      
+      
+      
+      
+      <link rel="icon" href="../../static/matbench_logo_favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>matbench_v0.1: ALIGNN - MatBench</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#757575">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="green">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#matbench_v01-alignn" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="MatBench" class="md-header__button md-logo" aria-label="MatBench" data-md-component="logo">
+      
+  <img src="../../static/matbench_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MatBench
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              matbench_v0.1: ALIGNN
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/hackingmaterials/matbench/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      Leaderboard
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Benchmark%20Info/matbench_v0.1/" class="md-tabs__link">
+        Benchmark Info
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../matbench_v0.1_CrabNet/" class="md-tabs__link md-tabs__link--active">
+        Full Benchmark Data
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../How%20To%20Use/1install/" class="md-tabs__link">
+        How To Use
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_dielectric/" class="md-tabs__link">
+        Per Task Leaderboards
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Reference/MatbenchBenchmark/" class="md-tabs__link">
+        Reference
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MatBench" class="md-nav__button md-logo" aria-label="MatBench" data-md-component="logo">
+      
+  <img src="../../static/matbench_logo.png" alt="logo">
+
+    </a>
+    MatBench
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/hackingmaterials/matbench/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Leaderboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Benchmark Info
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Benchmark Info" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Benchmark Info
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Benchmark%20Info/matbench_v0.1/" class="md-nav__link">
+        Benchmark info for `matbench_v0.1`
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Benchmark%20Info/notes/" class="md-nav__link">
+        Notes on Benchmarking
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Full Benchmark Data
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Full Benchmark Data" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Full Benchmark Data
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_CrabNet/" class="md-nav__link">
+        matbench_v0.1: CrabNet
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          matbench_v0.1: ALIGNN
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        matbench_v0.1: ALIGNN
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#algorithm-description" class="md-nav__link">
+    Algorithm description:
+  </a>
+  
+    <nav class="md-nav" aria-label="Algorithm description:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-in-bibtex-format" class="md-nav__link">
+    References (in bibtex format):
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-metadata" class="md-nav__link">
+    User metadata:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metadata" class="md-nav__link">
+    Metadata:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-requirements" class="md-nav__link">
+    Software Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-data" class="md-nav__link">
+    Task data:
+  </a>
+  
+    <nav class="md-nav" aria-label="Task data:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matbench_dielectric" class="md-nav__link">
+    matbench_dielectric
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_dielectric">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_jdft2d" class="md-nav__link">
+    matbench_jdft2d
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_jdft2d">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_1" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_1" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_1" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_log_gvrh" class="md-nav__link">
+    matbench_log_gvrh
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_log_gvrh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_2" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_2" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_2" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_log_kvrh" class="md-nav__link">
+    matbench_log_kvrh
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_log_kvrh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_3" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_3" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_3" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_mp_e_form" class="md-nav__link">
+    matbench_mp_e_form
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_mp_e_form">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_4" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_4" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_4" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_mp_gap" class="md-nav__link">
+    matbench_mp_gap
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_mp_gap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_5" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_5" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_5" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_mp_is_metal" class="md-nav__link">
+    matbench_mp_is_metal
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_mp_is_metal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_6" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_6" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_6" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_perovskites" class="md-nav__link">
+    matbench_perovskites
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_perovskites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_7" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_7" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_7" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_phonons" class="md-nav__link">
+    matbench_phonons
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_phonons">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_8" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_8" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_8" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_automatminer_expressv2020/" class="md-nav__link">
+        matbench_v0.1: AMMExpress v2020
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_cgcnnv2019/" class="md-nav__link">
+        matbench_v0.1: CGCNN v2019
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_dummy/" class="md-nav__link">
+        matbench_v0.1: Dummy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_modnet_v0.1.10/" class="md-nav__link">
+        matbench_v0.1: MODNet (v0.1.10)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_rf/" class="md-nav__link">
+        matbench_v0.1: RF-SCM/Magpie
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          How To Use
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How To Use" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          How To Use
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/1install/" class="md-nav__link">
+        1 - Install matbench
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/2run/" class="md-nav__link">
+        2 - Run benchmark on algorithm
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/3submit/" class="md-nav__link">
+        3 - Submit to leaderboard
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/advanced/" class="md-nav__link">
+        Advanced usage
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Per Task Leaderboards
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Per Task Leaderboards" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Per Task Leaderboards
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_dielectric/" class="md-nav__link">
+        matbench_v0.1 matbench_dielectric
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_expt_gap/" class="md-nav__link">
+        matbench_v0.1 matbench_expt_gap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_expt_is_metal/" class="md-nav__link">
+        matbench_v0.1 matbench_expt_is_metal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_glass/" class="md-nav__link">
+        matbench_v0.1 matbench_glass
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_jdft2d/" class="md-nav__link">
+        matbench_v0.1 matbench_jdft2d
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_log_gvrh/" class="md-nav__link">
+        matbench_v0.1 matbench_log_gvrh
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_log_kvrh/" class="md-nav__link">
+        matbench_v0.1 matbench_log_kvrh
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_mp_e_form/" class="md-nav__link">
+        matbench_v0.1 matbench_mp_e_form
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_mp_gap/" class="md-nav__link">
+        matbench_v0.1 matbench_mp_gap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_mp_is_metal/" class="md-nav__link">
+        matbench_v0.1 matbench_mp_is_metal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_perovskites/" class="md-nav__link">
+        matbench_v0.1 matbench_perovskites
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_phonons/" class="md-nav__link">
+        matbench_v0.1 matbench_phonons
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Per-Task%20Leaderboards/matbench_v0.1_matbench_steels/" class="md-nav__link">
+        matbench_v0.1 matbench_steels
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Reference/MatbenchBenchmark/" class="md-nav__link">
+        MatbenchBenchmark
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Reference/MatbenchTask/" class="md-nav__link">
+        MatbenchTask
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#algorithm-description" class="md-nav__link">
+    Algorithm description:
+  </a>
+  
+    <nav class="md-nav" aria-label="Algorithm description:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-in-bibtex-format" class="md-nav__link">
+    References (in bibtex format):
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-metadata" class="md-nav__link">
+    User metadata:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metadata" class="md-nav__link">
+    Metadata:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-requirements" class="md-nav__link">
+    Software Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-data" class="md-nav__link">
+    Task data:
+  </a>
+  
+    <nav class="md-nav" aria-label="Task data:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matbench_dielectric" class="md-nav__link">
+    matbench_dielectric
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_dielectric">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_jdft2d" class="md-nav__link">
+    matbench_jdft2d
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_jdft2d">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_1" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_1" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_1" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_log_gvrh" class="md-nav__link">
+    matbench_log_gvrh
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_log_gvrh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_2" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_2" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_2" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_log_kvrh" class="md-nav__link">
+    matbench_log_kvrh
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_log_kvrh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_3" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_3" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_3" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_mp_e_form" class="md-nav__link">
+    matbench_mp_e_form
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_mp_e_form">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_4" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_4" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_4" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_mp_gap" class="md-nav__link">
+    matbench_mp_gap
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_mp_gap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_5" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_5" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_5" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_mp_is_metal" class="md-nav__link">
+    matbench_mp_is_metal
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_mp_is_metal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_6" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_6" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_6" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_perovskites" class="md-nav__link">
+    matbench_perovskites
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_perovskites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_7" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_7" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_7" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matbench_phonons" class="md-nav__link">
+    matbench_phonons
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_phonons">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores_8" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats_8" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters_8" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/hackingmaterials/matbench/edit/master/docs/Full Benchmark Data/matbench_v0.1_alignn.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="matbench_v01-alignn">matbench_v0.1: ALIGNN</h1>
+<h3 id="algorithm-description">Algorithm description:</h3>
+<p>The Atomistic Line Graph Neural Network (https://doi.org/10.1038/s41524-021-00650-1) introduces a new graph convolution layer that explicitly models both two and three body interactions in atomistic systems. This is achieved by composing two edge-gated graph convolution layers, the first applied to the atomistic line graph L(g) (representing triplet interactions) and the second applied to the atomistic bond graph g (representing pair interactions). The atomistic graph g consists of a node for each atom i (with atom/node representations hi), and one edge for each atom pair within a cutoff radius (with bond/pair representations eij). The atomistic line graph L(g) represents relationships between atom triplets: it has nodes corresponding to bonds (sharing representations eij with those in g) and edges corresponding to bond angles (with angle/triplet representations tijk).The line graph convolution updates the triplet representations and the pair representations; the direct graph convolution further updates the pair representations and the atom representations.</p>
+<h4 id="notes">Notes:</h4>
+<p>None</p>
+<p>Raw data download and example notebook available <a href="https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_alignn">on the matbench repo</a>.</p>
+<h3 id="references-in-bibtex-format">References (in bibtex format):</h3>
+<div class="highlight"><pre><span></span><code>(&#39;@article{choudhary2021atomistic,title={Atomistic Line Graph Neural Network &#39;
+ &#39;for improved materials property predictions},author={Choudhary, Kamal and &#39;
+ &#39;DeCost, Brian},journal={npj Computational &#39;
+ &#39;Materials},volume={7},number={1},pages={1--8},year={2021},publisher={Nature &#39;
+ &#39;Publishing Group}}&#39;)
+</code></pre></div>
+<h3 id="user-metadata">User metadata:</h3>
+<div class="highlight"><pre><span></span><code>{&#39;algorithm&#39;: &#39;ALIGNN&#39;}
+</code></pre></div>
+<h3 id="metadata">Metadata:</h3>
+<table>
+<thead>
+<tr>
+<th>tasks recorded</th>
+<th>9/13</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>complete?</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>composition complete?</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>structure complete?</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>regression complete?</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>classification complete?</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<h3 id="software-requirements">Software Requirements</h3>
+<div class="highlight"><pre><span></span><code>{&#39;python&#39;: [&#39;absl-py==1.0.0&#39;,
+            &#39;alignn==2021.12.27&#39;,
+            &#39;astunparse==1.6.3&#39;,
+            &#39;attrs==21.3.0&#39;,
+            &#39;black==21.12b0&#39;,
+            &#39;cachetools==4.2.4&#39;,
+            &#39;certifi==2021.10.8&#39;,
+            &#39;charset-normalizer==2.0.9&#39;,
+            &#39;click==8.0.3&#39;,
+            &#39;cloudpickle==2.0.0&#39;,
+            &#39;cycler==0.11.0&#39;,
+            &#39;decorator==5.1.0&#39;,
+            &#39;dgl==0.6.1&#39;,
+            &#39;dgl-cu111==0.6.1&#39;,
+            &#39;dm-tree==0.1.6&#39;,
+            &#39;flake8==4.0.1&#39;,
+            &#39;flatbuffers==2.0&#39;,
+            &#39;fonttools==4.28.5&#39;,
+            &#39;future==0.18.2&#39;,
+            &#39;gast==0.4.0&#39;,
+            &#39;google-auth==2.3.3&#39;,
+            &#39;google-auth-oauthlib==0.4.6&#39;,
+            &#39;google-pasta==0.2.0&#39;,
+            &#39;grpcio==1.43.0&#39;,
+            &#39;h5py==3.6.0&#39;,
+            &#39;idna==3.3&#39;,
+            &#39;importlib-metadata==4.10.0&#39;,
+            &#39;importlib-resources==5.4.0&#39;,
+            &#39;jarvis-tools==2021.12.16&#39;,
+            &#39;joblib==1.1.0&#39;,
+            &#39;jsonschema==4.3.2&#39;,
+            &#39;julia==0.5.6&#39;,
+            &#39;keras==2.7.0&#39;,
+            &#39;Keras-Preprocessing==1.1.2&#39;,
+            &#39;kiwisolver==1.3.2&#39;,
+            &#39;libclang==12.0.0&#39;,
+            &#39;Markdown==3.3.6&#39;,
+            &#39;matbench==0.5&#39;,
+            &#39;matminer==0.6.5&#39;,
+            &#39;matplotlib==3.5.1&#39;,
+            &#39;mccabe==0.6.1&#39;,
+            &#39;modnet==0.1.11&#39;,
+            &#39;monty==2021.8.17&#39;,
+            &#39;mpmath==1.2.1&#39;,
+            &#39;mypy-extensions==0.4.3&#39;,
+            &#39;networkx==2.6.3&#39;,
+            &#39;numpy==1.21.5&#39;,
+            &#39;oauthlib==3.1.1&#39;,
+            &#39;opt-einsum==3.3.0&#39;,
+            &#39;packaging==21.3&#39;,
+            &#39;palettable==3.3.0&#39;,
+            &#39;pandas==1.3.5&#39;,
+            &#39;pathspec==0.9.0&#39;,
+            &#39;Pillow==8.4.0&#39;,
+            &#39;Pint==0.18&#39;,
+            &#39;platformdirs==2.4.0&#39;,
+            &#39;plotly==5.5.0&#39;,
+            &#39;protobuf==3.19.1&#39;,
+            &#39;pyasn1==0.4.8&#39;,
+            &#39;pyasn1-modules==0.2.8&#39;,
+            &#39;pycodestyle==2.8.0&#39;,
+            &#39;pydantic==1.8.2&#39;,
+            &#39;pydocstyle==6.1.1&#39;,
+            &#39;pyflakes==2.4.0&#39;,
+            &#39;pymatgen==2020.8.13&#39;,
+            &#39;pymongo==4.0.1&#39;,
+            &#39;pyparsing==2.4.7&#39;,
+            &#39;pyrsistent==0.18.0&#39;,
+            &#39;python-dateutil==2.8.2&#39;,
+            &#39;pytorch-ignite==0.4.7&#39;,
+            &#39;pytz==2021.3&#39;,
+            &#39;requests==2.26.0&#39;,
+            &#39;requests-oauthlib==1.3.0&#39;,
+            &#39;rsa==4.8&#39;,
+            &#39;ruamel.yaml==0.17.19&#39;,
+            &#39;ruamel.yaml.clib==0.2.6&#39;,
+            &#39;scikit-learn==0.23.2&#39;,
+            &#39;scipy==1.7.3&#39;,
+            &#39;six==1.16.0&#39;,
+            &#39;snowballstemmer==2.2.0&#39;,
+            &#39;spglib==1.16.3&#39;,
+            &#39;sympy==1.9&#39;,
+            &#39;tabulate==0.8.9&#39;,
+            &#39;tenacity==8.0.1&#39;,
+            &#39;tensorboard==2.7.0&#39;,
+            &#39;tensorboard-data-server==0.6.1&#39;,
+            &#39;tensorboard-plugin-wit==1.8.0&#39;,
+            &#39;tensorflow==2.7.0&#39;,
+            &#39;tensorflow-estimator==2.7.0&#39;,
+            &#39;tensorflow-io-gcs-filesystem==0.23.1&#39;,
+            &#39;tensorflow-probability==0.15.0&#39;,
+            &#39;termcolor==1.1.0&#39;,
+            &#39;threadpoolctl==3.0.0&#39;,
+            &#39;tomli==1.2.3&#39;,
+            &#39;toolz==0.11.2&#39;,
+            &#39;torch==1.10.1&#39;,
+            &#39;tqdm==4.62.3&#39;,
+            &#39;typing_extensions==4.0.1&#39;,
+            &#39;uncertainties==3.1.6&#39;,
+            &#39;urllib3==1.26.7&#39;,
+            &#39;Werkzeug==2.0.2&#39;,
+            &#39;wrapt==1.13.3&#39;,
+            &#39;xmltodict==0.12.0&#39;,
+            &#39;zipp==3.6.0&#39;]}
+</code></pre></div>
+<h3 id="task-data">Task data:</h3>
+<h4 id="matbench_dielectric"><code>matbench_dielectric</code></h4>
+<h6 id="fold-scores">Fold scores</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>mae</th>
+<th>rmse</th>
+<th>mape*</th>
+<th>max_error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td>0.1974</td>
+<td>0.6847</td>
+<td>0.0700</td>
+<td>13.6699</td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td>0.3552</td>
+<td>1.4949</td>
+<td>0.1212</td>
+<td>23.3832</td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td>0.4551</td>
+<td>3.1409</td>
+<td>0.1035</td>
+<td>58.7285</td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td>0.3164</td>
+<td>2.2413</td>
+<td>0.0725</td>
+<td>51.3719</td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td>0.4005</td>
+<td>2.2637</td>
+<td>0.1258</td>
+<td>36.5440</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-score-stats">Fold score stats</h6>
+<table>
+<thead>
+<tr>
+<th>metric</th>
+<th>mean</th>
+<th>max</th>
+<th>min</th>
+<th>std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mae</td>
+<td>0.3449</td>
+<td>0.4551</td>
+<td>0.1974</td>
+<td>0.0871</td>
+</tr>
+<tr>
+<td>rmse</td>
+<td>1.9651</td>
+<td>3.1409</td>
+<td>0.6847</td>
+<td>0.8257</td>
+</tr>
+<tr>
+<td>mape*</td>
+<td>0.0986</td>
+<td>0.1258</td>
+<td>0.0700</td>
+<td>0.0236</td>
+</tr>
+<tr>
+<td>max_error</td>
+<td>36.7395</td>
+<td>58.7285</td>
+<td>13.6699</td>
+<td>16.7825</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-parameters">Fold parameters</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>params dict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="matbench_jdft2d"><code>matbench_jdft2d</code></h4>
+<h6 id="fold-scores_1">Fold scores</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>mae</th>
+<th>rmse</th>
+<th>mape*</th>
+<th>max_error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td>37.0106</td>
+<td>85.2042</td>
+<td>23.4970</td>
+<td>649.7056</td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td>45.3752</td>
+<td>121.0872</td>
+<td>0.4163</td>
+<td>767.6072</td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td>58.3624</td>
+<td>172.0326</td>
+<td>0.6282</td>
+<td>973.0735</td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td>31.9625</td>
+<td>55.3213</td>
+<td>0.3025</td>
+<td>275.8517</td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td>44.4110</td>
+<td>153.4614</td>
+<td>0.5874</td>
+<td>1519.7424</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-score-stats_1">Fold score stats</h6>
+<table>
+<thead>
+<tr>
+<th>metric</th>
+<th>mean</th>
+<th>max</th>
+<th>min</th>
+<th>std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mae</td>
+<td>43.4244</td>
+<td>58.3624</td>
+<td>31.9625</td>
+<td>8.9491</td>
+</tr>
+<tr>
+<td>rmse</td>
+<td>117.4213</td>
+<td>172.0326</td>
+<td>55.3213</td>
+<td>42.8697</td>
+</tr>
+<tr>
+<td>mape*</td>
+<td>5.0863</td>
+<td>23.4970</td>
+<td>0.3025</td>
+<td>9.2061</td>
+</tr>
+<tr>
+<td>max_error</td>
+<td>837.1961</td>
+<td>1519.7424</td>
+<td>275.8517</td>
+<td>409.7401</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-parameters_1">Fold parameters</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>params dict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="matbench_log_gvrh"><code>matbench_log_gvrh</code></h4>
+<h6 id="fold-scores_2">Fold scores</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>mae</th>
+<th>rmse</th>
+<th>mape*</th>
+<th>max_error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td>0.0709</td>
+<td>0.1093</td>
+<td>0.0560</td>
+<td>0.9401</td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td>0.0725</td>
+<td>0.1167</td>
+<td>0.0587</td>
+<td>1.1324</td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td>0.0712</td>
+<td>0.1122</td>
+<td>0.0566</td>
+<td>0.7799</td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td>0.0710</td>
+<td>0.1102</td>
+<td>0.0558</td>
+<td>0.8718</td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td>0.0719</td>
+<td>0.1133</td>
+<td>0.0563</td>
+<td>0.7814</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-score-stats_2">Fold score stats</h6>
+<table>
+<thead>
+<tr>
+<th>metric</th>
+<th>mean</th>
+<th>max</th>
+<th>min</th>
+<th>std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mae</td>
+<td>0.0715</td>
+<td>0.0725</td>
+<td>0.0709</td>
+<td>0.0006</td>
+</tr>
+<tr>
+<td>rmse</td>
+<td>0.1123</td>
+<td>0.1167</td>
+<td>0.1093</td>
+<td>0.0026</td>
+</tr>
+<tr>
+<td>mape*</td>
+<td>0.0567</td>
+<td>0.0587</td>
+<td>0.0558</td>
+<td>0.0011</td>
+</tr>
+<tr>
+<td>max_error</td>
+<td>0.9011</td>
+<td>1.1324</td>
+<td>0.7799</td>
+<td>0.1303</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-parameters_2">Fold parameters</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>params dict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="matbench_log_kvrh"><code>matbench_log_kvrh</code></h4>
+<h6 id="fold-scores_3">Fold scores</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>mae</th>
+<th>rmse</th>
+<th>mape*</th>
+<th>max_error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td>0.0552</td>
+<td>0.1062</td>
+<td>0.0361</td>
+<td>1.6438</td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td>0.0572</td>
+<td>0.1158</td>
+<td>0.0375</td>
+<td>1.3470</td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td>0.0531</td>
+<td>0.1017</td>
+<td>0.0351</td>
+<td>1.1254</td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td>0.0615</td>
+<td>0.1187</td>
+<td>0.0442</td>
+<td>1.1145</td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td>0.0569</td>
+<td>0.1105</td>
+<td>0.0379</td>
+<td>1.3937</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-score-stats_3">Fold score stats</h6>
+<table>
+<thead>
+<tr>
+<th>metric</th>
+<th>mean</th>
+<th>max</th>
+<th>min</th>
+<th>std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mae</td>
+<td>0.0568</td>
+<td>0.0615</td>
+<td>0.0531</td>
+<td>0.0028</td>
+</tr>
+<tr>
+<td>rmse</td>
+<td>0.1106</td>
+<td>0.1187</td>
+<td>0.1017</td>
+<td>0.0062</td>
+</tr>
+<tr>
+<td>mape*</td>
+<td>0.0382</td>
+<td>0.0442</td>
+<td>0.0351</td>
+<td>0.0032</td>
+</tr>
+<tr>
+<td>max_error</td>
+<td>1.3249</td>
+<td>1.6438</td>
+<td>1.1145</td>
+<td>0.1955</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-parameters_3">Fold parameters</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>params dict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="matbench_mp_e_form"><code>matbench_mp_e_form</code></h4>
+<h6 id="fold-scores_4">Fold scores</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>mae</th>
+<th>rmse</th>
+<th>mape*</th>
+<th>max_error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td>0.0218</td>
+<td>0.0647</td>
+<td>0.1437</td>
+<td>3.5487</td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td>0.0220</td>
+<td>0.0534</td>
+<td>0.1299</td>
+<td>2.9160</td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td>0.0209</td>
+<td>0.0494</td>
+<td>0.1434</td>
+<td>2.1189</td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td>0.0219</td>
+<td>0.0546</td>
+<td>0.1762</td>
+<td>1.6654</td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td>0.0210</td>
+<td>0.0499</td>
+<td>0.2528</td>
+<td>1.4116</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-score-stats_4">Fold score stats</h6>
+<table>
+<thead>
+<tr>
+<th>metric</th>
+<th>mean</th>
+<th>max</th>
+<th>min</th>
+<th>std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mae</td>
+<td>0.0215</td>
+<td>0.0220</td>
+<td>0.0209</td>
+<td>0.0005</td>
+</tr>
+<tr>
+<td>rmse</td>
+<td>0.0544</td>
+<td>0.0647</td>
+<td>0.0494</td>
+<td>0.0055</td>
+</tr>
+<tr>
+<td>mape*</td>
+<td>0.1692</td>
+<td>0.2528</td>
+<td>0.1299</td>
+<td>0.0445</td>
+</tr>
+<tr>
+<td>max_error</td>
+<td>2.3321</td>
+<td>3.5487</td>
+<td>1.4116</td>
+<td>0.7948</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-parameters_4">Fold parameters</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>params dict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="matbench_mp_gap"><code>matbench_mp_gap</code></h4>
+<h6 id="fold-scores_5">Fold scores</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>mae</th>
+<th>rmse</th>
+<th>mape*</th>
+<th>max_error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td>0.1860</td>
+<td>0.4624</td>
+<td>2.3206</td>
+<td>6.6263</td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td>0.1852</td>
+<td>0.4622</td>
+<td>2.5314</td>
+<td>7.4756</td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td>0.1901</td>
+<td>0.4729</td>
+<td>4.2501</td>
+<td>6.2931</td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td>0.1812</td>
+<td>0.4497</td>
+<td>5.1591</td>
+<td>6.9986</td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td>0.1880</td>
+<td>0.4703</td>
+<td>4.8122</td>
+<td>6.4513</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-score-stats_5">Fold score stats</h6>
+<table>
+<thead>
+<tr>
+<th>metric</th>
+<th>mean</th>
+<th>max</th>
+<th>min</th>
+<th>std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mae</td>
+<td>0.1861</td>
+<td>0.1901</td>
+<td>0.1812</td>
+<td>0.0030</td>
+</tr>
+<tr>
+<td>rmse</td>
+<td>0.4635</td>
+<td>0.4729</td>
+<td>0.4497</td>
+<td>0.0081</td>
+</tr>
+<tr>
+<td>mape*</td>
+<td>3.8147</td>
+<td>5.1591</td>
+<td>2.3206</td>
+<td>1.1723</td>
+</tr>
+<tr>
+<td>max_error</td>
+<td>6.7690</td>
+<td>7.4756</td>
+<td>6.2931</td>
+<td>0.4242</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-parameters_5">Fold parameters</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>params dict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="matbench_mp_is_metal"><code>matbench_mp_is_metal</code></h4>
+<h6 id="fold-scores_6">Fold scores</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>accuracy</th>
+<th>balanced_accuracy</th>
+<th>f1</th>
+<th>rocauc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td>0.9173</td>
+<td>0.9156</td>
+<td>0.9047</td>
+<td>0.9156</td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td>0.9135</td>
+<td>0.9117</td>
+<td>0.9003</td>
+<td>0.9117</td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td>0.9146</td>
+<td>0.9125</td>
+<td>0.9013</td>
+<td>0.9125</td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td>0.9135</td>
+<td>0.9117</td>
+<td>0.9003</td>
+<td>0.9117</td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td>0.9147</td>
+<td>0.9123</td>
+<td>0.9012</td>
+<td>0.9123</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-score-stats_6">Fold score stats</h6>
+<table>
+<thead>
+<tr>
+<th>metric</th>
+<th>mean</th>
+<th>max</th>
+<th>min</th>
+<th>std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>accuracy</td>
+<td>0.9147</td>
+<td>0.9173</td>
+<td>0.9135</td>
+<td>0.0014</td>
+</tr>
+<tr>
+<td>balanced_accuracy</td>
+<td>0.9128</td>
+<td>0.9156</td>
+<td>0.9117</td>
+<td>0.0015</td>
+</tr>
+<tr>
+<td>f1</td>
+<td>0.9015</td>
+<td>0.9047</td>
+<td>0.9003</td>
+<td>0.0016</td>
+</tr>
+<tr>
+<td>rocauc</td>
+<td>0.9128</td>
+<td>0.9156</td>
+<td>0.9117</td>
+<td>0.0015</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-parameters_6">Fold parameters</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>params dict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="matbench_perovskites"><code>matbench_perovskites</code></h4>
+<h6 id="fold-scores_7">Fold scores</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>mae</th>
+<th>rmse</th>
+<th>mape*</th>
+<th>max_error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td>0.0293</td>
+<td>0.0577</td>
+<td>0.0292</td>
+<td>0.8306</td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td>0.0301</td>
+<td>0.0622</td>
+<td>0.0291</td>
+<td>0.9028</td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td>0.0276</td>
+<td>0.0509</td>
+<td>0.0274</td>
+<td>0.8358</td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td>0.0286</td>
+<td>0.0532</td>
+<td>0.0276</td>
+<td>0.7984</td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td>0.0282</td>
+<td>0.0558</td>
+<td>0.0253</td>
+<td>0.8666</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-score-stats_7">Fold score stats</h6>
+<table>
+<thead>
+<tr>
+<th>metric</th>
+<th>mean</th>
+<th>max</th>
+<th>min</th>
+<th>std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mae</td>
+<td>0.0288</td>
+<td>0.0301</td>
+<td>0.0276</td>
+<td>0.0009</td>
+</tr>
+<tr>
+<td>rmse</td>
+<td>0.0559</td>
+<td>0.0622</td>
+<td>0.0509</td>
+<td>0.0039</td>
+</tr>
+<tr>
+<td>mape*</td>
+<td>0.0277</td>
+<td>0.0292</td>
+<td>0.0253</td>
+<td>0.0014</td>
+</tr>
+<tr>
+<td>max_error</td>
+<td>0.8468</td>
+<td>0.9028</td>
+<td>0.7984</td>
+<td>0.0354</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-parameters_7">Fold parameters</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>params dict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="matbench_phonons"><code>matbench_phonons</code></h4>
+<h6 id="fold-scores_8">Fold scores</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>mae</th>
+<th>rmse</th>
+<th>mape*</th>
+<th>max_error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td>33.4099</td>
+<td>57.5251</td>
+<td>0.0623</td>
+<td>394.6285</td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td>28.0306</td>
+<td>44.1719</td>
+<td>0.0571</td>
+<td>277.0146</td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td>29.4772</td>
+<td>53.9163</td>
+<td>0.0575</td>
+<td>300.2450</td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td>29.4931</td>
+<td>62.0127</td>
+<td>0.0571</td>
+<td>615.3466</td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td>27.2814</td>
+<td>49.8790</td>
+<td>0.0521</td>
+<td>528.2511</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-score-stats_8">Fold score stats</h6>
+<table>
+<thead>
+<tr>
+<th>metric</th>
+<th>mean</th>
+<th>max</th>
+<th>min</th>
+<th>std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mae</td>
+<td>29.5385</td>
+<td>33.4099</td>
+<td>27.2814</td>
+<td>2.1148</td>
+</tr>
+<tr>
+<td>rmse</td>
+<td>53.5010</td>
+<td>62.0127</td>
+<td>44.1719</td>
+<td>6.1476</td>
+</tr>
+<tr>
+<td>mape*</td>
+<td>0.0572</td>
+<td>0.0623</td>
+<td>0.0521</td>
+<td>0.0032</td>
+</tr>
+<tr>
+<td>max_error</td>
+<td>423.0972</td>
+<td>615.3466</td>
+<td>277.0146</td>
+<td>130.5836</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-parameters_8">Fold parameters</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>params dict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td><code>{'atom_features': 'cgcnn', 'batch_size': 2, 'classification_threshold': None, 'criterion': 'mse', 'cutoff': 8.0, 'dataset': 'user_data', 'epochs': 3, 'filename': 'sample', 'id_tag': 'jid', 'keep_data_...</code></td>
+</tr>
+</tbody>
+</table>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../matbench_v0.1_CrabNet/" class="md-footer__link md-footer__link--prev" aria-label="Previous: matbench_v0.1: CrabNet" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              matbench_v0.1: CrabNet
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../matbench_v0.1_automatminer_expressv2020/" class="md-footer__link md-footer__link--next" aria-label="Next: matbench_v0.1: AMMExpress v2020" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              matbench_v0.1: AMMExpress v2020
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Materials Project (Maintained by Alex Dunn of HackingMaterials Group)
+          </div>
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+    
+  </body>
+</html>
