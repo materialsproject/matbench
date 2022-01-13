@@ -1,3 +1,10 @@
+Scaled errors for regressions on this leaderboard plot are assessed as the ratio of mean absolute error to mean absolute deviation:
+
+$$
+\text{Scaled Error} = \frac{\text{MAE}}{\text{MAD}} = \frac{\sum_i^N | y_i - y_i^{pred} |}{\sum_i^N | y_i - \bar{y} | }
+$$
+
+
 ## Overview
 
 [Matbench](https://doi.org/10.1038/s41524-020-00406-3) is an [ImageNet](http://www.image-net.org) for **materials science**; a
@@ -8,10 +15,6 @@ disordered metals, and more.
 **The [Matbench python package](https://github.com/hackingmaterials/matbench) provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.**
 
 ![infographic](static/infographic_matbench.png)
-
-
-Scaled error is assessed as:
-
 
 
 ## What can Matbench offer?
@@ -40,12 +43,6 @@ experimental materials data as well as larger datasets from computer modelling m
 
 
 ![breakdown](static/datasets_breakdown_inverted.png)
-
-Where scaled error refers to mean absolute error divided by mean absolute deviation:
-
-$$
-\text{Scaled Error} = \frac{\sum_i^N | y_i - y_i^{pred} |}{\sum_i^N | y_i - \bar{y} | }
-$$
 
 
 Each task in Matbench consists of a three things:

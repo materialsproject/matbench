@@ -1067,10 +1067,12 @@ Others are specialized for particular domains and need a separate comparison for
 <p>General purpose algorithms are valid for all the tasks in a benchmark <strong>using the same human-chosen configuration</strong>.
 Beyond defining a single configuration before beginning a benchmark, a human should not be hand-tuning or informing the algorithm about architecture, parameters, or hyperparameters.
 However, general purpose algorithms can automatically determine hyperparameters and parameters as part of their fitting processes in each fold.</p>
-<p><strong>We include algorithms as "general purpose" to include on the general purpose leaderboard if any one of the following criteria is met for Matbench v0.1:</strong>
- - All 13 tasks are recorded, OR...
- - All 10 regression tasks are recorded, OR...
- - All 9 structure tasks are recorded. If only the 9 structure tasks are recorded, the algorithm is marked with "requires structure".</p>
+<p><strong>We include algorithms as "general purpose" to include on the general purpose leaderboard if any one of the following criteria is met for Matbench v0.1:</strong></p>
+<ul>
+<li>All 13 tasks are recorded, OR...</li>
+<li>All 10 regression tasks are recorded, OR...</li>
+<li>All 9 structure tasks are recorded. If only the 9 structure tasks are recorded, the algorithm is marked with "requires structure".</li>
+</ul>
 <p>General purpose algorithms' results will appear on both the <a href="../..">General Purpose Leaderboard</a> as well as the Task-specific leaderboards.</p>
 <h3 id="task-specific-algorithms">Task specific algorithms</h3>
 <p>Task-specific algorithms can fit on any subset of tasks; for example, a single task. Task-specific algorithms may be valid or specialized only for a subset of the tasks in the benchmark.  </p>
@@ -1166,6 +1168,10 @@ a MAPE of 11% corresponds to <code>mape*=0.11</code>, and a MAPE of 11,000% corr
     
     
       <script src="../../assets/javascripts/bundle.5e13d264.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
