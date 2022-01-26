@@ -1,3 +1,4 @@
 matminer==0.7.4
 monty==2021.8.17
 scikit-learn==1.0.1
+scipy==1.7.3
