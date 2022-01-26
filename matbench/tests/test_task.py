@@ -204,6 +204,15 @@ class TestMatbenchTask(unittest.TestCase):
         self.assertTrue("SHA256 Hash Digest" in mbt.info)
 
     def test_record(self):
+        self._test_record()
+
+    def test_record_std(self):
+        self._test_record(uq_type="std")
+
+    def test_record_ci(self):
+        self._test_record(uq_type="ci")
+
+    def _test_record(self, uq_type=None):
         for ds in self.test_datasets:
             # Testing two scenarios: model is perfect, and model is random
             for model_is_perfect in (True, False):
@@ -230,14 +239,29 @@ class TestMatbenchTask(unittest.TestCase):
                             test_inputs,
                             response_type=mbt.metadata.task_type,
                         )
+
+                    n_response = len(model_response)
+
+                    # uncertainty quantification parameter
+                    uq_param = {}
+                    if uq_type == "ci":
+                        uq_shape = (n_response, n_response)
+                    elif uq_type == "std":
+                        uq_shape = n_response
+                    if uq_type is not None:
+                        uq_param[uq_type] = np.random.rand(uq_shape)
+
+                    dummy_params = {
+                        "test_param": 1,
+                        "other_param": "string",
+                        "hyperparam": True,
+                    }
+
                     mbt.record(
                         fold,
                         predictions=model_response,
-                        params={
-                            "test_param": 1,
-                            "other_param": "string",
-                            "hyperparam": True,
-                        },
+                        params=dummy_params,
+                        **uq_param,
                     )
                     self.assertEqual(
                         len(mbt.results[fold_key].data.values()), len(test_inputs)
