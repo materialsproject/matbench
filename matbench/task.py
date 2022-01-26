@@ -3,7 +3,7 @@ import logging
 
 import numpy as np
 
-from scipy.stats.norm import ppf
+from scipy import stats
 
 from matminer.datasets import get_all_dataset_info
 from matminer.featurizers.conversions import (
@@ -323,8 +323,8 @@ class MatbenchTask(MSONable, MSONable2File):
             # convert std to ci, modified from source:
             # https://github.com/uncertainty-toolbox/uncertainty-toolbox/blob/b2f342f6606d1d667bf9583919a663adf8643efe/uncertainty_toolbox/metrics_scoring_rule.py#L187
             if std is not None and ci is None:
-                pred_l = ppf(0.05, loc=predictions, scale=std)
-                pred_u = ppf(0.95, loc=predictions, scale=std)
+                pred_l = stats.norm.ppf(0.05, loc=predictions, scale=std)
+                pred_u = stats.norm.ppf(0.95, loc=predictions, scale=std)
                 ci = np.hstack(pred_l.ravel(), pred_u.ravel()).tolist()
 
             fold_key = self.folds_map[fold_number]
