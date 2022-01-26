@@ -333,6 +333,11 @@ class MatbenchTask(MSONable, MSONable2File):
                 )
 
             if std is not None or ci is not None:
+                if self.metadata["task_type"] == "classification":
+                    raise ValueError(
+                        "`std` and `ci` are not valid kwargs for classification tasks. See https://github.com/materialsproject/matbench/pull/99/files#issuecomment-1022662192."
+                    )
+
                 if ci is None:
                     # convert std to ci, modified from source:
                     # https://github.com/uncertainty-toolbox/uncertainty-toolbox/blob/b2f342f6606d1d667bf9583919a663adf8643efe/uncertainty_toolbox/metrics_scoring_rule.py#L187
