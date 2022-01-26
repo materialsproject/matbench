@@ -2,6 +2,9 @@ import copy
 import logging
 
 import numpy as np
+
+from scipy.stats.norm import ppf
+
 from matminer.datasets import get_all_dataset_info
 from matminer.featurizers.conversions import (
     StrToComposition,
@@ -273,14 +276,20 @@ class MatbenchTask(MSONable, MSONable2File):
                     [self.metadata.input_type]
                 ]
 
-    def record(self, fold_number, predictions, params=None):
+    def record(self, fold_number, predictions, ci=None, std=None, params=None):
         """Record the test data as well as parameters about the model
         trained on this fold.
 
         Args:
             fold_number (int): The fold number.
-            predictions ([float] or [bool] or np.ndarray): A list
-                of predictions for fold number {fold_number}
+            predictions ([float] or [bool] or np.ndarray): A list of predictions for
+            fold number {fold_number}
+            ci ([tuple] or [list] or np.ndarray): A list of 95% confidence intervals on
+            predictions for fold number {fold_number}. By default None. Only one of `ci`
+            or `std` should be specified, not both.
+            std ([float] or np.ndarray): A list of prediction standard deviations for
+            fold number {fold_number}. By default None. Only one of `ci` or `std` should
+            be specified, not both.
             params (dict): Any free-form parameters for information
                 about the algorithm on this fold. For example,
                 hyperparameters determined during validation. Parameters
@@ -300,6 +309,24 @@ class MatbenchTask(MSONable, MSONable2File):
             if isinstance(predictions, np.ndarray):
                 predictions = predictions.tolist()
 
+            if isinstance(std, np.ndarray):
+                std = std.tolist()
+
+            if isinstance(ci, np.ndarray):
+                ci = ci.tolist()
+
+            if std is not None and ci is not None:
+                raise ValueError(
+                    "Both standard deviation and confidence intervals were specified. Only one should be specified, not both."
+                )
+
+            # convert std to ci, modified from source:
+            # https://github.com/uncertainty-toolbox/uncertainty-toolbox/blob/b2f342f6606d1d667bf9583919a663adf8643efe/uncertainty_toolbox/metrics_scoring_rule.py#L187
+            if std is not None and ci is None:
+                pred_l = ppf(0.05, loc=predictions, scale=std)
+                pred_u = ppf(0.95, loc=predictions, scale=std)
+                ci = np.hstack(pred_l.ravel(), pred_u.ravel()).tolist()
+
             fold_key = self.folds_map[fold_number]
 
             # create map of original df index to prediction, e.g.,
@@ -310,6 +337,12 @@ class MatbenchTask(MSONable, MSONable2File):
                 raise ValueError(
                     f"Prediction outputs must be the same length as the "
                     f"inputs! {len(predictions)} != {len(split_ids)}"
+                )
+
+            if len(ci) != len(split_ids):
+                raise ValueError(
+                    f"Confidence interval outputs (derived from standard deviations if `std` was supplied) must be the same length as the "
+                    f"inputs! {len(ci)} != {len(split_ids)}"
                 )
 
             ids_to_predictions = {split_ids[i]: p for i, p in enumerate(predictions)}
