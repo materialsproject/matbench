@@ -317,15 +317,8 @@ class MatbenchTask(MSONable, MSONable2File):
 
             if std is not None and ci is not None:
                 raise ValueError(
-                    "Both standard deviation and confidence intervals were specified. Only one should be specified, not both."
+                    "Both standard deviation (`std`) and confidence intervals (`ci`) were specified as kwargs. Only one should be specified, not both."
                 )
-
-            # convert std to ci, modified from source:
-            # https://github.com/uncertainty-toolbox/uncertainty-toolbox/blob/b2f342f6606d1d667bf9583919a663adf8643efe/uncertainty_toolbox/metrics_scoring_rule.py#L187
-            if std is not None and ci is None:
-                pred_l = stats.norm.ppf(0.05, loc=predictions, scale=std)
-                pred_u = stats.norm.ppf(0.95, loc=predictions, scale=std)
-                ci = np.hstack(pred_l.ravel(), pred_u.ravel()).tolist()
 
             fold_key = self.folds_map[fold_number]
 
@@ -339,11 +332,19 @@ class MatbenchTask(MSONable, MSONable2File):
                     f"inputs! {len(predictions)} != {len(split_ids)}"
                 )
 
-            if len(ci) != len(split_ids):
-                raise ValueError(
-                    f"Confidence interval outputs (derived from standard deviations if `std` was supplied) must be the same length as the "
-                    f"inputs! {len(ci)} != {len(split_ids)}"
-                )
+            if std is not None or ci is not None:
+                if ci is None:
+                    # convert std to ci, modified from source:
+                    # https://github.com/uncertainty-toolbox/uncertainty-toolbox/blob/b2f342f6606d1d667bf9583919a663adf8643efe/uncertainty_toolbox/metrics_scoring_rule.py#L187
+                    pred_l = stats.norm.ppf(0.05, loc=predictions, scale=std)
+                    pred_u = stats.norm.ppf(0.95, loc=predictions, scale=std)
+                    ci = np.hstack(pred_l.ravel(), pred_u.ravel()).tolist()
+
+                if len(ci) != len(split_ids):
+                    raise ValueError(
+                        f"Confidence interval outputs (derived from standard deviations if `std` was supplied) must be the same length as the "
+                        f"inputs! {len(ci)} != {len(split_ids)}"
+                    )
 
             ids_to_predictions = {split_ids[i]: p for i, p in enumerate(predictions)}
             self.results[fold_key][self._DATA_KEY] = ids_to_predictions
