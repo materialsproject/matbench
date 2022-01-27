@@ -343,7 +343,7 @@ class MatbenchTask(MSONable, MSONable2File):
                     # https://github.com/uncertainty-toolbox/uncertainty-toolbox/blob/b2f342f6606d1d667bf9583919a663adf8643efe/uncertainty_toolbox/metrics_scoring_rule.py#L187
                     pred_l = stats.norm.ppf(0.05, loc=predictions, scale=std)
                     pred_u = stats.norm.ppf(0.95, loc=predictions, scale=std)
-                    ci = np.hstack(pred_l.ravel(), pred_u.ravel()).tolist()
+                    ci = np.hstack((pred_l.ravel(), pred_u.ravel())).tolist()
 
                 if len(ci) != len(split_ids):
                     raise ValueError(
