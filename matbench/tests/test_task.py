@@ -240,16 +240,16 @@ class TestMatbenchTask(unittest.TestCase):
                             response_type=mbt.metadata.task_type,
                         )
 
-                    n_response = len(model_response)
+                    n_test = len(test_inputs)
 
                     # uncertainty quantification parameter
                     uq_param = {}
                     if uq_type == "ci":
-                        uq_shape = (n_response, n_response)
+                        uq_shape = (n_test, n_test)
                     elif uq_type == "std":
-                        uq_shape = n_response
+                        uq_shape = n_test
                     if uq_type is not None:
-                        uq_param[uq_type] = np.random.rand(uq_shape)
+                        uq_param[uq_type] = np.random.rand(*uq_shape)
 
                     dummy_params = {
                         "test_param": 1,
@@ -264,7 +264,7 @@ class TestMatbenchTask(unittest.TestCase):
                         **uq_param,
                     )
                     self.assertEqual(
-                        len(mbt.results[fold_key].data.values()), len(test_inputs)
+                        len(mbt.results[fold_key].data.values()), n_test
                     )
                     self.assertEqual(mbt.results[fold_key].parameters.test_param, 1)
                     self.assertEqual(
