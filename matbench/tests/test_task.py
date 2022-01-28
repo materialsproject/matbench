@@ -253,7 +253,7 @@ class TestMatbenchTask(unittest.TestCase):
                     if uq_type == "ci":
                         uq_shape = (n_test, n_test)
                     elif uq_type == "std":
-                        uq_shape = n_test
+                        uq_shape = (n_test,)
                     if uq_type is not None:
                         uq_param[uq_type] = np.random.rand(*uq_shape)
 
