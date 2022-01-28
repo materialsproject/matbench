@@ -3,6 +3,7 @@ import glob
 import json
 import os
 import unittest
+from warnings import warn
 
 import numpy as np
 import pandas as pd
@@ -214,6 +215,11 @@ class TestMatbenchTask(unittest.TestCase):
 
     def _test_record(self, uq_type=None):
         for ds in self.test_datasets:
+            if ds == "matbench_glass":
+                uq_type = None
+                warn(
+                    "Overriding uq_type as None due to incompatibility with classification tasks (expected behavior)."
+                )
             # Testing two scenarios: model is perfect, and model is random
             for model_is_perfect in (True, False):
                 mbt = MatbenchTask(ds, autoload=False)
