@@ -74,6 +74,7 @@ class MatbenchTask(MSONable, MSONable2File):
     _BENCHMARK_KEY = "benchmark_name"
     _DATASET_KEY = "dataset_name"
     _DATA_KEY = "data"
+    _UNCERTAINTY_KEY = "uncertainty"
     _PARAMS_KEY = "parameters"
     _SCORES_KEY = "scores"
 
@@ -332,6 +333,9 @@ class MatbenchTask(MSONable, MSONable2File):
                     f"inputs! {len(predictions)} != {len(split_ids)}"
                 )
 
+            ids_to_predictions = {split_ids[i]: p for i, p in enumerate(predictions)}
+            self.results[fold_key][self._DATA_KEY] = ids_to_predictions
+
             if std is not None or ci is not None:
                 if self.metadata["task_type"] == "classification":
                     raise ValueError(
@@ -339,11 +343,17 @@ class MatbenchTask(MSONable, MSONable2File):
                     )
 
                 if ci is None:
+                    low_p = 0.05
+                    high_p = 0.95
+                    # convert from two-tail to one-tail probabilities for compatibility with `ppf` #https://stackoverflow.com/a/29562808/13697228
+                    low_p = low_p / 2.0
+                    high_p = (1 + high_p) / 2.0
                     # convert std to ci, modified from source:
                     # https://github.com/uncertainty-toolbox/uncertainty-toolbox/blob/b2f342f6606d1d667bf9583919a663adf8643efe/uncertainty_toolbox/metrics_scoring_rule.py#L187
-                    pred_l = stats.norm.ppf(0.05, loc=predictions, scale=std)
-                    pred_u = stats.norm.ppf(0.95, loc=predictions, scale=std)
-                    ci = np.hstack((pred_l.ravel(), pred_u.ravel())).tolist()
+                    pred_l = stats.norm.ppf(low_p, loc=predictions, scale=std)
+                    pred_u = stats.norm.ppf(high_p, loc=predictions, scale=std)
+                    ci = np.vstack((pred_l.ravel(), pred_u.ravel())).T.tolist()
+                    ci = [tuple(c) for c in ci]
 
                 if len(ci) != len(split_ids):
                     raise ValueError(
@@ -351,8 +361,11 @@ class MatbenchTask(MSONable, MSONable2File):
                         f"inputs! {len(ci)} != {len(split_ids)}"
                     )
 
-            ids_to_predictions = {split_ids[i]: p for i, p in enumerate(predictions)}
-            self.results[fold_key][self._DATA_KEY] = ids_to_predictions
+                ids_to_uncertainties = {
+                    split_ids[i]: {"ci_lower": p[0], "ci_upper": p[1]}
+                    for i, p in enumerate(ci)
+                }
+                self.results[fold_key][self._UNCERTAINTY_KEY] = ids_to_uncertainties
 
             if not isinstance(params, (dict, type(None))):
                 raise TypeError(

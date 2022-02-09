@@ -208,6 +208,22 @@ class TestMatbenchTask(unittest.TestCase):
         self._test_record()
 
     def test_record_std(self):
+        # ensure that conversion from std to ci is correct
+        mbt = MatbenchTask(self.test_datasets[0], autoload=True)
+        _, test_outputs = mbt.get_test_data(0, as_type="tuple", include_target=True)
+        n_test = len(test_outputs)
+        mbt.record(0, [0.0] * n_test, std=[1.0] * n_test)
+        ci_0_0 = list(mbt.results["fold_0"]["uncertainty"].items())[0][1]
+        ci_lower = ci_0_0["ci_lower"]
+        ci_upper = ci_0_0["ci_upper"]
+        # mean:0 std:1, 95% CI-->c.a. 1.96 https://stackoverflow.com/a/29562808/13697228
+        ci_upp_check = 1.959963984540054
+        ci_low_check = -ci_upp_check
+        msg = f"Conversion from normal distribution standard deviation to lower 95% confidence bound ({ci_upper}) is not within tolerance of expected confidence bound ({ci_upp_check})"
+        self.assertAlmostEqual(ci_upper, ci_upp_check, msg=msg)
+        msg = f"Conversion from normal distribution standard deviation to upper 95% confidence bound ({ci_lower}) is not within tolerance of expected confidence bound ({ci_low_check})"
+
+        # carry out test as normal
         self._test_record(uq_type="std")
 
     def test_record_ci(self):
@@ -251,7 +267,7 @@ class TestMatbenchTask(unittest.TestCase):
                     # uncertainty quantification parameter
                     uq_param = {}
                     if uq_type == "ci":
-                        uq_shape = (n_test, n_test)
+                        uq_shape = (n_test, 2)
                     elif uq_type == "std":
                         uq_shape = (n_test,)
                     if uq_type is not None:
