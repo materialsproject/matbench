@@ -222,6 +222,7 @@ class TestMatbenchTask(unittest.TestCase):
         msg = f"Conversion from normal distribution standard deviation to lower 95% confidence bound ({ci_upper}) is not within tolerance of expected confidence bound ({ci_upp_check})"
         self.assertAlmostEqual(ci_upper, ci_upp_check, msg=msg)
         msg = f"Conversion from normal distribution standard deviation to upper 95% confidence bound ({ci_lower}) is not within tolerance of expected confidence bound ({ci_low_check})"
+        self.assertAlmostEqual(ci_lower, ci_low_check, msg=msg)
 
         # carry out test as normal
         self._test_record(uq_type="std")
