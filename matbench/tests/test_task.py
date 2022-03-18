@@ -228,6 +228,20 @@ class TestMatbenchTask(unittest.TestCase):
         self._test_record(uq_type="std")
 
     def test_record_ci(self):
+        # ensure that conversion from ci to std is correct
+        mbt = MatbenchTask(self.test_datasets[0], autoload=True)
+        _, test_outputs = mbt.get_test_data(0, as_type="tuple", include_target=True)
+        n_test = len(test_outputs)
+        ci_upper = 1.959963984540054
+        ci_lower = -ci_upper
+        mbt.record(0, [0.0] * n_test, ci=[[ci_lower, ci_upper]] * n_test)
+        ci_0_0 = list(mbt.results["fold_0"]["uncertainty"].items())[0][1]
+        std = ci_0_0["std"]
+        std_check = 1.0
+        # mean:0 std:1, 95% CI-->c.a. 1.96 https://stackoverflow.com/a/29562808/13697228
+        msg = f"Conversion from symmetric 95% confidence bounds to standard deviation ({std}) is not within tolerance of expected confidence bound ({std_check})"
+        self.assertAlmostEqual(std, std_check, msg=msg)
+
         self._test_record(uq_type="ci")
 
     def _test_record(self, uq_type=None):
@@ -272,7 +286,7 @@ class TestMatbenchTask(unittest.TestCase):
                     elif uq_type == "std":
                         uq_shape = (n_test,)
                     if uq_type is not None:
-                        uq_param[uq_type] = np.random.rand(*uq_shape)
+                        uq_param[uq_type] = 2 * np.random.rand(*uq_shape)
 
                     dummy_params = {
                         "test_param": 1,
