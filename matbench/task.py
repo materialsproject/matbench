@@ -355,6 +355,17 @@ class MatbenchTask(MSONable, MSONable2File):
                     ci = np.vstack((pred_l.ravel(), pred_u.ravel())).T.tolist()
                     ci = [tuple(c) for c in ci]
 
+                if std is None:
+                    # std will be calculated and stored iff ci is symmetric within tol
+                    pred_l, pred_u = np.hsplit(np.array(ci), 2)
+                    if np.allclose(-pred_l, pred_u):
+                        high_p = 0.95
+                        # convert from two-tail to one-tail probabilities for compatibility with `ppf` #https://stackoverflow.com/a/29562808/13697228
+                        high_p = (1 + high_p) / 2.0
+                        std = (pred_u - pred_l) / (2 * stats.norm.ppf(high_p))
+                    else:
+                        std = [None] * len(ci)
+
                 if len(ci) != len(split_ids):
                     raise ValueError(
                         f"Confidence interval outputs (derived from standard deviations if `std` was supplied) must be the same length as the "
@@ -362,8 +373,8 @@ class MatbenchTask(MSONable, MSONable2File):
                     )
 
                 ids_to_uncertainties = {
-                    split_ids[i]: {"ci_lower": p[0], "ci_upper": p[1]}
-                    for i, p in enumerate(ci)
+                    split_ids[i]: {"ci_lower": p[0], "ci_upper": p[1], "std": s}
+                    for i, (p, s) in enumerate(zip(ci, std))
                 }
                 self.results[fold_key][self._UNCERTAINTY_KEY] = ids_to_uncertainties
 
