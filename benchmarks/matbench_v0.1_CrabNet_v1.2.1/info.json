@@ -1,0 +1,19 @@
+{
+    "authors": "Sterling G. Baird, Marianne Liu, Taylor D. Sparks",
+    "algorithm": "CrabNet v1.2.1",
+    "algorithm_long": "Fit CrabNet with default hyperparameters to serve as a baseline for Ax+CrabNet v1.2.1.",
+    "bibtex_refs": [
+        "@article{Wang2021crabnet,  author = {Wang, Anthony Yu-Tung and Kauwe, Steven K. and Murdock, Ryan J. and Sparks, Taylor D.},  year = {2021},  title = {Compositionally restricted attention-based network for materials property predictions},  pages = {77},  volume = {7},  number = {1},  doi = {10.1038/s41524-021-00545-1},  publisher = {{Nature Publishing Group}},  shortjournal = {npj Comput. Mater.},  journal = {npj Computational Materials}",
+        "@article{wang_kauwe_murdock_sparks_2021, place={Cambridge}, title={Compositionally-Restricted Attention-Based Network for Materials Property Prediction}, DOI={10.26434/chemrxiv.11869026.v3}, journal={ChemRxiv}, publisher={Cambridge Open Engage}, author={Wang, Anthony and Kauwe, Steven and Murdock, Ryan and Sparks, Taylor}, year={2021}} This content is a preprint and has not been peer-reviewed."
+    ],
+    "notes": "A Jupyter notebook is provided which contains additional details about the run of the algorithm.",
+    "requirements": {
+        "python": [
+            [
+                "crabnet==1.2.1",
+                "scikit_learn==1.0.2",
+                "matbench==0.5"
+            ]
+        ]
+    }
+}
