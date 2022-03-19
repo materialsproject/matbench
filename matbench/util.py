@@ -66,7 +66,7 @@ class MSONable2File:
     @classmethod
     def from_file(cls, filename):
         with open(filename, "r") as f:
-            d = json.load(f)
+            d = json.loads(f.read())
         return cls.from_dict(d)
 
 

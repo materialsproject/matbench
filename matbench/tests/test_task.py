@@ -402,7 +402,7 @@ class TestMatbenchTask(unittest.TestCase):
             truth_fname = os.path.join(TEST_DIR, f"msonability_{ds}.json")
 
             with open(truth_fname, "r") as f:
-                truth = json.load(f)
+                truth = json.loads(f.read())
             MatbenchTask.from_file(truth_fname)
             MatbenchTask.from_dict(truth)
 

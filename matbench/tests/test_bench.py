@@ -118,7 +118,7 @@ class TestMatbenchBenchmark(unittest.TestCase):
         self.assertDictEqual(example_metadata, mb.user_metadata)
 
         with open(self.static_full_bench_json, "r") as f:
-            d_truth = json.load(f)
+            d_truth = json.loads(f.read())
 
         # Test if hash is wrong (hash error should occur)
         d_test = copy.deepcopy(d_truth)
