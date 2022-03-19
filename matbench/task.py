@@ -470,15 +470,19 @@ class MatbenchTask(MSONable, MSONable2File):
                 k for k in self.results[fold_key] if k not in req_subfold_keys
             ]
             if self._UNCERTAINTY_KEY in extra_subfold_keys:
-                extra_subfold_keys.pop(self._UNCERTAINTY_KEY)
+                extra_subfold_keys.remove(self._UNCERTAINTY_KEY)
             if extra_subfold_keys:
                 raise KeyError(
                     f"Extra keys {extra_subfold_keys} for fold results of "
                     f"'{fold_key}' for task {self.dataset_name}  not allowed."
                 )
+            req_subfold_keys.append(self._UNCERTAINTY_KEY)
             for subkey in req_subfold_keys:
                 fold_results = self.results[fold_key]
-                if subkey not in fold_results:
+                if (
+                    subkey is not self._UNCERTAINTY_KEY
+                    and subkey not in fold_results
+                ):
                     raise KeyError(
                         f"Required key '{subkey}' for task {self.dataset_name} "
                         f"not found for fold '{fold_key}'."
@@ -567,7 +571,10 @@ class MatbenchTask(MSONable, MSONable2File):
                         pass
 
                 elif subkey == self._UNCERTAINTY_KEY:
-                    uncertainties = self.results[fold_key][subkey]
+                    if self._UNCERTAINTY_KEY in self.results[fold_key].keys():
+                        uncertainties = self.results[fold_key][subkey]
+                    else:
+                        uncertainties = None
                     if uncertainties is not None:
                         std = uncertainties["std"]
                         ci = uncertainties["ci"]
