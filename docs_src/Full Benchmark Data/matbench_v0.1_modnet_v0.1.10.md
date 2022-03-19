@@ -2,7 +2,7 @@
 
 ### Algorithm description: 
 
-MODNet, the Materials Optimal Descriptor Network (v0.1.10). A feed-forward neural network, using all compatible matminer features and a relevance-redundancy based feature selection algorithm. Hyperparameter optimisation is performed with a nested grid search. Benchmark results were loaded from https://github.com/ml-evs/modnet-matbench.
+MODNet, the Materials Optimal Descriptor Network (v0.1.10). A feed-forward neural network, using all compatible matminer features and a relevance-redundancy based feature selection algorithm. Hyperparameter optimisation is performed with a nested grid search for the 9 smaller tasks, and with a genetic algorithm for the 4 larger tasks (`matbench_perovskites`, `matbench_mp_gap`, `matbench_mp_is_metal`, `matbench_mp_eform`. Benchmark results were loaded from https://github.com/ml-evs/modnet-matbench/releases/tag/v0.3.0, archived at [10.5281/zenodo.5562338](https://doi.org/10.5281/zenodo.5562338).
 
 #### Notes:
 None
