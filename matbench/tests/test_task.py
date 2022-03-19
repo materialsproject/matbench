@@ -216,12 +216,17 @@ class TestMatbenchTask(unittest.TestCase):
         ci_0_0 = list(mbt.results["fold_0"]["uncertainty"].items())[0][1]
         ci_lower = ci_0_0["ci_lower"]
         ci_upper = ci_0_0["ci_upper"]
-        # mean:0 std:1, 95% CI-->c.a. 1.96 https://stackoverflow.com/a/29562808/13697228
+        # mean:0 std:1, 95% CI-->c.a. 1.96
+        # https://stackoverflow.com/a/29562808/13697228
         ci_upp_check = 1.959963984540054
         ci_low_check = -ci_upp_check
-        msg = f"Conversion from normal distribution standard deviation to lower 95% confidence bound ({ci_upper}) is not within tolerance of expected confidence bound ({ci_upp_check})"
+        msg = f"""Conversion from normal distribution standard deviation to
+        lower 95% confidence bound ({ci_upper}) is not within tolerance of
+        expected confidence bound ({ci_upp_check})"""
         self.assertAlmostEqual(ci_upper, ci_upp_check, msg=msg)
-        msg = f"Conversion from normal distribution standard deviation to upper 95% confidence bound ({ci_lower}) is not within tolerance of expected confidence bound ({ci_low_check})"
+        msg = f"""Conversion from normal distribution standard deviation
+        to upper 95% confidence bound ({ci_lower}) is not within tolerance
+        of expected confidence bound ({ci_low_check})"""
         self.assertAlmostEqual(ci_lower, ci_low_check, msg=msg)
 
         # carry out test as normal
@@ -238,8 +243,11 @@ class TestMatbenchTask(unittest.TestCase):
         ci_0_0 = list(mbt.results["fold_0"]["uncertainty"].items())[0][1]
         std = ci_0_0["std"]
         std_check = 1.0
-        # mean:0 std:1, 95% CI-->c.a. 1.96 https://stackoverflow.com/a/29562808/13697228
-        msg = f"Conversion from symmetric 95% confidence bounds to standard deviation ({std}) is not within tolerance of expected confidence bound ({std_check})"
+        # mean:0 std:1, 95% CI-->c.a. 1.96
+        # https://stackoverflow.com/a/29562808/13697228
+        msg = f"""Conversion from symmetric 95% confidence bounds to
+        standard deviation ({std}) is not within tolerance of expected
+        confidence bound ({std_check})"""
         self.assertAlmostEqual(std, std_check, msg=msg)
 
         self._test_record(uq_type="ci")
@@ -249,7 +257,8 @@ class TestMatbenchTask(unittest.TestCase):
             if ds == "matbench_glass":
                 uq_type = None
                 warn(
-                    "Overriding uq_type as None due to incompatibility with classification tasks (expected behavior)."
+                    """Overriding uq_type as None due to incompatibility
+                     with classification tasks (expected behavior)."""
                 )
             # Testing two scenarios: model is perfect, and model is random
             for model_is_perfect in (True, False):
