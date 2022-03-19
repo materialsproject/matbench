@@ -465,15 +465,12 @@ class MatbenchTask(MSONable, MSONable2File):
 
             # Check for extra or missing keys inside each fold:
             # need params, scores, and data.
-            req_subfold_keys = [
-                self._SCORES_KEY,
-                self._DATA_KEY,
-                self._PARAMS_KEY,
-                self._UNCERTAINTY_KEY,
-            ]
+            req_subfold_keys = [self._SCORES_KEY, self._DATA_KEY, self._PARAMS_KEY]
             extra_subfold_keys = [
                 k for k in self.results[fold_key] if k not in req_subfold_keys
             ]
+            if self._UNCERTAINTY_KEY in extra_subfold_keys:
+                extra_subfold_keys.pop(self._UNCERTAINTY_KEY)
             if extra_subfold_keys:
                 raise KeyError(
                     f"Extra keys {extra_subfold_keys} for fold results of "
