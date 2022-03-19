@@ -384,6 +384,8 @@ class MatbenchTask(MSONable, MSONable2File):
                     for i, (p, s) in enumerate(zip(ci, std))
                 }
                 self.results[fold_key][self._UNCERTAINTY_KEY] = ids_to_uncertainties
+            else:
+                self.results[fold_key][self._UNCERTAINTY_KEY] = None
 
             if not isinstance(params, (dict, type(None))):
                 raise TypeError(
@@ -569,34 +571,35 @@ class MatbenchTask(MSONable, MSONable2File):
 
                 elif subkey == self._UNCERTAINTY_KEY:
                     uncertainties = self.results[fold_key][subkey]
-                    std = uncertainties["std"]
-                    ci = uncertainties["ci"]
+                    if uncertainties is not None:
+                        std = uncertainties["std"]
+                        ci = uncertainties["ci"]
 
-                    if all(isinstance(s, float) for s in std):
-                        if any(isinstance(c, float) for c in ci):
-                            if not all(isinstance(c, float) for c in ci):
+                        if all(isinstance(s, float) for s in std):
+                            if any(isinstance(c, float) for c in ci):
+                                if not all(isinstance(c, float) for c in ci):
+                                    raise ValueError(
+                                        "std specified for all samples "
+                                        "but ci not specified for some."
+                                    )
+                        else:
+                            if any(isinstance(s, float) for s in std):
                                 raise ValueError(
-                                    "std specified for all samples "
-                                    "but ci not specified for some."
+                                    "std is specified for some, but not for all."
                                 )
-                    else:
-                        if any(isinstance(s, float) for s in std):
-                            raise ValueError(
-                                "std is specified for some, but not for all."
-                            )
 
-                    if all(isinstance(c, float) for c in ci):
-                        if any(isinstance(s, float) for s in std):
-                            if not all(isinstance(s, float) for s in std):
+                        if all(isinstance(c, float) for c in ci):
+                            if any(isinstance(s, float) for s in std):
+                                if not all(isinstance(s, float) for s in std):
+                                    raise ValueError(
+                                        "ci specified for all samples "
+                                        "but ci not specified for some."
+                                    )
+                        else:
+                            if any(isinstance(c, float) for c in ci):
                                 raise ValueError(
-                                    "ci specified for all samples "
-                                    "but ci not specified for some."
+                                    "ci is specified for some, but not for all."
                                 )
-                    else:
-                        if any(isinstance(c, float) for c in ci):
-                            raise ValueError(
-                                "ci is specified for some, but not for all."
-                            )
 
                 # Params key has no required form;
                 # it is up to the model to determine it.
