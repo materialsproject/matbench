@@ -63,7 +63,7 @@ This file is the `MatbenchBenchmark` you saved during your benchmark. You can fi
   - `"algorithm_long"`: A longer description of your algorithm, to be shown as details for your results. Can be up to 1000 words.
   - `"bibtex_refs"`: A comprehensive list of references for your algorithm, including manuscripts and preprints for the algorithm itself, each formatted as bibtex.
   - `"notes"`: Any other freeform notes you'd like to include as details for your algorithm/submission. Can include things like computing resources used to train/run the algorithm, methodology, alternative configurations, links, etc.
-  - `"requirements"`: A dictionary of software requirements for running your algorithm. In particular, installing these should ensure your [Source files](#source-files) run without issues. Please include the matbench version in these requirments.
+  - `"requirements"`: A dictionary of software requirements for running your algorithm. In particular, installing these should ensure your [Source files](#source-files) run without issues. Please include the matbench version in these requirements.
 
 
 Here's an template `info.json` you can copy+paste and edit to get started:

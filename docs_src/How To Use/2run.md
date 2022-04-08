@@ -99,7 +99,7 @@ not large arrays or weight matrices.
 
 ### User metadata for benchmark
 
-Add arbitrary metadata about your algorthm, in `dict` format, to the benchmark. This will be included as shown on the benchmark leaderboard on the website.
+Add arbitrary metadata about your algorithm, in `dict` format, to the benchmark. This will be included as shown on the benchmark leaderboard on the website.
 
 ```python
 
