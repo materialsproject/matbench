@@ -75,7 +75,7 @@ df = df.reset_index(drop=True)
 
 for target in ["K_VRH", "G_VRH", "log10(K_VRH)", "log10(G_VRH)"]:
     dftemp = df[["structure", target]]
-    dftemp.to_pickle("elasticity_{}.pickle.gz".format(target))
+    dftemp.to_pickle(f"elasticity_{target}.pickle.gz")
 
 for s in df["structure"]:
     if any([e.is_noble_gas for e in s.composition.elements]):

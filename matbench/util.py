@@ -36,13 +36,13 @@ class RecursiveDotDict(dict):
     def __setitem__(self, key, value):
         if isinstance(value, dict) and not isinstance(value, RecursiveDotDict):
             value = RecursiveDotDict(value)
-        super(RecursiveDotDict, self).__setitem__(key, value)
+        super().__setitem__(key, value)
 
     def __getitem__(self, key):
         found = self.get(key, RecursiveDotDict.MARKER)
         if found is RecursiveDotDict.MARKER:
             found = RecursiveDotDict()
-            super(RecursiveDotDict, self).__setitem__(key, found)
+            super().__setitem__(key, found)
         return found
 
     __setattr__, __getattr__ = __setitem__, __getitem__
@@ -71,8 +71,8 @@ class MSONable2File:
 
     @classmethod
     def from_file(cls, filename):
-        with open(filename, "r") as f:
-            d = json.loads(f.read())
+        with open(filename) as f:
+            d = json.load(f)
         return cls.from_dict(d)
 
 

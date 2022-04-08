@@ -65,7 +65,7 @@ class TestUtils(unittest.TestCase):
 
         self.assertTrue(os.path.exists(self.log_file))
 
-        with open(self.log_file, "r") as f:
+        with open(self.log_file) as f:
             logtxt = f.read()
             self.assertIn("INFO", logtxt)
             self.assertIn("DEBUG", logtxt)

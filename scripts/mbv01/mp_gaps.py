@@ -81,4 +81,4 @@ print(df)
 # df.to_pickle("mp_is_metal.pickle.gz")
 for target in ["gap pbe", "is_metal"]:
     dftemp = df[["structure", target]]
-    dftemp.to_pickle("mp_{}.pickle.gz".format(target))
+    dftemp.to_pickle(f"mp_{target}.pickle.gz")
