@@ -110,6 +110,16 @@ class MatbenchTask(MSONable, MSONable2File):
         self.folds = self.folds_nums
         self.results = RecursiveDotDict({})
 
+    def __repr__(self) -> str:
+        keys = "input_type mad n_samples target task_type unit".split()
+
+        md_str = ",\n  ".join(f"{k}={self.metadata[k]}" for k in keys)
+
+        return (
+            f"{type(self).__name__}(\n  dataset_name={self.dataset_name},\n  version"
+            f"={self.benchmark_name.replace('matbench_v', '')},\n  {md_str},\n)"
+        )
+
     def _get_data_from_df(self, ids, as_type):
         """Private function to get fold data from the task dataframe.
 
