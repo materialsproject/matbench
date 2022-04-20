@@ -47,6 +47,12 @@ class RecursiveDotDict(dict):
 
     __setattr__, __getattr__ = __setitem__, __getitem__
 
+    def __getstate__(self):
+        return self.__dict__
+
+    def __setstate__(self, d):
+        self.__dict__.update(d)
+
 
 class MSONable2File:
     """
