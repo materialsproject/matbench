@@ -102,7 +102,7 @@ def score_array(true_array, pred_array, task_type):
         metrics = CLF_METRICS
     else:
         raise ValueError(
-            f"'task_type' must be on of {[REG_KEY, CLF_KEY]}, not '{task_type}'"
+            f"'task_type' must be one of {[REG_KEY, CLF_KEY]}, not '{task_type}'"
         )
 
     for metric in metrics:

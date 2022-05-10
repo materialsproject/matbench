@@ -514,7 +514,7 @@ class MatbenchTask(MSONable, MSONable2File):
         regression problems.
 
         Returns:
-            (dict): A dictionary of all the scores for this
+            (dict): A dictionary of all the scores for this task.
         """
         metric_keys = (
             REG_METRICS if self.metadata.task_type == REG_KEY else CLF_METRICS
