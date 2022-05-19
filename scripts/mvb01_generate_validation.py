@@ -1,17 +1,21 @@
-import os
-import json
-
+import pandas as pd
 from monty.serialization import dumpfn
 from sklearn.model_selection import KFold, StratifiedKFold
 
+from matbench.constants import (
+    CLF_KEY,
+    REG_KEY,
+    TEST_KEY,
+    TRAIN_KEY,
+    VALIDATION_METADATA_KEY,
+    VALIDATION_SPLIT_KEY,
+)
 from matbench.data_ops import load
-from matbench.constants import REG_KEY, CLF_KEY, VALIDATION_METADATA_KEY, VALIDATION_SPLIT_KEY, TRAIN_KEY, TEST_KEY
 from matbench.metadata import mbv01_metadata
 
-import pandas as pd
-pd.set_option('display.max_rows', 500)
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.width', 1000)
+pd.set_option("display.max_rows", 500)
+pd.set_option("display.max_columns", 500)
+pd.set_option("display.width", 1000)
 
 
 def matbench_v01():
@@ -50,9 +54,9 @@ def matbench_v01():
         VALIDATION_METADATA_KEY: {
             "n_splits": 5,
             "random_state": 18012019,
-            "shuffle": True
+            "shuffle": True,
         },
-        VALIDATION_SPLIT_KEY: None
+        VALIDATION_SPLIT_KEY: None,
     }
 
     kfold_config = d[VALIDATION_METADATA_KEY]
@@ -69,7 +73,8 @@ def matbench_v01():
             kfold = StratifiedKFold(**kfold_config)
         else:
             raise ValueError(
-                f"'problem_type' must be one of {[REG_KEY, CLF_KEY]}, not '{task_type}'.")
+                f"'problem_type' must be one of {[REG_KEY, CLF_KEY]}, not '{task_type}'."
+            )
 
         df = load(ds)
         print(df)
@@ -93,8 +98,6 @@ def matbench_v01():
 
     print("Writing file...")
     dumpfn(d, "../matbench/matbench_v0.1_validation.json")
-
-
 
 
 if __name__ == "__main__":
