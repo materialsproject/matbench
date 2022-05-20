@@ -2,7 +2,7 @@
 
 ### Algorithm description: 
 
-Dummy regressor, using strategy 'mean', and Dummy regressor, using strategy 'stratified'.
+Dummy regressor, using strategy 'mean', and Dummy classifier, using strategy 'stratified'.
 
 #### Notes:
 No notes.
