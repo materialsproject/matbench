@@ -1,0 +1,1485 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A benchmark and leaderboard for predicting materials properties">
+      
+      
+      
+      <link rel="icon" href="../../static/matbench_logo_favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>matbench_v0.1: Ax(10/90)+CrabNet v1.2.7 - MatBench</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#757575">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="green">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#matbench_v01-ax1090crabnet-v127" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="MatBench" class="md-header__button md-logo" aria-label="MatBench" data-md-component="logo">
+      
+  <img src="../../static/matbench_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MatBench
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              matbench_v0.1: Ax(10/90)+CrabNet v1.2.7
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hackingmaterials/matbench" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      Leaderboard
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Benchmark%20Info/matbench_v0.1/" class="md-tabs__link">
+        Benchmark Info
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
+        Full Benchmark Data
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../How%20To%20Use/1install/" class="md-tabs__link">
+        How To Use
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_dielectric/" class="md-tabs__link">
+        Leaderboards Per Task
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Reference/MatbenchBenchmark/" class="md-tabs__link">
+        Reference
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MatBench" class="md-nav__button md-logo" aria-label="MatBench" data-md-component="logo">
+      
+  <img src="../../static/matbench_logo.png" alt="logo">
+
+    </a>
+    MatBench
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hackingmaterials/matbench" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Leaderboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Benchmark Info
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Benchmark Info" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Benchmark Info
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Benchmark%20Info/matbench_v0.1/" class="md-nav__link">
+        Benchmark info for `matbench_v0.1`
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Benchmark%20Info/notes/" class="md-nav__link">
+        Notes on Benchmarking
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Full Benchmark Data
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Full Benchmark Data" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Full Benchmark Data
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          matbench_v0.1: Ax(10/90)+CrabNet v1.2.7
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        matbench_v0.1: Ax(10/90)+CrabNet v1.2.7
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#algorithm-description" class="md-nav__link">
+    Algorithm description:
+  </a>
+  
+    <nav class="md-nav" aria-label="Algorithm description:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-in-bibtex-format" class="md-nav__link">
+    References (in bibtex format):
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-metadata" class="md-nav__link">
+    User metadata:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metadata" class="md-nav__link">
+    Metadata:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-requirements" class="md-nav__link">
+    Software Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-data" class="md-nav__link">
+    Task data:
+  </a>
+  
+    <nav class="md-nav" aria-label="Task data:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matbench_expt_gap" class="md-nav__link">
+    matbench_expt_gap
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_expt_gap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_Ax_CrabNet_v1.2.1/" class="md-nav__link">
+        matbench_v0.1: Ax+CrabNet v1.2.1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_Ax_SAASBO_CrabNet_v1.2.7/" class="md-nav__link">
+        matbench_v0.1: Ax/SAASBO CrabNet v1.2.7
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_CrabNet/" class="md-nav__link">
+        matbench_v0.1: CrabNet
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_CrabNet_v1.2.1/" class="md-nav__link">
+        matbench_v0.1: CrabNet v1.2.1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_alignn/" class="md-nav__link">
+        matbench_v0.1: ALIGNN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_automatminer_expressv2020/" class="md-nav__link">
+        matbench_v0.1: AMMExpress v2020
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_cgcnnv2019/" class="md-nav__link">
+        matbench_v0.1: CGCNN v2019
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_dummy/" class="md-nav__link">
+        matbench_v0.1: Dummy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_modnet_v0.1.10/" class="md-nav__link">
+        matbench_v0.1: MODNet (v0.1.10)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_rf/" class="md-nav__link">
+        matbench_v0.1: RF-SCM/Magpie
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          How To Use
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How To Use" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          How To Use
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/1install/" class="md-nav__link">
+        1 - Install matbench
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/2run/" class="md-nav__link">
+        2 - Run benchmark on algorithm
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/3submit/" class="md-nav__link">
+        3 - Submit to leaderboard
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/advanced/" class="md-nav__link">
+        Advanced usage
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Leaderboards Per Task
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Leaderboards Per Task" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Leaderboards Per Task
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_dielectric/" class="md-nav__link">
+        matbench_v0.1 matbench_dielectric
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_expt_gap/" class="md-nav__link">
+        matbench_v0.1 matbench_expt_gap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_expt_is_metal/" class="md-nav__link">
+        matbench_v0.1 matbench_expt_is_metal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_glass/" class="md-nav__link">
+        matbench_v0.1 matbench_glass
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_jdft2d/" class="md-nav__link">
+        matbench_v0.1 matbench_jdft2d
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_log_gvrh/" class="md-nav__link">
+        matbench_v0.1 matbench_log_gvrh
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_log_kvrh/" class="md-nav__link">
+        matbench_v0.1 matbench_log_kvrh
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_e_form/" class="md-nav__link">
+        matbench_v0.1 matbench_mp_e_form
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_gap/" class="md-nav__link">
+        matbench_v0.1 matbench_mp_gap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_is_metal/" class="md-nav__link">
+        matbench_v0.1 matbench_mp_is_metal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_perovskites/" class="md-nav__link">
+        matbench_v0.1 matbench_perovskites
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_phonons/" class="md-nav__link">
+        matbench_v0.1 matbench_phonons
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_steels/" class="md-nav__link">
+        matbench_v0.1 matbench_steels
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Reference/MatbenchBenchmark/" class="md-nav__link">
+        MatbenchBenchmark
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Reference/MatbenchTask/" class="md-nav__link">
+        MatbenchTask
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#algorithm-description" class="md-nav__link">
+    Algorithm description:
+  </a>
+  
+    <nav class="md-nav" aria-label="Algorithm description:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-in-bibtex-format" class="md-nav__link">
+    References (in bibtex format):
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-metadata" class="md-nav__link">
+    User metadata:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metadata" class="md-nav__link">
+    Metadata:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-requirements" class="md-nav__link">
+    Software Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-data" class="md-nav__link">
+    Task data:
+  </a>
+  
+    <nav class="md-nav" aria-label="Task data:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matbench_expt_gap" class="md-nav__link">
+    matbench_expt_gap
+  </a>
+  
+    <nav class="md-nav" aria-label="matbench_expt_gap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fold-scores" class="md-nav__link">
+    Fold scores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-score-stats" class="md-nav__link">
+    Fold score stats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold-parameters" class="md-nav__link">
+    Fold parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/hackingmaterials/matbench/edit/master/docs/Full Benchmark Data/matbench_v0.1_Ax_10_90_CrabNet_v1.2.7.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<h1 id="matbench_v01-ax1090crabnet-v127">matbench_v0.1: Ax(10/90)+CrabNet v1.2.7</h1>
+<h3 id="algorithm-description">Algorithm description:</h3>
+<p>Use Ax Bayesian adaptive design to simultaneously optimize 23 hyperparameters of CrabNet. 100 sequential design iterations were used, and parameters were chosen based on a combination of intuition and algorithm/data constraints (e.g. elemental featurizers which were missing elements contained in the dataset were removed). The first 10 iterations (for more direct comparison with SAASBO) were based on SOBOL sampling to create a rough initial model, while the remaining 90 iterations were Bayesian adaptive design iterations. For the inner loops (where hyperparameter optimization is performed), the average MAE across each of the five inner folds was used as Ax's objective to minimize. The best parameter set was then trained on all the inner fold data and used to predict on the test set (unknown during hyperparameter optimization). This is nested cross-validation, and is computationally expensive.</p>
+<h4 id="notes">Notes:</h4>
+<p>A Jupyter notebook is provided which contains additional details about the run of the algorithm. If you decide to run this yourself, because it can take several days to run, be sure to set the <code>dummy</code> variable to True and run an initial test that it runs free of errors.</p>
+<p>Raw data download and example notebook available <a href="https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_Ax_10_90_CrabNet_v1.2.7">on the matbench repo</a>.</p>
+<h3 id="references-in-bibtex-format">References (in bibtex format):</h3>
+<div class="highlight"><pre><span></span><code>[&#39;@article{Wang2021crabnet,  author = {Wang, Anthony Yu-Tung and Kauwe, Steven &#39;
+ &#39;K. and Murdock, Ryan J. and Sparks, Taylor D.},  year = {2021},  title = &#39;
+ &#39;{Compositionally restricted attention-based network for materials property &#39;
+ &#39;predictions},  pages = {77},  volume = {7},  number = {1},  doi = &#39;
+ &#39;{10.1038/s41524-021-00545-1},  publisher = {{Nature Publishing Group}},  &#39;
+ &#39;shortjournal = {npj Comput. Mater.},  journal = {npj Computational &#39;
+ &#39;Materials}&#39;,
+ &#39;@article{wang_kauwe_murdock_sparks_2021, place={Cambridge}, &#39;
+ &#39;title={Compositionally-Restricted Attention-Based Network for Materials &#39;
+ &#39;Property Prediction}, DOI={10.26434/chemrxiv.11869026.v3}, &#39;
+ &#39;journal={ChemRxiv}, publisher={Cambridge Open Engage}, author={Wang, Anthony &#39;
+ &#39;and Kauwe, Steven and Murdock, Ryan and Sparks, Taylor}, year={2021}} This &#39;
+ &#39;content is a preprint and has not been peer-reviewed.&#39;]
+</code></pre></div>
+<h3 id="user-metadata">User metadata:</h3>
+<div class="highlight"><pre><span></span><code>{&#39;algorithm_version&#39;: &#39;1.2.7&#39;}
+</code></pre></div>
+<h3 id="metadata">Metadata:</h3>
+<table>
+<thead>
+<tr>
+<th>tasks recorded</th>
+<th>1/13</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>complete?</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>composition complete?</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>structure complete?</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>regression complete?</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>classification complete?</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<h3 id="software-requirements">Software Requirements</h3>
+<div class="highlight"><pre><span></span><code>{&#39;python&#39;: [[&#39;ax_platform==0.2.3&#39;,
+             &#39;crabnet==1.2.7&#39;,
+             &#39;scikit_learn&#39;,
+             &#39;matbench==0.5&#39;,
+             &#39;matplotlib==3.5.0&#39;,
+             &#39;pandas==1.3.5&#39;,
+             &#39;ax-platform==0.2.3&#39;,
+             &#39;pyro-ppl==1.8.0&#39;,
+             &#39;plotly==5.5.0&#39;,
+             &#39;submitit==1.4.1&#39;,
+             &#39;cloudpickle==2.0.0&#39;]]}
+</code></pre></div>
+<h3 id="task-data">Task data:</h3>
+<h4 id="matbench_expt_gap"><code>matbench_expt_gap</code></h4>
+<h6 id="fold-scores">Fold scores</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>mae</th>
+<th>rmse</th>
+<th>mape*</th>
+<th>max_error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td>0.3457</td>
+<td>0.7883</td>
+<td>0.3564</td>
+<td>6.7229</td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td>0.3668</td>
+<td>0.8431</td>
+<td>0.3281</td>
+<td>6.4005</td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td>0.3931</td>
+<td>1.0137</td>
+<td>0.4027</td>
+<td>11.1003</td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td>0.3721</td>
+<td>0.8858</td>
+<td>0.4132</td>
+<td>9.3770</td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td>0.3381</td>
+<td>0.8085</td>
+<td>0.4338</td>
+<td>7.2568</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-score-stats">Fold score stats</h6>
+<table>
+<thead>
+<tr>
+<th>metric</th>
+<th>mean</th>
+<th>max</th>
+<th>min</th>
+<th>std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mae</td>
+<td>0.3632</td>
+<td>0.3931</td>
+<td>0.3381</td>
+<td>0.0196</td>
+</tr>
+<tr>
+<td>rmse</td>
+<td>0.8679</td>
+<td>1.0137</td>
+<td>0.7883</td>
+<td>0.0801</td>
+</tr>
+<tr>
+<td>mape*</td>
+<td>0.3868</td>
+<td>0.4338</td>
+<td>0.3281</td>
+<td>0.0388</td>
+</tr>
+<tr>
+<td>max_error</td>
+<td>8.1715</td>
+<td>11.1003</td>
+<td>6.4005</td>
+<td>1.7946</td>
+</tr>
+</tbody>
+</table>
+<h6 id="fold-parameters">Fold parameters</h6>
+<table>
+<thead>
+<tr>
+<th>fold</th>
+<th>params dict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fold_0</td>
+<td><code>{'N': 4, 'alpha': 0.48871585125853706, 'batch_size': 106, 'betas': [0.8316306312719108, 0.8958260465822976], 'bias': False, 'criterion': 'RobustL2', 'd_model': 860, 'dim_feedforward': 1411, 'dropout':...</code></td>
+</tr>
+<tr>
+<td>fold_1</td>
+<td><code>{'N': 3, 'alpha': 0.6316979414711735, 'batch_size': 70, 'betas': [0.7728603241989385, 0.9438804169876437], 'bias': False, 'criterion': 'RobustL2', 'd_model': 940, 'dim_feedforward': 1702, 'dropout': 0...</code></td>
+</tr>
+<tr>
+<td>fold_2</td>
+<td><code>{'N': 4, 'alpha': 0.5969894183232147, 'batch_size': 84, 'betas': [0.7123950881835376, 0.8704530737662193], 'bias': False, 'criterion': 'RobustL2', 'd_model': 726, 'dim_feedforward': 1024, 'dropout': 4...</code></td>
+</tr>
+<tr>
+<td>fold_3</td>
+<td><code>{'N': 3, 'alpha': 0.6335838688405715, 'batch_size': 100, 'betas': [0.815471216688928, 0.9330437529491037], 'bias': False, 'criterion': 'RobustL2', 'd_model': 784, 'dim_feedforward': 1080, 'dropout': 0...</code></td>
+</tr>
+<tr>
+<td>fold_4</td>
+<td><code>{'N': 3, 'alpha': 0.6381644715564362, 'batch_size': 103, 'betas': [0.8304237621083581, 0.90535025277763], 'bias': False, 'criterion': 'RobustL2', 'd_model': 784, 'dim_feedforward': 1487, 'dropout': 0....</code></td>
+</tr>
+</tbody>
+</table>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../Benchmark%20Info/notes/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Notes on Benchmarking" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Notes on Benchmarking
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../matbench_v0.1_Ax_CrabNet_v1.2.1/" class="md-footer__link md-footer__link--next" aria-label="Next: matbench_v0.1: Ax+CrabNet v1.2.1" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              matbench_v0.1: Ax+CrabNet v1.2.1
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Materials Project (Maintained by Alex Dunn of HackingMaterials Group)
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
