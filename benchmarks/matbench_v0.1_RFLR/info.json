@@ -1,0 +1,8 @@
+{
+  "authors": "Lorenz Romaner",
+  "algorithm": "Random Forest",
+  "algorithm_long": "The RF algorithm from sklearn is used.",
+  "bibtex_refs": "",
+  "notes": "No special considerations required. Key is to convert the composition string properly into a table",
+  "requirements": {"python":  ["scikit-learn==0.24.1", "numpy==1.20.1", "matbench==0.1.0"]}
+}
