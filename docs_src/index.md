@@ -22,7 +22,7 @@ Find more information about this benchmark on [the benchmark info page](Benchmar
 
 
 
-<iframe src="static/scaled_errors.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+<iframe src="static/scaled_errors_matbench_v0.1.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
 
 Scaled errors for regressions on this leaderboard plot are assessed as the ratio of mean absolute error to mean absolute deviation:
 
