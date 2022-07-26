@@ -32,7 +32,7 @@ FULL_DATA_DIR_PREFIX = "Full%20Benchmark%20Data/"
 METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
 METADATA_DIR_PREFIX = "Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
-SCALED_ERRORS_FILENAME = "scaled_errors.html"
+SCALED_ERRORS_FILENAME = "scaled_errors_{bmark_name}.html"
 
 
 MP_WEBSITE_STATICS = os.path.join(STATIC_DOCS_DIR, "mp_srcs")
@@ -88,7 +88,6 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
                 }
 
                 metadata = mbv01_metadata
-
             else:
                 raise ValueError(
                     f"Only {MBV01_KEY} defined as valid benchmark! '{bmark_name}' not supported.")
@@ -123,7 +122,7 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
                 scaled_df[task] = scaler(scaled_df[task], metadata[task].mad)
 
             scaled_df = scaled_df.T
-            scaled_df["n_samples"] = [metadata[task].num_entries for task in scaled_df.index]
+            scaled_df["n_samples"] = [metadata[task].n_samples for task in scaled_df.index]
             scaled_df["Problem"] = [f"{symbols[task]} {descriptors[task]}" for task in scaled_df.index]
             scaled_df = scaled_df.sort_values(by="n_samples")
             scaled_df.index = scaled_df["Problem"]
@@ -173,7 +172,7 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
             )
             fig.update_xaxes(linecolor="grey", gridcolor="grey")
             fig.update_yaxes(linecolor="grey", gridcolor="grey")
-            fig.write_html(SCALED_ERRORS_PATH)
+            fig.write_html(SCALED_ERRORS_PATH.format(bmark_name=bmark_name))
 
 
             # Update layout for showing on white background on mp website
@@ -181,7 +180,7 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
                 title_text="",
                 font={"color": "black"}
             )
-            fig.write_json(SCALED_ERRORS_JSON_PATH)
+            fig.write_json(SCALED_ERRORS_JSON_PATH.format(bmark_name=bmark_name))
 
 
 # NOTE: MUST BE CALLED AFTER CREATING generate_scaled_errors_graph
@@ -204,6 +203,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
     Returns:
 
     """
+    gp_leaderboard_txt = ""
     for bmark, gp_data in gp_leaderboard_data_by_bmark.items():
 
         if bmark == MBV01_KEY:
@@ -213,7 +213,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
 
         table_data = {
             "task": [k for k in gp_data.keys()],
-            "n_samples": [metadata[k].num_entries for k in gp_data.keys()],
+            "n_samples": [metadata[k].n_samples for k in gp_data.keys()],
             "algorithm": [d["algorithm"] for d in gp_data.values()],
             "completeness": [d["completeness"] for d in gp_data.values()],
             "link": [d["link"] for d in gp_data.values()],
@@ -248,26 +248,25 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
 
             table += f"| {task_name_link} | {samples} | {algorithm} | {score} | {notes} |\n"
         table += "\n\n"
+        scaled_errors_plot_txt = f'\n<iframe src="static/{SCALED_ERRORS_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
+        gp_leaderboard_txt += table_header + table_explanation + table + scaled_errors_plot_txt
 
-        gp_leaderboard_txt = table_header + table_explanation + table
+    # Load the static index from the snippets dir
+    with open(os.path.join(SNIPPETS_DIR, "index.md"), encoding="utf-8") as f:
+        static_txt = f.read()
 
-        # Load the static index from the snippets dir
-        with open(os.path.join(SNIPPETS_DIR, "index.md")) as f:
-            static_txt = f.read()
 
-        scaled_errors_plot_txt = f'\n<iframe src="static/{SCALED_ERRORS_FILENAME}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
+    page_header = f"# Leaderboard\n\n"
+    final_txt = page_header + gp_leaderboard_txt + static_txt
 
-        page_header = f"# Leaderboard\n\n"
-        final_txt = page_header + gp_leaderboard_txt + scaled_errors_plot_txt + static_txt
+    with open(os.path.join(DOCS_DIR, "index.md"), "w", encoding="utf-8") as f:
+        print("Writing leaderboard and plot to index.md...")
+        f.write(final_txt)
 
-        with open(os.path.join(DOCS_DIR, "index.md"), "w") as f:
-            print("Writing leaderboard and plot to index.md...")
-            f.write(final_txt)
-
-        with open(os.path.join(STATIC_DOCS_DIR,  "gp_table.json"), "w") as f:
-            print("Writing static gp_table json to gp_table.json...")
-            j = {"txt": gp_leaderboard_txt}
-            json.dump(j, f)
+    with open(os.path.join(STATIC_DOCS_DIR,  "gp_table.json"), "w", encoding="utf-8") as f:
+        print("Writing static gp_table json to gp_table.json...")
+        j = {"txt": gp_leaderboard_txt}
+        json.dump(j, f)
 
 
 def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
@@ -347,7 +346,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             info_header = "### Dataset info\n\n"
 
             info_body = f"##### Description\n\n{mbt.metadata.description}\n\n"
-            info_body += f"Number of samples: {mbt.metadata.num_entries}\n\n"
+            info_body += f"Number of samples: {mbt.metadata.n_samples}\n\n"
             info_body += f"Task type: {mbt.metadata.task_type}\n\n"
             info_body += f"Input type: {mbt.metadata.input_type}\n\n"
             info_body += f"##### Dataset columns\n\n" + "".join([f"- {c}: {cd}\n" for c, cd in mbt.metadata.columns.items()]) + "\n\n"
@@ -413,7 +412,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
                                     metadata_header + \
                                     metadata
             fname = os.path.join(PER_TASK_DIR, f"{bmark_name}_{task}.md")
-            with open(fname, "w") as f:
+            with open(fname, "w", encoding="utf-8") as f:
                 print(f"Creating task leaderboard page {fname}")
                 f.write(task_leaderboard_page)
 
@@ -522,7 +521,7 @@ def organize_task_data(all_data):
             task_leaderboards_data_by_bmark[bmark_name] = task_leaderboards
             gp_graph_data_by_bmark[bmark_name] = gp_graph_data
 
-        return gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark, gp_graph_data_by_bmark
+    return gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark, gp_graph_data_by_bmark
 
 
 def generate_metadata_pages(task_leaderboard_data_by_bmark):
@@ -548,7 +547,7 @@ def generate_metadata_pages(task_leaderboard_data_by_bmark):
                 "Task type": infod.task_type,
                 "Target column (unit)": f"`{infod.target}` " + f"({infod.unit})" if infod.unit else f"`{infod.target}`",
                 "Input type": infod.input_type,
-                "Samples": infod.num_entries,
+                "Samples": infod.n_samples,
                 "MAD (regression) or Fraction True (classification)": format_float(infod.mad if infod.task_type == REG_KEY else infod.frac_true),
                 "Links": f"[download](https://ml.materialsproject.org/projects/{task}.json.gz), [interactive](https://ml.materialsproject.org/projects/{task})",
                 "Submissions": f"{len(bmark_data[task])}"
@@ -572,7 +571,7 @@ def generate_metadata_pages(task_leaderboard_data_by_bmark):
         page = table_header + table_explanation + table
 
         path = os.path.join(METADATA_DIR, f"{bmark_name}.md")
-        with open(path, "w") as f:
+        with open(path, "w", encoding="utf-8") as f:
             print(f"Writing benchmark info page {path}")
             f.write(page)
 
@@ -597,7 +596,7 @@ def generate_info_pages(all_data):
         doc_str = generate_info_page(mb, info, dir_name_short)
 
         doc_path = os.path.join(FULL_DATA_DIR, f"{dir_name_short}.md")
-        with open(doc_path, "w") as f:
+        with open(doc_path, "w", encoding="utf-8") as f:
             print(f"Writing full benchmark data page {doc_path}")
             f.write(doc_str)
 
