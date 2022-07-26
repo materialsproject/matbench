@@ -4,7 +4,7 @@ The `matbench_v0.1` benchmark contains 13 tasks:
 
 | Task name | Task type | Target column (unit) | Input type | Samples | MAD (regression) or Fraction True (classification) | Links | Submissions|
 |-------|-------|-------|-------|-------|-------|-------|-------|
-| `matbench_steels` | regression | `yield strength` (MPa) | composition | 312 | 229.3743 | [download](https://ml.materialsproject.org/projects/matbench_steels.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_steels) | 5 |
+| `matbench_steels` | regression | `yield strength` (MPa) | composition | 312 | 229.3743 | [download](https://ml.materialsproject.org/projects/matbench_steels.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_steels) | 6 |
 | `matbench_jdft2d` | regression | `exfoliation_en` (meV/atom) | structure | 636 | 67.2020 | [download](https://ml.materialsproject.org/projects/matbench_jdft2d.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_jdft2d) | 7 |
 | `matbench_phonons` | regression | `last phdos peak` (cm^-1) | structure | 1,265 | 323.7870 | [download](https://ml.materialsproject.org/projects/matbench_phonons.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_phonons) | 7 |
 | `matbench_expt_gap` | regression | `gap expt` (eV) | composition | 4,604 | 1.1432 | [download](https://ml.materialsproject.org/projects/matbench_expt_gap.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_expt_gap) | 9 |
