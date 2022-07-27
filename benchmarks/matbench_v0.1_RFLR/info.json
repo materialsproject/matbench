@@ -1,6 +1,6 @@
 {
   "authors": "Lorenz Romaner",
-  "algorithm": "Random Forest",
+  "algorithm": "RF-Regex Steels",
   "algorithm_long": "The RF algorithm from sklearn is used.",
   "bibtex_refs": "",
   "notes": "No special considerations required. Key is to convert the composition string properly into a table",
