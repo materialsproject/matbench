@@ -9,6 +9,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | algorithm | mean mae | std mae | mean rmse | max max_error |
 |------|------|------|------|------|
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **29.5385** | 2.1148 | 53.5010 | 615.3466 | 
+| [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **34.2751** | 2.0781 | 70.0669 | 1079.1280 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **38.7524** | 1.7732 | 78.2220 | 1031.8168 | 
 | [CrabNet](../Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **55.1114** | 5.7317 | 138.3775 | 1452.7562 | 
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **56.1706** | 6.7981 | 109.7048 | 1151.5570 | 

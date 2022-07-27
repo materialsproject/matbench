@@ -11,6 +11,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0215** | 0.0005 | 0.0544 | 3.5487 | 
 | [CGCNN v2019](../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.0337** | 0.0006 | 0.0682 | 7.7205 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.0448** | 0.0039 | 0.0888 | 4.8803 | 
+| [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.0448** | 0.0039 | 0.0888 | 4.8803 | 
 | [CrabNet](../Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **0.0862** | 0.0010 | 0.2544 | 6.3774 | 
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.1165** | 0.0008 | 0.2419 | 5.4382 | 
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.1726** | 0.0270 | 0.2602 | 5.8108 | 
