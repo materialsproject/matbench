@@ -27,3 +27,5 @@ Computational Materials 6, 138 (2020). https://doi.org/10.1038/s41524-020-00406-
 ```
 
 Matbench is pip installable! Install with `pip install matbench` or see [the installation page](https://matbench.materialsproject.org/How%20To%20Use/1install/) for more details.
+
+Python versions 3.9 and 3.10 are supported.
