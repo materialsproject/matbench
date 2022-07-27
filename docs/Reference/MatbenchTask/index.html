@@ -1374,6 +1374,7 @@ task, including the training and testing splits for each fold.</p></td>
     <span class="n">_BENCHMARK_KEY</span> <span class="o">=</span> <span class="s2">&quot;benchmark_name&quot;</span>
     <span class="n">_DATASET_KEY</span> <span class="o">=</span> <span class="s2">&quot;dataset_name&quot;</span>
     <span class="n">_DATA_KEY</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+    <span class="n">_UNCERTAINTY_KEY</span> <span class="o">=</span> <span class="s2">&quot;uncertainty&quot;</span>
     <span class="n">_PARAMS_KEY</span> <span class="o">=</span> <span class="s2">&quot;parameters&quot;</span>
     <span class="n">_SCORES_KEY</span> <span class="o">=</span> <span class="s2">&quot;scores&quot;</span>
 
@@ -1586,14 +1587,20 @@ task, including the training and testing splits for each fold.</p></td>
                     <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">input_type</span><span class="p">]</span>
                 <span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Record the test data as well as parameters about the model</span>
 <span class="sd">        trained on this fold.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            fold_number (int): The fold number.</span>
-<span class="sd">            predictions ([float] or [bool] or np.ndarray): A list</span>
-<span class="sd">                of predictions for fold number {fold_number}</span>
+<span class="sd">            predictions ([float] or [bool] or np.ndarray): A list of predictions for</span>
+<span class="sd">            fold number {fold_number}</span>
+<span class="sd">            ci ([tuple] or [list] or np.ndarray): A list of 95% confidence</span>
+<span class="sd">            intervals on predictions for fold number {fold_number}. By default</span>
+<span class="sd">            None. Only one of `ci` or `std` should be specified, not both.</span>
+<span class="sd">            std ([float] or np.ndarray): A list of prediction standard deviations</span>
+<span class="sd">            for fold number {fold_number}. By default None. Only one of</span>
+<span class="sd">            `ci` or `std` should be specified, not both.</span>
 <span class="sd">            params (dict): Any free-form parameters for information</span>
 <span class="sd">                about the algorithm on this fold. For example,</span>
 <span class="sd">                hyperparameters determined during validation. Parameters</span>
@@ -1613,6 +1620,19 @@ task, including the training and testing splits for each fold.</p></td>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
                 <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">std</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">std</span> <span class="o">=</span> <span class="n">std</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">ci</span> <span class="o">=</span> <span class="n">ci</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ci</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;Both standard deviation (`std`) and confidence</span>
+<span class="sd">                    intervals (`ci`) were specified as kwargs. Only one</span>
+<span class="sd">                    should be specified, not both.&quot;&quot;&quot;</span>
+                <span class="p">)</span>
+
             <span class="n">fold_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span>
 
             <span class="c1"># create map of original df index to prediction, e.g.,</span>
@@ -1627,6 +1647,57 @@ task, including the training and testing splits for each fold.</p></td>
 
             <span class="n">ids_to_predictions</span> <span class="o">=</span> <span class="p">{</span><span class="n">split_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_DATA_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">ids_to_predictions</span>
+
+            <span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ci</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;task_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;`std` and `ci` are not valid kwargs for classification &quot;</span>
+                        <span class="o">+</span> <span class="s2">&quot;tasks. See &quot;</span>
+                        <span class="o">+</span> <span class="s2">&quot;https://github.com/materialsproject/matbench/pull/99/files#issuecomment-1022662192.&quot;</span>  <span class="c1"># noqa: E501</span>
+                    <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">ci</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">low_p</span> <span class="o">=</span> <span class="mf">0.05</span>
+                    <span class="n">high_p</span> <span class="o">=</span> <span class="mf">0.95</span>
+                    <span class="c1"># convert from two-tail to one-tail probabilities</span>
+                    <span class="c1"># for compatibility with `ppf`</span>
+                    <span class="c1"># https://stackoverflow.com/a/29562808/13697228</span>
+                    <span class="n">low_p</span> <span class="o">=</span> <span class="n">low_p</span> <span class="o">/</span> <span class="mf">2.0</span>
+                    <span class="n">high_p</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">high_p</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+                    <span class="c1"># convert std to ci, modified from source:</span>
+                    <span class="c1"># https://github.com/uncertainty-toolbox/uncertainty-toolbox/blob/b2f342f6606d1d667bf9583919a663adf8643efe/uncertainty_toolbox/metrics_scoring_rule.py#L187 # noqa: E501</span>
+                    <span class="n">pred_l</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">low_p</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">predictions</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>
+                    <span class="n">pred_u</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">high_p</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">predictions</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>
+                    <span class="n">ci</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">pred_l</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">pred_u</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                    <span class="n">ci</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># std calculated and stored iff ci is symmetric within tol</span>
+                    <span class="n">pred_l</span><span class="p">,</span> <span class="n">pred_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hsplit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ci</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="o">-</span><span class="n">pred_l</span><span class="p">,</span> <span class="n">pred_u</span><span class="p">):</span>
+                        <span class="n">high_p</span> <span class="o">=</span> <span class="mf">0.95</span>
+                        <span class="c1"># convert from two-tail to one-tail probabilities for</span>
+                        <span class="c1"># compatibility with `ppf`</span>
+                        <span class="c1"># https://stackoverflow.com/a/29562808/13697228</span>
+                        <span class="n">high_p</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">high_p</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+                        <span class="n">std</span> <span class="o">=</span> <span class="p">(</span><span class="n">pred_u</span> <span class="o">-</span> <span class="n">pred_l</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">high_p</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">std</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Confidence interval outputs (derived from standard</span>
+<span class="s2">                         deviations if `std` was supplied) must be the same</span>
+<span class="s2">                         length as the inputs! </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span>
+                    <span class="p">)</span>
+
+                <span class="n">ids_to_uncertainties</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="n">split_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="p">{</span><span class="s2">&quot;ci_lower&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;ci_upper&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">s</span><span class="p">}</span>
+                    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">std</span><span class="p">))</span>
+                <span class="p">}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">ids_to_uncertainties</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
@@ -1675,7 +1746,11 @@ task, including the training and testing splits for each fold.</p></td>
 <span class="sd">            the data, including indices. Every index specified in</span>
 <span class="sd">            the validation procedure must be present in its</span>
 <span class="sd">            correct fold, and no extras may be present.</span>
-
+<span class="sd">        - Ensure consistency of the supplied uncertainty values.</span>
+<span class="sd">            For example, if std is specified and ci is specified</span>
+<span class="sd">            for one sample, it must be specified for all samples.</span>
+<span class="sd">            If ci is specified but std is not, that must be</span>
+<span class="sd">            consistent for all samples.</span>
 <span class="sd">        Returns:</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1706,14 +1781,20 @@ task, including the training and testing splits for each fold.</p></td>
             <span class="n">extra_subfold_keys</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">req_subfold_keys</span>
             <span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span> <span class="ow">in</span> <span class="n">extra_subfold_keys</span><span class="p">:</span>
+                <span class="n">extra_subfold_keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">extra_subfold_keys</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;Extra keys </span><span class="si">{</span><span class="n">extra_subfold_keys</span><span class="si">}</span><span class="s2"> for fold results of &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39; for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">  not allowed.&quot;</span>
                 <span class="p">)</span>
+            <span class="n">req_subfold_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">subkey</span> <span class="ow">in</span> <span class="n">req_subfold_keys</span><span class="p">:</span>
                 <span class="n">fold_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">subkey</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fold_results</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">subkey</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span>
+                    <span class="ow">and</span> <span class="n">subkey</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fold_results</span>
+                <span class="p">):</span>
                     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
                         <span class="sa">f</span><span class="s2">&quot;Required key &#39;</span><span class="si">{</span><span class="n">subkey</span><span class="si">}</span><span class="s2">&#39; for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
                         <span class="sa">f</span><span class="s2">&quot;not found for fold &#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
@@ -1800,6 +1881,41 @@ task, including the training and testing splits for each fold.</p></td>
                         <span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">pass</span>
+
+                <span class="k">elif</span> <span class="n">subkey</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">uncertainties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="n">subkey</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">uncertainties</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="n">uncertainties</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">std</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span>
+                        <span class="n">ci</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">&quot;ci&quot;</span><span class="p">]</span>
+
+                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
+                                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                                        <span class="s2">&quot;std specified for all samples &quot;</span>
+                                        <span class="s2">&quot;but ci not specified for some.&quot;</span>
+                                    <span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
+                                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                                    <span class="s2">&quot;std is specified for some, but not for all.&quot;</span>
+                                <span class="p">)</span>
+
+                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
+                                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                                        <span class="s2">&quot;ci specified for all samples &quot;</span>
+                                        <span class="s2">&quot;but ci not specified for some.&quot;</span>
+                                    <span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
+                                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                                    <span class="s2">&quot;ci is specified for some, but not for all.&quot;</span>
+                                <span class="p">)</span>
 
                 <span class="c1"># Params key has no required form;</span>
                 <span class="c1"># it is up to the model to determine it.</span>
@@ -2492,7 +2608,7 @@ hyperparameter selection must be done on this data, NOT test data.</p>
 
 
 <h2 id="matbench.task.MatbenchTask.record" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
 </h2>
@@ -2522,9 +2638,20 @@ trained on this fold.</p>
       <tr>
         <td><code>predictions</code></td>
         <td><code>[float] or [bool] or np.ndarray</code></td>
-        <td><p>A list
-of predictions for fold number {fold_number}</p></td>
+        <td><p>A list of predictions for</p></td>
         <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>ci</code></td>
+        <td><code>[tuple] or [list] or np.ndarray</code></td>
+        <td><p>A list of 95% confidence</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>std</code></td>
+        <td><code>[float] or np.ndarray</code></td>
+        <td><p>A list of prediction standard deviations</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>params</code></td>
@@ -2556,14 +2683,20 @@ docstring.</p></td>
 </table>
         <details class="quote">
           <summary>Source code in <code>matbench/task.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Record the test data as well as parameters about the model</span>
 <span class="sd">    trained on this fold.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        fold_number (int): The fold number.</span>
-<span class="sd">        predictions ([float] or [bool] or np.ndarray): A list</span>
-<span class="sd">            of predictions for fold number {fold_number}</span>
+<span class="sd">        predictions ([float] or [bool] or np.ndarray): A list of predictions for</span>
+<span class="sd">        fold number {fold_number}</span>
+<span class="sd">        ci ([tuple] or [list] or np.ndarray): A list of 95% confidence</span>
+<span class="sd">        intervals on predictions for fold number {fold_number}. By default</span>
+<span class="sd">        None. Only one of `ci` or `std` should be specified, not both.</span>
+<span class="sd">        std ([float] or np.ndarray): A list of prediction standard deviations</span>
+<span class="sd">        for fold number {fold_number}. By default None. Only one of</span>
+<span class="sd">        `ci` or `std` should be specified, not both.</span>
 <span class="sd">        params (dict): Any free-form parameters for information</span>
 <span class="sd">            about the algorithm on this fold. For example,</span>
 <span class="sd">            hyperparameters determined during validation. Parameters</span>
@@ -2583,6 +2716,19 @@ docstring.</p></td>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
             <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">std</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">std</span> <span class="o">=</span> <span class="n">std</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">ci</span> <span class="o">=</span> <span class="n">ci</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ci</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sd">&quot;&quot;&quot;Both standard deviation (`std`) and confidence</span>
+<span class="sd">                intervals (`ci`) were specified as kwargs. Only one</span>
+<span class="sd">                should be specified, not both.&quot;&quot;&quot;</span>
+            <span class="p">)</span>
+
         <span class="n">fold_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span>
 
         <span class="c1"># create map of original df index to prediction, e.g.,</span>
@@ -2597,6 +2743,57 @@ docstring.</p></td>
 
         <span class="n">ids_to_predictions</span> <span class="o">=</span> <span class="p">{</span><span class="n">split_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_DATA_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">ids_to_predictions</span>
+
+        <span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ci</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;task_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;`std` and `ci` are not valid kwargs for classification &quot;</span>
+                    <span class="o">+</span> <span class="s2">&quot;tasks. See &quot;</span>
+                    <span class="o">+</span> <span class="s2">&quot;https://github.com/materialsproject/matbench/pull/99/files#issuecomment-1022662192.&quot;</span>  <span class="c1"># noqa: E501</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">ci</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">low_p</span> <span class="o">=</span> <span class="mf">0.05</span>
+                <span class="n">high_p</span> <span class="o">=</span> <span class="mf">0.95</span>
+                <span class="c1"># convert from two-tail to one-tail probabilities</span>
+                <span class="c1"># for compatibility with `ppf`</span>
+                <span class="c1"># https://stackoverflow.com/a/29562808/13697228</span>
+                <span class="n">low_p</span> <span class="o">=</span> <span class="n">low_p</span> <span class="o">/</span> <span class="mf">2.0</span>
+                <span class="n">high_p</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">high_p</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+                <span class="c1"># convert std to ci, modified from source:</span>
+                <span class="c1"># https://github.com/uncertainty-toolbox/uncertainty-toolbox/blob/b2f342f6606d1d667bf9583919a663adf8643efe/uncertainty_toolbox/metrics_scoring_rule.py#L187 # noqa: E501</span>
+                <span class="n">pred_l</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">low_p</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">predictions</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>
+                <span class="n">pred_u</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">high_p</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">predictions</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>
+                <span class="n">ci</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">pred_l</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">pred_u</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="n">ci</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># std calculated and stored iff ci is symmetric within tol</span>
+                <span class="n">pred_l</span><span class="p">,</span> <span class="n">pred_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hsplit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ci</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="o">-</span><span class="n">pred_l</span><span class="p">,</span> <span class="n">pred_u</span><span class="p">):</span>
+                    <span class="n">high_p</span> <span class="o">=</span> <span class="mf">0.95</span>
+                    <span class="c1"># convert from two-tail to one-tail probabilities for</span>
+                    <span class="c1"># compatibility with `ppf`</span>
+                    <span class="c1"># https://stackoverflow.com/a/29562808/13697228</span>
+                    <span class="n">high_p</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">high_p</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+                    <span class="n">std</span> <span class="o">=</span> <span class="p">(</span><span class="n">pred_u</span> <span class="o">-</span> <span class="n">pred_l</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">high_p</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">std</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Confidence interval outputs (derived from standard</span>
+<span class="s2">                     deviations if `std` was supplied) must be the same</span>
+<span class="s2">                     length as the inputs! </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">ids_to_uncertainties</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">split_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="p">{</span><span class="s2">&quot;ci_lower&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;ci_upper&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">s</span><span class="p">}</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">std</span><span class="p">))</span>
+            <span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">ids_to_uncertainties</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
@@ -2645,7 +2842,12 @@ docstring.</p></td>
 - There must be no extra or missing required keys from
     the data, including indices. Every index specified in
     the validation procedure must be present in its
-    correct fold, and no extras may be present.</p>
+    correct fold, and no extras may be present.
+- Ensure consistency of the supplied uncertainty values.
+    For example, if std is specified and ci is specified
+    for one sample, it must be specified for all samples.
+    If ci is specified but std is not, that must be
+    consistent for all samples.</p>
 
         <details class="quote">
           <summary>Source code in <code>matbench/task.py</code></summary>
@@ -2660,7 +2862,11 @@ docstring.</p></td>
 <span class="sd">        the data, including indices. Every index specified in</span>
 <span class="sd">        the validation procedure must be present in its</span>
 <span class="sd">        correct fold, and no extras may be present.</span>
-
+<span class="sd">    - Ensure consistency of the supplied uncertainty values.</span>
+<span class="sd">        For example, if std is specified and ci is specified</span>
+<span class="sd">        for one sample, it must be specified for all samples.</span>
+<span class="sd">        If ci is specified but std is not, that must be</span>
+<span class="sd">        consistent for all samples.</span>
 <span class="sd">    Returns:</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2691,14 +2897,20 @@ docstring.</p></td>
         <span class="n">extra_subfold_keys</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">req_subfold_keys</span>
         <span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span> <span class="ow">in</span> <span class="n">extra_subfold_keys</span><span class="p">:</span>
+            <span class="n">extra_subfold_keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">extra_subfold_keys</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Extra keys </span><span class="si">{</span><span class="n">extra_subfold_keys</span><span class="si">}</span><span class="s2"> for fold results of &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39; for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">  not allowed.&quot;</span>
             <span class="p">)</span>
+        <span class="n">req_subfold_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">subkey</span> <span class="ow">in</span> <span class="n">req_subfold_keys</span><span class="p">:</span>
             <span class="n">fold_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">subkey</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fold_results</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">subkey</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span>
+                <span class="ow">and</span> <span class="n">subkey</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fold_results</span>
+            <span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;Required key &#39;</span><span class="si">{</span><span class="n">subkey</span><span class="si">}</span><span class="s2">&#39; for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;not found for fold &#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
@@ -2785,6 +2997,41 @@ docstring.</p></td>
                     <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">pass</span>
+
+            <span class="k">elif</span> <span class="n">subkey</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">uncertainties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="n">subkey</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">uncertainties</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="n">uncertainties</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">std</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span>
+                    <span class="n">ci</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">&quot;ci&quot;</span><span class="p">]</span>
+
+                    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
+                                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                                    <span class="s2">&quot;std specified for all samples &quot;</span>
+                                    <span class="s2">&quot;but ci not specified for some.&quot;</span>
+                                <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
+                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                                <span class="s2">&quot;std is specified for some, but not for all.&quot;</span>
+                            <span class="p">)</span>
+
+                    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
+                                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                                    <span class="s2">&quot;ci specified for all samples &quot;</span>
+                                    <span class="s2">&quot;but ci not specified for some.&quot;</span>
+                                <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
+                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                                <span class="s2">&quot;ci is specified for some, but not for all.&quot;</span>
+                            <span class="p">)</span>
 
             <span class="c1"># Params key has no required form;</span>
             <span class="c1"># it is up to the model to determine it.</span>
