@@ -1,4 +1,4 @@
-# matbench_v0.1: Random Forest
+# matbench_v0.1: RF-Regex Steels
 
 ### Algorithm description: 
 
