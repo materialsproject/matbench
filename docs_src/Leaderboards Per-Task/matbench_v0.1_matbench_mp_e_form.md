@@ -14,6 +14,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | [CrabNet](../Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **0.0862** | 0.0010 | 0.2544 | 6.3774 | 
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.1165** | 0.0008 | 0.2419 | 5.4382 | 
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.1726** | 0.0270 | 0.2602 | 5.8108 | 
+| [Lattice-XGBoost](../Full%20Benchmark%20Data/matbench_v0.1_lattice_xgboost.md) | **0.7515** | 0.0042 | 0.9415 | 4.2425 | 
 | [Dummy](../Full%20Benchmark%20Data/matbench_v0.1_dummy.md) | **1.0059** | 0.0030 | 1.1631 | 3.9096 | 
 
 
