@@ -1,0 +1,32 @@
+# YAML 1.2
+# Metadata for citation of this software according to the CFF format (https://citation-file-format.github.io/)
+cff-version: 1.2.0
+message: If you use this software, please cite the following article and the appropriate version of the archived data.
+title: "Matbench: Benchmarks for materials science property prediction"
+authors:
+- given-names: Alex
+  family-names: Dunn
+  affiliation: UC Berkeley
+  orcid: https://orcid.org/0000-0002-8567-1879
+repository-code: https://github.com/materialsproject/matbench
+url: https://matbench.materialsproject.org/
+license: MIT
+preferred-citation:
+  type: article
+  authors:
+  - given-names: A.
+    family-names: Dunn
+  - given-names: Q.
+    family-names: Wang 
+  - given-names: A.
+    family-names: Ganose
+  - given-names: D.
+    family-names: Dopp 
+  - given-names: A.
+    family-names: Jain 
+  doi: "10.1038/s41524-020-00406-3"
+  journal: "npj Computational Materials"
+  title: "Benchmarking Materials Property Prediction Methods: The Matbench Test Set and Automatminer Reference Algorithm"
+  volume: 6
+  number: 138
+  year: 2020
