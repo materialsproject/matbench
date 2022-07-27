@@ -3,6 +3,7 @@ import glob
 import json
 import os
 import unittest
+from warnings import warn
 
 import numpy as np
 import pandas as pd
@@ -204,7 +205,61 @@ class TestMatbenchTask(unittest.TestCase):
         self.assertTrue("SHA256 Hash Digest" in mbt.info)
 
     def test_record(self):
+        self._test_record()
+
+    def test_record_std(self):
+        # ensure that conversion from std to ci is correct
+        mbt = MatbenchTask(self.test_datasets[0], autoload=True)
+        _, test_outputs = mbt.get_test_data(0, as_type="tuple", include_target=True)
+        n_test = len(test_outputs)
+        mbt.record(0, [0.0] * n_test, std=[1.0] * n_test)
+        ci_0_0 = list(mbt.results["fold_0"]["uncertainty"].items())[0][1]
+        ci_lower = ci_0_0["ci_lower"]
+        ci_upper = ci_0_0["ci_upper"]
+        # mean:0 std:1, 95% CI-->c.a. 1.96
+        # https://stackoverflow.com/a/29562808/13697228
+        ci_upp_check = 1.959963984540054
+        ci_low_check = -ci_upp_check
+        msg = f"""Conversion from normal distribution standard deviation to
+        lower 95% confidence bound ({ci_upper}) is not within tolerance of
+        expected confidence bound ({ci_upp_check})"""
+        self.assertAlmostEqual(ci_upper, ci_upp_check, msg=msg)
+        msg = f"""Conversion from normal distribution standard deviation
+        to upper 95% confidence bound ({ci_lower}) is not within tolerance
+        of expected confidence bound ({ci_low_check})"""
+        self.assertAlmostEqual(ci_lower, ci_low_check, msg=msg)
+
+        # carry out test as normal
+        self._test_record(uq_type="std")
+
+    def test_record_ci(self):
+        # ensure that conversion from ci to std is correct
+        mbt = MatbenchTask(self.test_datasets[0], autoload=True)
+        _, test_outputs = mbt.get_test_data(0, as_type="tuple", include_target=True)
+        n_test = len(test_outputs)
+        ci_upper = 1.959963984540054
+        ci_lower = -ci_upper
+        mbt.record(0, [0.0] * n_test, ci=[[ci_lower, ci_upper]] * n_test)
+        ci_0_0 = list(mbt.results["fold_0"]["uncertainty"].items())[0][1]
+        std = ci_0_0["std"]
+        std_check = 1.0
+        # mean:0 std:1, 95% CI-->c.a. 1.96
+        # https://stackoverflow.com/a/29562808/13697228
+        msg = f"""Conversion from symmetric 95% confidence bounds to
+        standard deviation ({std}) is not within tolerance of expected
+        confidence bound ({std_check})"""
+        self.assertAlmostEqual(std, std_check, msg=msg)
+
+        self._test_record(uq_type="ci")
+
+    def _test_record(self, uq_type=None):
         for ds in self.test_datasets:
+            if ds == "matbench_glass":
+                uq_type = None
+                warn(
+                    """Overriding uq_type as None due to incompatibility
+                     with classification tasks (expected behavior)."""
+                )
             # Testing two scenarios: model is perfect, and model is random
             for model_is_perfect in (True, False):
                 mbt = MatbenchTask(ds, autoload=False)
@@ -230,17 +285,32 @@ class TestMatbenchTask(unittest.TestCase):
                             test_inputs,
                             response_type=mbt.metadata.task_type,
                         )
+
+                    n_test = len(test_inputs)
+
+                    # uncertainty quantification parameter
+                    uq_param = {}
+                    if uq_type == "ci":
+                        uq_shape = (n_test, 2)
+                    elif uq_type == "std":
+                        uq_shape = (n_test,)
+                    if uq_type is not None:
+                        uq_param[uq_type] = 2 * np.random.rand(*uq_shape)
+
+                    dummy_params = {
+                        "test_param": 1,
+                        "other_param": "string",
+                        "hyperparam": True,
+                    }
+
                     mbt.record(
                         fold,
                         predictions=model_response,
-                        params={
-                            "test_param": 1,
-                            "other_param": "string",
-                            "hyperparam": True,
-                        },
+                        params=dummy_params,
+                        **uq_param,
                     )
                     self.assertEqual(
-                        len(mbt.results[fold_key].data.values()), len(test_inputs)
+                        len(mbt.results[fold_key].data.values()), n_test
                     )
                     self.assertEqual(mbt.results[fold_key].parameters.test_param, 1)
                     self.assertEqual(
@@ -332,7 +402,7 @@ class TestMatbenchTask(unittest.TestCase):
             truth_fname = os.path.join(TEST_DIR, f"msonability_{ds}.json")
 
             with open(truth_fname, "r") as f:
-                truth = json.load(f)
+                truth = json.loads(f.read())
             MatbenchTask.from_file(truth_fname)
             MatbenchTask.from_dict(truth)
 
