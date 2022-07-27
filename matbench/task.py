@@ -8,6 +8,7 @@ from matminer.featurizers.conversions import (
     StructureToComposition,
 )
 from monty.json import MSONable
+from scipy import stats
 
 from matbench.constants import (
     CLF_KEY,
@@ -71,6 +72,7 @@ class MatbenchTask(MSONable, MSONable2File):
     _BENCHMARK_KEY = "benchmark_name"
     _DATASET_KEY = "dataset_name"
     _DATA_KEY = "data"
+    _UNCERTAINTY_KEY = "uncertainty"
     _PARAMS_KEY = "parameters"
     _SCORES_KEY = "scores"
 
@@ -283,14 +285,20 @@ class MatbenchTask(MSONable, MSONable2File):
                     [self.metadata.input_type]
                 ]
 
-    def record(self, fold_number, predictions, params=None):
+    def record(self, fold_number, predictions, ci=None, std=None, params=None):
         """Record the test data as well as parameters about the model
         trained on this fold.
 
         Args:
             fold_number (int): The fold number.
-            predictions ([float] or [bool] or np.ndarray): A list
-                of predictions for fold number {fold_number}
+            predictions ([float] or [bool] or np.ndarray): A list of predictions for
+            fold number {fold_number}
+            ci ([tuple] or [list] or np.ndarray): A list of 95% confidence
+            intervals on predictions for fold number {fold_number}. By default
+            None. Only one of `ci` or `std` should be specified, not both.
+            std ([float] or np.ndarray): A list of prediction standard deviations
+            for fold number {fold_number}. By default None. Only one of
+            `ci` or `std` should be specified, not both.
             params (dict): Any free-form parameters for information
                 about the algorithm on this fold. For example,
                 hyperparameters determined during validation. Parameters
@@ -310,6 +318,19 @@ class MatbenchTask(MSONable, MSONable2File):
             if isinstance(predictions, np.ndarray):
                 predictions = predictions.tolist()
 
+            if isinstance(std, np.ndarray):
+                std = std.tolist()
+
+            if isinstance(ci, np.ndarray):
+                ci = ci.tolist()
+
+            if std is not None and ci is not None:
+                raise ValueError(
+                    """Both standard deviation (`std`) and confidence
+                    intervals (`ci`) were specified as kwargs. Only one
+                    should be specified, not both."""
+                )
+
             fold_key = self.folds_map[fold_number]
 
             # create map of original df index to prediction, e.g.,
@@ -324,6 +345,57 @@ class MatbenchTask(MSONable, MSONable2File):
 
             ids_to_predictions = {split_ids[i]: p for i, p in enumerate(predictions)}
             self.results[fold_key][self._DATA_KEY] = ids_to_predictions
+
+            if std is not None or ci is not None:
+                if self.metadata["task_type"] == "classification":
+                    raise ValueError(
+                        "`std` and `ci` are not valid kwargs for classification "
+                        + "tasks. See "
+                        + "https://github.com/materialsproject/matbench/pull/99/files#issuecomment-1022662192."  # noqa: E501
+                    )
+
+                if ci is None:
+                    low_p = 0.05
+                    high_p = 0.95
+                    # convert from two-tail to one-tail probabilities
+                    # for compatibility with `ppf`
+                    # https://stackoverflow.com/a/29562808/13697228
+                    low_p = low_p / 2.0
+                    high_p = (1 + high_p) / 2.0
+                    # convert std to ci, modified from source:
+                    # https://github.com/uncertainty-toolbox/uncertainty-toolbox/blob/b2f342f6606d1d667bf9583919a663adf8643efe/uncertainty_toolbox/metrics_scoring_rule.py#L187 # noqa: E501
+                    pred_l = stats.norm.ppf(low_p, loc=predictions, scale=std)
+                    pred_u = stats.norm.ppf(high_p, loc=predictions, scale=std)
+                    ci = np.vstack((pred_l.ravel(), pred_u.ravel())).T.tolist()
+                    ci = [tuple(c) for c in ci]
+
+                if std is None:
+                    # std calculated and stored iff ci is symmetric within tol
+                    pred_l, pred_u = np.hsplit(np.array(ci), 2)
+                    if np.allclose(-pred_l, pred_u):
+                        high_p = 0.95
+                        # convert from two-tail to one-tail probabilities for
+                        # compatibility with `ppf`
+                        # https://stackoverflow.com/a/29562808/13697228
+                        high_p = (1 + high_p) / 2.0
+                        std = (pred_u - pred_l) / (2 * stats.norm.ppf(high_p))
+                    else:
+                        std = [None] * len(ci)
+
+                if len(ci) != len(split_ids):
+                    raise ValueError(
+                        f"""Confidence interval outputs (derived from standard
+                         deviations if `std` was supplied) must be the same
+                         length as the inputs! {len(ci)} != {len(split_ids)}"""
+                    )
+
+                ids_to_uncertainties = {
+                    split_ids[i]: {"ci_lower": p[0], "ci_upper": p[1], "std": s}
+                    for i, (p, s) in enumerate(zip(ci, std))
+                }
+                self.results[fold_key][self._UNCERTAINTY_KEY] = ids_to_uncertainties
+            else:
+                self.results[fold_key][self._UNCERTAINTY_KEY] = None
 
             if not isinstance(params, (dict, type(None))):
                 raise TypeError(
@@ -372,7 +444,11 @@ class MatbenchTask(MSONable, MSONable2File):
             the data, including indices. Every index specified in
             the validation procedure must be present in its
             correct fold, and no extras may be present.
-
+        - Ensure consistency of the supplied uncertainty values.
+            For example, if std is specified and ci is specified
+            for one sample, it must be specified for all samples.
+            If ci is specified but std is not, that must be
+            consistent for all samples.
         Returns:
 
         """
@@ -403,14 +479,20 @@ class MatbenchTask(MSONable, MSONable2File):
             extra_subfold_keys = [
                 k for k in self.results[fold_key] if k not in req_subfold_keys
             ]
+            if self._UNCERTAINTY_KEY in extra_subfold_keys:
+                extra_subfold_keys.remove(self._UNCERTAINTY_KEY)
             if extra_subfold_keys:
                 raise KeyError(
                     f"Extra keys {extra_subfold_keys} for fold results of "
                     f"'{fold_key}' for task {self.dataset_name}  not allowed."
                 )
+            req_subfold_keys.append(self._UNCERTAINTY_KEY)
             for subkey in req_subfold_keys:
                 fold_results = self.results[fold_key]
-                if subkey not in fold_results:
+                if (
+                    subkey is not self._UNCERTAINTY_KEY
+                    and subkey not in fold_results
+                ):
                     raise KeyError(
                         f"Required key '{subkey}' for task {self.dataset_name} "
                         f"not found for fold '{fold_key}'."
@@ -497,6 +579,41 @@ class MatbenchTask(MSONable, MSONable2File):
                         )
                     else:
                         pass
+
+                elif subkey == self._UNCERTAINTY_KEY:
+                    if self._UNCERTAINTY_KEY in self.results[fold_key].keys():
+                        uncertainties = self.results[fold_key][subkey]
+                    else:
+                        uncertainties = None
+                    if uncertainties is not None:
+                        std = uncertainties["std"]
+                        ci = uncertainties["ci"]
+
+                        if all(isinstance(s, float) for s in std):
+                            if any(isinstance(c, float) for c in ci):
+                                if not all(isinstance(c, float) for c in ci):
+                                    raise ValueError(
+                                        "std specified for all samples "
+                                        "but ci not specified for some."
+                                    )
+                        else:
+                            if any(isinstance(s, float) for s in std):
+                                raise ValueError(
+                                    "std is specified for some, but not for all."
+                                )
+
+                        if all(isinstance(c, float) for c in ci):
+                            if any(isinstance(s, float) for s in std):
+                                if not all(isinstance(s, float) for s in std):
+                                    raise ValueError(
+                                        "ci specified for all samples "
+                                        "but ci not specified for some."
+                                    )
+                        else:
+                            if any(isinstance(c, float) for c in ci):
+                                raise ValueError(
+                                    "ci is specified for some, but not for all."
+                                )
 
                 # Params key has no required form;
                 # it is up to the model to determine it.
