@@ -38,6 +38,17 @@ Input type: structure
 - structure: Pymatgen Structure of the material.
 
 
+##### Dataset visualizations
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_phonons_elements.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_phonons_composition_by_crystal_system.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_phonons_spacegroup_sunburst.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
 ##### Dataset reference
 
  `Petretto, G. et al. High-throughput density functional perturbation theory phonons for inorganic materials. Sci. Data 5:180065 doi: 10.1038/sdata.2018.65 (2018).

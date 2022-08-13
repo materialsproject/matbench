@@ -40,6 +40,11 @@ Input type: composition
 - gap expt: Target variable. Experimentally measured gap, in eV.
 
 
+##### Dataset visualizations
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_expt_gap_elements.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
 ##### Dataset reference
 
  `Y. Zhuo, A. Masouri Tehrani, J. Brgoch (2018) Predicting the Band Gaps of Inorganic Solids by Machine Learning J. Phys. Chem. Lett. 2018, 9, 7, 1668-1673 https:doi.org/10.1021/acs.jpclett.8b00124.`

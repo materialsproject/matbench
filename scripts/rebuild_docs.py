@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import pprint
+import shutil
 from operator import gt, lt
 
 import numpy as np
@@ -11,7 +12,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 import plotly.io as pio
 import tqdm
-from matminer.datasets import get_available_datasets, load_dataset
+from matminer.datasets import load_dataset
 from monty.serialization import loadfn
 from pymatviz import ptable_heatmap_plotly, spacegroup_sunburst
 from pymatviz.utils import get_crystal_sys
@@ -33,6 +34,7 @@ FULL_DATA_DIR = os.path.join(DOCS_DIR, "Full Benchmark Data")
 PER_TASK_DIR = os.path.join(DOCS_DIR, "Leaderboards Per-Task")
 PER_TASK_DIR_PREFIX = "Leaderboards%20Per-Task/"
 FULL_DATA_DIR_PREFIX = "Full%20Benchmark%20Data/"
+PYMATVIZ_ARTIFACTS_DIR = os.path.join(THIS_DIR, "pymatviz_artifacts")
 METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
 METADATA_DIR_PREFIX = "Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
@@ -360,6 +362,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             info_body += f"##### Dataset columns\n\n" + "".join([f"- {c}: {cd}\n" for c, cd in mbt.metadata.columns.items()]) + "\n\n"
 
 
+            # Generate links to pymatviz figures for MBV01
             if bmark_name == MBV01_KEY:
 
                 if mbv01_metadata[task].input_type == "structure":
@@ -796,80 +799,119 @@ def convert_bool_to_unicode_check(t_or_f):
     return "✓" if t_or_f else "✗"
 
 
-def generate_pymatviz_eda_figs(regenerate_artifacts: bool = False) -> None:
-    for dataset in mbv01_metadata.keys:
-        # cache crystal_system and spacegroup numbers for matbench datasets so we
-        # don't have to recompute every time we regenerate the plots
-        artifact_path = os.path.join(THIS_DIR, "artifacts", f"{dataset}.json.bz2")
-        if not regenerate_artifacts and os.path.exists(artifact_path):
-            df = pd.read_json(artifact_path)
-        else:
-            print(f"Regenerating artifact for {dataset}")
-            df = load_dataset(dataset)
+def generate_pymatviz_eda_figs_mbv01(
+        regenerate_plots: bool = False,
+        regenerate_artifacts: bool = False
+) -> None:
+    """
+    Create pymatviz figures for the matbench v0.1 benchmark.
 
-            if "composition" not in df:
-                df["composition"] = [x.formula for x in df.structure]
+    Args:
+        regenerate_plots (bool): If true, regenerates the plots
+            with plotly. Otherwise, just copies them from an
+            artifact directory to the docs_src directory.
+        regenerate_artifacts (bool): If true, loads datasets
+            in order to compile their information. Must be
+            regenerating plots in order to use this option.
 
-            df[["spg_symbol", "spg_num"]] = [
-                struct.get_space_group_info() for struct in df.structure
-            ]
+    Returns:
+        None
 
-            df["crys_sys"] = [get_crystal_sys(x) for x in df.spg_num]
+    """
+    if regenerate_plots:
+        print("Regenerating pymatviz figures for task leaderboards...")
+        for dataset in mbv01_metadata.keys():
 
-            # don't store structures in artifacts to save disk space and increase
-            # read speed
-            df.drop(columns=["structure"], errors="ignore").to_json(artifact_path)
+            prefix_short = f"{MBV01_KEY}_{dataset}"
+            prefix = f"pymatviz_{prefix_short}"
 
-        dataset_title = dataset.replace("_", " ").title()
+            # cache crystal_system and spacegroup numbers for matbench datasets so we
+            # don't have to recompute every time we regenerate the plots
+            artifact_path = os.path.join(PYMATVIZ_ARTIFACTS_DIR, f"{prefix_short}.json.bz2")
+            if not regenerate_artifacts and os.path.exists(artifact_path):
+                df = pd.read_json(artifact_path)
+            else:
+                print(f"Regenerating artifact for {dataset}")
+                df = load_dataset(dataset)
 
-        fig = ptable_heatmap_plotly(df.composition)
-        title = f"Elements in {dataset_title}"
-        fig.update_layout(
-            title=dict(text=f"<b>{title}</b>", x=0.4, y=0.94, font_size=20)
+                if "composition" not in df:
+                    df["composition"] = [x.formula for x in df.structure]
+
+                df[["spg_symbol", "spg_num"]] = [
+                    struct.get_space_group_info() for struct in df.structure
+                ]
+
+                df["crys_sys"] = [get_crystal_sys(x) for x in df.spg_num]
+
+                # don't store structures in artifacts to save disk space and increase
+                # read speed
+                df.drop(columns=["structure"], errors="ignore").to_json(artifact_path)
+
+            dataset_title = dataset.replace("_", " ").title()
+
+            fig = ptable_heatmap_plotly(df.composition)
+            title = f"Elements in {dataset_title}"
+            fig.update_layout(
+                title=dict(text=f"<b>{title}</b>", x=0.4, y=0.94, font_size=20)
+            )
+            fig.write_html(
+                f"{PYMATVIZ_ARTIFACTS_DIR}/{prefix}_elements.html",
+                include_plotlyjs="cdn"
+            )
+
+            # below plots only apply to structure-containing datasets
+            if "spg_num" not in df:
+                continue
+
+            fig = spacegroup_sunburst(df.spg_num, show_counts="percent")
+            title = f"{dataset_title} Spacegroup Sunburst"
+            fig.update_layout(
+                title=dict(text=f"<b>{title}</b>", x=0.4, y=0.94, font_size=20)
+            )
+            fig.write_html(
+                f"{PYMATVIZ_ARTIFACTS_DIR}/{prefix}_spacegroup_sunburst.html",
+                include_plotlyjs="cdn",
+            )
+
+            target = df.columns[2]
+            labels = {
+                "crys_sys": "Crystal system",
+                "spg_num": "Space group",
+            }
+
+            fig = px.violin(
+                df,
+                color="crys_sys",
+                x="crys_sys",
+                y=target,
+                labels=labels,
+                points="all",
+                hover_data=["spg_num"],
+                hover_name="composition",
+            ).update_traces(jitter=1)
+            fig.update_layout(
+                title=f"{dataset_title} {target} distribution by crystal system",
+                margin=dict(b=10, l=10, r=10, t=50),
+                showlegend=False,
+            )
+            fig.write_html(
+                f"{PYMATVIZ_ARTIFACTS_DIR}/{prefix}_{target}_by_crystal_system.html",
+                include_plotlyjs="cdn",
+            )
+        print("Task pymatviz figures regenerated.")
+
+
+    # this copying step is needed because all html statics in the
+    # static docs dir are nuked on every run
+    print("Copying pre-exising pymatviz figures...")
+    pymatviz_html_statics = glob.glob(os.path.join(PYMATVIZ_ARTIFACTS_DIR, "*.html"))
+    for pmv_html in pymatviz_html_statics:
+        shutil.copy(
+            pmv_html,
+            os.path.join(STATIC_DOCS_DIR, os.path.basename(pmv_html))
         )
-        fig.write_html(
-            f"{STATIC_DOCS_DIR}/{dataset}_elements.html", include_plotlyjs="cdn"
-        )
+    print("Pymatviz figures copied.")
 
-        # below plots only apply to structure-containing datasets
-        if "spg_num" not in df:
-            continue
-
-        fig = spacegroup_sunburst(df.spg_num, show_counts="percent")
-        title = f"{dataset_title} Spacegroup Sunburst"
-        fig.update_layout(
-            title=dict(text=f"<b>{title}</b>", x=0.4, y=0.94, font_size=20)
-        )
-        fig.write_html(
-            f"{STATIC_DOCS_DIR}/{dataset}_spacegroup_sunburst.html",
-            include_plotlyjs="cdn",
-        )
-
-        target = df.columns[2]
-        labels = {
-            "crys_sys": "Crystal system",
-            "spg_num": "Space group",
-        }
-
-        fig = px.violin(
-            df,
-            color="crys_sys",
-            x="crys_sys",
-            y=target,
-            labels=labels,
-            points="all",
-            hover_data=["spg_num"],
-            hover_name="composition",
-        ).update_traces(jitter=1)
-        fig.update_layout(
-            title=f"{dataset_title} {target} distribution by crystal system",
-            margin=dict(b=10, l=10, r=10, t=50),
-            showlegend=False,
-        )
-        fig.write_html(
-            f"{STATIC_DOCS_DIR}/{dataset}_{target}_by_crystal_system.html",
-            include_plotlyjs="cdn",
-        )
 
 
 if __name__ == "__main__":
@@ -918,6 +960,7 @@ if __name__ == "__main__":
 
     generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark)
 
-    # TODO: we probably don't need to update these plots on every docs update
-    # maybe comment this out or put it behind a condition? - @janosh
-    generate_pymatviz_eda_figs()
+    generate_pymatviz_eda_figs_mbv01(
+        regenerate_plots=False,
+        regenerate_artifacts=False
+    )

@@ -35,6 +35,11 @@ Input type: composition
 - gfa: Target variable. Glass forming ability: 1 means glass forming and corresponds to amorphous, 0 means non full glass forming.
 
 
+##### Dataset visualizations
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_glass_elements.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
 ##### Dataset reference
 
  `Y. Kawazoe, T. Masumoto, A.-P. Tsai, J.-Z. Yu, T. Aihara Jr. (1997) Y. Kawazoe, J.-Z. Yu, A.-P. Tsai, T. Masumoto (ed.) SpringerMaterials

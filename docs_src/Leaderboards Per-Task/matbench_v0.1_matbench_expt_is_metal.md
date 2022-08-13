@@ -35,6 +35,11 @@ Input type: composition
 - is_metal: Target variable. 1 if is a metal, 0 if nonmetal.
 
 
+##### Dataset visualizations
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_expt_is_metal_elements.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
 ##### Dataset reference
 
  `Y. Zhuo, A. Masouri Tehrani, J. Brgoch (2018) Predicting the Band Gaps of Inorganic Solids by Machine Learning J. Phys. Chem. Lett. 2018, 9, 7, 1668-1673 

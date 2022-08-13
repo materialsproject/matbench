@@ -38,6 +38,17 @@ Input type: structure
 - structure: Pymatgen Structure of the material.
 
 
+##### Dataset visualizations
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_log_gvrh_elements.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_log_gvrh_composition_by_crystal_system.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_log_gvrh_spacegroup_sunburst.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
 ##### Dataset reference
 
  `Jong, M. De, Chen, W., Angsten, T., Jain, A., Notestine, R., Gamst,

@@ -38,6 +38,17 @@ Input type: structure
 - structure: Pymatgen Structure of the material.
 
 
+##### Dataset visualizations
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_perovskites_elements.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_perovskites_composition_by_crystal_system.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
+
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_perovskites_spacegroup_sunburst.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+
 ##### Dataset reference
 
  `Ivano E. Castelli, David D. Landis, Kristian S. Thygesen, Søren Dahl, Ib Chorkendorff, Thomas F. Jaramillo and Karsten W. Jacobsen (2012) New cubic perovskites for one- and two-photon water splitting using the computational materials repository. Energy Environ. Sci., 2012,5, 9034-9043 https://doi.org/10.1039/C2EE22341D`
