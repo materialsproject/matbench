@@ -21,6 +21,7 @@ sum_constraint = SumConstraint(
 )
 parameter_constraints = [order_constraint, sum_constraint]
 
+
 # %% search space
 search_space = SearchSpace(
     parameters=[

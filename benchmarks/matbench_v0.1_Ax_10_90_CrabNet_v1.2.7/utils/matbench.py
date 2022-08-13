@@ -57,6 +57,7 @@ Path(figure_dir).mkdir(parents=True, exist_ok=True)
 
 param_names = list(search_space.parameters.keys())
 
+
 # %% matbench loop
 mb = MatbenchBenchmark(autoload=False, subset=["matbench_expt_gap"])
 
