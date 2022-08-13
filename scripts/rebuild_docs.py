@@ -568,9 +568,8 @@ def generate_metadata_pages(task_leaderboard_data_by_bmark):
         for task, infod in metadata.items():
             d[task] = {
                 "Task name": f"`{task}`",
-                "Task type": infod.task_type,
+                "Task type/input": f"{infod.task_type}/{infod.input_type}",
                 "Target column (unit)": f"`{infod.target}` " + f"({infod.unit})" if infod.unit else f"`{infod.target}`",
-                "Input type": infod.input_type,
                 "Samples": infod.n_samples,
                 "MAD (regression) or Fraction True (classification)": format_float(infod.mad if infod.task_type == REG_KEY else infod.frac_true),
                 "Links": f"[download](https://ml.materialsproject.org/projects/{task}.json.gz), [interactive](https://ml.materialsproject.org/projects/{task})",
