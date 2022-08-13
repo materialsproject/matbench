@@ -358,22 +358,6 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             info_body += f"Task type: {mbt.metadata.task_type}\n\n"
             info_body += f"Input type: {mbt.metadata.input_type}\n\n"
             info_body += f"##### Dataset columns\n\n" + "".join([f"- {c}: {cd}\n" for c, cd in mbt.metadata.columns.items()]) + "\n\n"
-
-
-            if bmark_name == MBV01_KEY:
-
-                if mbv01_metadata[task].input_type == "structure":
-                    plot_set = ("elements", "composition_by_crystal_system", "spacegroup_sunburst")
-                else:
-                    plot_set = ("elements",)
-
-                info_body += "##### Dataset visualizations\n\n"
-
-                for plot_type in plot_set:
-                    pmv_eda_path = f"pymatviz_{bmark_name}_{task}_{plot_type}.html"
-                    pmv_eda_reference = f'\n<iframe src="../../static/{pmv_eda_path}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
-                    info_body += pmv_eda_reference
-
             info_body += f"##### Dataset reference\n\n `{mbt.metadata.reference}`\n\n"
 
             metadata_header = "### Metadata\n\n"
@@ -920,4 +904,4 @@ if __name__ == "__main__":
 
     # TODO: we probably don't need to update these plots on every docs update
     # maybe comment this out or put it behind a condition? - @janosh
-    generate_pymatviz_eda_figs()
+    # generate_pymatviz_eda_figs()
