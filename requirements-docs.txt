@@ -1,4 +1,4 @@
-mkdocs-material==8.2.15
+mkdocs-material==8.4.0
 plotly==4.14.3
 mkdocstrings==0.18.1
 pymatviz==0.4.4
