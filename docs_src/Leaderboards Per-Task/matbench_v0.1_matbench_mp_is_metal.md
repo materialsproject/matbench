@@ -43,7 +43,7 @@ Input type: structure
 <iframe src="../../static/pymatviz_matbench_v0.1_matbench_mp_is_metal_elements.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
 
 
-<iframe src="../../static/pymatviz_matbench_v0.1_matbench_mp_is_metal_composition_by_crystal_system.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+<iframe src="../../static/pymatviz_matbench_v0.1_matbench_mp_is_metal_by_target_by_crystal_system.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
 
 
 <iframe src="../../static/pymatviz_matbench_v0.1_matbench_mp_is_metal_spacegroup_sunburst.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>

@@ -366,7 +366,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             if bmark_name == MBV01_KEY:
 
                 if mbv01_metadata[task].input_type == "structure":
-                    plot_set = ("elements", "composition_by_crystal_system", "spacegroup_sunburst")
+                    plot_set = ("elements", "by_target_by_crystal_system", "spacegroup_sunburst")
                 else:
                     plot_set = ("elements",)
 
@@ -895,7 +895,7 @@ def generate_pymatviz_eda_figs_mbv01(
                 showlegend=False,
             )
             fig.write_html(
-                f"{PYMATVIZ_ARTIFACTS_DIR}/{prefix}_{target}_by_crystal_system.html",
+                f"{PYMATVIZ_ARTIFACTS_DIR}/{prefix}_by_target_by_crystal_system.html",
                 include_plotlyjs="cdn",
             )
         print("Task pymatviz figures regenerated.")
@@ -961,6 +961,6 @@ if __name__ == "__main__":
     generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark)
 
     generate_pymatviz_eda_figs_mbv01(
-        regenerate_plots=True,
+        regenerate_plots=False,
         regenerate_artifacts=False
     )
