@@ -873,7 +873,7 @@ def generate_pymatviz_eda_figs_mbv01(
                 include_plotlyjs="cdn",
             )
 
-            target = df.columns[2]
+            target = df.columns[1]
             labels = {
                 "crys_sys": "Crystal system",
                 "spg_num": "Space group",
@@ -961,6 +961,6 @@ if __name__ == "__main__":
     generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark)
 
     generate_pymatviz_eda_figs_mbv01(
-        regenerate_plots=False,
+        regenerate_plots=True,
         regenerate_artifacts=False
     )
