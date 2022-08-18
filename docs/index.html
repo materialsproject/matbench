@@ -1199,6 +1199,14 @@
 
 
 <h1 id="leaderboard">Leaderboard</h1>
+<p><strong>Matbench is an automated leaderboard</strong> for benchmarking state of the art ML algorithms predicting a <strong>diverse range of solid materials' properties</strong>. It is hosted and maintained by <a href="https://materialsproject.org">the Materials Project</a>. </p>
+<p><img alt="crystal" src="static/crystals.png" /></p>
+<ul>
+<li><code>115</code> <strong>total task submissions</strong></li>
+<li><code>16</code> <strong>algorithms</strong> </li>
+<li><code>1</code> <strong>benchmark test suites</strong></li>
+</ul>
+<p>Scroll down to learn more.</p>
 <h2 id="leaderboard-general-purpose-algorithms-on-matbench_v01">Leaderboard: General Purpose Algorithms on <code>matbench_v0.1</code></h2>
 <p>Find more information about this benchmark on <a href="Benchmark%20Info/matbench_v0.1/">the benchmark info page</a></p>
 <table>
@@ -1305,7 +1313,9 @@
 </tr>
 </tbody>
 </table>
-<iframe src="static/scaled_errors_matbench_v0.1.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+<iframe src="static/scaled_errors_matbench_v0.1.html" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>
+
+<iframe src="static/scaled_errors_non_gp_matbench_v0.1.html" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>
 
 <p>Scaled errors for regressions on this leaderboard plot are assessed as the ratio of mean absolute error to mean absolute deviation:</p>
 <p>$$
@@ -1316,14 +1326,14 @@ $$</p>
 <strong>curated set of 13 supervised, pre-cleaned, ready-to-use ML tasks</strong> for benchmarking and fair comparison. The tasks span a wide domain of
 inorganic materials science applications including electronic, thermodynamic, mechanical, and thermal properties among crystals, 2D materials,
 disordered metals, and more.  </p>
-<p><strong>The <a href="https://github.com/hackingmaterials/matbench">Matbench python package</a> provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.</strong></p>
+<p><strong>The <a href="https://github.com/hackingmaterials/matbench">Matbench python package</a> provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.</strong> The web pages and repository online contain full result files, citations, methodologies, and code for the algorithms shown.</p>
 <p><img alt="infographic" src="static/infographic_matbench.png" /></p>
 <h2 id="what-can-matbench-offer">What can Matbench offer?</h2>
 <h3 id="this-website">This website</h3>
 <ul>
 <li><strong>Leaderboard of results for state-of-the-art materials ML algorithms on standardized test problems</strong></li>
 <li>Interactively explore and download the tasks on <a href="https://ml.materialsproject.org/browse">MPContribs-ML</a>, a platform hosted by <a href="https://materialsproject.org">The Materials Project</a>. See <a href="Benchmark%20Info/matbench_v0.1/">Benchmark Info</a> for links to each dataset.</li>
-<li><strong>Each and every result is backed by a peer-reviewed publication and a jupyter notebook</strong> (similar to Papers With Code) - i.e., how were these results were obtained?</li>
+<li><strong>Each and every result is backed by a peer-reviewed publication and/or a jupyter notebook</strong> (similar to Papers With Code) - i.e., how were these results were obtained?</li>
 <li>Glossary of all algorithms' results on the Matbench problems</li>
 </ul>
 <h3 id="the-matbench-python-package">The Matbench Python package</h3>
