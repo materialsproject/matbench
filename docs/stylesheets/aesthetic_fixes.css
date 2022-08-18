@@ -1,0 +1,23 @@
+/* NOTE: YOU MUST CANCEL MKDOCS SERVE AND RESTART THE PROCESS
+BEFORE CHANGES TO THIS FILE WILL BE NOTICED IN THE BROWSER.
+MKDOCS CAN'T DYNAMICALLY LOAD THIS CONTENT AS IT IS BEING
+EDITED FOR SOME REASON.*/
+
+
+
+/* Set the max width of the grid. Increased from 1500px to fit slightly more in on big screens.*/
+.md-grid {
+  max-width: 1750px;
+}
+
+/* Make header bottom black.*/
+.md-tabs {
+  background-color: black;
+
+}
+
+
+/* Make header top black.*/
+.md-header {
+  background-color: black;
+}

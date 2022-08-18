@@ -26,7 +26,7 @@
         
           
           
-          <meta name="theme-color" content="#757575">
+          <meta name="theme-color" content="#2094f3">
         
       
     
@@ -43,6 +43,8 @@
     
       <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
+      <link rel="stylesheet" href="../../stylesheets/aesthetic_fixes.css">
+    
     <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -57,7 +59,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="green">
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="green">
   
     
     
@@ -1531,7 +1533,7 @@ task, including the training and testing splits for each fold.</p></td>
 <span class="sd">            d (dict):</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (MatbenchTask)</span>
+<span class="sd">            (MatbenchTask): The MatbenchTask object.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">req_base_keys</span> <span class="o">=</span> <span class="p">[</span>
@@ -1563,7 +1565,7 @@ task, including the training and testing splits for each fold.</p></td>
 <span class="sd">            results_dict (dict): A formatted dictionary of raw results.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (MatbenchTask)</span>
+<span class="sd">            (MatbenchTask): The matbench task object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">benchmark_name</span><span class="p">)</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="n">RecursiveDotDict</span><span class="p">(</span><span class="n">results_dict</span><span class="p">)</span>
@@ -1574,7 +1576,7 @@ task, including the training and testing splits for each fold.</p></td>
         <span class="sd">&quot;&quot;&quot;Load the dataset for this task into memory.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            None</span>
+<span class="sd">            (NoneType):  The dataset is stored as an attribute.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading dataset &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">&#39;...&quot;</span><span class="p">)</span>
@@ -1595,9 +1597,11 @@ task, including the training and testing splits for each fold.</p></td>
 <span class="sd">        hyperparameter selection must be done on this data, NOT test data.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            fold_number:</span>
+<span class="sd">            fold_number (int): Index of the fold to retrieve test data.</span>
 
 <span class="sd">        Returns:</span>
+<span class="sd">            (pd.Dataframe) or (tuple): Returns either a dataframe of</span>
+<span class="sd">                training data or a 2-tuple of training data.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_loaded</span><span class="p">()</span>
@@ -1610,11 +1614,12 @@ task, including the training and testing splits for each fold.</p></td>
 <span class="sd">        The test data used for recording benchmarks.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            fold_number:</span>
+<span class="sd">            fold_number (int): Index of the fold to retrieve.</span>
 
 <span class="sd">        Returns:</span>
-
-
+<span class="sd">            (tuple) or (pd.Dataframe): Data for inference. If target is</span>
+<span class="sd">                not included (it should not be, usually) then it should</span>
+<span class="sd">                be a single column if a df or a 1-tuple if a tuple.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_loaded</span><span class="p">()</span>
         <span class="n">fold_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span>
@@ -1636,13 +1641,13 @@ task, including the training and testing splits for each fold.</p></td>
 <span class="sd">        Args:</span>
 <span class="sd">            fold_number (int): The fold number.</span>
 <span class="sd">            predictions ([float] or [bool] or np.ndarray): A list of predictions for</span>
-<span class="sd">            fold number {fold_number}</span>
+<span class="sd">            fold number (int): The index of the fold number to record.</span>
 <span class="sd">            ci ([tuple] or [list] or np.ndarray): A list of 95% confidence</span>
-<span class="sd">            intervals on predictions for fold number {fold_number}. By default</span>
-<span class="sd">            None. Only one of `ci` or `std` should be specified, not both.</span>
+<span class="sd">                intervals on predictions for fold number {fold_number}. By default</span>
+<span class="sd">                None. Only one of `ci` or `std` should be specified, not both.</span>
 <span class="sd">            std ([float] or np.ndarray): A list of prediction standard deviations</span>
-<span class="sd">            for fold number {fold_number}. By default None. Only one of</span>
-<span class="sd">            `ci` or `std` should be specified, not both.</span>
+<span class="sd">                for fold number {fold_number}. By default None. Only one of</span>
+<span class="sd">                `ci` or `std` should be specified, not both.</span>
 <span class="sd">            params (dict): Any free-form parameters for information</span>
 <span class="sd">                about the algorithm on this fold. For example,</span>
 <span class="sd">                hyperparameters determined during validation. Parameters</span>
@@ -1651,7 +1656,7 @@ task, including the training and testing splits for each fold.</p></td>
 <span class="sd">                docstring.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            None</span>
+<span class="sd">            (NoneType): Recorded data is stored in attributes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
@@ -1767,7 +1772,7 @@ task, including the training and testing splits for each fold.</p></td>
 <span class="sd">        Required method from MSONAble.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (dict)</span>
+<span class="sd">            (dict): The object as a serialized dictionary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;@module&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
@@ -1794,6 +1799,7 @@ task, including the training and testing splits for each fold.</p></td>
 <span class="sd">            If ci is specified but std is not, that must be</span>
 <span class="sd">            consistent for all samples.</span>
 <span class="sd">        Returns:</span>
+<span class="sd">            (NoneType): Errors are thrown if benchmark not valid.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_all_folds_recorded</span><span class="p">(</span>
@@ -2025,7 +2031,7 @@ task, including the training and testing splits for each fold.</p></td>
         <span class="sd">&quot;&quot;&quot;Determine if a task&#39;s raw data contains polymorphs.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (bool) If true, contains polymorphs.</span>
+<span class="sd">            (bool): If true, contains polymorphs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">checker_key</span> <span class="o">=</span> <span class="s2">&quot;pmg_composition&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_loaded</span><span class="p">()</span>
@@ -2126,8 +2132,8 @@ task, including the training and testing splits for each fold.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(bool) If true, contains polymorphs.</p></td>
+      <td><code>(bool)</code></td>
+      <td><p>If true, contains polymorphs.</p></td>
     </tr>
   </tbody>
 </table>    </div>
@@ -2342,8 +2348,8 @@ run .load() before running .get_*_data() methods.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(dict)</p></td>
+      <td><code>(dict)</code></td>
+      <td><p>The object as a serialized dictionary.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2355,7 +2361,7 @@ run .load() before running .get_*_data() methods.</p></td>
 <span class="sd">    Required method from MSONAble.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (dict)</span>
+<span class="sd">        (dict): The object as a serialized dictionary.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;@module&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
@@ -2419,8 +2425,8 @@ run .load() before running .get_*_data() methods.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(MatbenchTask)</p></td>
+      <td><code>(MatbenchTask)</code></td>
+      <td><p>The MatbenchTask object.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2436,7 +2442,7 @@ run .load() before running .get_*_data() methods.</p></td>
 <span class="sd">        d (dict):</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (MatbenchTask)</span>
+<span class="sd">        (MatbenchTask): The MatbenchTask object.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">req_base_keys</span> <span class="o">=</span> <span class="p">[</span>
@@ -2493,10 +2499,27 @@ run .load() before running .get_*_data() methods.</p></td>
   <tbody>
       <tr>
         <td><code>fold_number</code></td>
-        <td></td>
-        <td></td>
+        <td><code>int</code></td>
+        <td><p>Index of the fold to retrieve.</p></td>
         <td><em>required</em></td>
       </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(tuple) or (pd.Dataframe)</code></td>
+      <td><p>Data for inference. If target is
+    not included (it should not be, usually) then it should
+    be a single column if a df or a 1-tuple if a tuple.</p></td>
+    </tr>
   </tbody>
 </table>
         <details class="quote">
@@ -2506,11 +2529,12 @@ run .load() before running .get_*_data() methods.</p></td>
 <span class="sd">    The test data used for recording benchmarks.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        fold_number:</span>
+<span class="sd">        fold_number (int): Index of the fold to retrieve.</span>
 
 <span class="sd">    Returns:</span>
-
-
+<span class="sd">        (tuple) or (pd.Dataframe): Data for inference. If target is</span>
+<span class="sd">            not included (it should not be, usually) then it should</span>
+<span class="sd">            be a single column if a df or a 1-tuple if a tuple.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_loaded</span><span class="p">()</span>
     <span class="n">fold_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span>
@@ -2560,10 +2584,26 @@ hyperparameter selection must be done on this data, NOT test data.</p>
   <tbody>
       <tr>
         <td><code>fold_number</code></td>
-        <td></td>
-        <td></td>
+        <td><code>int</code></td>
+        <td><p>Index of the fold to retrieve test data.</p></td>
         <td><em>required</em></td>
       </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(pd.Dataframe) or (tuple)</code></td>
+      <td><p>Returns either a dataframe of
+    training data or a 2-tuple of training data.</p></td>
+    </tr>
   </tbody>
 </table>
         <details class="quote">
@@ -2574,9 +2614,11 @@ hyperparameter selection must be done on this data, NOT test data.</p>
 <span class="sd">    hyperparameter selection must be done on this data, NOT test data.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        fold_number:</span>
+<span class="sd">        fold_number (int): Index of the fold to retrieve test data.</span>
 
 <span class="sd">    Returns:</span>
+<span class="sd">        (pd.Dataframe) or (tuple): Returns either a dataframe of</span>
+<span class="sd">            training data or a 2-tuple of training data.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_loaded</span><span class="p">()</span>
@@ -2615,8 +2657,8 @@ hyperparameter selection must be done on this data, NOT test data.</p>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>None</p></td>
+      <td><code>(NoneType)</code></td>
+      <td><p>The dataset is stored as an attribute.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2626,7 +2668,7 @@ hyperparameter selection must be done on this data, NOT test data.</p>
     <span class="sd">&quot;&quot;&quot;Load the dataset for this task into memory.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        None</span>
+<span class="sd">        (NoneType):  The dataset is stored as an attribute.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading dataset &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">&#39;...&quot;</span><span class="p">)</span>
@@ -2684,15 +2726,25 @@ trained on this fold.</p>
         <td><em>required</em></td>
       </tr>
       <tr>
+        <td><code>fold</code></td>
+        <td><code>number (int</code></td>
+        <td><p>The index of the fold number to record.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
         <td><code>ci</code></td>
         <td><code>[tuple] or [list] or np.ndarray</code></td>
-        <td><p>A list of 95% confidence</p></td>
+        <td><p>A list of 95% confidence
+intervals on predictions for fold number {fold_number}. By default
+None. Only one of <code>ci</code> or <code>std</code> should be specified, not both.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>std</code></td>
         <td><code>[float] or np.ndarray</code></td>
-        <td><p>A list of prediction standard deviations</p></td>
+        <td><p>A list of prediction standard deviations
+for fold number {fold_number}. By default None. Only one of
+<code>ci</code> or <code>std</code> should be specified, not both.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
@@ -2718,8 +2770,8 @@ docstring.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>None</p></td>
+      <td><code>(NoneType)</code></td>
+      <td><p>Recorded data is stored in attributes.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2732,13 +2784,13 @@ docstring.</p></td>
 <span class="sd">    Args:</span>
 <span class="sd">        fold_number (int): The fold number.</span>
 <span class="sd">        predictions ([float] or [bool] or np.ndarray): A list of predictions for</span>
-<span class="sd">        fold number {fold_number}</span>
+<span class="sd">        fold number (int): The index of the fold number to record.</span>
 <span class="sd">        ci ([tuple] or [list] or np.ndarray): A list of 95% confidence</span>
-<span class="sd">        intervals on predictions for fold number {fold_number}. By default</span>
-<span class="sd">        None. Only one of `ci` or `std` should be specified, not both.</span>
+<span class="sd">            intervals on predictions for fold number {fold_number}. By default</span>
+<span class="sd">            None. Only one of `ci` or `std` should be specified, not both.</span>
 <span class="sd">        std ([float] or np.ndarray): A list of prediction standard deviations</span>
-<span class="sd">        for fold number {fold_number}. By default None. Only one of</span>
-<span class="sd">        `ci` or `std` should be specified, not both.</span>
+<span class="sd">            for fold number {fold_number}. By default None. Only one of</span>
+<span class="sd">            `ci` or `std` should be specified, not both.</span>
 <span class="sd">        params (dict): Any free-form parameters for information</span>
 <span class="sd">            about the algorithm on this fold. For example,</span>
 <span class="sd">            hyperparameters determined during validation. Parameters</span>
@@ -2747,7 +2799,7 @@ docstring.</p></td>
 <span class="sd">            docstring.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        None</span>
+<span class="sd">        (NoneType): Recorded data is stored in attributes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
@@ -2891,6 +2943,21 @@ docstring.</p></td>
     If ci is specified but std is not, that must be
     consistent for all samples.</p>
 
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(NoneType)</code></td>
+      <td><p>Errors are thrown if benchmark not valid.</p></td>
+    </tr>
+  </tbody>
+</table>
         <details class="quote">
           <summary>Source code in <code>matbench/task.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2910,6 +2977,7 @@ docstring.</p></td>
 <span class="sd">        If ci is specified but std is not, that must be</span>
 <span class="sd">        consistent for all samples.</span>
 <span class="sd">    Returns:</span>
+<span class="sd">        (NoneType): Errors are thrown if benchmark not valid.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_all_folds_recorded</span><span class="p">(</span>

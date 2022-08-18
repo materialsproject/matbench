@@ -26,7 +26,7 @@
         
           
           
-          <meta name="theme-color" content="#757575">
+          <meta name="theme-color" content="#2094f3">
         
       
     
@@ -43,6 +43,8 @@
     
       <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
+      <link rel="stylesheet" href="../../stylesheets/aesthetic_fixes.css">
+    
     <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -57,7 +59,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="green">
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="green">
   
     
     
@@ -1558,8 +1560,9 @@ mb.matbench_dielectric</p>
 <span class="sd">            item (str): The name of the attr.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            The attr, if not in the metadata defined by the benchmark</span>
-<span class="sd">            If the attr is a task name, returns that MatBenchTask object.</span>
+
+<span class="sd">            (object): The attr, if not in the metadata defined by the benchmark</span>
+<span class="sd">                If the attr is a task name, returns that MatBenchTask object.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
@@ -1588,7 +1591,8 @@ mb.matbench_dielectric</p>
 <span class="sd">                upon instantiation. Be warned; this can take a while.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (MatbenchBenchmark object)</span>
+<span class="sd">            (MatbenchBenchmark object): A ready-to-use MatbenchBenchmark</span>
+<span class="sd">                object.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">benchmark</span> <span class="o">==</span> <span class="n">MBV01_KEY</span><span class="p">:</span>
@@ -1639,10 +1643,10 @@ mb.matbench_dielectric</p>
         <span class="sd">&quot;&quot;&quot;Create a MatbenchBenchmark object from a dictionary.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            d (dict):</span>
+<span class="sd">            d (dict): The benchmark as a dictionary.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (MatbenchBenchmark)</span>
+<span class="sd">            (MatbenchBenchmark): The benchmark as an object.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">required_keys</span> <span class="o">=</span> <span class="p">[</span>
@@ -1823,7 +1827,7 @@ mb.matbench_dielectric</p>
         <span class="sd">&quot;&quot;&quot;Overridden from MSONable.as_dict, get dict repr of this obj</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (dict)</span>
+<span class="sd">            d (dict): the object as a dictionary.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tasksd</span> <span class="o">=</span> <span class="p">{</span><span class="n">mbt</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">:</span> <span class="n">mbt</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">mbt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">}</span>
@@ -1853,7 +1857,7 @@ mb.matbench_dielectric</p>
         <span class="sd">&quot;&quot;&quot;Log info about the benchmark to the respective logging handlers.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            None</span>
+<span class="sd">            (NoneType): Output is sent to logger.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
 
@@ -1877,10 +1881,11 @@ mb.matbench_dielectric</p>
 <span class="sd">               are one of a, b, c, d, or e (recursive).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            metadata (dict)</span>
+<span class="sd">            metadata (dict): Metadata about the algorithm being</span>
+<span class="sd">                run on this benchmark.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            None</span>
+<span class="sd">            (NoneType): None. Logger provides information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Use logging here so bad metadata addition does not</span>
         <span class="c1"># ruin an entire run...</span>
@@ -1901,7 +1906,7 @@ mb.matbench_dielectric</p>
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Load all tasks in this benchmark.</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            None</span>
+<span class="sd">            (NoneType): Datasets are kept in attributes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">:</span>
             <span class="n">t</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
@@ -1947,7 +1952,7 @@ mb.matbench_dielectric</p>
 <span class="sd">        state.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (str)</span>
+<span class="sd">            s (str): A formatted string describing this benchmark&#39;s state.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1999,7 +2004,7 @@ mb.matbench_dielectric</p>
 <span class="sd">        For matbench v0.1, this means all 13 tasks are in the benchmark.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (bool)</span>
+<span class="sd">            (bool): Whether benchmark is entirely complete.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_completeness</span><span class="p">(</span><span class="n">completeness_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ALL_KEY</span><span class="p">)</span>
@@ -2009,7 +2014,7 @@ mb.matbench_dielectric</p>
         <span class="sd">&quot;&quot;&quot;Determine if all composition tasks for this benchmark are included</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (bool)</span>
+<span class="sd">            (bool): Whether benchmark is composition complete.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_completeness</span><span class="p">(</span><span class="n">completeness_type</span><span class="o">=</span><span class="n">COMPOSITION_KEY</span><span class="p">)</span>
 
@@ -2018,7 +2023,7 @@ mb.matbench_dielectric</p>
         <span class="sd">&quot;&quot;&quot;Determine if all structure tasks for this benchmark are included</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (bool)</span>
+<span class="sd">            (bool): Whether benchmark is structure complete.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_completeness</span><span class="p">(</span><span class="n">completeness_type</span><span class="o">=</span><span class="n">STRUCTURE_KEY</span><span class="p">)</span>
 
@@ -2027,7 +2032,7 @@ mb.matbench_dielectric</p>
         <span class="sd">&quot;&quot;&quot;Determine if all regression tasks for this benchmark are included</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (bool)</span>
+<span class="sd">            (bool): Whether benchmark is regression complete.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_completeness</span><span class="p">(</span><span class="n">completeness_type</span><span class="o">=</span><span class="n">REG_KEY</span><span class="p">)</span>
 
@@ -2036,7 +2041,7 @@ mb.matbench_dielectric</p>
         <span class="sd">&quot;&quot;&quot;Determine if all classification tasks for this benchmark are included</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (bool)</span>
+<span class="sd">            (bool): Whether benchmark is classification complete.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_completeness</span><span class="p">(</span><span class="n">completeness_type</span><span class="o">=</span><span class="n">CLF_KEY</span><span class="p">)</span>
 
@@ -2114,8 +2119,8 @@ state.</p>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(str)</p></td>
+      <td><code>s (str)</code></td>
+      <td><p>A formatted string describing this benchmark's state.</p></td>
     </tr>
   </tbody>
 </table>    </div>
@@ -2152,8 +2157,8 @@ state.</p>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(bool)</p></td>
+      <td><code>(bool)</code></td>
+      <td><p>Whether benchmark is classification complete.</p></td>
     </tr>
   </tbody>
 </table>    </div>
@@ -2191,8 +2196,8 @@ state.</p>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(bool)</p></td>
+      <td><code>(bool)</code></td>
+      <td><p>Whether benchmark is entirely complete.</p></td>
     </tr>
   </tbody>
 </table>    </div>
@@ -2229,8 +2234,8 @@ state.</p>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(bool)</p></td>
+      <td><code>(bool)</code></td>
+      <td><p>Whether benchmark is composition complete.</p></td>
     </tr>
   </tbody>
 </table>    </div>
@@ -2307,8 +2312,8 @@ for this benchmark are recorded.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(bool)</p></td>
+      <td><code>(bool)</code></td>
+      <td><p>Whether benchmark is regression complete.</p></td>
     </tr>
   </tbody>
 </table>    </div>
@@ -2345,8 +2350,8 @@ for this benchmark are recorded.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(bool)</p></td>
+      <td><code>(bool)</code></td>
+      <td><p>Whether benchmark is structure complete.</p></td>
     </tr>
   </tbody>
 </table>    </div>
@@ -2522,9 +2527,9 @@ loaded into memory.</p>
   </thead>
   <tbody>
     <tr>
-      <td></td>
+      <td><code>(object)</code></td>
       <td><p>The attr, if not in the metadata defined by the benchmark
-If the attr is a task name, returns that MatBenchTask object.</p></td>
+    If the attr is a task name, returns that MatBenchTask object.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2538,8 +2543,9 @@ If the attr is a task name, returns that MatBenchTask object.</p></td>
 <span class="sd">        item (str): The name of the attr.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        The attr, if not in the metadata defined by the benchmark</span>
-<span class="sd">        If the attr is a task name, returns that MatBenchTask object.</span>
+
+<span class="sd">        (object): The attr, if not in the metadata defined by the benchmark</span>
+<span class="sd">            If the attr is a task name, returns that MatBenchTask object.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
@@ -2696,6 +2702,26 @@ e. A dictionary where all keys are strs and all values
    are one of a, b, c, d, or e (recursive).
 </code></pre></div>
 
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>metadata</code></td>
+        <td><code>dict</code></td>
+        <td><p>Metadata about the algorithm being
+run on this benchmark.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
 <p><strong>Returns:</strong></p>
 <table>
   <thead>
@@ -2706,8 +2732,8 @@ e. A dictionary where all keys are strs and all values
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>None</p></td>
+      <td><code>(NoneType)</code></td>
+      <td><p>None. Logger provides information.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2733,10 +2759,11 @@ e. A dictionary where all keys are strs and all values
 <span class="sd">           are one of a, b, c, d, or e (recursive).</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        metadata (dict)</span>
+<span class="sd">        metadata (dict): Metadata about the algorithm being</span>
+<span class="sd">            run on this benchmark.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        None</span>
+<span class="sd">        (NoneType): None. Logger provides information.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Use logging here so bad metadata addition does not</span>
     <span class="c1"># ruin an entire run...</span>
@@ -2785,8 +2812,8 @@ e. A dictionary where all keys are strs and all values
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(dict)</p></td>
+      <td><code>d (dict)</code></td>
+      <td><p>the object as a dictionary.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2796,7 +2823,7 @@ e. A dictionary where all keys are strs and all values
     <span class="sd">&quot;&quot;&quot;Overridden from MSONable.as_dict, get dict repr of this obj</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (dict)</span>
+<span class="sd">        d (dict): the object as a dictionary.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tasksd</span> <span class="o">=</span> <span class="p">{</span><span class="n">mbt</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">:</span> <span class="n">mbt</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">mbt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">}</span>
@@ -2860,7 +2887,7 @@ e. A dictionary where all keys are strs and all values
       <tr>
         <td><code>d</code></td>
         <td><code>dict</code></td>
-        <td></td>
+        <td><p>The benchmark as a dictionary.</p></td>
         <td><em>required</em></td>
       </tr>
   </tbody>
@@ -2875,8 +2902,8 @@ e. A dictionary where all keys are strs and all values
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(MatbenchBenchmark)</p></td>
+      <td><code>(MatbenchBenchmark)</code></td>
+      <td><p>The benchmark as an object.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2887,10 +2914,10 @@ e. A dictionary where all keys are strs and all values
     <span class="sd">&quot;&quot;&quot;Create a MatbenchBenchmark object from a dictionary.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        d (dict):</span>
+<span class="sd">        d (dict): The benchmark as a dictionary.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (MatbenchBenchmark)</span>
+<span class="sd">        (MatbenchBenchmark): The benchmark as an object.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">required_keys</span> <span class="o">=</span> <span class="p">[</span>
@@ -3052,8 +3079,9 @@ upon instantiation. Be warned; this can take a while.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>(MatbenchBenchmark object)</p></td>
+      <td><code>(MatbenchBenchmark object)</code></td>
+      <td><p>A ready-to-use MatbenchBenchmark
+    object.</p></td>
     </tr>
   </tbody>
 </table>
@@ -3080,7 +3108,8 @@ upon instantiation. Be warned; this can take a while.</p></td>
 <span class="sd">            upon instantiation. Be warned; this can take a while.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (MatbenchBenchmark object)</span>
+<span class="sd">        (MatbenchBenchmark object): A ready-to-use MatbenchBenchmark</span>
+<span class="sd">            object.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">benchmark</span> <span class="o">==</span> <span class="n">MBV01_KEY</span><span class="p">:</span>
@@ -3157,8 +3186,8 @@ upon instantiation. Be warned; this can take a while.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>None</p></td>
+      <td><code>(NoneType)</code></td>
+      <td><p>Output is sent to logger.</p></td>
     </tr>
   </tbody>
 </table>
@@ -3168,7 +3197,7 @@ upon instantiation. Be warned; this can take a while.</p></td>
     <span class="sd">&quot;&quot;&quot;Log info about the benchmark to the respective logging handlers.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        None</span>
+<span class="sd">        (NoneType): Output is sent to logger.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
 </code></pre></div>
@@ -3203,8 +3232,8 @@ upon instantiation. Be warned; this can take a while.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td><p>None</p></td>
+      <td><code>(NoneType)</code></td>
+      <td><p>Datasets are kept in attributes.</p></td>
     </tr>
   </tbody>
 </table>
@@ -3213,7 +3242,7 @@ upon instantiation. Be warned; this can take a while.</p></td>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Load all tasks in this benchmark.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        None</span>
+<span class="sd">        (NoneType): Datasets are kept in attributes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">:</span>
         <span class="n">t</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
