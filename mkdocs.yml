@@ -10,7 +10,7 @@ theme:
   name: material
   palette:
     scheme: slate
-    primary: grey
+    primary: blue
     accent: green
   logo: static/matbench_logo.png
   favicon: static/matbench_logo_favicon.png
@@ -36,5 +36,5 @@ extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
-#extra_css:
-#  - stylesheets/wide_content.css
+extra_css:
+  - stylesheets/aesthetic_fixes.css

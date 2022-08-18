@@ -144,8 +144,9 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             item (str): The name of the attr.
 
         Returns:
-            The attr, if not in the metadata defined by the benchmark
-            If the attr is a task name, returns that MatBenchTask object.
+
+            (object): The attr, if not in the metadata defined by the benchmark
+                If the attr is a task name, returns that MatBenchTask object.
 
         """
         if item in self.metadata:
@@ -174,7 +175,8 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                 upon instantiation. Be warned; this can take a while.
 
         Returns:
-            (MatbenchBenchmark object)
+            (MatbenchBenchmark object): A ready-to-use MatbenchBenchmark
+                object.
 
         """
         if benchmark == MBV01_KEY:
@@ -225,10 +227,10 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         """Create a MatbenchBenchmark object from a dictionary.
 
         Args:
-            d (dict):
+            d (dict): The benchmark as a dictionary.
 
         Returns:
-            (MatbenchBenchmark)
+            (MatbenchBenchmark): The benchmark as an object.
 
         """
         required_keys = [
@@ -409,7 +411,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         """Overridden from MSONable.as_dict, get dict repr of this obj
 
         Returns:
-            (dict)
+            d (dict): the object as a dictionary.
 
         """
         tasksd = {mbt.dataset_name: mbt.as_dict() for mbt in self.tasks}
@@ -439,7 +441,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         """Log info about the benchmark to the respective logging handlers.
 
         Returns:
-            None
+            (NoneType): Output is sent to logger.
         """
         logger.info(self.info)
 
@@ -463,10 +465,11 @@ class MatbenchBenchmark(MSONable, MSONable2File):
                are one of a, b, c, d, or e (recursive).
 
         Args:
-            metadata (dict)
+            metadata (dict): Metadata about the algorithm being
+                run on this benchmark.
 
         Returns:
-            None
+            (NoneType): None. Logger provides information.
         """
         # Use logging here so bad metadata addition does not
         # ruin an entire run...
@@ -487,7 +490,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
     def load(self):
         """Load all tasks in this benchmark.
         Returns:
-            None
+            (NoneType): Datasets are kept in attributes.
         """
         for t in self.tasks:
             t.load()
@@ -533,7 +536,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         state.
 
         Returns:
-            (str)
+            s (str): A formatted string describing this benchmark's state.
 
         """
 
@@ -585,7 +588,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         For matbench v0.1, this means all 13 tasks are in the benchmark.
 
         Returns:
-            (bool)
+            (bool): Whether benchmark is entirely complete.
 
         """
         return self._determine_completeness(completeness_type=self.ALL_KEY)
@@ -595,7 +598,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         """Determine if all composition tasks for this benchmark are included
 
         Returns:
-            (bool)
+            (bool): Whether benchmark is composition complete.
         """
         return self._determine_completeness(completeness_type=COMPOSITION_KEY)
 
@@ -604,7 +607,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         """Determine if all structure tasks for this benchmark are included
 
         Returns:
-            (bool)
+            (bool): Whether benchmark is structure complete.
         """
         return self._determine_completeness(completeness_type=STRUCTURE_KEY)
 
@@ -613,7 +616,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         """Determine if all regression tasks for this benchmark are included
 
         Returns:
-            (bool)
+            (bool): Whether benchmark is regression complete.
         """
         return self._determine_completeness(completeness_type=REG_KEY)
 
@@ -622,7 +625,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
         """Determine if all classification tasks for this benchmark are included
 
         Returns:
-            (bool)
+            (bool): Whether benchmark is classification complete.
         """
         return self._determine_completeness(completeness_type=CLF_KEY)
 

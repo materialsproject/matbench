@@ -187,7 +187,7 @@ class MatbenchTask(MSONable, MSONable2File):
             d (dict):
 
         Returns:
-            (MatbenchTask)
+            (MatbenchTask): The MatbenchTask object.
 
         """
         req_base_keys = [
@@ -219,7 +219,7 @@ class MatbenchTask(MSONable, MSONable2File):
             results_dict (dict): A formatted dictionary of raw results.
 
         Returns:
-            (MatbenchTask)
+            (MatbenchTask): The matbench task object.
         """
         obj = cls(dataset_name, autoload=False, benchmark=benchmark_name)
         obj.results = RecursiveDotDict(results_dict)
@@ -230,7 +230,7 @@ class MatbenchTask(MSONable, MSONable2File):
         """Load the dataset for this task into memory.
 
         Returns:
-            None
+            (NoneType):  The dataset is stored as an attribute.
         """
         if self.df is None:
             logger.info(f"Loading dataset '{self.dataset_name}'...")
@@ -251,9 +251,11 @@ class MatbenchTask(MSONable, MSONable2File):
         hyperparameter selection must be done on this data, NOT test data.
 
         Args:
-            fold_number:
+            fold_number (int): Index of the fold to retrieve test data.
 
         Returns:
+            (pd.Dataframe) or (tuple): Returns either a dataframe of
+                training data or a 2-tuple of training data.
 
         """
         self._check_is_loaded()
@@ -266,11 +268,12 @@ class MatbenchTask(MSONable, MSONable2File):
         The test data used for recording benchmarks.
 
         Args:
-            fold_number:
+            fold_number (int): Index of the fold to retrieve.
 
         Returns:
-
-
+            (tuple) or (pd.Dataframe): Data for inference. If target is
+                not included (it should not be, usually) then it should
+                be a single column if a df or a 1-tuple if a tuple.
         """
         self._check_is_loaded()
         fold_key = self.folds_map[fold_number]
@@ -292,13 +295,13 @@ class MatbenchTask(MSONable, MSONable2File):
         Args:
             fold_number (int): The fold number.
             predictions ([float] or [bool] or np.ndarray): A list of predictions for
-            fold number {fold_number}
+            fold number (int): The index of the fold number to record.
             ci ([tuple] or [list] or np.ndarray): A list of 95% confidence
-            intervals on predictions for fold number {fold_number}. By default
-            None. Only one of `ci` or `std` should be specified, not both.
+                intervals on predictions for fold number {fold_number}. By default
+                None. Only one of `ci` or `std` should be specified, not both.
             std ([float] or np.ndarray): A list of prediction standard deviations
-            for fold number {fold_number}. By default None. Only one of
-            `ci` or `std` should be specified, not both.
+                for fold number {fold_number}. By default None. Only one of
+                `ci` or `std` should be specified, not both.
             params (dict): Any free-form parameters for information
                 about the algorithm on this fold. For example,
                 hyperparameters determined during validation. Parameters
@@ -307,7 +310,7 @@ class MatbenchTask(MSONable, MSONable2File):
                 docstring.
 
         Returns:
-            None
+            (NoneType): Recorded data is stored in attributes.
         """
         if self.is_recorded[fold_number]:
             logger.error(
@@ -423,7 +426,7 @@ class MatbenchTask(MSONable, MSONable2File):
         Required method from MSONAble.
 
         Returns:
-            (dict)
+            (dict): The object as a serialized dictionary.
         """
         return {
             "@module": self.__class__.__module__,
@@ -450,6 +453,7 @@ class MatbenchTask(MSONable, MSONable2File):
             If ci is specified but std is not, that must be
             consistent for all samples.
         Returns:
+            (NoneType): Errors are thrown if benchmark not valid.
 
         """
         self._check_all_folds_recorded(
@@ -681,7 +685,7 @@ class MatbenchTask(MSONable, MSONable2File):
         """Determine if a task's raw data contains polymorphs.
 
         Returns:
-            (bool) If true, contains polymorphs.
+            (bool): If true, contains polymorphs.
         """
         checker_key = "pmg_composition"
         self._check_is_loaded()
