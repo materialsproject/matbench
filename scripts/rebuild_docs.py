@@ -180,10 +180,10 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERR
                     name="Best algorithms"
                 )
             )
+            fig.update_traces(hoverlabel={"bgcolor": "black"}, selector=dict(type='scatter'))
             fig.update_xaxes(linecolor="grey", gridcolor="grey")
             fig.update_yaxes(linecolor="grey", gridcolor="grey")
             fig.write_html(output_fname.format(bmark_name=bmark_name))
-
 
             if output_fname == SCALED_ERRORS_PATH:
                 # Update layout for showing on white background on mp website
