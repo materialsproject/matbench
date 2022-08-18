@@ -1,4 +1,14 @@
-# Leaderboard
+# Leaderboard 
+
+**Matbench is an automated leaderboard** for benchmarking state of the art ML algorithms predicting a **diverse range of solid materials' properties**. It is hosted and maintained by [the Materials Project](https://materialsproject.org). 
+
+ ![crystal](static/crystals.png)
+
+- `115` **total task submissions**
+- `16` **algorithms** 
+- `1` **benchmark test suites**
+
+ Scroll down to learn more.
 
 ## Leaderboard: General Purpose Algorithms on `matbench_v0.1`
 
@@ -22,7 +32,10 @@ Find more information about this benchmark on [the benchmark info page](Benchmar
 
 
 
-<iframe src="static/scaled_errors_matbench_v0.1.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
+<iframe src="static/scaled_errors_matbench_v0.1.html" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>
+
+
+<iframe src="static/scaled_errors_non_gp_matbench_v0.1.html" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>
 
 Scaled errors for regressions on this leaderboard plot are assessed as the ratio of mean absolute error to mean absolute deviation:
 
@@ -38,7 +51,7 @@ $$
 inorganic materials science applications including electronic, thermodynamic, mechanical, and thermal properties among crystals, 2D materials,
 disordered metals, and more.  
 
-**The [Matbench python package](https://github.com/hackingmaterials/matbench) provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.**
+**The [Matbench python package](https://github.com/hackingmaterials/matbench) provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.** The web pages and repository online contain full result files, citations, methodologies, and code for the algorithms shown.
 
 ![infographic](static/infographic_matbench.png)
 
@@ -50,7 +63,7 @@ disordered metals, and more.
 
 - **Leaderboard of results for state-of-the-art materials ML algorithms on standardized test problems**
 - Interactively explore and download the tasks on [MPContribs-ML](https://ml.materialsproject.org/browse), a platform hosted by [The Materials Project](https://materialsproject.org). See [Benchmark Info](Benchmark%20Info/matbench_v0.1/) for links to each dataset.
-- **Each and every result is backed by a peer-reviewed publication and a jupyter notebook** (similar to Papers With Code) - i.e., how were these results were obtained?
+- **Each and every result is backed by a peer-reviewed publication and/or a jupyter notebook** (similar to Papers With Code) - i.e., how were these results were obtained?
 - Glossary of all algorithms' results on the Matbench problems
 
 

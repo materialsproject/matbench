@@ -1,3 +1,4 @@
+import copy
 import glob
 import json
 import logging
@@ -37,16 +38,18 @@ METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
 METADATA_DIR_PREFIX = "Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
 SCALED_ERRORS_FILENAME = "scaled_errors_{bmark_name}.html"
+SCALED_ERRORS_NON_GP_FILENAME = "scaled_errors_non_gp_{bmark_name}.html"
 
 
 MP_WEBSITE_STATICS = os.path.join(STATIC_DOCS_DIR, "mp_srcs")
 SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_FILENAME)
 SCALED_ERRORS_JSON_PATH = SCALED_ERRORS_PATH.replace(".html", ".json")
+SCALED_ERRORS_NON_GP_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_NON_GP_FILENAME)
 
 pio.templates.default = "plotly_white"
 
 
-def generate_scaled_errors_graph(gp_graph_data_by_bmark):
+def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERRORS_PATH, title_txt="General purpose", title_subtext=""):
     """
     Generate the scaled errors graph
 
@@ -149,15 +152,16 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
                 )
             )
 
-            fig.update_layout(title_text="Scaled Errors",
-                              title_font_size=30,
-                              legend_font_size=15,
-                              legend_title_font_size=15,
+            fig.update_layout(title_text=f"{title_txt} Scaled Errors {title_subtext}",
+                              title_font_size=24,
+                              legend_font_size=14,
+                              legend_title_font_size=14,
                               legend_title_text="Algorithm",
                               yaxis_title="Scaled MAE (regression) or <br> (1-ROCAUC)/0.5 (classification)",
                               xaxis_title="", paper_bgcolor='rgba(0,0,0,0)',
                               plot_bgcolor='rgba(0,0,0,0)',
-                              font={"color": "white"})
+                              font={"color": "white"},
+                              legend={"yanchor": "top", "y": -0.10, "xanchor": "left", "x": 0.01})
 
             # add scatter for the best algorithms on scaled error
             fig.add_trace(
@@ -178,19 +182,20 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark):
             )
             fig.update_xaxes(linecolor="grey", gridcolor="grey")
             fig.update_yaxes(linecolor="grey", gridcolor="grey")
-            fig.write_html(SCALED_ERRORS_PATH.format(bmark_name=bmark_name))
+            fig.write_html(output_fname.format(bmark_name=bmark_name))
 
 
-            # Update layout for showing on white background on mp website
-            fig.update_layout(
-                title_text="",
-                font={"color": "black"}
-            )
-            fig.write_json(SCALED_ERRORS_JSON_PATH.format(bmark_name=bmark_name))
+            if output_fname == SCALED_ERRORS_PATH:
+                # Update layout for showing on white background on mp website
+                fig.update_layout(
+                    title_text="",
+                    font={"color": "black"}
+                )
+                fig.write_json(SCALED_ERRORS_JSON_PATH.format(bmark_name=bmark_name))
 
 
 # NOTE: MUST BE CALLED AFTER CREATING generate_scaled_errors_graph
-def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
+def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, total_info_counts):
     """
     Generate both the general purpose leaderboard and scaled errors graph on the main leaderboard page.
 
@@ -254,15 +259,21 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark):
 
             table += f"| {task_name_link} | {samples} | {algorithm} | {score} | {notes} |\n"
         table += "\n\n"
-        scaled_errors_plot_txt = f'\n<iframe src="static/{SCALED_ERRORS_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
-        gp_leaderboard_txt += table_header + table_explanation + table + scaled_errors_plot_txt
+        scaled_errors_plot_txt = f'\n<iframe src="static/{SCALED_ERRORS_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>\n\n'
+        scaled_errors_non_gp_plt_txt = f'\n<iframe src="static/{SCALED_ERRORS_NON_GP_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>\n\n'
+        gp_leaderboard_txt += table_header + table_explanation + table + scaled_errors_plot_txt + scaled_errors_non_gp_plt_txt
 
     # Load the static index from the snippets dir
     with open(os.path.join(SNIPPETS_DIR, "index.md"), encoding="utf-8") as f:
         static_txt = f.read()
 
-
-    page_header = f"# Leaderboard\n\n"
+    n_algos = total_info_counts["algos"]
+    n_tasks = total_info_counts["tasks"]
+    n_benchmarks = total_info_counts["benchmarks"]
+    page_header = f"# Leaderboard \n\n" \
+                  f"**Matbench is an automated leaderboard** for benchmarking state of the art ML algorithms predicting a **diverse range of solid materials' properties**. " \
+                  f"It is hosted and maintained by [the Materials Project](https://materialsproject.org). \n\n ![crystal](static/crystals.png)\n\n" \
+                  f"- `{n_tasks}` **total task submissions**\n- `{n_algos}` **algorithms** \n- `{n_benchmarks}` **benchmark test suites**\n\n Scroll down to learn more.\n\n"
     final_txt = page_header + gp_leaderboard_txt + static_txt
 
     with open(os.path.join(DOCS_DIR, "index.md"), "w", encoding="utf-8") as f:
@@ -448,12 +459,17 @@ def organize_task_data(all_data):
         else:
             all_data_per_benchmark[bmark_name] = [data_packet]
 
+    n_tasks = 0
+    n_algos = 0
+    n_benchmarks = 0
 
     gp_leaderboard_data_by_bmark = {}
     task_leaderboards_data_by_bmark = {}
     gp_graph_data_by_bmark = {}
+    non_gp_graph_data_by_bmark = {}
 
     for bmark_name, bmarks in all_data_per_benchmark.items():
+        n_benchmarks += 1
         if bmark_name == MBV01_KEY:
             metadata = mbv01_metadata
         else:
@@ -468,15 +484,17 @@ def organize_task_data(all_data):
         } for t in metadata.keys()}
 
         task_leaderboards = {t: [] for t in metadata.keys()}
-
         gp_graph_data = {t: {} for t in metadata.keys()}
+        non_gp_graph_data = copy.deepcopy(gp_graph_data)
 
         for bmark_data in bmarks:
+            n_algos += 1
             mb = bmark_data["results"]
             info = bmark_data["info"]
             dir_name_short = bmark_data["dir_name_short"]
 
             for task in mb.tasks:
+                n_tasks += 1
                 task_name = task.dataset_name
 
                 if task.metadata.task_type == REG_KEY:
@@ -516,6 +534,8 @@ def organize_task_data(all_data):
                     else:
                         pass
 
+                non_gp_graph_data[task_name][info["algorithm"]] = score
+
                 # Add it to the task-specific leaderboard, as all entries will be included
                 # there
                 task_leaderboards[task_name].append({
@@ -528,8 +548,15 @@ def organize_task_data(all_data):
             gp_leaderboard_data_by_bmark[bmark_name] = gp_leaderboard
             task_leaderboards_data_by_bmark[bmark_name] = task_leaderboards
             gp_graph_data_by_bmark[bmark_name] = gp_graph_data
+            non_gp_graph_data_by_bmark[bmark_name] = non_gp_graph_data
+    total_info_counts = {"benchmarks": n_benchmarks, "tasks": n_tasks, "algos": n_algos}
 
-    return gp_leaderboard_data_by_bmark, task_leaderboards_data_by_bmark, gp_graph_data_by_bmark
+    return \
+        gp_leaderboard_data_by_bmark, \
+        task_leaderboards_data_by_bmark, \
+        gp_graph_data_by_bmark, \
+        non_gp_graph_data_by_bmark, \
+        total_info_counts
 
 
 def generate_metadata_pages(task_leaderboard_data_by_bmark):
@@ -887,6 +914,8 @@ if __name__ == "__main__":
         gp_leaderboard_data_by_bmark,
         task_leaderboards_data_by_bmark,
         gp_graph_data_by_bmark,
+        non_gp_graph_data_by_bmark,
+        total_info_counts
     ) = organize_task_data(all_data)
 
     print("DOCS: ALL DATA ACQUIRED")
@@ -898,10 +927,7 @@ if __name__ == "__main__":
     generate_metadata_pages(task_leaderboards_data_by_bmark)
 
     # must be called before generating the gp leaderboard
-    generate_scaled_errors_graph(gp_graph_data_by_bmark)
+    generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERRORS_PATH, title_txt="General Purpose Algorithms'", title_subtext="<br><sup>(only broadly applicable algorithms)</sup>")
+    generate_scaled_errors_graph(non_gp_graph_data_by_bmark, output_fname=SCALED_ERRORS_NON_GP_PATH, title_txt="All Algorithms'", title_subtext="<br><sup>(includes task-specific algorithms)</sup>")
 
-    generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark)
-
-    # TODO: we probably don't need to update these plots on every docs update
-    # maybe comment this out or put it behind a condition? - @janosh
-    # generate_pymatviz_eda_figs()
+    generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, total_info_counts)

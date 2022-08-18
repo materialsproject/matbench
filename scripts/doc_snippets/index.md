@@ -12,7 +12,7 @@ $$
 inorganic materials science applications including electronic, thermodynamic, mechanical, and thermal properties among crystals, 2D materials,
 disordered metals, and more.  
 
-**The [Matbench python package](https://github.com/hackingmaterials/matbench) provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.**
+**The [Matbench python package](https://github.com/hackingmaterials/matbench) provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.** The web pages and repository online contain full result files, citations, methodologies, and code for the algorithms shown.
 
 ![infographic](static/infographic_matbench.png)
 
@@ -24,7 +24,7 @@ disordered metals, and more.
 
 - **Leaderboard of results for state-of-the-art materials ML algorithms on standardized test problems**
 - Interactively explore and download the tasks on [MPContribs-ML](https://ml.materialsproject.org/browse), a platform hosted by [The Materials Project](https://materialsproject.org). See [Benchmark Info](Benchmark%20Info/matbench_v0.1/) for links to each dataset.
-- **Each and every result is backed by a peer-reviewed publication and a jupyter notebook** (similar to Papers With Code) - i.e., how were these results were obtained?
+- **Each and every result is backed by a peer-reviewed publication and/or a jupyter notebook** (similar to Papers With Code) - i.e., how were these results were obtained?
 - Glossary of all algorithms' results on the Matbench problems
 
 

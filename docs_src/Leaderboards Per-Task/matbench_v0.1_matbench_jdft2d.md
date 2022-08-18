@@ -13,6 +13,8 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **39.8497** | 9.8835 | 106.5460 | 1552.9102 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **43.4244** | 8.9491 | 117.4213 | 1519.7424 | 
 | [CrabNet](../Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **45.6104** | 12.2491 | 120.0088 | 1532.0118 | 
+| [Finder_v1.2 structure-based version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_structure.md) | **46.1339** | 11.4644 | 120.0917 | 1581.4571 | 
+| [Finder_v1.2 composition-only version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_composition.md) | **47.9614** | 11.6680 | 120.8819 | 1582.3598 | 
 | [CGCNN v2019](../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **49.2440** | 11.5865 | 112.7689 | 1516.9120 | 
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **50.0440** | 8.6271 | 112.2660 | 1538.6073 | 
 | [Dummy](../Full%20Benchmark%20Data/matbench_v0.1_dummy.md) | **67.2851** | 10.1832 | 126.8446 | 1491.7993 | 

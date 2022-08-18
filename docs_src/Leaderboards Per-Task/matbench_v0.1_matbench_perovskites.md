@@ -9,6 +9,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | algorithm | mean mae | std mae | mean rmse | max max_error |
 |------|------|------|------|------|
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0288** | 0.0009 | 0.0559 | 0.9028 | 
+| [Finder_v1.2 structure-based version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_structure.md) | **0.0320** | 0.0012 | 0.0594 | 0.8875 | 
 | [CGCNN v2019](../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.0452** | 0.0007 | 0.0722 | 0.9923 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.0908** | 0.0028 | 0.1277 | 1.1780 | 
 | [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.0908** | 0.0028 | 0.1277 | 1.1780 | 
@@ -16,6 +17,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.2355** | 0.0034 | 0.3346 | 2.8870 | 
 | [CrabNet](../Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **0.4065** | 0.0069 | 0.5412 | 2.3726 | 
 | [Dummy](../Full%20Benchmark%20Data/matbench_v0.1_dummy.md) | **0.5660** | 0.0048 | 0.7424 | 3.6873 | 
+| [Finder_v1.2 composition-only version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_composition.md) | **0.6450** | 0.0167 | 0.8831 | 3.5402 | 
 
 
 <iframe src="../../static/task_matbench_v0.1_matbench_perovskites.html" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>
