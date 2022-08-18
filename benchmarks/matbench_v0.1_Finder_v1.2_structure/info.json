@@ -1,0 +1,24 @@
+{
+    "authors": "Achintha Avin Ihalage",
+    "algorithm": "Finder_v1.2 structure-based version",
+    "algorithm_long": "Formula graph self-attention network for representation-domain independent materials discovery (Finder). Formula graph is a general representation of crystal structure and chemical composition for graph neural networks (GNNs). Finder GNN can therefore be used for materials property prediction with or without crystal structure. Please see the related publication (https://onlinelibrary.wiley.com/doi/full/10.1002/advs.202200164) and the github repository for more details (https://github.com/ihalage/Finder).",
+        "bibtex_refs": "@article{Ihalage_2022_Adv_Sci, author = {Ihalage, Achintha and Hao, Yang}, title = {Formula Graph Self-Attention Network for Representation-Domain Independent Materials Discovery}, journal = {Advanced Science}, volume = {9}, number = {18}, pages = {2200164}, keywords = {attention, epsilon-near-zero, graph-network, machine-learning, materials-informatics}, doi = {https://doi.org/10.1002/advs.202200164}, url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/advs.202200164}, eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1002/advs.202200164}, year = {2022}}",
+    "notes": "An example python script with instructions to evaluate Finder algorithm on matbench suite is provided.",
+    "requirements": {
+        "python": [
+            [
+                "spektral==1.1.0",
+                "tensorflow==2.9.1",
+                "pymatgen==2022.7.19",
+                "matminer==0.7.8",
+                "numpy==1.23.1",
+                "pandas==1.4.3",
+                "matplotlib==3.5.2",
+                "scikit-learn==1.1.1",
+                "scipy==1.8.1",
+                "sparse==0.13.0",
+                "protobuf==3.19.4"
+            ]
+        ]
+    }
+}

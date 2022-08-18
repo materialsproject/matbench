@@ -1036,9 +1036,8 @@
 <thead>
 <tr>
 <th>Task name</th>
-<th>Task type</th>
+<th>Task type/input</th>
 <th>Target column (unit)</th>
-<th>Input type</th>
 <th>Samples</th>
 <th>MAD (regression) or Fraction True (classification)</th>
 <th>Links</th>
@@ -1048,9 +1047,8 @@
 <tbody>
 <tr>
 <td><code>matbench_steels</code></td>
-<td>regression</td>
+<td>regression/composition</td>
 <td><code>yield strength</code> (MPa)</td>
-<td>composition</td>
 <td>312</td>
 <td>229.3743</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_steels.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_steels">interactive</a></td>
@@ -1058,9 +1056,8 @@
 </tr>
 <tr>
 <td><code>matbench_jdft2d</code></td>
-<td>regression</td>
+<td>regression/structure</td>
 <td><code>exfoliation_en</code> (meV/atom)</td>
-<td>structure</td>
 <td>636</td>
 <td>67.2020</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_jdft2d.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_jdft2d">interactive</a></td>
@@ -1068,9 +1065,8 @@
 </tr>
 <tr>
 <td><code>matbench_phonons</code></td>
-<td>regression</td>
+<td>regression/structure</td>
 <td><code>last phdos peak</code> (cm^-1)</td>
-<td>structure</td>
 <td>1,265</td>
 <td>323.7870</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_phonons.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_phonons">interactive</a></td>
@@ -1078,9 +1074,8 @@
 </tr>
 <tr>
 <td><code>matbench_expt_gap</code></td>
-<td>regression</td>
+<td>regression/composition</td>
 <td><code>gap expt</code> (eV)</td>
-<td>composition</td>
 <td>4,604</td>
 <td>1.1432</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_expt_gap.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_expt_gap">interactive</a></td>
@@ -1088,9 +1083,8 @@
 </tr>
 <tr>
 <td><code>matbench_dielectric</code></td>
-<td>regression</td>
+<td>regression/structure</td>
 <td><code>n</code> (unitless)</td>
-<td>structure</td>
 <td>4,764</td>
 <td>0.8085</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_dielectric.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_dielectric">interactive</a></td>
@@ -1098,9 +1092,8 @@
 </tr>
 <tr>
 <td><code>matbench_expt_is_metal</code></td>
-<td>classification</td>
+<td>classification/composition</td>
 <td><code>is_metal</code></td>
-<td>composition</td>
 <td>4,921</td>
 <td>0.4981</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_expt_is_metal.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_expt_is_metal">interactive</a></td>
@@ -1108,9 +1101,8 @@
 </tr>
 <tr>
 <td><code>matbench_glass</code></td>
-<td>classification</td>
+<td>classification/composition</td>
 <td><code>gfa</code></td>
-<td>composition</td>
 <td>5,680</td>
 <td>0.7104</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_glass.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_glass">interactive</a></td>
@@ -1118,9 +1110,8 @@
 </tr>
 <tr>
 <td><code>matbench_log_gvrh</code></td>
-<td>regression</td>
+<td>regression/structure</td>
 <td><code>log10(G_VRH)</code> (log10(GPa))</td>
-<td>structure</td>
 <td>10,987</td>
 <td>0.2931</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_log_gvrh.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_log_gvrh">interactive</a></td>
@@ -1128,9 +1119,8 @@
 </tr>
 <tr>
 <td><code>matbench_log_kvrh</code></td>
-<td>regression</td>
+<td>regression/structure</td>
 <td><code>log10(K_VRH)</code> (log10(GPa))</td>
-<td>structure</td>
 <td>10,987</td>
 <td>0.2897</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_log_kvrh.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_log_kvrh">interactive</a></td>
@@ -1138,9 +1128,8 @@
 </tr>
 <tr>
 <td><code>matbench_perovskites</code></td>
-<td>regression</td>
+<td>regression/structure</td>
 <td><code>e_form</code> (eV/unit cell)</td>
-<td>structure</td>
 <td>18,928</td>
 <td>0.5660</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_perovskites.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_perovskites">interactive</a></td>
@@ -1148,9 +1137,8 @@
 </tr>
 <tr>
 <td><code>matbench_mp_gap</code></td>
-<td>regression</td>
+<td>regression/structure</td>
 <td><code>gap pbe</code> (eV)</td>
-<td>structure</td>
 <td>106,113</td>
 <td>1.3271</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_mp_gap.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_mp_gap">interactive</a></td>
@@ -1158,9 +1146,8 @@
 </tr>
 <tr>
 <td><code>matbench_mp_is_metal</code></td>
-<td>classification</td>
+<td>classification/structure</td>
 <td><code>is_metal</code></td>
-<td>structure</td>
 <td>106,113</td>
 <td>0.4349</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_mp_is_metal.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_mp_is_metal">interactive</a></td>
@@ -1168,9 +1155,8 @@
 </tr>
 <tr>
 <td><code>matbench_mp_e_form</code></td>
-<td>regression</td>
+<td>regression/structure</td>
 <td><code>e_form</code> (eV/atom)</td>
-<td>structure</td>
 <td>132,752</td>
 <td>1.0059</td>
 <td><a href="https://ml.materialsproject.org/projects/matbench_mp_e_form.json.gz">download</a>, <a href="https://ml.materialsproject.org/projects/matbench_mp_e_form">interactive</a></td>
