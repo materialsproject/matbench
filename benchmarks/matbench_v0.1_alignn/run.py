@@ -5,18 +5,18 @@
 # conda activate matbench_test
 # pip install alignn matbench dgl-cu111
 
-from matbench.bench import MatbenchBenchmark
-from matbench.constants import CLF_KEY
-import os
 import glob
-from jarvis.db.jsonutils import loadjson, dumpjson
-from jarvis.core.atoms import pmg_to_atoms
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import roc_auc_score
-import pandas as pd
-import numpy as np
+import os
 from collections import defaultdict
 
+import numpy as np
+import pandas as pd
+from jarvis.core.atoms import pmg_to_atoms
+from jarvis.db.jsonutils import dumpjson, loadjson
+from sklearn.metrics import mean_absolute_error, roc_auc_score
+
+from matbench.bench import MatbenchBenchmark
+from matbench.constants import CLF_KEY
 
 mb = MatbenchBenchmark(
     autoload=False,

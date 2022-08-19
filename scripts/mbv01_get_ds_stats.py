@@ -1,11 +1,10 @@
-from matbench.constants import CLF_KEY, REG_KEY
-from matbench.data_ops import load
-
-from copy import deepcopy
 import pprint
+from copy import deepcopy
 
 from monty.serialization import loadfn
 
+from matbench.constants import CLF_KEY, REG_KEY
+from matbench.data_ops import load
 
 mbv01_metadata = loadfn("/Users/ardunn/alex/lbl/projects/common_env/dev_codes/matbench/matbench/matbench_v0.1_dataset_metadata.json")
 new_metadata = deepcopy(mbv01_metadata)

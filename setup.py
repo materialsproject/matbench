@@ -1,5 +1,6 @@
 import os
-from setuptools import setup, find_packages
+
+from setuptools import find_packages, setup
 
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(MODULE_DIR, "requirements.txt")) as f:

@@ -1,11 +1,10 @@
-import os
 import glob
+import os
 import unittest
 
 from monty.serialization import loadfn
 
 from matbench.bench import MatbenchBenchmark
-
 
 BENCHMARKS_DIR = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir), "benchmarks")
 

@@ -10,15 +10,12 @@ Reduce the number of jobs n_jobs for less memory usage on consumer machines.
 
 
 from automatminer import MatPipe
+from automatminer.automl.adaptors import SinglePipelineAdaptor, TPOTAdaptor
 from automatminer.featurization import AutoFeaturizer
-from automatminer.automl.adaptors import SinglePipelineAdaptor
 from automatminer.preprocessing import DataCleaner, FeatureReducer
-from automatminer.automl.adaptors import TPOTAdaptor, SinglePipelineAdaptor
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 
 from matbench.bench import MatbenchBenchmark
-
-
 
 # The learner is a single 500-estimator Random Forest model
 learner = SinglePipelineAdaptor(

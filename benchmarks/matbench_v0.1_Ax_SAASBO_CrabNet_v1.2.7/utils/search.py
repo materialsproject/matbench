@@ -1,6 +1,6 @@
+from ax import ChoiceParameter, ParameterType, RangeParameter
 from ax.core import SearchSpace
-from ax.core.parameter_constraint import SumConstraint, OrderConstraint
-from ax import RangeParameter, ChoiceParameter, ParameterType
+from ax.core.parameter_constraint import OrderConstraint, SumConstraint
 
 # %% constraint parameters and constraints
 betas1 = RangeParameter(

@@ -9,14 +9,12 @@ To combat duplicate compositions, we don't keep any compositions with a range
 of bandgaps more than 0.1eV. Then, we find the mean band gap for each composition
 and keep the value closest to the mean.
 """
-from matminer.datasets.dataset_retrieval import load_dataset
-from matminer.utils.io import store_dataframe_as_json
-from matminer.featurizers.conversions import StrToComposition
-from tqdm import tqdm
 import numpy as np
-
-
 import pandas as pd
+from matminer.datasets.dataset_retrieval import load_dataset
+from matminer.featurizers.conversions import StrToComposition
+from matminer.utils.io import store_dataframe_as_json
+from tqdm import tqdm
 
 pd.set_option("display.max_rows", 500)
 pd.set_option("display.max_columns", 500)

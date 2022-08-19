@@ -1,8 +1,9 @@
 import pandas as pd
 from ax import Data
-from ax.storage.metric_registry import register_metric
 from ax.core import Metric
+from ax.storage.metric_registry import register_metric
 from utils.parameterization import crabnet_mae
+
 
 # %% CrabNetMetric
 class CrabNetMetric(Metric):
