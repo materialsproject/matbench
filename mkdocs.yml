@@ -20,6 +20,9 @@ theme:
   features:
     - navigation.tabs
     - navigation.tabs.sticky
+  font:
+    text: Helvetica
+    code: Monaco
 
 plugins:
   - search
