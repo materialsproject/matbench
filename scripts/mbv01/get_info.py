@@ -1,4 +1,9 @@
-from matminer.datasets.dataset_retrieval import load_dataset, get_available_datasets, get_all_dataset_info
+from matminer.datasets.dataset_retrieval import (
+    get_all_dataset_info,
+    get_available_datasets,
+    load_dataset,
+)
+
 datasets = get_available_datasets(print_format=None)
 
 for dataset in datasets:

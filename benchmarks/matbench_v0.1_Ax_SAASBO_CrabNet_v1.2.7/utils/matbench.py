@@ -15,11 +15,11 @@ from ax.runners.synthetic import SyntheticRunner
 from ax.storage.json_store.save import save_experiment
 from crabnet.train_crabnet import get_model
 from sklearn.metrics import mean_absolute_error
-
-from matbench.bench import MatbenchBenchmark
 from utils.metrics import CrabNetMetric
 from utils.parameterization import correct_parameterization
 from utils.search import search_space
+
+from matbench.bench import MatbenchBenchmark
 
 dummy = False
 metric = "crabnet_mae"
@@ -56,6 +56,7 @@ Path(figure_dir).mkdir(parents=True, exist_ok=True)
 
 
 param_names = list(search_space.parameters.keys())
+
 
 # %% matbench loop
 mb = MatbenchBenchmark(autoload=False, subset=["matbench_expt_gap"])

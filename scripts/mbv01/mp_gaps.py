@@ -6,13 +6,12 @@ This file makes the following benchmarking datasets:
 From matminer's dataset library.
 """
 
-from pymatgen import MPRester
-from matminer.datasets.dataset_retrieval import load_dataset
-from matminer.data_retrieval.retrieve_MP import MPDataRetrieval
-import pandas as pd
 import numpy as np
+import pandas as pd
+from matminer.data_retrieval.retrieve_MP import MPDataRetrieval
+from matminer.datasets.dataset_retrieval import load_dataset
+from pymatgen import MPRester
 from tqdm import tqdm
-
 
 pd.set_option("display.max_rows", 500)
 pd.set_option("display.max_columns", 500)
@@ -81,4 +80,4 @@ print(df)
 # df.to_pickle("mp_is_metal.pickle.gz")
 for target in ["gap pbe", "is_metal"]:
     dftemp = df[["structure", target]]
-    dftemp.to_pickle("mp_{}.pickle.gz".format(target))
+    dftemp.to_pickle(f"mp_{target}.pickle.gz")

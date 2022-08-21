@@ -30,7 +30,7 @@ class MatbenchTask(MSONable, MSONable2File):
 
     MatbenchTask handles creating training/validation and testing sets, as
     well as recording and managing all data in a consistent fashion.
-    MatbenchTask also validates data according to te specifications in the
+    MatbenchTask also validates data according to the specifications in the
     validation file.
 
     MatbenchTasks have a few core methods:

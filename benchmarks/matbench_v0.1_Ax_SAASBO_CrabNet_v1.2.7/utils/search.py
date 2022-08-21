@@ -1,6 +1,6 @@
+from ax import ChoiceParameter, ParameterType, RangeParameter
 from ax.core import SearchSpace
-from ax.core.parameter_constraint import SumConstraint, OrderConstraint
-from ax import RangeParameter, ChoiceParameter, ParameterType
+from ax.core.parameter_constraint import OrderConstraint, SumConstraint
 
 # %% constraint parameters and constraints
 betas1 = RangeParameter(
@@ -20,6 +20,7 @@ sum_constraint = SumConstraint(
     parameters=[emb_scaler, pos_scaler], is_upper_bound=True, bound=1.0
 )
 parameter_constraints = [order_constraint, sum_constraint]
+
 
 # %% search space
 search_space = SearchSpace(

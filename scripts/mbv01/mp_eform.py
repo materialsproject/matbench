@@ -5,13 +5,12 @@ This file makes the following benchmarking datasets:
 Generated from the materials project.
 """
 
-from pymatgen import MPRester
-from matminer.datasets.dataset_retrieval import load_dataset
-from matminer.data_retrieval.retrieve_MP import MPDataRetrieval
-import pandas as pd
 import numpy as np
+import pandas as pd
+from matminer.data_retrieval.retrieve_MP import MPDataRetrieval
+from matminer.datasets.dataset_retrieval import load_dataset
+from pymatgen import MPRester
 from tqdm import tqdm
-
 
 pd.set_option("display.max_rows", 500)
 pd.set_option("display.max_columns", 500)

@@ -11,13 +11,11 @@ out at the end. It appears there are none.
 
 From matminer's dataset library.
 """
-from matminer.datasets.dataset_retrieval import load_dataset
-from matminer.utils.io import store_dataframe_as_json
-from matminer.featurizers.conversions import StrToComposition
-from tqdm import tqdm
-
-
 import pandas as pd
+from matminer.datasets.dataset_retrieval import load_dataset
+from matminer.featurizers.conversions import StrToComposition
+from matminer.utils.io import store_dataframe_as_json
+from tqdm import tqdm
 
 pd.set_option("display.max_rows", 500)
 pd.set_option("display.max_columns", 500)

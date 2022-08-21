@@ -8,6 +8,7 @@ from utils.matbench import matbench_fold_GPEI, collect_results, task, savepath, 
 
 print(f"dummy: {dummy}")
 
+
 # %% submission
 log_folder = "log_ax/%j"
 walltime = 28 * 60  # 4320  # 4320 min == 3 days

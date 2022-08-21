@@ -1,12 +1,17 @@
 # %% imports
 # NOTE: `pip install pyro-ppl` to use FULLYBAYESIAN (SAASBO)
-from submitit import AutoExecutor
-
 import cloudpickle as pickle
-
-from utils.matbench import matbench_fold, collect_results, task, savepath, dummy
+from submitit import AutoExecutor
+from utils.matbench import (
+    collect_results,
+    dummy,
+    matbench_fold,
+    savepath,
+    task,
+)
 
 print(f"dummy: {dummy}")
+
 
 # %% submission
 log_folder = "log_ax/%j"

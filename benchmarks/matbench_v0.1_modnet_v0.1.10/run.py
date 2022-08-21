@@ -1,27 +1,28 @@
 # This files serves only for illustrative purposes.
 # The code used for the published results can be found in the following repo: https://github.com/ml-evs/modnet-matbench
 
-from matbench.bench import MatbenchBenchmark
-from matbench.constants import CLF_KEY
-from modnet.preprocessing import MODData
 from modnet.featurizers.presets import DeBreuck2020Featurizer
 from modnet.models import EnsembleMODNetModel
+from modnet.preprocessing import MODData
 from pymatgen.core import Composition
 
-USE_GA = False # wheter to use the GA or fit_preset (dynamic grid-search) for hyper-paremeter optimization.
+from matbench.bench import MatbenchBenchmark
+from matbench.constants import CLF_KEY
+
+USE_GA = False  # whether to use the GA or fit_preset (dynamic grid-search) for hyper-parameter optimization.
 
 mb = MatbenchBenchmark(
-    autoload=False, 
+    autoload=False,
     subset=[
-        'matbench_dielectric', 
-        'matbench_jdft2d', 
-        'matbench_steels', 
-        'matbench_expt_gap', 
-        'matbench_phonons',
-        'matbench_log_gvrh',
-        'matbench_log_kvrh',
-        'matbench_glass', 
-        'matbench_expt_is_metal',
+        "matbench_dielectric",
+        "matbench_jdft2d",
+        "matbench_steels",
+        "matbench_expt_gap",
+        "matbench_phonons",
+        "matbench_log_gvrh",
+        "matbench_log_kvrh",
+        "matbench_glass",
+        "matbench_expt_is_metal",
         #'matbench_perovskites', # for the bigger tasks, USE_GA=True is recommended, as training time scales better with larger training sets
         #'matbench_mp_e_form',
         #'matbench_mp_gap',
@@ -31,7 +32,7 @@ mb = MatbenchBenchmark(
 
 for task in mb.tasks:
     task.load()
-    
+
     if task.metadata.task_type == CLF_KEY:
         classification = True
     else:
@@ -41,16 +42,23 @@ for task in mb.tasks:
 
         # load and create training MODData (this performs featurization + feature selection)
         train_df = task.get_train_and_val_data(fold, as_type="df")
-        
 
         targets = [
-            col for col in train_df.columns if col not in ("id", "structure", "composition")
+            col
+            for col in train_df.columns
+            if col not in ("id", "structure", "composition")
         ]
 
         try:
-            materials = train_df["structure"] if "structure" in train_df.columns else train_df["composition"].map(Composition)
+            materials = (
+                train_df["structure"]
+                if "structure" in train_df.columns
+                else train_df["composition"].map(Composition)
+            )
         except KeyError:
-            raise RuntimeError(f"Could not find any materials data dataset for task {task!r}!")
+            raise RuntimeError(
+                f"Could not find any materials data dataset for task {task!r}!"
+            )
 
         fast_oxid_featurizer = DeBreuck2020Featurizer(fast_oxid=True)
         train_data = MODData(
@@ -60,10 +68,7 @@ for task in mb.tasks:
             featurizer=fast_oxid_featurizer,
         )
         train_data.featurize(n_jobs=32)
-        train_data.feature_selection(
-                    n=-1, use_precomputed_cross_nmi=True
-                )
-
+        train_data.feature_selection(n=-1, use_precomputed_cross_nmi=True)
 
         # create model
         targets_hierarchy = [[[field for field in targets]]]
@@ -75,6 +80,7 @@ for task in mb.tasks:
         if USE_GA:
             # you can either use a GA for hyper-parameter optimization or...
             from modnet.hyper_opt import FitGenetic
+
             ga = FitGenetic(train_data)
             model = ga.run(
                 size_pop=20,
@@ -102,18 +108,22 @@ for task in mb.tasks:
         test_df = task.get_test_data(fold, include_target=False, as_type="df")
 
         try:
-            materials = test_df["structure"] if "structure" in test_df.columns else train_df["composition"].map(Composition)
+            materials = (
+                test_df["structure"]
+                if "structure" in test_df.columns
+                else train_df["composition"].map(Composition)
+            )
         except KeyError:
-            raise RuntimeError(f"Could not find any materials data dataset for task {task!r}!")
+            raise RuntimeError(
+                f"Could not find any materials data dataset for task {task!r}!"
+            )
 
         test_data = MODData(
             materials=materials.tolist(),
             featurizer=fast_oxid_featurizer,
         )
         test_data.featurize(n_jobs=32)
-        test_data.feature_selection(
-                    n=-1, use_precomputed_cross_nmi=True
-                )
+        test_data.feature_selection(n=-1, use_precomputed_cross_nmi=True)
 
         # predict on test data
         predict_kwargs = {}
@@ -137,6 +147,5 @@ for task in mb.tasks:
 
         # record predictions
         task.record(fold, predictions)
-
 
         mb.to_file("results.json.gz")

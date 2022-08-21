@@ -74,7 +74,7 @@ def my_plot_feature_importance_by_feature_plotly(
     Notes:
         Copyright (c) Facebook, Inc. and its affiliates.
 
-        This source code is licensed under the MIT license. Modifed by @sgbaird.
+        This source code is licensed under the MIT license. Modified by @sgbaird.
     """
     traces = []
     dropdown = []

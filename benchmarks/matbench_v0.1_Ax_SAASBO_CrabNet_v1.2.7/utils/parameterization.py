@@ -1,10 +1,11 @@
-import pprint
 import gc
+import pprint
+
 import numpy as np
-from torch.cuda import empty_cache
+from crabnet.train_crabnet import get_model
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import KFold
-from crabnet.train_crabnet import get_model
+from torch.cuda import empty_cache
 
 
 def correct_parameterization(parameterization, verbose=False):

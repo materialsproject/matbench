@@ -1,10 +1,9 @@
-import os
-import requests
 import json
+import os
 
+import requests
 
 from matbench import __version__
-
 
 
 def release_gh():

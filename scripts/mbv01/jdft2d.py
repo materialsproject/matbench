@@ -5,10 +5,8 @@ This file makes the following benchmarking datasets:
 From matminer's dataset library.
 """
 
-from matminer.datasets.dataset_retrieval import load_dataset
-
-
 import pandas as pd
+from matminer.datasets.dataset_retrieval import load_dataset
 
 # pd.set_option('display.height', 1000)
 pd.set_option("display.max_rows", 500)
