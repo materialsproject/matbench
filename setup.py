@@ -15,29 +15,21 @@ with open(VERSION_FILE) as f:
         if token in line:
             version = line.replace(token, "").strip()
 # Double quotes are contained in the read line, remove them
-version = version.replace("\"", "")
+version = version.replace('"', "")
 
 
 if __name__ == "__main__":
     setup(
-        name='matbench',
+        name="matbench",
         version=version,
-        description='a machine learning benchmark for materials science',
+        description="a machine learning benchmark for materials science",
         long_description="A machine learning benchmark for materials science. "
-                         "https://github.com/materialsproject/matbench",
-        url='https://github.com/materialsproject/matbench',
-        author=['Alex Dunn', 'Anubhav Jain'],
-        author_email='ardunn@lbl.gov',
-        license='modified BSD',
-        packages=find_packages(where="."),
-        package_data={
-            "matbench": ["*.json"],
-            "matbench.tests": ["*.json"]
-        },
-        zip_safe=False,
+        "https://github.com/materialsproject/matbench",
+        url="https://github.com/materialsproject/matbench",
+        author="Alex Dunn, Anubhav Jain",
+        author_email="ardunn@lbl.gov",
+        license="modified BSD",
+        packages=find_packages(include="matbench"),
+        package_data={"matbench": ["*.json"]},
         install_requires=requirements,
-        extras_require={},
-        test_suite='matbench',
-        tests_require='tests',
-        include_package_data=True
     )
