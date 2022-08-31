@@ -3,8 +3,6 @@ import os
 from setuptools import find_packages, setup
 
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
-with open(os.path.join(MODULE_DIR, "requirements.txt")) as f:
-    requirements = f.read().replace(" ", "").split("\n")
 
 # source of version is in the constants file
 VERSION_FILE = os.path.join(MODULE_DIR, "matbench/constants.py")
@@ -31,5 +29,10 @@ if __name__ == "__main__":
         license="modified BSD",
         packages=find_packages(include="matbench"),
         package_data={"matbench": ["*.json"]},
-        install_requires=requirements,
+        install_requires=[
+            "matminer>=0.7.4",
+            "scipy>=1.9.0",
+            "monty>=2022.4.26",
+            "scikit-learn>=1.0.1",
+        ],
     )
