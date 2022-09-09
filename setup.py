@@ -25,7 +25,7 @@ setup(
     author="Alex Dunn, Anubhav Jain",
     author_email="ardunn@lbl.gov",
     license="modified BSD",
-    packages=find_packages(include="matbench/*"),
+    packages=find_packages(include=["matbench*"], exclude=["*tests"]),
     package_data={"matbench": ["*.json"]},
     install_requires=[
         "matminer>=0.7.4",
