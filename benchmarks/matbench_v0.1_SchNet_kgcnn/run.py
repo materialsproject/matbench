@@ -105,9 +105,9 @@ for idx_task, task in enumerate(mb.tasks):
     for i, fold in enumerate(task.folds):
 
         if restart_training and os.path.exists(
-                "%s_predictions_%s_fold_%s.npy" % (subsets_compatible[idx_task], hyper["model"]["config"]["name"], i)):
+                "%s_predictions_%s_fold_%s.npy" % (task.dataset_name, hyper["model"]["config"]["name"], i)):
             predictions = np.load(
-                "%s_predictions_%s_fold_%s.npy" % (subsets_compatible[idx_task], hyper["model"]["config"]["name"], i)
+                "%s_predictions_%s_fold_%s.npy" % (task.dataset_name, hyper["model"]["config"]["name"], i)
             )
             task.record(fold, predictions, params=hyper_all)
             continue
@@ -146,7 +146,10 @@ for idx_task, task in enumerate(mb.tasks):
 
         if remove_invalid_graphs_on_predict:
             removed = data_test.clean(hyper["model"]["config"]["inputs"])
-            np.save("predictions_invalid_%s_fold_%s.npy" % (hyper["model"]["config"]["name"], i), removed)
+            np.save(
+                "%s_predictions_invalid_%s_fold_%s.npy" % (task.dataset_name, hyper["model"]["config"]["name"], i),
+                removed
+            )
         else:
             removed = None
 
@@ -168,7 +171,7 @@ for idx_task, task in enumerate(mb.tasks):
             predictions = np.squeeze(predictions, axis=-1)
 
         np.save(
-            "%s_predictions_%s_fold_%s.npy" % (subsets_compatible[idx_task], hyper["model"]["config"]["name"], i),
+            "%s_predictions_%s_fold_%s.npy" % (task.dataset_name, hyper["model"]["config"]["name"], i),
             predictions
         )
 
