@@ -12,7 +12,8 @@ import kgcnn.training.callbacks
 import numpy as np
 from copy import deepcopy
 
-mb = MatbenchBenchmark(subset=["matbench_mp_e_form"], autoload=False)
+subsets_compatible = ["matbench_mp_e_form"]
+mb = MatbenchBenchmark(subset=subsets_compatible, autoload=False)
 
 callbacks = {
     "graph_labels": lambda st, ds: np.expand_dims(ds, axis=-1),
@@ -96,15 +97,18 @@ hyper_all = {
 }
 hyper = deepcopy(hyper_all)
 
-restart_training = False
+restart_training = True
 remove_invalid_graphs_on_predict = False
 
-for task in mb.tasks:
+for idx_task, task in enumerate(mb.tasks):
     task.load()
     for i, fold in enumerate(task.folds):
 
-        if os.path.exists("predictions_%s_fold_%s.npy" % (hyper["model"]["config"]["name"], i)) and restart_training:
-            predictions = np.load("predictions_%s_fold_%s.npy" % (hyper["model"]["config"]["name"], i))
+        if restart_training and os.path.exists(
+                "%s_predictions_%s_fold_%s.npy" % (subsets_compatible[idx_task], hyper["model"]["config"]["name"], i)):
+            predictions = np.load(
+                "%s_predictions_%s_fold_%s.npy" % (subsets_compatible[idx_task], hyper["model"]["config"]["name"], i)
+            )
             task.record(fold, predictions, params=hyper_all)
             continue
 
@@ -160,7 +164,13 @@ for task in mb.tasks:
             predictions = predictions_model
 
         predictions = scaler.inverse_transform(predictions)
-        np.save("predictions_%s_fold_%s.npy" % (hyper["model"]["config"]["name"], i), predictions)
+        if predictions.shape[-1] == 1:
+            predictions = np.squeeze(predictions, axis=-1)
+
+        np.save(
+            "%s_predictions_%s_fold_%s.npy" % (subsets_compatible[idx_task], hyper["model"]["config"]["name"], i),
+            predictions
+        )
 
         # Record data!
         task.record(fold, predictions, params=hyper_all)
