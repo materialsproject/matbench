@@ -1,6 +1,6 @@
 {
   "authors": "Patrick Reiser, Robin Ruff, Pascal Friederich (original code by Kristof Schütt)",
-  "algorithm": "SchNet (kgcnn)",
+  "algorithm": "SchNet (kgcnn v2.1.0)",
   "algorithm_long": "A continuous-filter convolutional neural network for modeling quantum interactions - SchNet. Implementation adapted to crystals in `kgcnn`. Original code from https://github.com/atomistic-machine-learning/schnetpack .",
   "bibtex_refs": [
     "@article{doi:10.1063/1.5019779,author={Schütt, K.T. and Sauceda, H. E. and Kindermans, P.-J. and Tkatchenko, A. and Müller, K.-R.},title={SchNet - A deep learning architecture for molecules and materials},journal={The Journal of Chemical Physics},volume={148},number={24},pages={241722},year={2018},doi={10.1063/1.5019779},URL={https://doi.org/10.1063/1.5019779},eprint={https://doi.org/10.1063/1.5019779}}"
