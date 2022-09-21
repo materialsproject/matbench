@@ -14,6 +14,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | [Finder_v1.2 structure-based version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_structure.md) | **0.3197** | 0.0717 | 1.7213 | 59.0606 | 
 | [Finder_v1.2 composition-only version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_composition.md) | **0.3204** | 0.0811 | 1.7189 | 59.0528 | 
 | [CrabNet](../Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **0.3234** | 0.0714 | 1.7288 | 59.1583 | 
+| [SchNet (kgcnn)](../Full%20Benchmark%20Data/matbench_v0.1_SchNet_kgcnn.md) | **0.3277** | 0.0829 | 1.8990 | 58.6071 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.3449** | 0.0871 | 1.9651 | 58.7285 | 
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.4196** | 0.0750 | 1.8538 | 59.1201 | 
 | [CGCNN v2019](../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.5988** | 0.0833 | 1.8976 | 58.9996 | 
