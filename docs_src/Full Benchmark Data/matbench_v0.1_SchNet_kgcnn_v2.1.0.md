@@ -1,4 +1,4 @@
-# matbench_v0.1: SchNet (kgcnn)
+# matbench_v0.1: SchNet (kgcnn v2.1.0)
 
 ### Algorithm description: 
 
@@ -7,7 +7,7 @@ A continuous-filter convolutional neural network for modeling quantum interactio
 #### Notes:
 
 
-Raw data download and example notebook available [on the matbench repo](https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_SchNet_kgcnn).
+Raw data download and example notebook available [on the matbench repo](https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_SchNet_kgcnn_v2.1.0).
 
 ### References (in bibtex format): 
 

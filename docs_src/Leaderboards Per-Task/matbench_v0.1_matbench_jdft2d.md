@@ -11,7 +11,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **33.1918** | 7.3428 | 96.7332 | 1564.8245 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **34.5368** | 9.4959 | 92.2288 | 1534.9797 | 
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **39.8497** | 9.8835 | 106.5460 | 1552.9102 | 
-| [SchNet (kgcnn)](../Full%20Benchmark%20Data/matbench_v0.1_SchNet_kgcnn.md) | **42.6637** | 13.7201 | 111.0187 | 1524.9143 | 
+| [SchNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_SchNet_kgcnn_v2.1.0.md) | **42.6637** | 13.7201 | 111.0187 | 1524.9143 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **43.4244** | 8.9491 | 117.4213 | 1519.7424 | 
 | [CrabNet](../Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **45.6104** | 12.2491 | 120.0088 | 1532.0118 | 
 | [Finder_v1.2 structure-based version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_structure.md) | **46.1339** | 11.4644 | 120.0917 | 1581.4571 | 
