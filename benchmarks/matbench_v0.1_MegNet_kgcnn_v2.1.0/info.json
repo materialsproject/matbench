@@ -1,1 +1,23 @@
-
+{
+  "authors": "Patrick Reiser, Robin Ruff, Pascal Friederich (original code by Chi Chen)",
+  "algorithm": "MegNet (kgcnn v2.1.0)",
+  "algorithm_long": "Graph Networks as a Universal Machine Learning Framework for Molecules and Crystals. Implementation adapted for `kgcnn`. Original code from https://github.com/materialsvirtuallab/megnet.",
+  "bibtex_refs": [
+    "@article{doi:10.1021/acs.chemmater.9b01294, author = {Chen, Chi and Ye, Weike and Zuo, Yunxing and Zheng, Chen and Ong, Shyue Ping}, title = {Graph Networks as a Universal Machine Learning Framework for Molecules and Crystals}, journal = {Chemistry of Materials}, volume = {31}, number = {9}, pages = {3564-3572}, year = {2019}, doi = {10.1021/acs.chemmater.9b01294}, URL = {https://doi.org/10.1021/acs.chemmater.9b01294}, eprint = {https://doi.org/10.1021/acs.chemmater.9b01294}}"
+  ],
+  "notes": "",
+  "requirements": {
+    "python": [
+      "scikit-learn==0.24.1",
+      "numpy==1.20.1",
+      "matbench==0.1.0",
+      "tensorflow==2.9.0",
+      "kgcnn==2.1.0",
+      "pymatgen==2022.9.8",
+      "pyxtal==0.5.2",
+      "networkx",
+      "pandas",
+      "tensorflow-addons"
+    ]
+  }
+}
