@@ -4,8 +4,8 @@
 
  ![crystal](static/crystals.png)
 
-- `124` **total task submissions**
-- `17` **algorithms** 
+- `133` **total task submissions**
+- `18` **algorithms** 
 - `1` **benchmark test suites**
 
  Scroll down to learn more.
@@ -18,7 +18,7 @@ Find more information about this benchmark on [the benchmark info page](Benchmar
 |------------------|---------|-----------|----------------------|-------|
 | [matbench_steels](Leaderboards%20Per-Task/matbench_v0.1_matbench_steels.md) | 312 | [MODNet (v0.1.12)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **87.7627 (MPa)** |  |
 | [matbench_jdft2d](Leaderboards%20Per-Task/matbench_v0.1_matbench_jdft2d.md) | 636 | [MODNet (v0.1.12)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **33.1918 (meV/atom)** |  |
-| [matbench_phonons](Leaderboards%20Per-Task/matbench_v0.1_matbench_phonons.md) | 1,265 | [ALIGNN](Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **29.5385 (cm^-1)** | structure required |
+| [matbench_phonons](Leaderboards%20Per-Task/matbench_v0.1_matbench_phonons.md) | 1,265 | [MegNet (kgcnn v2.1.0)](Full%20Benchmark%20Data/matbench_v0.1_MegNet_kgcnn_v2.1.0.md) | **28.7606 (cm^-1)** | structure required |
 | [matbench_expt_gap](Leaderboards%20Per-Task/matbench_v0.1_matbench_expt_gap.md) | 4,604 | [MODNet (v0.1.12)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.3327 (eV)** |  |
 | [matbench_dielectric](Leaderboards%20Per-Task/matbench_v0.1_matbench_dielectric.md) | 4,764 | [MODNet (v0.1.12)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.2711 (unitless)** |  |
 | [matbench_expt_is_metal](Leaderboards%20Per-Task/matbench_v0.1_matbench_expt_is_metal.md) | 4,921 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.9209** |  |
