@@ -18,7 +18,7 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install wheel setuptools
-          pip install -e . -r requirements.txt
+          pip install -e .
           pip install -r requirements-dev.txt
           pip install -r requirements-docs.txt
           python scripts/rebuild_docs.py

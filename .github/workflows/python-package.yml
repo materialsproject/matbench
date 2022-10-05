@@ -26,7 +26,7 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install wheel setuptools
-          pip install -e . -r requirements.txt
+          pip install -e .
           pip install -r requirements-dev.txt
           coverage run -m unittest discover
           coverage json
@@ -63,6 +63,6 @@ jobs:
       run: |
         pip install --upgrade pip
         pip install wheel setuptools
-        pip install -e . -r requirements.txt
+        pip install -e .
         pip install -r requirements-dev.txt
         python -m unittest scripts/test_submission.py
