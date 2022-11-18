@@ -1,0 +1,46 @@
+{
+  "authors": "Felix Conrad, Mauritz Mälzer",
+  "algorithm": "AutoML-Mat",
+  "algorithm_long": "This algorithm is a modification of the 'AutoML Benchmark' framework from the publication Conrad2022AutoMLBench. 
+  It combines 4 AutoML tools and selects the most performant one. 
+  For this purpose, the AutoML tools are each run in a container to solve the problems of the different dependencies.
+  This was simplified for this benchmark, so Docker is not needed.
+  The best framework for the task was selected by hand, so only one AutoML tool is needed.
+  Further information on the implementation can be found in the publication.
+  More details on the used AutoML tool autosklearn can be found in Feurer2015Neur",
+  "bibtex_refs": "@article{Conrad2022AutoMLBench,
+    author  = {Conrad, Felix and M{\"a}lzer, Mauritz and Schwarzenberger, Michael and Wiemer, Hajo and Ihlenfeldt, Steffen},
+    title   = {Benchmarking AutoML for regression tasks on small tabular data in materials design},
+    journal = {Scientific Reports},
+    year    = {2022},
+    month   = {Nov},
+    day     = {11},
+    volume  = {12},
+    issn    = {2045-2322},
+    doi     = {10.1038/s41598-022-23327-1},
+    url     = {https://doi.org/10.1038/s41598-022-23327-1}
+},
+@inproceedings{feurer-neurips15a,
+    title     = {Efficient and Robust Automated Machine Learning},
+    author    = {Feurer, Matthias and Klein, Aaron and Eggensperger, Katharina and Springenberg, Jost and Blum, Manuel and Hutter, Frank},
+    booktitle = {Advances in Neural Information Processing Systems 28 (2015)},
+    pages     = {2962--2970},
+    year      = {2015}
+}
+",
+  "notes": "Autosklearn (sklearn>=0.24) and Matbench(sklearn>=1.0) have mutually exclusive dependencies for sklearn.
+  In order to run the script, an environment according to the 'requirements' must be created.
+  Installation instructions for autosklearn can be found at https://automl.github.io/auto-sklearn/master/installation.html#installation.
+  Matbench cannot be installed via pip, but must be added via git clone. 
+  Link to GitHub from the AutoML Benchmark: https://github.com/mm-tud/automl-materials .",
+  "requirements": {"python":  
+  ["gxx_linux-64==12.2.0",
+  "gcc_linux-64==12.2.0",
+  "swig==4.1.0",
+  "auto-sklearn==0.15.0",
+  "numpy==1.23.4",
+  "pandas==1.5.1",
+  "monty==2022.4.26",
+  "matminer==0.8.0",
+  "jupyter==1.0.0"]}
+}
