@@ -45,6 +45,7 @@ MP_WEBSITE_STATICS = os.path.join(STATIC_DOCS_DIR, "mp_srcs")
 SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_FILENAME)
 SCALED_ERRORS_JSON_PATH = SCALED_ERRORS_PATH.replace(".html", ".json")
 SCALED_ERRORS_NON_GP_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_NON_GP_FILENAME)
+SCALED_ERRORS_NON_GP_JSON_PATH = SCALED_ERRORS_NON_GP_PATH.replace(".html", ".json")
 
 pio.templates.default = "plotly_white"
 
@@ -185,13 +186,20 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERR
             fig.update_yaxes(linecolor="grey", gridcolor="grey")
             fig.write_html(output_fname.format(bmark_name=bmark_name))
 
-            if output_fname == SCALED_ERRORS_PATH:
+            if output_fname in (SCALED_ERRORS_PATH, SCALED_ERRORS_NON_GP_PATH):
                 # Update layout for showing on white background on mp website
+                output_path = {
+                    SCALED_ERRORS_PATH: SCALED_ERRORS_JSON_PATH,
+                    SCALED_ERRORS_NON_GP_PATH: SCALED_ERRORS_NON_GP_JSON_PATH
+                }[output_fname].format(bmark_name=bmark_name)
                 fig.update_layout(
                     title_text="",
                     font={"color": "black"}
                 )
-                fig.write_json(SCALED_ERRORS_JSON_PATH.format(bmark_name=bmark_name))
+                print(f"Writing scaled errors graph to {output_path}")
+                fig.write_json(output_path)
+            else:
+                print(f"Output filename {output_fname} not required to write to disk.")
 
 
 # NOTE: MUST BE CALLED AFTER CREATING generate_scaled_errors_graph
@@ -417,6 +425,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
 
             fig_path = f"task_{bmark_name}_{task}.html"
             fig.write_html(os.path.join(STATIC_DOCS_DIR, fig_path))
+            fig.write_json(os.path.join(STATIC_DOCS_DIR, fig_path.replace(".html", ".json")))
 
             fig_reference = f'\n<iframe src="../../static/{fig_path}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
 
