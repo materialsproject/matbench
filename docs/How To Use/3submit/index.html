@@ -11,7 +11,7 @@
       
       
       <link rel="icon" href="../../static/matbench_logo_favicon.png">
-      <meta name="generator" content="mkdocs-1.4.0, mkdocs-material-8.4.0">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.4.0">
     
     
       
@@ -1269,7 +1269,7 @@
 </ol>
 <h2 id="step-2-put-files-in-appropriate-folder">Step 2: Put files in appropriate folder</h2>
 <ul>
-<li>a. If you are using matbench through pypi, clone the source repository in order to make a pull request. Find instrucions for cloning the source repository on the <a href="../1install/">Installation page</a>.</li>
+<li>a. If you are using matbench through pypi, clone the source repository in order to make a pull request. Find instructions for cloning the source repository on the <a href="../1install/">Installation page</a>.</li>
 <li>b. Locate the <code>matbench/benchmarks</code> directory.</li>
 <li>c. Create a new directory <code>&lt;benchmark name&gt;_&lt;algorithm name&gt;</code> according to your algorithm and the benchmark you ran (e.g., <code>matbench_v0.1_my_algorithm_namev2</code>).</li>
 <li>d. Put the required files from <a href="#step-1-create-3-required-files">Step 1</a> into this directory.</li>
@@ -1324,14 +1324,14 @@
 <h3 id="general-guidelines">General guidelines</h3>
 <p>The source file should contain all the code needed for configuring, training, and running your algorithm on all the benchmark tasks you decide to run.</p>
 <p>The easiest way to create a source file is just use the source file you used while <a href="../2run/">recording your benchmark results</a>.</p>
-<p>There are no naming requirements for these source files. You can also include other supporting files, like metadata, features, etc. if they are critical for the algorithm to run and they are small (&lt;10MB). </p>
+<p>There are no naming requirements for these source files. You can also include other supporting files, like metadata, features, etc. if they are critical for the algorithm to run and they are small (&lt;10MB).</p>
 <p>Please include the matbench code (e.g., <code>mb.record(...)</code>) for obtaining benchmarks/recording/examining results in the source files.</p>
 <h3 id="jupyter-notebooks">Jupyter notebooks</h3>
 <p>The preferred format for source files is a <strong>jupyter notebook</strong> with some code for running your algorithm on Matbench. You can find an example</p>
 <p><img alt="example_notebook" src="../../static/notebook_example.png" /></p>
-<p>The notebook should generally follow the format of the example notebook <code>/benchmarks/matbench_v0.1_dummy/notebook.ipynb</code>. Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and <strong>most importantly, a link to a publication for your algorithm</strong>. </p>
+<p>The notebook should generally follow the format of the example notebook <code>/benchmarks/matbench_v0.1_dummy/notebook.ipynb</code>. Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and <strong>most importantly, a link to a publication for your algorithm</strong>.</p>
 <p>Aside from that, what goes in your notebook is pretty freeform; <strong>put whatever is needed to
-allow someone else to train and run your algorithm on the benchmark</strong>. </p>
+allow someone else to train and run your algorithm on the benchmark</strong>.</p>
 <p>You can find an example template for a notebook in the matbench repo under <code>/benchmarks/matbench_v0.1_dummy/notebook.ipynb</code></p>
 <h3 id="py-files"><code>.py</code> files</h3>
 <p>If you use <code>.py</code> files as source in the submission, please comment your code as much as you can to help others run it!</p>

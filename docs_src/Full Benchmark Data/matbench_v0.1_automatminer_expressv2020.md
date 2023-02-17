@@ -235,7 +235,7 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 | fold | params dict|
 |------|------------|
-| fold_0 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(gradientboostingregressor, GradientBoostingRegressor(alpha...` |
+| fold_0 | `{'best_pipeline': ['(variancethreshold, VarianceThreshold(threshold=0.1))', '(minmaxscaler, MinMaxScaler(copy=true, feature_range=(0, 1)))', '(gradientboostingregressor, GradientBoostingRegressor(alph...` |
 | fold_1 | `{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=40,\n                 score_func=<function f_regression at 0x2aaaf35a08c8>))', '(maxabsscaler, MaxAbsScaler(copy=true))', '(gradientb...` |
 | fold_2 | `{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=62,\n                 score_func=<function f_regression at 0x2aaaf35a08c8>))', '(onehotencoder, OneHotEncoder(categorical_features=[f...` |
 | fold_3 | `{'best_pipeline': ['(selectpercentile, SelectPercentile(percentile=82,\n                 score_func=<function f_regression at 0x2aab561f6620>))', '(robustscaler, RobustScaler(copy=true, quantile_range...` |
