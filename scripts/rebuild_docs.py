@@ -12,7 +12,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 import plotly.io as pio
 import tqdm
-from matminer.datasets import get_available_datasets, load_dataset
+from matminer.datasets import load_dataset
 from monty.serialization import loadfn
 from pymatviz import ptable_heatmap_plotly, spacegroup_sunburst
 from pymatviz.utils import get_crystal_sys
@@ -511,8 +511,8 @@ def organize_task_data(all_data):
                     raise ValueError
 
 
-                # Include both GP, structure-required, and strcuture/comp regression algos on
-                # GP leaderboard, as there are 9 structure problems or 10 regresison problems
+                # Include both GP, structure-required, and structure/comp regression algos on
+                # GP leaderboard, as there are 9 structure problems or 10 regression problems
                 # across multiple dataset sizes (composition only or clf only are not included)
                 if mb.is_complete or mb.is_structure_complete or mb.is_regression_complete:
                     current_best_score = gp_leaderboard[task_name]["score"]
