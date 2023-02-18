@@ -12,7 +12,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 import plotly.io as pio
 import tqdm
-from matminer.datasets import get_available_datasets, load_dataset
+from matminer.datasets import load_dataset
 from monty.serialization import loadfn
 from pymatviz import ptable_heatmap_plotly, spacegroup_sunburst
 from pymatviz.utils import get_crystal_sys
@@ -271,7 +271,22 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
         scaled_errors_non_gp_plt_txt = f'\n<iframe src="static/{SCALED_ERRORS_NON_GP_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>\n\n'
         gp_leaderboard_txt += table_header + table_explanation + table + scaled_errors_plot_txt + scaled_errors_non_gp_plt_txt
 
+    # Load Janosh's leaderboard from json
+
+    table_header_discovery = f"## Discovery Leaderboard: General Purpose Algorithms on `matbench_discovery 0.1.0`\n\n"
+    table_explanation_discovery = f"[Matbench Discovery](https://matbench-discovery.janosh.dev/) is an interactive leaderboard and associated PyPI package which together make it easy to benchmark ML energy models on a task designed to closely simulate a high-throughput discovery campaign for new stable inorganic crystals. [Matbench Discovery](https://matbench-discovery.janosh.dev/) is developed by Janosh Riebesell.\n\n"
+
+    with open(os.path.join(SNIPPETS_DIR, "metrics-table.svelte"), encoding="utf-8") as f:
+        mdb_table = f.read() 
+        mdb_table = mdb_table.replace("sans-serif", "Helvetica")   
+
+    with open(os.path.join(SNIPPETS_DIR, "cumulative-clf-metrics.svelte"), encoding="utf-8") as f:
+        mdb_figs = f.read()    
+
     # Load the static index from the snippets dir
+    with open(os.path.join(SNIPPETS_DIR, "index_0.md"), encoding="utf-8") as f:
+        static_txt_0 = f.read()
+
     with open(os.path.join(SNIPPETS_DIR, "index.md"), encoding="utf-8") as f:
         static_txt = f.read()
 
@@ -282,7 +297,9 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
                   f"**Matbench is an automated leaderboard** for benchmarking state of the art ML algorithms predicting a **diverse range of solid materials' properties**. " \
                   f"It is hosted and maintained by [the Materials Project](https://materialsproject.org). \n\n ![crystal](static/crystals.png)\n\n" \
                   f"- `{n_tasks}` **total task submissions**\n- `{n_algos}` **algorithms** \n- `{n_benchmarks}` **benchmark test suites**\n\n Scroll down to learn more.\n\n"
-    final_txt = page_header + gp_leaderboard_txt + static_txt
+    load_plotly = f"<script src='https://cdn.plot.ly/plotly-latest.min.js'></script> \n\n"
+    final_txt = load_plotly + page_header + gp_leaderboard_txt + static_txt_0 + table_header_discovery + table_explanation_discovery + mdb_table + mdb_figs + static_txt
+
 
     with open(os.path.join(DOCS_DIR, "index.md"), "w", encoding="utf-8") as f:
         print("Writing leaderboard and plot to index.md...")
@@ -520,8 +537,8 @@ def organize_task_data(all_data):
                     raise ValueError
 
 
-                # Include both GP, structure-required, and strcuture/comp regression algos on
-                # GP leaderboard, as there are 9 structure problems or 10 regresison problems
+                # Include both GP, structure-required, and structure/comp regression algos on
+                # GP leaderboard, as there are 9 structure problems or 10 regression problems
                 # across multiple dataset sizes (composition only or clf only are not included)
                 if mb.is_complete or mb.is_structure_complete or mb.is_regression_complete:
                     current_best_score = gp_leaderboard[task_name]["score"]

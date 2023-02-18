@@ -1,11 +1,13 @@
 # ~ Structure-based Finder_v1.2 algorithm ~
 
-from matbench.bench import MatbenchBenchmark
-import pandas as pd
-from sklearn.model_selection import train_test_split
 import os
-from pymatgen.core import Structure
 import shutil
+
+import pandas as pd
+from pymatgen.core import Structure
+from sklearn.model_selection import train_test_split
+
+from matbench.bench import MatbenchBenchmark
 
 ################################ Finder Installation ################################
 
@@ -22,17 +24,18 @@ Please clone and install the Finder package at this location. You may also find 
 '''
 
 
-# Defining a number of helper function to prepare the data for the Finder algorthim. The data processing codes
+# Defining a number of helper function to prepare the data for the Finder algorithm. The data processing codes
 # are adapted from CrabNet's submission to the matbench repository.
 
-#condesne_formula takes a material and returns the chemical formula in the correct format for Finder
+# condense_formula takes a material and returns the chemical formula in the correct format for Finder
 def condense_formula(mat):
     if isinstance(mat, str):
         return mat, 'no structure'
     else:
         return mat.formula.replace(' ', ''), mat.to(fmt='cif')
 
-#change_input runs condesne_formula on all the input data used for training
+
+# change_input runs condense_formula on all the input data used for training
 def change_input(train_inputs):
   formula = []
   cif = []
@@ -112,18 +115,18 @@ for task in mb.tasks:
         '''
         Note that although the number of epochs is fixed at 500 in the following example run, some matbench
         tasks like mp_e_form require over 1000 epochs to converge whereas smaller databases like phonons and dielectric
-        converge within 300 epochs. One workaround is to define subsets variable above as a dictionary with specified 
+        converge within 300 epochs. One workaround is to define subsets variable above as a dictionary with specified
         hyperparameters for each task and feed those hyperparameters as arguments below. Also, the optimal batch_size
         for mp_e_form and dielectric tasks in structure-based domain is identified as 24.
         '''
-        os.chdir('Finder/Finder') # change directory for convenience 
+        os.chdir('Finder/Finder') # change directory for convenience
         os.system('python trainer.py --train-path '+ f'../../{data_dir}/{mat_prop}/train.csv ' +
             '--val-path ' + f'../../{data_dir}/{mat_prop}/val.csv ' +
             '--test-path ' + f'../../{data_dir}/{mat_prop}/test.csv ' +
             '--epochs ' + '500' + ' --batch-size 128 --train --test --patience 300 --max-no-atoms 500 --use-crystal-structure')
-        
+
         os.chdir('../..') # jump back
-        
+
         # saving the best model for each fold for each task
         shutil.copytree('Finder/Finder/saved_models/best_model_gnn', f'{model_dir}/{mat_prop}/best_model_gnn_{i}', dirs_exist_ok=True)
 

@@ -13,7 +13,7 @@ To submit to the leaderboard, you need 3 files:
 
 ## Step 2: Put files in appropriate folder
 
-- a. If you are using matbench through pypi, clone the source repository in order to make a pull request. Find instrucions for cloning the source repository on the [Installation page](1install.md).
+- a. If you are using matbench through pypi, clone the source repository in order to make a pull request. Find instructions for cloning the source repository on the [Installation page](1install.md).
 - b. Locate the `matbench/benchmarks` directory.
 - c. Create a new directory `<benchmark name>_<algorithm name>` according to your algorithm and the benchmark you ran (e.g., `matbench_v0.1_my_algorithm_namev2`).
 - d. Put the required files from [Step 1](#step-1-create-3-required-files) into this directory.
@@ -90,7 +90,7 @@ The source file should contain all the code needed for configuring, training, an
 
 The easiest way to create a source file is just use the source file you used while [recording your benchmark results](2run.md).
 
-There are no naming requirements for these source files. You can also include other supporting files, like metadata, features, etc. if they are critical for the algorithm to run and they are small (<10MB). 
+There are no naming requirements for these source files. You can also include other supporting files, like metadata, features, etc. if they are critical for the algorithm to run and they are small (<10MB).
 
 Please include the matbench code (e.g., `mb.record(...)`) for obtaining benchmarks/recording/examining results in the source files.
 
@@ -101,10 +101,10 @@ The preferred format for source files is a **jupyter notebook** with some code f
 
 ![example_notebook](../static/notebook_example.png)
 
-The notebook should generally follow the format of the example notebook `/benchmarks/matbench_v0.1_dummy/notebook.ipynb`. Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and **most importantly, a link to a publication for your algorithm**. 
+The notebook should generally follow the format of the example notebook `/benchmarks/matbench_v0.1_dummy/notebook.ipynb`. Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and **most importantly, a link to a publication for your algorithm**.
 
 Aside from that, what goes in your notebook is pretty freeform; **put whatever is needed to
-allow someone else to train and run your algorithm on the benchmark**. 
+allow someone else to train and run your algorithm on the benchmark**.
 
 You can find an example template for a notebook in the matbench repo under `/benchmarks/matbench_v0.1_dummy/notebook.ipynb`
 
