@@ -63,7 +63,7 @@ Indicate if your code requires new tests and whether they are included with your
 
 ### Closed issues or PRs
 
-Indicate if your PR closes any currently open issues or supercedes any other currently open PRs.
+Indicate if your PR closes any currently open issues or supersedes any other currently open PRs.
 
 
 ### Label the pull request
