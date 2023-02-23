@@ -159,5 +159,5 @@ if __name__ == '__main__':
                          use_scaler=True,
                          epochs=800,
                          batch_size=64)
-    mb.to_file('matbench_results_coGN.json')
+    mb.to_file('results.json.gz')
 
