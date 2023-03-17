@@ -9,15 +9,14 @@
   text-align: left;
   padding: 8px;
   white-space: nowrap;
-  width: 0%;
-  column-width: 1px;
+  min-width: 2.2rem;
 }
 #T_  th {
   border: 1px solid #ddd;
   text-align: left;
   padding: 8px;
   white-space: nowrap;
-  width: 0%;
+  min-width: 2.2rem;
 }
 #T__row0_col0, #T__row0_col2, #T__row0_col3, #T__row0_col5, #T__row0_col10, #T__row1_col7, #T__row1_col8, #T__row3_col4, #T__row3_col6, #T__row3_col9, #T__row5_col1, #T__row5_col11 {
   background-color: #440154;
