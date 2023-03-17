@@ -8,6 +8,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 
 | algorithm | mean mae | std mae | mean rmse | max max_error |
 |------|------|------|------|------|
+| [AutoML-Mat](../Full%20Benchmark%20Data/matbench_v0.1_Auto-sklearn.md) | **82.3043** | 8.8565 | 114.0577 | 463.0130 | 
 | [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **87.7627** | 12.2188 | 144.7722 | 1121.0504 | 
 | [RF-Regex Steels](../Full%20Benchmark%20Data/matbench_v0.1_RFLR.md) | **90.5896** | 6.7138 | 128.0865 | 505.2967 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **96.2139** | 9.8352 | 149.9535 | 931.3261 | 

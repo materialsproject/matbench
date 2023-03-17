@@ -1,0 +1,13 @@
+{
+  "authors": "Kevin M. Jablonka, Philippe Schwaller, Andres Ortega-Guerrero, Berend Smit",
+  "algorithm": "gptchem",
+  "algorithm_long": "Language-interface (LIFT) fine-tuned ada GPT-3 model (without optimization of finetuning parameters or prompt)",
+  "bibtex_refs": "@article{Jablonka_2023,\n doi = {10.26434/chemrxiv-2023-fw8n4},\n url = {https:doi.org/10.26434%2Fchemrxiv-2023-fw8n4},\n year = 2023,\n month = {feb},\n  publisher = {American Chemical Society ({ACS})},\n author = {Kevin Maik Jablonka and Philippe Schwaller and Andres Ortega-Guerrero and Berend Smit},\n title = {Is {GPT}-3 all you need for low-data discovery in chemistry\n}",
+  "notes": "We use the high-level GPTRegressor and GPTClassifier APIs provided via our gptchem package. The code for running the benchmarks is available at https://github.com/kjappelbaum/gptchem-matbench.",
+  "requirements": {
+    "python": [
+      "git+https://github.com/kjappelbaum/gptchem.git",
+      "matbench==0.1.0"
+    ]
+  }
+}
