@@ -241,7 +241,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
         }
 
         df_src = pd.DataFrame(table_data).sort_values(by="n_samples")
-        table_header = f"## Leaderboard: General Purpose Algorithms on `{bmark}`\n\n"
+        table_header = f"## Leaderboard-Property: General Purpose Algorithms on `{bmark}`\n\n"
         table_explanation = f"Find more information about this benchmark on [the benchmark info page]({METADATA_DIR_PREFIX}{bmark}.md)\n\n"
         table = "| Task name | Samples | Algorithm | Verified MAE (unit) or ROCAUC | Notes |\n" \
                 "|------------------|---------|-----------|----------------------|-------|\n"
@@ -273,7 +273,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
 
     # Load Janosh's leaderboard from json
 
-    table_header_discovery = f"## Discovery Leaderboard: General Purpose Algorithms on `matbench_discovery 0.1.0`\n\n"
+    table_header_discovery = f"## Leaderboard-Discovery: General Purpose Algorithms on `matbench_discovery 0.1.0`\n\n"
     table_explanation_discovery = f"[Matbench Discovery](https://matbench-discovery.janosh.dev/) is an interactive leaderboard and associated PyPI package which together make it easy to benchmark ML energy models on a task designed to closely simulate a high-throughput discovery campaign for new stable inorganic crystals. Matbench-discovery compares ML structure-relaxation methods on the [WBM dataset](https://www.nature.com/articles/s41524-020-00481-6) for ranking ~250k generated structures according to predicted hull stability (42k stable). [Matbench Discovery](https://matbench-discovery.janosh.dev/) is developed by Janosh Riebesell.\n\n"
     
     with open(os.path.join(SNIPPETS_DIR, "metrics-table.svelte"), encoding="utf-8") as f:
