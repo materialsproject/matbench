@@ -1,0 +1,24 @@
+{
+  "authors": "Patrick Reiser, Robin Ruff, Pascal Friederich (original code by Gasteiger, Johannes)",
+  "algorithm": "DimeNet++ (kgcnn v2.1.0)",
+  "algorithm_long": "Fast and Uncertainty-Aware Directional Message Passing for Non-Equilibrium Molecules. Adapted implementation of `kgcnn`. Original code from https://github.com/gasteigerjo/dimenet. Settings are almost similar compared to original work for QM9. We had to reduce the batch size to 16 and the maximum number of edges or neighbours to 17 due to memory issues (in addition to 5A cutoff). For angles, multi-edges and correct images are taken into account. We added a standard scaler for regression. No additional features were introduced but geometry and atom type. Training was carried out on A100-SXM with 41 GB of memory.",
+  "bibtex_refs": [
+    "@inproceedings{gasteiger_dimenet_2020,\ntitle = {Directional Message Passing for Molecular Graphs},\nauthor = {Gasteiger, Johannes and Gro{\\ss}, Janek and G{\\\"u}nnemann, Stephan},\nbooktitle={International Conference on Learning Representations (ICLR)},\nyear = {2020} }",
+    "@inproceedings{gasteiger_dimenetpp_2020,\ntitle = {Fast and Uncertainty-Aware Directional Message Passing for Non-Equilibrium Molecules},\nauthor = {Gasteiger, Johannes and Giri, Shankari and Margraf, Johannes T. and G{\\\"u}nnemann, Stephan},\nbooktitle={Machine Learning for Molecules Workshop, NeurIPS},\nyear = {2020} }"
+  ],
+  "notes": "",
+  "requirements": {
+    "python": [
+      "scikit-learn==0.24.1",
+      "numpy==1.20.1",
+      "matbench==0.1.0",
+      "tensorflow==2.9.0",
+      "kgcnn==2.1.0",
+      "pymatgen==2022.9.8",
+      "pyxtal==0.5.2",
+      "networkx",
+      "pandas",
+      "tensorflow-addons"
+    ]
+  }
+}
