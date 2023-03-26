@@ -13,8 +13,8 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | [MegNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_MegNet_kgcnn_v2.1.0.md) | **0.0252** | 0.0003 | 0.0701 | 3.6006 | 
 | [CGCNN v2019](../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.0337** | 0.0006 | 0.0682 | 7.7205 | 
 | [Finder_v1.2 structure-based version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_structure.md) | **0.0343** | 0.0012 | 0.1331 | 45.1834 | 
-| [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.0448** | 0.0039 | 0.0888 | 4.8803 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.0448** | 0.0039 | 0.0888 | 4.8803 | 
+| [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.0448** | 0.0039 | 0.0888 | 4.8803 | 
 | [Finder_v1.2 composition-only version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_composition.md) | **0.0839** | 0.0011 | 0.2537 | 6.3948 | 
 | [CrabNet](../Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **0.0862** | 0.0010 | 0.2544 | 6.3774 | 
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.1165** | 0.0008 | 0.2419 | 5.4382 | 
