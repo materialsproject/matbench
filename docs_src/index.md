@@ -6,13 +6,13 @@
 
  ![crystal](static/crystals.png)
 
-- `134` **total task submissions**
-- `19` **algorithms** 
+- `156` **total task submissions**
+- `22` **algorithms** 
 - `1` **benchmark test suites**
 
  Scroll down to learn more.
 
-## Leaderboard: General Purpose Algorithms on `matbench_v0.1`
+## Leaderboard-Property: General Purpose Algorithms on `matbench_v0.1`
 
 Find more information about this benchmark on [the benchmark info page](Benchmark%20Info/matbench_v0.1.md)
 
@@ -25,12 +25,12 @@ Find more information about this benchmark on [the benchmark info page](Benchmar
 | [matbench_dielectric](Leaderboards%20Per-Task/matbench_v0.1_matbench_dielectric.md) | 4,764 | [MODNet (v0.1.12)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.2711 (unitless)** |  |
 | [matbench_expt_is_metal](Leaderboards%20Per-Task/matbench_v0.1_matbench_expt_is_metal.md) | 4,921 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.9209** |  |
 | [matbench_glass](Leaderboards%20Per-Task/matbench_v0.1_matbench_glass.md) | 5,680 | [MODNet (v0.1.12)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.9603** |  |
-| [matbench_log_gvrh](Leaderboards%20Per-Task/matbench_v0.1_matbench_log_gvrh.md) | 10,987 | [ALIGNN](Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0715 (log10(GPa))** | structure required |
-| [matbench_log_kvrh](Leaderboards%20Per-Task/matbench_v0.1_matbench_log_kvrh.md) | 10,987 | [MODNet (v0.1.10)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.0548 (log10(GPa))** |  |
-| [matbench_perovskites](Leaderboards%20Per-Task/matbench_v0.1_matbench_perovskites.md) | 18,928 | [ALIGNN](Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0288 (eV/unit cell)** | structure required |
-| [matbench_mp_gap](Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_gap.md) | 106,113 | [ALIGNN](Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.1861 (eV)** | structure required |
+| [matbench_log_gvrh](Leaderboards%20Per-Task/matbench_v0.1_matbench_log_gvrh.md) | 10,987 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0693 (log10(GPa))** | structure required |
+| [matbench_log_kvrh](Leaderboards%20Per-Task/matbench_v0.1_matbench_log_kvrh.md) | 10,987 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0532 (log10(GPa))** | structure required |
+| [matbench_perovskites](Leaderboards%20Per-Task/matbench_v0.1_matbench_perovskites.md) | 18,928 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0270 (eV/unit cell)** | structure required |
+| [matbench_mp_gap](Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_gap.md) | 106,113 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.1559 (eV)** | structure required |
 | [matbench_mp_is_metal](Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_is_metal.md) | 106,113 | [CGCNN v2019](Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.9520** | structure required |
-| [matbench_mp_e_form](Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_e_form.md) | 132,752 | [ALIGNN](Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0215 (eV/atom)** | structure required |
+| [matbench_mp_e_form](Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_e_form.md) | 132,752 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0170 (eV/atom)** | structure required |
 
 
 
@@ -45,7 +45,7 @@ $$
 \text{Scaled Error} = \frac{\text{MAE}}{\text{MAD}} = \frac{\sum_i^N | y_i - y_i^{pred} |}{\sum_i^N | y_i - \bar{y} | }
 $$
 
-## Discovery Leaderboard: General Purpose Algorithms on `matbench_discovery 0.1.0`
+## Leaderboard-Discovery: General Purpose Algorithms on `matbench_discovery 0.1.0`
 
 [Matbench Discovery](https://matbench-discovery.janosh.dev/) is an interactive leaderboard and associated PyPI package which together make it easy to benchmark ML energy models on a task designed to closely simulate a high-throughput discovery campaign for new stable inorganic crystals. Matbench-discovery compares ML structure-relaxation methods on the [WBM dataset](https://www.nature.com/articles/s41524-020-00481-6) for ranking ~250k generated structures according to predicted hull stability (42k stable). [Matbench Discovery](https://matbench-discovery.janosh.dev/) is developed by Janosh Riebesell.
 
