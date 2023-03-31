@@ -6,8 +6,8 @@
 
  ![crystal](static/crystals.png)
 
-- `156` **total task submissions**
-- `22` **algorithms** 
+- `157` **total task submissions**
+- `23` **algorithms** 
 - `1` **benchmark test suites**
 
  Scroll down to learn more.
