@@ -11,6 +11,7 @@ import sys
 
 import numpy as np
 import pandas as pd
+from monty.serialization import dumpfn
 
 logger = logging.getLogger(__name__)
 
@@ -61,9 +62,8 @@ class MSONable2File:
     """
 
     def to_file(self, filename):
-        with open(filename, "w") as f:
-            d = self.as_dict()
-            json.dump(d, f)
+        d = self.as_dict()
+        dumpfn(d, filename)
 
         logger.info(
             f"Successfully wrote {self.__class__.__name__} " f"to file '{filename}'."
