@@ -10,7 +10,9 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 |------|------|------|------|------|
 | [MegNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_MegNet_kgcnn_v2.1.0.md) | **28.7606** | 2.5767 | 57.4679 | 774.1321 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **29.5385** | 2.1148 | 53.5010 | 615.3466 | 
+| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **29.9538** | 2.1189 | 60.0347 | 868.0997 | 
 | [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **34.2751** | 2.0781 | 70.0669 | 1079.1280 | 
+| [DimeNet++ (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_DimeNetPP_kgcnn_v2.1.0.md) | **37.4619** | 2.1934 | 80.3047 | 1012.6802 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **38.7524** | 1.7732 | 78.2220 | 1031.8168 | 
 | [SchNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_SchNet_kgcnn_v2.1.0.md) | **38.9636** | 1.9760 | 76.9279 | 1034.3312 | 
 | [Finder_v1.2 composition-only version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_composition.md) | **46.5751** | 3.7415 | 94.8514 | 1051.2485 | 

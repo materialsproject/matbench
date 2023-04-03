@@ -12,6 +12,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.9167** | 0.0064 | 0.9159 | 0.9167 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.9161** | 0.0072 | 0.9153 | 0.9161 | 
 | [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.9161** | 0.0072 | 0.9153 | 0.9161 | 
+| [gptchem](../Full%20Benchmark%20Data/matbench_v0.1_gptchem.md) | **0.8965** | 0.0060 | 0.8953 | 0.8965 | 
 | [Dummy](../Full%20Benchmark%20Data/matbench_v0.1_dummy.md) | **0.4924** | 0.0128 | 0.4913 | 0.4924 | 
 
 

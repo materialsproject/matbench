@@ -1,0 +1,8 @@
+{
+  "authors": ["Guanjian Cheng", "Xin-Gao Gong", "Wan-Jian Yin"],
+  "algorithm": "GN-OA v1",
+  "algorithm_long": "Crystal structure prediction by combining graph network and optimization algorithm, GN-OA v1.",
+  "bibtex_refs": "@article{cheng_crystal_2022,\n  doi = {10.1038/s41467-022-29241-4},\n  url = {https://www.nature.com/articles/s41467-022-29241-4},\n  year = {2022},\n  month = mar,\n  publisher = {Nature Publishing Group},\n  volume = {13},\n  number = {1},\n  pages={1492},\n  author = {Guanjian Cheng and Xin-Gao Gong and Wan-Jian Yin},\n  title = {Crystal structure prediction by combining graph network and optimization algorithm},\n  journal = {Nature Communications}\n}",
+  "notes": "",
+  "requirements": {"python":  ["pymatgen==2020.8.3", "tensorflow==2.3.0", "megnet==1.1.8", "megnet==1.1.8", "hyperopt==0.2.4", "sko==0.6.1", "matbench==0.1.0"]}
+}

@@ -8,8 +8,10 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 
 | algorithm | mean mae | std mae | mean rmse | max max_error |
 |------|------|------|------|------|
+| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.1559** | 0.0031 | 0.3994 | 7.3029 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.1861** | 0.0030 | 0.4635 | 7.4756 | 
 | [MegNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_MegNet_kgcnn_v2.1.0.md) | **0.1934** | 0.0087 | 0.4715 | 7.8821 | 
+| [DimeNet++ (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_DimeNetPP_kgcnn_v2.1.0.md) | **0.1993** | 0.0058 | 0.4720 | 14.0169 | 
 | [Finder_v1.2 structure-based version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_structure.md) | **0.2193** | 0.0012 | 0.4989 | 7.6676 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.2199** | 0.0059 | 0.4525 | 7.5685 | 
 | [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.2199** | 0.0059 | 0.4525 | 7.5685 | 

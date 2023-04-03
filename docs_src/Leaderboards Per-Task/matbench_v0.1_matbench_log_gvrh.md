@@ -8,9 +8,11 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 
 | algorithm | mean mae | std mae | mean rmse | max max_error |
 |------|------|------|------|------|
+| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0693** | 0.0008 | 0.1108 | 1.0508 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0715** | 0.0006 | 0.1123 | 1.1324 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.0731** | 0.0007 | 0.1103 | 1.1745 | 
 | [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.0731** | 0.0007 | 0.1103 | 1.1745 | 
+| [DimeNet++ (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_DimeNetPP_kgcnn_v2.1.0.md) | **0.0792** | 0.0011 | 0.1255 | 1.5558 | 
 | [SchNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_SchNet_kgcnn_v2.1.0.md) | **0.0796** | 0.0022 | 0.1260 | 1.1584 | 
 | [MegNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_MegNet_kgcnn_v2.1.0.md) | **0.0871** | 0.0013 | 0.1358 | 1.5558 | 
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.0874** | 0.0020 | 0.1277 | 1.1580 | 
