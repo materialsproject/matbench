@@ -72,8 +72,13 @@ class MSONable2File:
 
     @classmethod
     def from_file(cls, filename):
-        with gzip.open(filename, 'rb') as f:
-            d = json.loads(f.read().decode('utf-8'))    
+        if filename.endswith(".gz"):
+            with gzip.open(filename, "rb") as f:
+                d = json.loads(f.read().decode("utf-8"))
+        else:
+            with open(filename) as f:
+                d = json.load(f)
+ 
         return cls.from_dict(d)
 
 
