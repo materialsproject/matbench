@@ -305,13 +305,6 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
                   
 
     # Define the table content as a nested list
-    table_content = [
-        ["", "Materials Properties", "Materials Discovery"],
-        ["Task Submissions", n_tasks, n_tasks_discovery],
-        ["Algorithms", n_algos, n_algos_discovery],
-        ["Benchmark Test Suites", n_benchmarks, n_benchmarks_discovery]
-    ]
-
     table_header = "|             | Materials Properties | Materials Discovery |\n" \
                "|-------------|---------------------|---------------------|\n"
 
