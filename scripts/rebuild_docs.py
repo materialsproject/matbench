@@ -293,12 +293,35 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
     n_algos = total_info_counts["algos"]
     n_tasks = total_info_counts["tasks"]
     n_benchmarks = total_info_counts["benchmarks"]
+
+    num_tr_blocks = mdb_table.count("<tr>")
+    n_algos_discovery = num_tr_blocks - 1
+    n_tasks_discovery = num_tr_blocks - 1
+    n_benchmarks_discovery = 1
+
     page_header = f"# Leaderboard \n\n" \
                   f"**Matbench is an automated leaderboard** for benchmarking state of the art ML algorithms predicting a **diverse range of solid materials' properties**. " \
                   f"It is hosted and maintained by [the Materials Project](https://materialsproject.org). \n\n ![crystal](static/crystals.png)\n\n" \
-                  f"- `{n_tasks}` **total task submissions**\n- `{n_algos}` **algorithms** \n- `{n_benchmarks}` **benchmark test suites**\n\n Scroll down to learn more.\n\n"
+                  
+
+    # Define the table content as a nested list
+    table_content = [
+        ["", "Materials Properties", "Materials Discovery"],
+        ["Task Submissions", n_tasks, n_tasks_discovery],
+        ["Algorithms", n_algos, n_algos_discovery],
+        ["Benchmark Test Suites", n_benchmarks, n_benchmarks_discovery]
+    ]
+
+    table_header = "|             | Materials Properties | Materials Discovery |\n" \
+               "|-------------|---------------------|---------------------|\n"
+
+    table_rows = f"| Task Submissions |        `{n_tasks}`          |        `{n_tasks_discovery}`          |\n" \
+                f"| Algorithms      |          `{n_algos}`         |          `{n_algos_discovery}`         |\n" \
+                f"| Benchmark Task Suite |         `{n_benchmarks}`        |         `{n_benchmarks_discovery}`        |\n\n"
+            
+    
     load_plotly = f"<script src='https://cdn.plot.ly/plotly-latest.min.js'></script> \n\n"
-    final_txt = load_plotly + page_header + gp_leaderboard_txt + static_txt_0 + table_header_discovery + table_explanation_discovery + mdb_table + mdb_figs + static_txt
+    final_txt = load_plotly + page_header + table_header + table_rows + gp_leaderboard_txt + static_txt_0 + table_header_discovery + table_explanation_discovery + mdb_table + mdb_figs + static_txt
 
 
     with open(os.path.join(DOCS_DIR, "index.md"), "w", encoding="utf-8") as f:
