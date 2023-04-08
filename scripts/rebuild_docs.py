@@ -305,7 +305,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
                   
 
     # Define the table content as a nested list
-    table_header = "|             | [Materials Properties](https://matbench.materialsproject.org/#leaderboard-property-general-purpose-algorithms-on-matbench_v01) | [Materials Discovery](https://matbench.materialsproject.org/#leaderboard-discovery-general-purpose-algorithms-on-matbench_discovery-010) |\n" \
+    table_header = "|             | [Materials Properties](/#leaderboard-property-general-purpose-algorithms-on-matbench_v01) | [Materials Discovery](/#leaderboard-discovery-general-purpose-algorithms-on-matbench_discovery-010) |\n" \
                "|-------------|---------------------|---------------------|\n"
 
     table_rows = f"| Task Submissions |        `{n_tasks}`          |        `{n_tasks_discovery}`          |\n" \
