@@ -8,6 +8,7 @@ import json
 import logging
 import os
 import sys
+import gzip
 
 import numpy as np
 import pandas as pd
@@ -71,7 +72,6 @@ class MSONable2File:
 
     @classmethod
     def from_file(cls, filename):
-        import gzip
         with gzip.open(filename, 'rb') as f:
             d = json.loads(f.read().decode('utf-8'))    
         return cls.from_dict(d)
