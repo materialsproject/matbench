@@ -1,13 +1,13 @@
-<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script> 
 
-# Leaderboard
+# Leaderboard 
 
-**Matbench is an automated leaderboard** for benchmarking state of the art ML algorithms predicting a **diverse range of solid materials' properties**. It is hosted and maintained by [the Materials Project](https://materialsproject.org).
+**Matbench is an automated leaderboard** for benchmarking state of the art ML algorithms predicting a **diverse range of solid materials' properties**. It is hosted and maintained by [the Materials Project](https://materialsproject.org). 
 
  ![crystal](static/crystals.png)
 
 - `157` **total task submissions**
-- `23` **algorithms**
+- `23` **algorithms** 
 - `1` **benchmark test suites**
 
  Scroll down to learn more.
@@ -409,7 +409,7 @@ $$
 [Matbench](https://doi.org/10.1038/s41524-020-00406-3) is an [ImageNet](http://www.image-net.org) for **materials science**; a
 **curated set of 13 supervised, pre-cleaned, ready-to-use ML tasks** for benchmarking and fair comparison. The tasks span a wide domain of
 inorganic materials science applications including electronic, thermodynamic, mechanical, and thermal properties among crystals, 2D materials,
-disordered metals, and more.
+disordered metals, and more.  
 
 **The [Matbench python package](https://github.com/hackingmaterials/matbench) provides everything needed to use Matbench with your ML algorithm in ~10 lines of code or less.** The web pages and repository online contain full result files, citations, methodologies, and code for the algorithms shown.
 
@@ -451,23 +451,23 @@ Each task in Matbench consists of a three things:
 3. **A test procedure:** a way to get a score for your algorithm
 
 
-The Matbench Python package provides functions for getting the first two (packaged together for each task as a _dataset_) as well as running
+The Matbench Python package provides functions for getting the first two (packaged together for each task as a _dataset_) as well as running 
 the test procedure. See the [How to use](How%20To%20Use/) documentation page to get started.
 
 
 
 ## Citing Matbench
 
-You can find details and results on the benchmark in our paper [Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm](https://doi.org/10.1038/s41524-020-00406-3).
+You can find details and results on the benchmark in our paper [Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm](https://doi.org/10.1038/s41524-020-00406-3). 
 Please consider citing this paper if you use Matbench v0.1 for benchmarking, comparison, or prototyping.
 
 
 You can cite Matbench using this reference:
 
 ```
-Dunn, A., Wang, Q., Ganose, A., Dopp, D., Jain, A.
-Benchmarking Materials Property Prediction Methods:
-The Matbench Test Set and Automatminer Reference Algorithm.
-npj Computational Materials 6, 138 (2020).
+Dunn, A., Wang, Q., Ganose, A., Dopp, D., Jain, A. 
+Benchmarking Materials Property Prediction Methods: 
+The Matbench Test Set and Automatminer Reference Algorithm. 
+npj Computational Materials 6, 138 (2020). 
 https://doi.org/10.1038/s41524-020-00406-3
 ```
