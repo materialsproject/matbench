@@ -1,8 +1,0 @@
-{
-  "authors": "coGN authors (anonymous)",
-  "algorithm": "coGN",
-  "algorithm_long": "Connectivity optimized Graph Network",
-  "bibtex_refs": "",
-  "notes": "",
-  "requirements": {"python":  ["git+https://github.com/matbench-submission-coGN/CrystalGNNs"]}
-}
