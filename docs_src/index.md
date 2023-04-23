@@ -25,9 +25,9 @@ Find more information about this benchmark on [the benchmark info page](Benchmar
 | [matbench_dielectric](Leaderboards%20Per-Task/matbench_v0.1_matbench_dielectric.md) | 4,764 | [MODNet (v0.1.12)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.2711 (unitless)** |  |
 | [matbench_expt_is_metal](Leaderboards%20Per-Task/matbench_v0.1_matbench_expt_is_metal.md) | 4,921 | [AMMExpress v2020](Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.9209** |  |
 | [matbench_glass](Leaderboards%20Per-Task/matbench_v0.1_matbench_glass.md) | 5,680 | [MODNet (v0.1.12)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.9603** |  |
-| [matbench_log_gvrh](Leaderboards%20Per-Task/matbench_v0.1_matbench_log_gvrh.md) | 10,987 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0693 (log10(GPa))** | structure required |
-| [matbench_log_kvrh](Leaderboards%20Per-Task/matbench_v0.1_matbench_log_kvrh.md) | 10,987 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0532 (log10(GPa))** | structure required |
-| [matbench_perovskites](Leaderboards%20Per-Task/matbench_v0.1_matbench_perovskites.md) | 18,928 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0270 (eV/unit cell)** | structure required |
+| [matbench_log_gvrh](Leaderboards%20Per-Task/matbench_v0.1_matbench_log_gvrh.md) | 10,987 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0689 (log10(GPa))** | structure required |
+| [matbench_log_kvrh](Leaderboards%20Per-Task/matbench_v0.1_matbench_log_kvrh.md) | 10,987 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0535 (log10(GPa))** | structure required |
+| [matbench_perovskites](Leaderboards%20Per-Task/matbench_v0.1_matbench_perovskites.md) | 18,928 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0269 (eV/unit cell)** | structure required |
 | [matbench_mp_gap](Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_gap.md) | 106,113 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.1559 (eV)** | structure required |
 | [matbench_mp_is_metal](Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_is_metal.md) | 106,113 | [CGCNN v2019](Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.9520** | structure required |
 | [matbench_mp_e_form](Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_e_form.md) | 132,752 | [coGN](Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0170 (eV/atom)** | structure required |

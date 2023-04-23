@@ -8,7 +8,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 
 | algorithm | mean mae | std mae | mean rmse | max max_error |
 |------|------|------|------|------|
-| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0693** | 0.0008 | 0.1108 | 1.0508 | 
+| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0689** | 0.0009 | 0.1102 | 1.0842 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0715** | 0.0006 | 0.1123 | 1.1324 | 
 | [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.0731** | 0.0007 | 0.1103 | 1.1745 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.0731** | 0.0007 | 0.1103 | 1.1745 | 

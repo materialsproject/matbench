@@ -10,7 +10,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 |------|------|------|------|------|
 | [CGCNN v2019](../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.9520** | 0.0074 | 0.9462 | 0.9520 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.9128** | 0.0015 | 0.9015 | 0.9128 | 
-| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.9127** | 0.0015 | 0.9017 | 0.9127 | 
+| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.9124** | 0.0023 | 0.9012 | 0.9124 | 
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **0.9093** | 0.0008 | 0.8981 | 0.9093 | 
 | [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **0.9038** | 0.0106 | 0.8916 | 0.9038 | 
 | [DimeNet++ (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_DimeNetPP_kgcnn_v2.1.0.md) | **0.9032** | 0.0036 | 0.8907 | 0.9032 | 

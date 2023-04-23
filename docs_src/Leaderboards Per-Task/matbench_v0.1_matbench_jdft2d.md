@@ -10,7 +10,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 |------|------|------|------|------|
 | [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **33.1918** | 7.3428 | 96.7332 | 1564.8245 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **34.5368** | 9.4959 | 92.2288 | 1534.9797 | 
-| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **35.7659** | 13.2311 | 97.8740 | 1554.5435 | 
+| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **37.1652** | 13.6825 | 101.1580 | 1515.5614 | 
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **39.8497** | 9.8835 | 106.5460 | 1552.9102 | 
 | [SchNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_SchNet_kgcnn_v2.1.0.md) | **42.6637** | 13.7201 | 111.0187 | 1524.9143 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **43.4244** | 8.9491 | 117.4213 | 1519.7424 | 

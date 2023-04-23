@@ -5,14 +5,17 @@
 Connectivity optimized Graph Network
 
 #### Notes:
-
+We found that there is a strong interdependency between crystal preprocessing for GNNs and GNN architectures. Our model 'coGN' was optimized with respect to both aspects.
 
 Raw data download and example notebook available [on the matbench repo](https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_coGN).
 
 ### References (in bibtex format): 
 
 ```
-''
+('@misc{ruff2023connectivity, title={Connectivity Optimized Nested Graph '
+ 'Networks for Crystal Structures}, author={Robin Ruff and Patrick Reiser and '
+ 'Jan Stühmer and Pascal Friederich}, year={2023}, eprint={2302.14102}, '
+ 'archivePrefix={arXiv}, primaryClass={cs.LG}}')
 ```
 
 ### User metadata:
@@ -34,7 +37,8 @@ Raw data download and example notebook available [on the matbench repo](https://
 ### Software Requirements
 
 ```
-{'python': ['git+https://github.com/matbench-submission-coGN/CrystalGNNs']}
+{'python': ['git+https://github.com/robinruff/graphlist@dcbf79e',
+            'kgcnn==3.0.0']}
 ```
 
 ### Task data:
@@ -45,32 +49,32 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 | fold | mae | rmse | mape* | max_error |
 |------ |------ |------ |------ |------ |
- | fold_0 | 0.1881| 1.2052| 0.0615| 30.4824 |
- | fold_1 | 0.2652| 1.2112| 0.0940| 19.0093 |
- | fold_2 | 0.4088| 3.1209| 0.0889| 58.6299 |
- | fold_3 | 0.2851| 2.1472| 0.0561| 45.6425 |
- | fold_4 | 0.3775| 2.2437| 0.1414| 30.4891 |
+ | fold_0 | 0.1775| 1.1939| 0.0588| 31.1751 |
+ | fold_1 | 0.2663| 1.2545| 0.0928| 19.5706 |
+ | fold_2 | 0.4209| 3.1241| 0.0910| 58.7728 |
+ | fold_3 | 0.2986| 2.3053| 0.0561| 50.6162 |
+ | fold_4 | 0.3805| 2.3953| 0.1318| 34.7823 |
 
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
-| mae | 0.3049 | 0.4088 | 0.1881 | 0.0796 |
-| rmse | 1.9857 | 3.1209 | 1.2052 | 0.7198 |
-| mape* | 0.0884 | 0.1414 | 0.0561 | 0.0304 |
-| max_error | 36.8507 | 58.6299 | 19.0093 | 13.7911 |
+| mae | 0.3088 | 0.4209 | 0.1775 | 0.0859 |
+| rmse | 2.0546 | 3.1241 | 1.1939 | 0.7353 |
+| mape* | 0.0861 | 0.1318 | 0.0561 | 0.0276 |
+| max_error | 38.9834 | 58.7728 | 19.5706 | 14.0173 |
 
 
 ###### Fold parameters
 
 | fold | params dict|
 |------|------------|
-| fold_0 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_1 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_2 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_3 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_4 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
+| fold_0 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_1 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_2 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_3 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_4 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
 
 
 
@@ -81,32 +85,32 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 | fold | mae | rmse | mape* | max_error |
 |------ |------ |------ |------ |------ |
- | fold_0 | 20.4129| 34.0208| 16.7510| 147.5706 |
- | fold_1 | 36.8559| 88.0698| 0.2906| 482.6166 |
- | fold_2 | 58.2834| 170.5519| 0.6320| 886.2500 |
- | fold_3 | 24.6639| 44.8349| 0.2278| 285.3291 |
- | fold_4 | 38.6134| 151.8924| 0.5330| 1554.5435 |
+ | fold_0 | 22.2500| 37.9580| 16.0047| 159.0532 |
+ | fold_1 | 37.2341| 93.9861| 0.3232| 511.9405 |
+ | fold_2 | 60.1682| 173.0409| 0.6480| 886.4798 |
+ | fold_3 | 24.3924| 46.1018| 0.2122| 300.6775 |
+ | fold_4 | 41.7814| 154.7034| 0.5589| 1515.5614 |
 
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
-| mae | 35.7659 | 58.2834 | 20.4129 | 13.2311 |
-| rmse | 97.8740 | 170.5519 | 34.0208 | 55.1118 |
-| mape* | 3.6869 | 16.7510 | 0.2278 | 6.5337 |
-| max_error | 671.2620 | 1554.5435 | 147.5706 | 506.9892 |
+| mae | 37.1652 | 60.1682 | 22.2500 | 13.6825 |
+| rmse | 101.1580 | 173.0409 | 37.9580 | 54.9748 |
+| mape* | 3.5494 | 16.0047 | 0.2122 | 6.2296 |
+| max_error | 674.7425 | 1515.5614 | 159.0532 | 486.6567 |
 
 
 ###### Fold parameters
 
 | fold | params dict|
 |------|------------|
-| fold_0 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_1 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_2 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_3 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_4 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
+| fold_0 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_1 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_2 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_3 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_4 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
 
 
 
@@ -117,32 +121,32 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 | fold | mae | rmse | mape* | max_error |
 |------ |------ |------ |------ |------ |
- | fold_0 | 0.0679| 0.1077| 0.0542| 0.9003 |
- | fold_1 | 0.0703| 0.1121| 0.0567| 1.0508 |
- | fold_2 | 0.0688| 0.1107| 0.0554| 0.9464 |
- | fold_3 | 0.0695| 0.1112| 0.0547| 0.9811 |
- | fold_4 | 0.0698| 0.1123| 0.0546| 0.8259 |
+ | fold_0 | 0.0681| 0.1078| 0.0538| 0.9176 |
+ | fold_1 | 0.0700| 0.1145| 0.0570| 1.0842 |
+ | fold_2 | 0.0685| 0.1084| 0.0544| 0.9597 |
+ | fold_3 | 0.0699| 0.1110| 0.0550| 0.9638 |
+ | fold_4 | 0.0679| 0.1091| 0.0530| 0.7744 |
 
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
-| mae | 0.0693 | 0.0703 | 0.0679 | 0.0008 |
-| rmse | 0.1108 | 0.1123 | 0.1077 | 0.0017 |
-| mape* | 0.0551 | 0.0567 | 0.0542 | 0.0009 |
-| max_error | 0.9409 | 1.0508 | 0.8259 | 0.0756 |
+| mae | 0.0689 | 0.0700 | 0.0679 | 0.0009 |
+| rmse | 0.1102 | 0.1145 | 0.1078 | 0.0024 |
+| mape* | 0.0547 | 0.0570 | 0.0530 | 0.0013 |
+| max_error | 0.9399 | 1.0842 | 0.7744 | 0.0997 |
 
 
 ###### Fold parameters
 
 | fold | params dict|
 |------|------------|
-| fold_0 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_1 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_2 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_3 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_4 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
+| fold_0 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_1 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_2 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_3 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_4 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
 
 
 
@@ -153,32 +157,32 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 | fold | mae | rmse | mape* | max_error |
 |------ |------ |------ |------ |------ |
- | fold_0 | 0.0517| 0.1052| 0.0341| 1.6432 |
- | fold_1 | 0.0532| 0.1101| 0.0351| 1.3853 |
- | fold_2 | 0.0492| 0.1031| 0.0329| 1.4786 |
- | fold_3 | 0.0582| 0.1152| 0.0414| 1.0340 |
- | fold_4 | 0.0538| 0.1079| 0.0363| 1.3281 |
+ | fold_0 | 0.0521| 0.1067| 0.0346| 1.6521 |
+ | fold_1 | 0.0547| 0.1140| 0.0365| 1.3120 |
+ | fold_2 | 0.0495| 0.0998| 0.0334| 1.1084 |
+ | fold_3 | 0.0579| 0.1142| 0.0410| 1.1212 |
+ | fold_4 | 0.0536| 0.1064| 0.0359| 1.4031 |
 
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
-| mae | 0.0532 | 0.0582 | 0.0492 | 0.0030 |
-| rmse | 0.1083 | 0.1152 | 0.1031 | 0.0042 |
-| mape* | 0.0360 | 0.0414 | 0.0329 | 0.0029 |
-| max_error | 1.3738 | 1.6432 | 1.0340 | 0.2006 |
+| mae | 0.0535 | 0.0579 | 0.0495 | 0.0028 |
+| rmse | 0.1082 | 0.1142 | 0.0998 | 0.0054 |
+| mape* | 0.0363 | 0.0410 | 0.0334 | 0.0026 |
+| max_error | 1.3194 | 1.6521 | 1.1084 | 0.2008 |
 
 
 ###### Fold parameters
 
 | fold | params dict|
 |------|------------|
-| fold_0 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_1 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_2 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_3 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_4 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
+| fold_0 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_1 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_2 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_3 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_4 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
 
 
 
@@ -189,32 +193,32 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 | fold | mae | rmse | mape* | max_error |
 |------ |------ |------ |------ |------ |
- | fold_0 | 0.0173| 0.0576| 0.1895| 3.2492 |
- | fold_1 | 0.0167| 0.0459| 0.1057| 2.4144 |
- | fold_2 | 0.0166| 0.0428| 0.1149| 1.7081 |
- | fold_3 | 0.0176| 0.0497| 0.1341| 1.9816 |
- | fold_4 | 0.0168| 0.0463| 0.1862| 2.4855 |
+ | fold_0 | 0.0174| 0.0597| 0.2045| 3.8249 |
+ | fold_1 | 0.0167| 0.0473| 0.1188| 2.5255 |
+ | fold_2 | 0.0168| 0.0433| 0.1260| 1.4799 |
+ | fold_3 | 0.0173| 0.0464| 0.1515| 1.2865 |
+ | fold_4 | 0.0169| 0.0448| 0.1966| 1.6626 |
 
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
-| mae | 0.0170 | 0.0176 | 0.0166 | 0.0004 |
-| rmse | 0.0485 | 0.0576 | 0.0428 | 0.0051 |
-| mape* | 0.1461 | 0.1895 | 0.1057 | 0.0353 |
-| max_error | 2.3678 | 3.2492 | 1.7081 | 0.5248 |
+| mae | 0.0170 | 0.0174 | 0.0167 | 0.0003 |
+| rmse | 0.0483 | 0.0597 | 0.0433 | 0.0059 |
+| mape* | 0.1595 | 0.2045 | 0.1188 | 0.0353 |
+| max_error | 2.1559 | 3.8249 | 1.2865 | 0.9358 |
 
 
 ###### Fold parameters
 
 | fold | params dict|
 |------|------------|
-| fold_0 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_1 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_2 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_3 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_4 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
+| fold_0 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_1 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_2 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_3 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_4 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
 
 
 
@@ -225,32 +229,32 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 | fold | mae | rmse | mape* | max_error |
 |------ |------ |------ |------ |------ |
- | fold_0 | 0.1538| 0.3950| 1.5448| 7.1551 |
- | fold_1 | 0.1546| 0.3971| 1.6310| 6.6974 |
- | fold_2 | 0.1600| 0.4078| 4.1607| 7.3029 |
- | fold_3 | 0.1520| 0.3923| 6.3196| 7.0559 |
- | fold_4 | 0.1589| 0.4046| 4.1557| 6.7068 |
+ | fold_0 | 0.1532| 0.3904| 1.5736| 7.3352 |
+ | fold_1 | 0.1561| 0.3928| 1.9621| 6.7683 |
+ | fold_2 | 0.1570| 0.4010| 3.8426| 7.3269 |
+ | fold_3 | 0.1549| 0.3909| 5.5071| 7.1401 |
+ | fold_4 | 0.1583| 0.4027| 4.0927| 6.8235 |
 
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
-| mae | 0.1559 | 0.1600 | 0.1520 | 0.0031 |
-| rmse | 0.3994 | 0.4078 | 0.3923 | 0.0059 |
-| mape* | 3.5624 | 6.3196 | 1.5448 | 1.7952 |
-| max_error | 6.9836 | 7.3029 | 6.6974 | 0.2430 |
+| mae | 0.1559 | 0.1583 | 0.1532 | 0.0017 |
+| rmse | 0.3956 | 0.4027 | 0.3904 | 0.0052 |
+| mape* | 3.3956 | 5.5071 | 1.5736 | 1.4504 |
+| max_error | 7.0788 | 7.3352 | 6.7683 | 0.2419 |
 
 
 ###### Fold parameters
 
 | fold | params dict|
 |------|------------|
-| fold_0 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_1 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_2 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_3 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_4 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
+| fold_0 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_1 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_2 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_3 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_4 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
 
 
 
@@ -261,32 +265,32 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 | fold | accuracy | balanced_accuracy | f1 | rocauc |
 |------ |------ |------ |------ |------ |
- | fold_0 | 0.9183| 0.9155| 0.9049| 0.9155 |
- | fold_1 | 0.9141| 0.9118| 0.9005| 0.9118 |
- | fold_2 | 0.9141| 0.9113| 0.9001| 0.9113 |
- | fold_3 | 0.9152| 0.9128| 0.9017| 0.9128 |
- | fold_4 | 0.9149| 0.9124| 0.9013| 0.9124 |
+ | fold_0 | 0.9184| 0.9162| 0.9055| 0.9162 |
+ | fold_1 | 0.9116| 0.9092| 0.8976| 0.9092 |
+ | fold_2 | 0.9138| 0.9117| 0.9003| 0.9117 |
+ | fold_3 | 0.9155| 0.9135| 0.9024| 0.9135 |
+ | fold_4 | 0.9137| 0.9113| 0.9000| 0.9113 |
 
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
-| accuracy | 0.9153 | 0.9183 | 0.9141 | 0.0016 |
-| balanced_accuracy | 0.9127 | 0.9155 | 0.9113 | 0.0015 |
-| f1 | 0.9017 | 0.9049 | 0.9001 | 0.0017 |
-| rocauc | 0.9127 | 0.9155 | 0.9113 | 0.0015 |
+| accuracy | 0.9146 | 0.9184 | 0.9116 | 0.0023 |
+| balanced_accuracy | 0.9124 | 0.9162 | 0.9092 | 0.0023 |
+| f1 | 0.9012 | 0.9055 | 0.8976 | 0.0027 |
+| rocauc | 0.9124 | 0.9162 | 0.9092 | 0.0023 |
 
 
 ###### Fold parameters
 
 | fold | params dict|
 |------|------------|
-| fold_0 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_1 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_2 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_3 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_4 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
+| fold_0 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_1 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_2 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_3 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_4 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
 
 
 
@@ -297,32 +301,32 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 | fold | mae | rmse | mape* | max_error |
 |------ |------ |------ |------ |------ |
- | fold_0 | 0.0269| 0.0552| 0.0268| 0.8322 |
- | fold_1 | 0.0281| 0.0629| 0.0289| 0.9489 |
- | fold_2 | 0.0265| 0.0503| 0.0276| 0.7050 |
- | fold_3 | 0.0265| 0.0503| 0.0265| 0.7964 |
- | fold_4 | 0.0268| 0.0553| 0.0255| 0.8531 |
+ | fold_0 | 0.0273| 0.0577| 0.0272| 0.8584 |
+ | fold_1 | 0.0280| 0.0616| 0.0297| 0.9449 |
+ | fold_2 | 0.0256| 0.0494| 0.0254| 0.8721 |
+ | fold_3 | 0.0271| 0.0538| 0.0277| 0.8234 |
+ | fold_4 | 0.0266| 0.0545| 0.0240| 0.8305 |
 
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
-| mae | 0.0270 | 0.0281 | 0.0265 | 0.0006 |
-| rmse | 0.0548 | 0.0629 | 0.0503 | 0.0046 |
-| mape* | 0.0271 | 0.0289 | 0.0255 | 0.0011 |
-| max_error | 0.8271 | 0.9489 | 0.7050 | 0.0792 |
+| mae | 0.0269 | 0.0280 | 0.0256 | 0.0008 |
+| rmse | 0.0554 | 0.0616 | 0.0494 | 0.0041 |
+| mape* | 0.0268 | 0.0297 | 0.0240 | 0.0019 |
+| max_error | 0.8659 | 0.9449 | 0.8234 | 0.0434 |
 
 
 ###### Fold parameters
 
 | fold | params dict|
 |------|------------|
-| fold_0 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_1 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_2 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_3 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_4 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
+| fold_0 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_1 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_2 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_3 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_4 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
 
 
 
@@ -333,32 +337,32 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 | fold | mae | rmse | mape* | max_error |
 |------ |------ |------ |------ |------ |
- | fold_0 | 33.6455| 76.2273| 0.0593| 868.0997 |
- | fold_1 | 30.4823| 62.3384| 0.0602| 635.7188 |
- | fold_2 | 29.1343| 52.4933| 0.0622| 400.1526 |
- | fold_3 | 29.2746| 56.3612| 0.0711| 500.1160 |
- | fold_4 | 27.2320| 52.7534| 0.0566| 535.7434 |
+ | fold_0 | 32.1211| 62.9439| 0.0581| 622.4674 |
+ | fold_1 | 29.1911| 54.8274| 0.0602| 480.0777 |
+ | fold_2 | 30.2587| 55.7380| 0.0661| 497.7857 |
+ | fold_3 | 30.7953| 62.8746| 0.0695| 593.3290 |
+ | fold_4 | 26.1921| 52.1653| 0.0547| 530.2232 |
 
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
-| mae | 29.9538 | 33.6455 | 27.2320 | 2.1189 |
-| rmse | 60.0347 | 76.2273 | 52.4933 | 8.8419 |
-| mape* | 0.0619 | 0.0711 | 0.0566 | 0.0049 |
-| max_error | 587.9661 | 868.0997 | 400.1526 | 159.0433 |
+| mae | 29.7117 | 32.1211 | 26.1921 | 1.9968 |
+| rmse | 57.7099 | 62.9439 | 52.1653 | 4.4047 |
+| mape* | 0.0617 | 0.0695 | 0.0547 | 0.0054 |
+| max_error | 544.7766 | 622.4674 | 480.0777 | 54.7706 |
 
 
 ###### Fold parameters
 
 | fold | params dict|
 |------|------------|
-| fold_0 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_1 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_2 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_3 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
-| fold_4 | `{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...` |
+| fold_0 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_1 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_2 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_3 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
+| fold_4 | `{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...` |
 
 
 

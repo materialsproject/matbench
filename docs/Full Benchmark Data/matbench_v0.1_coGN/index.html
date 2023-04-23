@@ -1929,9 +1929,13 @@
 <h3 id="algorithm-description">Algorithm description:</h3>
 <p>Connectivity optimized Graph Network</p>
 <h4 id="notes">Notes:</h4>
+<p>We found that there is a strong interdependency between crystal preprocessing for GNNs and GNN architectures. Our model 'coGN' was optimized with respect to both aspects.</p>
 <p>Raw data download and example notebook available <a href="https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_coGN">on the matbench repo</a>.</p>
 <h3 id="references-in-bibtex-format">References (in bibtex format):</h3>
-<div class="highlight"><pre><span></span><code>&#39;&#39;
+<div class="highlight"><pre><span></span><code>(&#39;@misc{ruff2023connectivity, title={Connectivity Optimized Nested Graph &#39;
+ &#39;Networks for Crystal Structures}, author={Robin Ruff and Patrick Reiser and &#39;
+ &#39;Jan Stühmer and Pascal Friederich}, year={2023}, eprint={2302.14102}, &#39;
+ &#39;archivePrefix={arXiv}, primaryClass={cs.LG}}&#39;)
 </code></pre></div>
 <h3 id="user-metadata">User metadata:</h3>
 <div class="highlight"><pre><span></span><code>{}
@@ -1968,7 +1972,8 @@
 </tbody>
 </table>
 <h3 id="software-requirements">Software Requirements</h3>
-<div class="highlight"><pre><span></span><code>{&#39;python&#39;: [&#39;git+https://github.com/matbench-submission-coGN/CrystalGNNs&#39;]}
+<div class="highlight"><pre><span></span><code>{&#39;python&#39;: [&#39;git+https://github.com/robinruff/graphlist@dcbf79e&#39;,
+            &#39;kgcnn==3.0.0&#39;]}
 </code></pre></div>
 <h3 id="task-data">Task data:</h3>
 <h4 id="matbench_dielectric"><code>matbench_dielectric</code></h4>
@@ -1986,38 +1991,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.1881</td>
-<td>1.2052</td>
-<td>0.0615</td>
-<td>30.4824</td>
+<td>0.1775</td>
+<td>1.1939</td>
+<td>0.0588</td>
+<td>31.1751</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.2652</td>
-<td>1.2112</td>
-<td>0.0940</td>
-<td>19.0093</td>
+<td>0.2663</td>
+<td>1.2545</td>
+<td>0.0928</td>
+<td>19.5706</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.4088</td>
-<td>3.1209</td>
-<td>0.0889</td>
-<td>58.6299</td>
+<td>0.4209</td>
+<td>3.1241</td>
+<td>0.0910</td>
+<td>58.7728</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.2851</td>
-<td>2.1472</td>
+<td>0.2986</td>
+<td>2.3053</td>
 <td>0.0561</td>
-<td>45.6425</td>
+<td>50.6162</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.3775</td>
-<td>2.2437</td>
-<td>0.1414</td>
-<td>30.4891</td>
+<td>0.3805</td>
+<td>2.3953</td>
+<td>0.1318</td>
+<td>34.7823</td>
 </tr>
 </tbody>
 </table>
@@ -2035,31 +2040,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>0.3049</td>
-<td>0.4088</td>
-<td>0.1881</td>
-<td>0.0796</td>
+<td>0.3088</td>
+<td>0.4209</td>
+<td>0.1775</td>
+<td>0.0859</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>1.9857</td>
-<td>3.1209</td>
-<td>1.2052</td>
-<td>0.7198</td>
+<td>2.0546</td>
+<td>3.1241</td>
+<td>1.1939</td>
+<td>0.7353</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.0884</td>
-<td>0.1414</td>
+<td>0.0861</td>
+<td>0.1318</td>
 <td>0.0561</td>
-<td>0.0304</td>
+<td>0.0276</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>36.8507</td>
-<td>58.6299</td>
-<td>19.0093</td>
-<td>13.7911</td>
+<td>38.9834</td>
+<td>58.7728</td>
+<td>19.5706</td>
+<td>14.0173</td>
 </tr>
 </tbody>
 </table>
@@ -2074,23 +2079,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 </tbody>
 </table>
@@ -2109,38 +2114,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>20.4129</td>
-<td>34.0208</td>
-<td>16.7510</td>
-<td>147.5706</td>
+<td>22.2500</td>
+<td>37.9580</td>
+<td>16.0047</td>
+<td>159.0532</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>36.8559</td>
-<td>88.0698</td>
-<td>0.2906</td>
-<td>482.6166</td>
+<td>37.2341</td>
+<td>93.9861</td>
+<td>0.3232</td>
+<td>511.9405</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>58.2834</td>
-<td>170.5519</td>
-<td>0.6320</td>
-<td>886.2500</td>
+<td>60.1682</td>
+<td>173.0409</td>
+<td>0.6480</td>
+<td>886.4798</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>24.6639</td>
-<td>44.8349</td>
-<td>0.2278</td>
-<td>285.3291</td>
+<td>24.3924</td>
+<td>46.1018</td>
+<td>0.2122</td>
+<td>300.6775</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>38.6134</td>
-<td>151.8924</td>
-<td>0.5330</td>
-<td>1554.5435</td>
+<td>41.7814</td>
+<td>154.7034</td>
+<td>0.5589</td>
+<td>1515.5614</td>
 </tr>
 </tbody>
 </table>
@@ -2158,31 +2163,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>35.7659</td>
-<td>58.2834</td>
-<td>20.4129</td>
-<td>13.2311</td>
+<td>37.1652</td>
+<td>60.1682</td>
+<td>22.2500</td>
+<td>13.6825</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>97.8740</td>
-<td>170.5519</td>
-<td>34.0208</td>
-<td>55.1118</td>
+<td>101.1580</td>
+<td>173.0409</td>
+<td>37.9580</td>
+<td>54.9748</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>3.6869</td>
-<td>16.7510</td>
-<td>0.2278</td>
-<td>6.5337</td>
+<td>3.5494</td>
+<td>16.0047</td>
+<td>0.2122</td>
+<td>6.2296</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>671.2620</td>
-<td>1554.5435</td>
-<td>147.5706</td>
-<td>506.9892</td>
+<td>674.7425</td>
+<td>1515.5614</td>
+<td>159.0532</td>
+<td>486.6567</td>
 </tr>
 </tbody>
 </table>
@@ -2197,23 +2202,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 </tbody>
 </table>
@@ -2232,38 +2237,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.0679</td>
-<td>0.1077</td>
-<td>0.0542</td>
-<td>0.9003</td>
+<td>0.0681</td>
+<td>0.1078</td>
+<td>0.0538</td>
+<td>0.9176</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.0703</td>
-<td>0.1121</td>
-<td>0.0567</td>
-<td>1.0508</td>
+<td>0.0700</td>
+<td>0.1145</td>
+<td>0.0570</td>
+<td>1.0842</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.0688</td>
-<td>0.1107</td>
-<td>0.0554</td>
-<td>0.9464</td>
+<td>0.0685</td>
+<td>0.1084</td>
+<td>0.0544</td>
+<td>0.9597</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.0695</td>
-<td>0.1112</td>
-<td>0.0547</td>
-<td>0.9811</td>
+<td>0.0699</td>
+<td>0.1110</td>
+<td>0.0550</td>
+<td>0.9638</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.0698</td>
-<td>0.1123</td>
-<td>0.0546</td>
-<td>0.8259</td>
+<td>0.0679</td>
+<td>0.1091</td>
+<td>0.0530</td>
+<td>0.7744</td>
 </tr>
 </tbody>
 </table>
@@ -2281,31 +2286,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>0.0693</td>
-<td>0.0703</td>
+<td>0.0689</td>
+<td>0.0700</td>
 <td>0.0679</td>
-<td>0.0008</td>
-</tr>
-<tr>
-<td>rmse</td>
-<td>0.1108</td>
-<td>0.1123</td>
-<td>0.1077</td>
-<td>0.0017</td>
-</tr>
-<tr>
-<td>mape*</td>
-<td>0.0551</td>
-<td>0.0567</td>
-<td>0.0542</td>
 <td>0.0009</td>
 </tr>
 <tr>
+<td>rmse</td>
+<td>0.1102</td>
+<td>0.1145</td>
+<td>0.1078</td>
+<td>0.0024</td>
+</tr>
+<tr>
+<td>mape*</td>
+<td>0.0547</td>
+<td>0.0570</td>
+<td>0.0530</td>
+<td>0.0013</td>
+</tr>
+<tr>
 <td>max_error</td>
-<td>0.9409</td>
-<td>1.0508</td>
-<td>0.8259</td>
-<td>0.0756</td>
+<td>0.9399</td>
+<td>1.0842</td>
+<td>0.7744</td>
+<td>0.0997</td>
 </tr>
 </tbody>
 </table>
@@ -2320,23 +2325,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 </tbody>
 </table>
@@ -2355,38 +2360,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.0517</td>
-<td>0.1052</td>
-<td>0.0341</td>
-<td>1.6432</td>
+<td>0.0521</td>
+<td>0.1067</td>
+<td>0.0346</td>
+<td>1.6521</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.0532</td>
-<td>0.1101</td>
-<td>0.0351</td>
-<td>1.3853</td>
+<td>0.0547</td>
+<td>0.1140</td>
+<td>0.0365</td>
+<td>1.3120</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.0492</td>
-<td>0.1031</td>
-<td>0.0329</td>
-<td>1.4786</td>
+<td>0.0495</td>
+<td>0.0998</td>
+<td>0.0334</td>
+<td>1.1084</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.0582</td>
-<td>0.1152</td>
-<td>0.0414</td>
-<td>1.0340</td>
+<td>0.0579</td>
+<td>0.1142</td>
+<td>0.0410</td>
+<td>1.1212</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.0538</td>
-<td>0.1079</td>
-<td>0.0363</td>
-<td>1.3281</td>
+<td>0.0536</td>
+<td>0.1064</td>
+<td>0.0359</td>
+<td>1.4031</td>
 </tr>
 </tbody>
 </table>
@@ -2404,31 +2409,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>0.0532</td>
-<td>0.0582</td>
-<td>0.0492</td>
-<td>0.0030</td>
+<td>0.0535</td>
+<td>0.0579</td>
+<td>0.0495</td>
+<td>0.0028</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>0.1083</td>
-<td>0.1152</td>
-<td>0.1031</td>
-<td>0.0042</td>
+<td>0.1082</td>
+<td>0.1142</td>
+<td>0.0998</td>
+<td>0.0054</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.0360</td>
-<td>0.0414</td>
-<td>0.0329</td>
-<td>0.0029</td>
+<td>0.0363</td>
+<td>0.0410</td>
+<td>0.0334</td>
+<td>0.0026</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>1.3738</td>
-<td>1.6432</td>
-<td>1.0340</td>
-<td>0.2006</td>
+<td>1.3194</td>
+<td>1.6521</td>
+<td>1.1084</td>
+<td>0.2008</td>
 </tr>
 </tbody>
 </table>
@@ -2443,23 +2448,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 </tbody>
 </table>
@@ -2478,38 +2483,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.0173</td>
-<td>0.0576</td>
-<td>0.1895</td>
-<td>3.2492</td>
+<td>0.0174</td>
+<td>0.0597</td>
+<td>0.2045</td>
+<td>3.8249</td>
 </tr>
 <tr>
 <td>fold_1</td>
 <td>0.0167</td>
-<td>0.0459</td>
-<td>0.1057</td>
-<td>2.4144</td>
+<td>0.0473</td>
+<td>0.1188</td>
+<td>2.5255</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.0166</td>
-<td>0.0428</td>
-<td>0.1149</td>
-<td>1.7081</td>
+<td>0.0168</td>
+<td>0.0433</td>
+<td>0.1260</td>
+<td>1.4799</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.0176</td>
-<td>0.0497</td>
-<td>0.1341</td>
-<td>1.9816</td>
+<td>0.0173</td>
+<td>0.0464</td>
+<td>0.1515</td>
+<td>1.2865</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.0168</td>
-<td>0.0463</td>
-<td>0.1862</td>
-<td>2.4855</td>
+<td>0.0169</td>
+<td>0.0448</td>
+<td>0.1966</td>
+<td>1.6626</td>
 </tr>
 </tbody>
 </table>
@@ -2528,30 +2533,30 @@
 <tr>
 <td>mae</td>
 <td>0.0170</td>
-<td>0.0176</td>
-<td>0.0166</td>
-<td>0.0004</td>
+<td>0.0174</td>
+<td>0.0167</td>
+<td>0.0003</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>0.0485</td>
-<td>0.0576</td>
-<td>0.0428</td>
-<td>0.0051</td>
+<td>0.0483</td>
+<td>0.0597</td>
+<td>0.0433</td>
+<td>0.0059</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.1461</td>
-<td>0.1895</td>
-<td>0.1057</td>
+<td>0.1595</td>
+<td>0.2045</td>
+<td>0.1188</td>
 <td>0.0353</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>2.3678</td>
-<td>3.2492</td>
-<td>1.7081</td>
-<td>0.5248</td>
+<td>2.1559</td>
+<td>3.8249</td>
+<td>1.2865</td>
+<td>0.9358</td>
 </tr>
 </tbody>
 </table>
@@ -2566,23 +2571,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 </tbody>
 </table>
@@ -2601,38 +2606,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.1538</td>
-<td>0.3950</td>
-<td>1.5448</td>
-<td>7.1551</td>
+<td>0.1532</td>
+<td>0.3904</td>
+<td>1.5736</td>
+<td>7.3352</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.1546</td>
-<td>0.3971</td>
-<td>1.6310</td>
-<td>6.6974</td>
+<td>0.1561</td>
+<td>0.3928</td>
+<td>1.9621</td>
+<td>6.7683</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.1600</td>
-<td>0.4078</td>
-<td>4.1607</td>
-<td>7.3029</td>
+<td>0.1570</td>
+<td>0.4010</td>
+<td>3.8426</td>
+<td>7.3269</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.1520</td>
-<td>0.3923</td>
-<td>6.3196</td>
-<td>7.0559</td>
+<td>0.1549</td>
+<td>0.3909</td>
+<td>5.5071</td>
+<td>7.1401</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.1589</td>
-<td>0.4046</td>
-<td>4.1557</td>
-<td>6.7068</td>
+<td>0.1583</td>
+<td>0.4027</td>
+<td>4.0927</td>
+<td>6.8235</td>
 </tr>
 </tbody>
 </table>
@@ -2651,30 +2656,30 @@
 <tr>
 <td>mae</td>
 <td>0.1559</td>
-<td>0.1600</td>
-<td>0.1520</td>
-<td>0.0031</td>
+<td>0.1583</td>
+<td>0.1532</td>
+<td>0.0017</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>0.3994</td>
-<td>0.4078</td>
-<td>0.3923</td>
-<td>0.0059</td>
+<td>0.3956</td>
+<td>0.4027</td>
+<td>0.3904</td>
+<td>0.0052</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>3.5624</td>
-<td>6.3196</td>
-<td>1.5448</td>
-<td>1.7952</td>
+<td>3.3956</td>
+<td>5.5071</td>
+<td>1.5736</td>
+<td>1.4504</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>6.9836</td>
-<td>7.3029</td>
-<td>6.6974</td>
-<td>0.2430</td>
+<td>7.0788</td>
+<td>7.3352</td>
+<td>6.7683</td>
+<td>0.2419</td>
 </tr>
 </tbody>
 </table>
@@ -2689,23 +2694,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 </tbody>
 </table>
@@ -2724,38 +2729,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.9183</td>
-<td>0.9155</td>
-<td>0.9049</td>
-<td>0.9155</td>
+<td>0.9184</td>
+<td>0.9162</td>
+<td>0.9055</td>
+<td>0.9162</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.9141</td>
-<td>0.9118</td>
-<td>0.9005</td>
-<td>0.9118</td>
+<td>0.9116</td>
+<td>0.9092</td>
+<td>0.8976</td>
+<td>0.9092</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.9141</td>
-<td>0.9113</td>
-<td>0.9001</td>
-<td>0.9113</td>
+<td>0.9138</td>
+<td>0.9117</td>
+<td>0.9003</td>
+<td>0.9117</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.9152</td>
-<td>0.9128</td>
-<td>0.9017</td>
-<td>0.9128</td>
+<td>0.9155</td>
+<td>0.9135</td>
+<td>0.9024</td>
+<td>0.9135</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.9149</td>
-<td>0.9124</td>
-<td>0.9013</td>
-<td>0.9124</td>
+<td>0.9137</td>
+<td>0.9113</td>
+<td>0.9000</td>
+<td>0.9113</td>
 </tr>
 </tbody>
 </table>
@@ -2773,31 +2778,31 @@
 <tbody>
 <tr>
 <td>accuracy</td>
-<td>0.9153</td>
-<td>0.9183</td>
-<td>0.9141</td>
-<td>0.0016</td>
+<td>0.9146</td>
+<td>0.9184</td>
+<td>0.9116</td>
+<td>0.0023</td>
 </tr>
 <tr>
 <td>balanced_accuracy</td>
-<td>0.9127</td>
-<td>0.9155</td>
-<td>0.9113</td>
-<td>0.0015</td>
+<td>0.9124</td>
+<td>0.9162</td>
+<td>0.9092</td>
+<td>0.0023</td>
 </tr>
 <tr>
 <td>f1</td>
-<td>0.9017</td>
-<td>0.9049</td>
-<td>0.9001</td>
-<td>0.0017</td>
+<td>0.9012</td>
+<td>0.9055</td>
+<td>0.8976</td>
+<td>0.0027</td>
 </tr>
 <tr>
 <td>rocauc</td>
-<td>0.9127</td>
-<td>0.9155</td>
-<td>0.9113</td>
-<td>0.0015</td>
+<td>0.9124</td>
+<td>0.9162</td>
+<td>0.9092</td>
+<td>0.0023</td>
 </tr>
 </tbody>
 </table>
@@ -2812,23 +2817,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 </tbody>
 </table>
@@ -2847,38 +2852,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>0.0269</td>
-<td>0.0552</td>
-<td>0.0268</td>
-<td>0.8322</td>
+<td>0.0273</td>
+<td>0.0577</td>
+<td>0.0272</td>
+<td>0.8584</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>0.0281</td>
-<td>0.0629</td>
-<td>0.0289</td>
-<td>0.9489</td>
+<td>0.0280</td>
+<td>0.0616</td>
+<td>0.0297</td>
+<td>0.9449</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>0.0265</td>
-<td>0.0503</td>
-<td>0.0276</td>
-<td>0.7050</td>
+<td>0.0256</td>
+<td>0.0494</td>
+<td>0.0254</td>
+<td>0.8721</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>0.0265</td>
-<td>0.0503</td>
-<td>0.0265</td>
-<td>0.7964</td>
+<td>0.0271</td>
+<td>0.0538</td>
+<td>0.0277</td>
+<td>0.8234</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>0.0268</td>
-<td>0.0553</td>
-<td>0.0255</td>
-<td>0.8531</td>
+<td>0.0266</td>
+<td>0.0545</td>
+<td>0.0240</td>
+<td>0.8305</td>
 </tr>
 </tbody>
 </table>
@@ -2896,31 +2901,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>0.0270</td>
-<td>0.0281</td>
-<td>0.0265</td>
-<td>0.0006</td>
+<td>0.0269</td>
+<td>0.0280</td>
+<td>0.0256</td>
+<td>0.0008</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>0.0548</td>
-<td>0.0629</td>
-<td>0.0503</td>
-<td>0.0046</td>
+<td>0.0554</td>
+<td>0.0616</td>
+<td>0.0494</td>
+<td>0.0041</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.0271</td>
-<td>0.0289</td>
-<td>0.0255</td>
-<td>0.0011</td>
+<td>0.0268</td>
+<td>0.0297</td>
+<td>0.0240</td>
+<td>0.0019</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>0.8271</td>
-<td>0.9489</td>
-<td>0.7050</td>
-<td>0.0792</td>
+<td>0.8659</td>
+<td>0.9449</td>
+<td>0.8234</td>
+<td>0.0434</td>
 </tr>
 </tbody>
 </table>
@@ -2935,23 +2940,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 </tbody>
 </table>
@@ -2970,38 +2975,38 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td>33.6455</td>
-<td>76.2273</td>
-<td>0.0593</td>
-<td>868.0997</td>
+<td>32.1211</td>
+<td>62.9439</td>
+<td>0.0581</td>
+<td>622.4674</td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td>30.4823</td>
-<td>62.3384</td>
+<td>29.1911</td>
+<td>54.8274</td>
 <td>0.0602</td>
-<td>635.7188</td>
+<td>480.0777</td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td>29.1343</td>
-<td>52.4933</td>
-<td>0.0622</td>
-<td>400.1526</td>
+<td>30.2587</td>
+<td>55.7380</td>
+<td>0.0661</td>
+<td>497.7857</td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td>29.2746</td>
-<td>56.3612</td>
-<td>0.0711</td>
-<td>500.1160</td>
+<td>30.7953</td>
+<td>62.8746</td>
+<td>0.0695</td>
+<td>593.3290</td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td>27.2320</td>
-<td>52.7534</td>
-<td>0.0566</td>
-<td>535.7434</td>
+<td>26.1921</td>
+<td>52.1653</td>
+<td>0.0547</td>
+<td>530.2232</td>
 </tr>
 </tbody>
 </table>
@@ -3019,31 +3024,31 @@
 <tbody>
 <tr>
 <td>mae</td>
-<td>29.9538</td>
-<td>33.6455</td>
-<td>27.2320</td>
-<td>2.1189</td>
+<td>29.7117</td>
+<td>32.1211</td>
+<td>26.1921</td>
+<td>1.9968</td>
 </tr>
 <tr>
 <td>rmse</td>
-<td>60.0347</td>
-<td>76.2273</td>
-<td>52.4933</td>
-<td>8.8419</td>
+<td>57.7099</td>
+<td>62.9439</td>
+<td>52.1653</td>
+<td>4.4047</td>
 </tr>
 <tr>
 <td>mape*</td>
-<td>0.0619</td>
-<td>0.0711</td>
-<td>0.0566</td>
-<td>0.0049</td>
+<td>0.0617</td>
+<td>0.0695</td>
+<td>0.0547</td>
+<td>0.0054</td>
 </tr>
 <tr>
 <td>max_error</td>
-<td>587.9661</td>
-<td>868.0997</td>
-<td>400.1526</td>
-<td>159.0433</td>
+<td>544.7766</td>
+<td>622.4674</td>
+<td>480.0777</td>
+<td>54.7706</td>
 </tr>
 </tbody>
 </table>
@@ -3058,23 +3063,23 @@
 <tbody>
 <tr>
 <td>fold_0</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_1</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_2</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_3</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 <tr>
 <td>fold_4</td>
-<td><code>{'input_block': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_area': ...</code></td>
+<td><code>{'input_block_cfg': {'atomic_mass': True, 'atomic_radius': True, 'edge_embedding_args': {'bins_distance': 32, 'bins_voronoi_area': None, 'distance_log_base': 1.0, 'max_distance': 8.0, 'max_voronoi_are...</code></td>
 </tr>
 </tbody>
 </table>

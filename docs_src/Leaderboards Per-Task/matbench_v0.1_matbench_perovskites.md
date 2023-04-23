@@ -8,7 +8,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 
 | algorithm | mean mae | std mae | mean rmse | max max_error |
 |------|------|------|------|------|
-| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0270** | 0.0006 | 0.0548 | 0.9489 | 
+| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0269** | 0.0008 | 0.0554 | 0.9449 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0288** | 0.0009 | 0.0559 | 0.9028 | 
 | [Finder_v1.2 structure-based version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_structure.md) | **0.0320** | 0.0012 | 0.0594 | 0.8875 | 
 | [SchNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_SchNet_kgcnn_v2.1.0.md) | **0.0342** | 0.0005 | 0.0599 | 0.8929 | 
