@@ -1,8 +1,8 @@
 {
-  "authors": "coGN authors (anonymous)",
+  "authors": "Robin Ruff, Patrick Reiser, Jan Stühmer, Pascal Friederich",
   "algorithm": "coGN",
   "algorithm_long": "Connectivity optimized Graph Network",
-  "bibtex_refs": "",
-  "notes": "",
-  "requirements": {"python":  ["git+https://github.com/matbench-submission-coGN/CrystalGNNs"]}
+  "bibtex_refs": "@misc{ruff2023connectivity, title={Connectivity Optimized Nested Graph Networks for Crystal Structures}, author={Robin Ruff and Patrick Reiser and Jan Stühmer and Pascal Friederich}, year={2023}, eprint={2302.14102}, archivePrefix={arXiv}, primaryClass={cs.LG}}",
+  "notes": "We found that there is a strong interdependency between crystal preprocessing for GNNs and GNN architectures. Our model 'coGN' was optimized with respect to both aspects.",
+  "requirements": {"python":  ["git+https://github.com/robinruff/graphlist@dcbf79e", "kgcnn==3.0.0"]}
 }
