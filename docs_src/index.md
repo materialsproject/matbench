@@ -8,8 +8,8 @@
 
 |             | [<span style='color: #1e90ff'>Materials Properties</span>](/#leaderboard-property-general-purpose-algorithms-on-matbench_v01) | [<span style='color: #1e90ff'>Materials Discovery</span>](/#leaderboard-discovery-general-purpose-algorithms-on-matbench_discovery-010) |
 |-------------|---------------------|---------------------|
-| Task Submissions |        `157`          |        `9`          |
-| Algorithms      |          `23`         |          `9`         |
+| Task Submissions |        `158`          |        `9`          |
+| Algorithms      |          `24`         |          `9`         |
 | Benchmark Task Suite |         `1`        |         `1`        |
 
 ## Leaderboard-Property: General Purpose Algorithms on `matbench_v0.1`

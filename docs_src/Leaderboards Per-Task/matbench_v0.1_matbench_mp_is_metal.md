@@ -17,6 +17,7 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 | [MegNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_MegNet_kgcnn_v2.1.0.md) | **0.9021** | 0.0018 | 0.8895 | 0.9021 | 
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **0.8992** | 0.0019 | 0.8866 | 0.8992 | 
 | [SchNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_SchNet_kgcnn_v2.1.0.md) | **0.8907** | 0.0018 | 0.8765 | 0.8907 | 
+| [Matformer](../Full%20Benchmark%20Data/matbench_v0.1_matformer.md) | **0.8117** | 0.0455 | 0.7660 | 0.8117 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **0.7805** | 0.1406 | 0.6621 | 0.7805 | 
 | [Dummy](../Full%20Benchmark%20Data/matbench_v0.1_dummy.md) | **0.5012** | 0.0043 | 0.4353 | 0.5012 | 
 
