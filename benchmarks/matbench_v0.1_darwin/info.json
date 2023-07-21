@@ -1,7 +1,7 @@
 {
   "authors": "Tong Xie, Yuwei Wan, Wei Huang, Zhenyu Yin, Yixuan Liu, Shaozhou Wang, Qingyuan Linghu, Imran Razzak, Bram Hoex, Chunyu Kit, Wenjie Zhang",
   "algorithm": "Darwin",
-  "algorithm_long": "Fine tuning DARWIN Natural Science Large Language Model",
+  "algorithm_long": "Fine-tuning DARWIN Natural Science Large Language Model",
   "bibtex_refs": "@misc{xie2023large,\n title={Large Language Models as Master Key: Unlocking the Secrets of Materials Science with GPT},\n author={Tong Xie and Yuwei Wan and Wei Huang and Yufei Zhou and Yixuan Liu and Qingyuan Linghu and Shaozhou Wang and Chunyu Kit and Clara Grazian and Wenjie Zhang and Bram Hoex},\n year={2023},\n eprint={2304.02213},\n archivePrefix={arXiv},\n primaryClass={cs.CL}",
   "notes": "We provide prompts and call-and-return of our model. The code for evaluating the benchmarks is available at https://github.com/MasterAI-EAM/Darwin-SIT, our base model is available at https://aigreendynamics-my.sharepoint.com/:f:/g/personal/yuwei_greendynamics_com_au/EvZEghuFSZZCguWrCsbk2QMB_eYqv-BRMM4VLhcK8TT4Zw?e=9bnqWW. To train our model, it requires at least 4*A100(80G)",
   "requirements": {
