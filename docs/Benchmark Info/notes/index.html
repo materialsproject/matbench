@@ -11,7 +11,7 @@
       
       
       <link rel="icon" href="../../static/matbench_logo_favicon.png">
-      <meta name="generator" content="mkdocs-1.4.0, mkdocs-material-8.4.0">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.4.0">
     
     
       
@@ -174,7 +174,7 @@
 
   <li class="md-tabs__item">
     <a href="../.." class="md-tabs__link">
-      Leaderboard
+      Home
     </a>
   </li>
 
@@ -206,7 +206,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_Ax_10_90_CrabNet_v1.2.7/" class="md-tabs__link">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_Auto-sklearn/" class="md-tabs__link">
         Full Benchmark Data
       </a>
     </li>
@@ -319,7 +319,7 @@
   
     <li class="md-nav__item">
       <a href="../.." class="md-nav__link">
-        Leaderboard
+        Home
       </a>
     </li>
   
@@ -498,6 +498,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_Auto-sklearn/" class="md-nav__link">
+        matbench_v0.1: AutoML-Mat
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../Full%20Benchmark%20Data/matbench_v0.1_Ax_10_90_CrabNet_v1.2.7/" class="md-nav__link">
         matbench_v0.1: Ax(10/90)+CrabNet v1.2.7
       </a>
@@ -568,6 +582,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_DimeNetPP_kgcnn_v2.1.0/" class="md-nav__link">
+        matbench_v0.1: DimeNet++ (kgcnn v2.1.0)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_composition/" class="md-nav__link">
         matbench_v0.1: Finder_v1.2 composition-only version
       </a>
@@ -584,6 +612,20 @@
     <li class="md-nav__item">
       <a href="../../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_structure/" class="md-nav__link">
         matbench_v0.1: Finder_v1.2 structure-based version
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_GN-OA/" class="md-nav__link">
+        matbench_v0.1: GN-OA v1
       </a>
     </li>
   
@@ -680,6 +722,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_coGN/" class="md-nav__link">
+        matbench_v0.1: coGN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_coNGN/" class="md-nav__link">
+        matbench_v0.1: coNGN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../Full%20Benchmark%20Data/matbench_v0.1_dummy/" class="md-nav__link">
         matbench_v0.1: Dummy
       </a>
@@ -694,8 +764,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_gptchem/" class="md-nav__link">
+        matbench_v0.1: gptchem
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../Full%20Benchmark%20Data/matbench_v0.1_lattice_xgboost/" class="md-nav__link">
         matbench_v0.1: Lattice-XGBoost
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_matformer/" class="md-nav__link">
+        matbench_v0.1: Matformer
       </a>
     </li>
   
@@ -1218,7 +1316,7 @@ However, general purpose algorithms can automatically determine hyperparameters 
 <li>All 10 regression tasks are recorded, OR...</li>
 <li>All 9 structure tasks are recorded. If only the 9 structure tasks are recorded, the algorithm is marked with "requires structure".</li>
 </ul>
-<p>General purpose algorithms' results will appear on both the <a href="../..">General Purpose Leaderboard</a> as well as the Task-specific leaderboards.</p>
+<p>General purpose algorithms' results will appear on both the <a href="../../">General Purpose Leaderboard</a> as well as the Task-specific leaderboards.</p>
 <h3 id="task-specific-algorithms">Task specific algorithms</h3>
 <p>Task-specific algorithms can fit on any subset of tasks; for example, a single task. Task-specific algorithms may be valid or specialized only for a subset of the tasks in the benchmark.  </p>
 <p>For example, if you have a model which was specifically created for predicting bulk metallic glasses, you may submit a benchmark containing only results for the <code>matbench_glass</code> dataset. </p>
@@ -1274,13 +1372,13 @@ a MAPE of 11% corresponds to <code>mape*=0.11</code>, and a MAPE of 11,000% corr
       
       
         
-        <a href="../../Full%20Benchmark%20Data/matbench_v0.1_Ax_10_90_CrabNet_v1.2.7/" class="md-footer__link md-footer__link--next" aria-label="Next: matbench_v0.1: Ax(10/90)+CrabNet v1.2.7" rel="next">
+        <a href="../../Full%20Benchmark%20Data/matbench_v0.1_Auto-sklearn/" class="md-footer__link md-footer__link--next" aria-label="Next: matbench_v0.1: AutoML-Mat" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              matbench_v0.1: Ax(10/90)+CrabNet v1.2.7
+              matbench_v0.1: AutoML-Mat
             </div>
           </div>
           <div class="md-footer__button md-icon">

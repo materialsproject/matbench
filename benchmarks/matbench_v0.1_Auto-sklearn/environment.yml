@@ -1,0 +1,14 @@
+name: auto_ml
+channels:
+    - conda-forge
+dependencies:
+    - python==3.9
+    - gxx_linux-64==12.2.0
+    - gcc_linux-64==12.2.0
+    - swig==4.1.0
+    - auto-sklearn==0.15.0
+    - numpy==1.23.4
+    - pandas==1.5.1
+    - monty==2022.4.26
+    - matminer==0.8.0
+    - jupyter==1.0.0

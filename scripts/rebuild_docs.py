@@ -12,7 +12,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 import plotly.io as pio
 import tqdm
-from matminer.datasets import get_available_datasets, load_dataset
+from matminer.datasets import load_dataset
 from monty.serialization import loadfn
 from pymatviz import ptable_heatmap_plotly, spacegroup_sunburst
 from pymatviz.utils import get_crystal_sys
@@ -45,6 +45,7 @@ MP_WEBSITE_STATICS = os.path.join(STATIC_DOCS_DIR, "mp_srcs")
 SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_FILENAME)
 SCALED_ERRORS_JSON_PATH = SCALED_ERRORS_PATH.replace(".html", ".json")
 SCALED_ERRORS_NON_GP_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_NON_GP_FILENAME)
+SCALED_ERRORS_NON_GP_JSON_PATH = SCALED_ERRORS_NON_GP_PATH.replace(".html", ".json")
 
 pio.templates.default = "plotly_white"
 
@@ -185,13 +186,20 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERR
             fig.update_yaxes(linecolor="grey", gridcolor="grey")
             fig.write_html(output_fname.format(bmark_name=bmark_name))
 
-            if output_fname == SCALED_ERRORS_PATH:
+            if output_fname in (SCALED_ERRORS_PATH, SCALED_ERRORS_NON_GP_PATH):
                 # Update layout for showing on white background on mp website
+                output_path = {
+                    SCALED_ERRORS_PATH: SCALED_ERRORS_JSON_PATH,
+                    SCALED_ERRORS_NON_GP_PATH: SCALED_ERRORS_NON_GP_JSON_PATH
+                }[output_fname].format(bmark_name=bmark_name)
                 fig.update_layout(
                     title_text="",
                     font={"color": "black"}
                 )
-                fig.write_json(SCALED_ERRORS_JSON_PATH.format(bmark_name=bmark_name))
+                print(f"Writing scaled errors graph to {output_path}")
+                fig.write_json(output_path)
+            else:
+                print(f"Output filename {output_fname} not required to write to disk.")
 
 
 # NOTE: MUST BE CALLED AFTER CREATING generate_scaled_errors_graph
@@ -233,7 +241,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
         }
 
         df_src = pd.DataFrame(table_data).sort_values(by="n_samples")
-        table_header = f"## Leaderboard: General Purpose Algorithms on `{bmark}`\n\n"
+        table_header = f"## Leaderboard-Property: General Purpose Algorithms on `{bmark}`\n\n"
         table_explanation = f"Find more information about this benchmark on [the benchmark info page]({METADATA_DIR_PREFIX}{bmark}.md)\n\n"
         table = "| Task name | Samples | Algorithm | Verified MAE (unit) or ROCAUC | Notes |\n" \
                 "|------------------|---------|-----------|----------------------|-------|\n"
@@ -263,18 +271,51 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
         scaled_errors_non_gp_plt_txt = f'\n<iframe src="static/{SCALED_ERRORS_NON_GP_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>\n\n'
         gp_leaderboard_txt += table_header + table_explanation + table + scaled_errors_plot_txt + scaled_errors_non_gp_plt_txt
 
+    # Load Janosh's leaderboard from json
+
+    table_header_discovery = f"## Leaderboard-Discovery: General Purpose Algorithms on `matbench_discovery 0.1.0`\n\n"
+    table_explanation_discovery = f"[Matbench Discovery](https://matbench-discovery.materialsproject.org/) is an interactive leaderboard and associated PyPI package which together make it easy to benchmark ML energy models on a task designed to closely simulate a high-throughput discovery campaign for new stable inorganic crystals. Matbench-discovery compares ML structure-relaxation methods on the [WBM dataset](https://www.nature.com/articles/s41524-020-00481-6) for ranking ~250k generated structures according to predicted hull stability (42k stable). [Matbench Discovery](https://matbench-discovery.materialsproject.org/) is developed by Janosh Riebesell.\n\n"
+
+    with open(os.path.join(SNIPPETS_DIR, "metrics-table.svelte"), encoding="utf-8") as f:
+        mdb_table = f.read()
+        mdb_table = mdb_table.replace("sans-serif", "Helvetica")
+
+    with open(os.path.join(SNIPPETS_DIR, "cumulative-clf-metrics.svelte"), encoding="utf-8") as f:
+        mdb_figs = f.read()
+
     # Load the static index from the snippets dir
+    with open(os.path.join(SNIPPETS_DIR, "index_0.md"), encoding="utf-8") as f:
+        static_txt_0 = f.read()
+
     with open(os.path.join(SNIPPETS_DIR, "index.md"), encoding="utf-8") as f:
         static_txt = f.read()
 
     n_algos = total_info_counts["algos"]
     n_tasks = total_info_counts["tasks"]
     n_benchmarks = total_info_counts["benchmarks"]
+
+    num_tr_blocks = mdb_table.count("<tr>")
+    n_algos_discovery = num_tr_blocks - 1
+    n_tasks_discovery = num_tr_blocks - 1
+    n_benchmarks_discovery = 1
+
     page_header = f"# Leaderboard \n\n" \
                   f"**Matbench is an automated leaderboard** for benchmarking state of the art ML algorithms predicting a **diverse range of solid materials' properties**. " \
                   f"It is hosted and maintained by [the Materials Project](https://materialsproject.org). \n\n ![crystal](static/crystals.png)\n\n" \
-                  f"- `{n_tasks}` **total task submissions**\n- `{n_algos}` **algorithms** \n- `{n_benchmarks}` **benchmark test suites**\n\n Scroll down to learn more.\n\n"
-    final_txt = page_header + gp_leaderboard_txt + static_txt
+                  
+
+    # Define the table content as a nested list
+    table_header = "|             | [<span style='color: #1e90ff'>Materials Properties</span>](/#leaderboard-property-general-purpose-algorithms-on-matbench_v01) | [<span style='color: #1e90ff'>Materials Discovery</span>](/#leaderboard-discovery-general-purpose-algorithms-on-matbench_discovery-010) |\n" \
+               "|-------------|---------------------|---------------------|\n"
+
+    table_rows = f"| Task Submissions |        `{n_tasks}`          |        `{n_tasks_discovery}`          |\n" \
+                f"| Algorithms      |          `{n_algos}`         |          `{n_algos_discovery}`         |\n" \
+                f"| Benchmark Task Suite |         `{n_benchmarks}`        |         `{n_benchmarks_discovery}`        |\n\n"
+            
+    
+    load_plotly = f"<script src='https://cdn.plot.ly/plotly-latest.min.js'></script> \n\n"
+    final_txt = load_plotly + page_header + table_header + table_rows + gp_leaderboard_txt + static_txt_0 + table_header_discovery + table_explanation_discovery + mdb_table + mdb_figs + static_txt
+
 
     with open(os.path.join(DOCS_DIR, "index.md"), "w", encoding="utf-8") as f:
         print("Writing leaderboard and plot to index.md...")
@@ -417,6 +458,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
 
             fig_path = f"task_{bmark_name}_{task}.html"
             fig.write_html(os.path.join(STATIC_DOCS_DIR, fig_path))
+            fig.write_json(os.path.join(STATIC_DOCS_DIR, fig_path.replace(".html", ".json")))
 
             fig_reference = f'\n<iframe src="../../static/{fig_path}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
 
@@ -511,8 +553,8 @@ def organize_task_data(all_data):
                     raise ValueError
 
 
-                # Include both GP, structure-required, and strcuture/comp regression algos on
-                # GP leaderboard, as there are 9 structure problems or 10 regresison problems
+                # Include both GP, structure-required, and structure/comp regression algos on
+                # GP leaderboard, as there are 9 structure problems or 10 regression problems
                 # across multiple dataset sizes (composition only or clf only are not included)
                 if mb.is_complete or mb.is_structure_complete or mb.is_regression_complete:
                     current_best_score = gp_leaderboard[task_name]["score"]

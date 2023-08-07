@@ -1,0 +1,19 @@
+{
+  "authors": "Keqiang Yan and Yi Liu and Yuchao Lin and Shuiwang Ji",
+  "algorithm": "Matformer",
+  "algorithm_long": "Periodic Graph Transformers for Crystal Material Property Prediction. In this work, we propose a transformer architecture, known as Matformer, for periodic graph representation learning. Our Matformer is designed to be invariant to periodicity and can capture repeating patterns explicitly. In particular, Matformer encodes periodic patterns by efficient use of geometric distances between the same atoms in neighboring cells.",
+  "bibtex_refs": [
+    "@inproceedings{yan2022periodic,\n  title={Periodic Graph Transformers for Crystal Material Property Prediction},\n  author={Keqiang Yan and Yi Liu and Yuchao Lin and Shuiwang Ji},\n  booktitle={The 36th Annual Conference on Neural Information Processing Systems},\n  year={2022}\n}",
+    "@misc{yan2022periodicArXiv,\n      title={Periodic Graph Transformers for Crystal Material Property Prediction}, \n      author={Keqiang Yan and Yi Liu and Yuchao Lin and Shuiwang Ji},\n      year={2022},\n      eprint={2209.11807},\n      archivePrefix={arXiv},\n      primaryClass={cs.LG}\n}"
+  ],
+  "notes": "This version has not been submitted by the original authors and has a modified training script, since the original version is not capable to train on the official matbench. All adjusted files are attached. The model and the parameters are from the original github repository (https://github.com/YKQ98/Matformer), which itself builds on the code basis of ALIGNN.",
+  "requirements": {
+    "python": [
+      "torch",
+      "torchvision",
+      "torchaudio",
+      "torch_geometric",
+      "git+https://github.com/YKQ98/Matformer"
+    ]
+  }
+}

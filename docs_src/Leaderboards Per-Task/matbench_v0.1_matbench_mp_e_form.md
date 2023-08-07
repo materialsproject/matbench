@@ -8,8 +8,12 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 
 | algorithm | mean mae | std mae | mean rmse | max max_error |
 |------|------|------|------|------|
+| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **0.0170** | 0.0003 | 0.0483 | 3.8249 | 
+| [coNGN](../Full%20Benchmark%20Data/matbench_v0.1_coNGN.md) | **0.0178** | 0.0004 | 0.0502 | 3.2378 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **0.0215** | 0.0005 | 0.0544 | 3.5487 | 
 | [SchNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_SchNet_kgcnn_v2.1.0.md) | **0.0218** | 0.0004 | 0.0529 | 2.9990 | 
+| [DimeNet++ (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_DimeNetPP_kgcnn_v2.1.0.md) | **0.0235** | 0.0004 | 0.0695 | 3.6006 | 
+| [GN-OA v1](../Full%20Benchmark%20Data/matbench_v0.1_GN-OA.md) | **0.0248** | 0.0002 | 0.0636 | 2.4150 | 
 | [MegNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_MegNet_kgcnn_v2.1.0.md) | **0.0252** | 0.0003 | 0.0701 | 3.6006 | 
 | [CGCNN v2019](../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **0.0337** | 0.0006 | 0.0682 | 7.7205 | 
 | [Finder_v1.2 structure-based version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_structure.md) | **0.0343** | 0.0012 | 0.1331 | 45.1834 | 

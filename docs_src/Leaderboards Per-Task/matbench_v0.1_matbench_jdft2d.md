@@ -10,12 +10,15 @@ _Leaderboard for an individual task. Algorithms shown here may include both gene
 |------|------|------|------|------|
 | [MODNet (v0.1.12)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **33.1918** | 7.3428 | 96.7332 | 1564.8245 | 
 | [MODNet (v0.1.10)](../Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.10.md) | **34.5368** | 9.4959 | 92.2288 | 1534.9797 | 
+| [coNGN](../Full%20Benchmark%20Data/matbench_v0.1_coNGN.md) | **36.1698** | 11.5972 | 95.4766 | 1496.9020 | 
+| [coGN](../Full%20Benchmark%20Data/matbench_v0.1_coGN.md) | **37.1652** | 13.6825 | 101.1580 | 1515.5614 | 
 | [AMMExpress v2020](../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020.md) | **39.8497** | 9.8835 | 106.5460 | 1552.9102 | 
 | [SchNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_SchNet_kgcnn_v2.1.0.md) | **42.6637** | 13.7201 | 111.0187 | 1524.9143 | 
 | [ALIGNN](../Full%20Benchmark%20Data/matbench_v0.1_alignn.md) | **43.4244** | 8.9491 | 117.4213 | 1519.7424 | 
 | [CrabNet](../Full%20Benchmark%20Data/matbench_v0.1_CrabNet.md) | **45.6104** | 12.2491 | 120.0088 | 1532.0118 | 
 | [Finder_v1.2 structure-based version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_structure.md) | **46.1339** | 11.4644 | 120.0917 | 1581.4571 | 
 | [Finder_v1.2 composition-only version](../Full%20Benchmark%20Data/matbench_v0.1_Finder_v1.2_composition.md) | **47.9614** | 11.6680 | 120.8819 | 1582.3598 | 
+| [DimeNet++ (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_DimeNetPP_kgcnn_v2.1.0.md) | **49.0243** | 11.9027 | 114.9349 | 1515.0046 | 
 | [CGCNN v2019](../Full%20Benchmark%20Data/matbench_v0.1_cgcnnv2019.md) | **49.2440** | 11.5865 | 112.7689 | 1516.9120 | 
 | [RF-SCM/Magpie](../Full%20Benchmark%20Data/matbench_v0.1_rf.md) | **50.0440** | 8.6271 | 112.2660 | 1538.6073 | 
 | [MegNet (kgcnn v2.1.0)](../Full%20Benchmark%20Data/matbench_v0.1_MegNet_kgcnn_v2.1.0.md) | **54.1719** | 11.4299 | 129.3267 | 1561.5756 | 

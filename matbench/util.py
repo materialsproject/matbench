@@ -8,9 +8,11 @@ import json
 import logging
 import os
 import sys
+import gzip
 
 import numpy as np
 import pandas as pd
+from monty.serialization import dumpfn
 
 logger = logging.getLogger(__name__)
 
@@ -61,9 +63,8 @@ class MSONable2File:
     """
 
     def to_file(self, filename):
-        with open(filename, "w") as f:
-            d = self.as_dict()
-            json.dump(d, f)
+        d = self.as_dict()
+        dumpfn(d, filename)
 
         logger.info(
             f"Successfully wrote {self.__class__.__name__} " f"to file '{filename}'."
@@ -71,8 +72,13 @@ class MSONable2File:
 
     @classmethod
     def from_file(cls, filename):
-        with open(filename) as f:
-            d = json.load(f)
+        if filename.endswith(".gz"):
+            with gzip.open(filename, "rb") as f:
+                d = json.loads(f.read().decode("utf-8"))
+        else:
+            with open(filename) as f:
+                d = json.load(f)
+ 
         return cls.from_dict(d)
 
 
