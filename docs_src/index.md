@@ -46,14 +46,14 @@ $$
 
 [Matbench Discovery](https://matbench-discovery.materialsproject.org) is an interactive leaderboard and associated PyPI package which together make it easy to benchmark ML energy models on a task designed to closely simulate a high-throughput discovery campaign for new stable inorganic crystals. Matbench-discovery compares ML structure-relaxation methods on the [WBM dataset](https://www.nature.com/articles/s41524-020-00481-6) for ranking ~250k generated structures according to predicted hull stability (42k stable).
 
-<iframe id="github-iframe" src="" style="width:800px;height:350px;"></iframe>
+<iframe id="github-iframe" style="width:830px; height:350px; background:rgba(255,255,255,0.2); border-radius: 3px;" frameBorder="none"></iframe>
 <script>
-    fetch('https://api.github.com/repos/janosh/matbench-discovery/contents/site/src/figs/metrics-table.svelte')
-        .then((response) => response.json())
-        .then((data) => {
-            iframe = document.getElementById('github-iframe');
-            iframe.src = 'data:text/html;base64,' + encodeURIComponent(data['content']);
-        });
+  fetch("https://api.github.com/repos/janosh/matbench-discovery/contents/site/src/figs/metrics-table.svelte")
+  .then((response) => response.json())
+  .then((data) => {
+      iframe = document.getElementById("github-iframe");
+      iframe.src = `data:text/html;base64,${encodeURIComponent(data["content"])}`;
+  });
 </script>
 
 ## Overview
