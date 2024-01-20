@@ -5,8 +5,6 @@ Metadata for matbench.
 from matminer.datasets.utils import _load_dataset_dict
 from monty.serialization import loadfn
 
-import pprint
-
 from matbench.constants import (
     MBV01_DATASET_METADATA_PATH,
     MBV01_VALIDATION_DATA_PATH,
