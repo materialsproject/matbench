@@ -37,17 +37,13 @@ FULL_DATA_DIR_PREFIX = "Full%20Benchmark%20Data/"
 METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
 METADATA_DIR_PREFIX = "Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
-SCALED_ERRORS_FILENAME = "scaled_errors_{bmark_name}.html"
-SCALED_ERRORS_NON_GP_FILENAME = "scaled_errors_non_gp_{bmark_name}.html"
 
 
-MP_WEBSITE_STATICS = os.path.join(STATIC_DOCS_DIR, "mp_srcs")
-SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_FILENAME)
-SCALED_ERRORS_JSON_PATH = SCALED_ERRORS_PATH.replace(".html", ".json")
-SCALED_ERRORS_NON_GP_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_NON_GP_FILENAME)
-SCALED_ERRORS_NON_GP_JSON_PATH = SCALED_ERRORS_NON_GP_PATH.replace(".html", ".json")
+# mp website statics locations
+SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, "scaled_errors_non_gp_{bmark_name}.json")
+SCALED_ERRORS_NON_GP_PATH = os.path.join(STATIC_DOCS_DIR, "scaled_errors_non_gp_{bmark_name}.json")
 
-pio.templates.default = "plotly_dark"
+pio.templates.default = "plotly_white"
 
 
 def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERRORS_PATH, title_txt="General purpose", title_subtext=""):
@@ -190,16 +186,14 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERR
 
             if output_fname in (SCALED_ERRORS_PATH, SCALED_ERRORS_NON_GP_PATH):
                 # Update layout and write files for showing on white background on mp website
-                output_path = {
-                    SCALED_ERRORS_PATH: SCALED_ERRORS_JSON_PATH,
-                    SCALED_ERRORS_NON_GP_PATH: SCALED_ERRORS_NON_GP_JSON_PATH
-                }[output_fname].format(bmark_name=bmark_name)
+                output_path = output_fname.format(bmark_name=bmark_name)
                 fig.update_layout(
                     title_text="",
                     font={"color": "black"}
                 )
                 print(f"Writing scaled errors graph to {output_path}")
                 fig.write_json(output_path)
+                fig.write_html(output_path.replace(".json", ".html"))
             else:
                 print(f"Output filename {output_fname} not required to write to disk.")
 
@@ -976,7 +970,17 @@ if __name__ == "__main__":
     generate_metadata_pages(task_leaderboards_data_by_bmark)
 
     # must be called before generating the gp leaderboard
-    gp_div = generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERRORS_PATH, title_txt="General Purpose Algorithms'", title_subtext="<br><sup>(only broadly applicable algorithms)</sup>")
-    non_gp_div = generate_scaled_errors_graph(non_gp_graph_data_by_bmark, output_fname=SCALED_ERRORS_NON_GP_PATH, title_txt="All Algorithms'", title_subtext="<br><sup>(includes task-specific algorithms)</sup>")
+    gp_div = generate_scaled_errors_graph(
+        gp_graph_data_by_bmark,
+        output_fname=SCALED_ERRORS_PATH,
+        title_txt="General Purpose Algorithms'",
+        title_subtext="<br><sup>(only broadly applicable algorithms)</sup>"
+    )
+    non_gp_div = generate_scaled_errors_graph(
+        non_gp_graph_data_by_bmark,
+        output_fname=SCALED_ERRORS_NON_GP_PATH,
+        title_txt="All Algorithms'",
+        title_subtext="<br><sup>(includes task-specific algorithms)</sup>"
+    )
 
     generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, total_info_counts, leaderboard_divs=[gp_div, non_gp_div])
