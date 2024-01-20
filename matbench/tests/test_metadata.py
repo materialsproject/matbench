@@ -8,6 +8,8 @@ class TestMetadata(unittest.TestCase):
     def test_mbv01_metadata(self):
 
         # for matbench v0.1
+        # note this will not work in pytest as a rogue key gets added to
+        # the dictionaries
         for ds, metadata in mbv01_metadata.items():
             for key in ["task_type", "n_samples", "input_type", "target"]:
                 self.assertIn(key, metadata.keys())
