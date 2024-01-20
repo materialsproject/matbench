@@ -40,7 +40,7 @@ SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
 
 
 # mp website statics locations
-SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, "scaled_errors_non_gp_{bmark_name}.json")
+SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, "scaled_errors_{bmark_name}.json")
 SCALED_ERRORS_NON_GP_PATH = os.path.join(STATIC_DOCS_DIR, "scaled_errors_non_gp_{bmark_name}.json")
 
 pio.templates.default = "plotly_white"
