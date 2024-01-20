@@ -1,0 +1,372 @@
+Job:
+    run_mode: "Training"  
+    #{Training, Predict, Repeat, CV, Hyperparameter, Ensemble, Analysis}
+    Training:
+        job_name: "my_train_job"
+        reprocess: "False"    
+        model: CGCNN_demo   
+        load_model: "False"
+        save_model: "True"
+        model_path: "my_model.pth"
+        write_output: "True"
+        parallel: "True"
+        #seed=0 means random initalization
+        seed: 0        
+    Predict:
+        job_name: "my_predict_job"
+        reprocess: "False"    
+        model_path: "my_model.pth"
+        write_output: "True"
+        seed: 0     
+    Repeat:
+        job_name: "my_repeat_job"
+        reprocess: "False"    
+        model: CGCNN_demo   
+        model_path: "my_model.pth"
+        write_output: "False"
+        parallel: "True"
+        seed: 0      
+        ###specific options
+        #number of repeat trials
+        repeat_trials: 5
+    CV:
+        job_name: "my_CV_job"
+        reprocess: "False"    
+        model: CGCNN_demo   
+        write_output: "True"
+        parallel: "True"
+        seed: 18012019     
+        ###specific options
+        #number of folds for n-fold CV
+        cv_folds: 5    
+    Hyperparameter:
+        job_name: "my_hyperparameter_job"
+        reprocess: "False"    
+        model: CGCNN_demo   
+        seed: 0  
+        ###specific options   
+        hyper_trials: 10
+        #number of concurrent trials (can be greater than number of GPUs)
+        hyper_concurrency: 8
+        #frequency of checkpointing and update (default: 1)
+        hyper_iter: 1
+        #resume a previous hyperparameter optimization run
+        hyper_resume: "True"
+        #Verbosity of ray tune output; available: (1, 2, 3)
+        hyper_verbosity: 1
+        #Delete processed datasets
+        hyper_delete_processed: "True"
+    Ensemble:
+        job_name: "my_ensemble_job"
+        reprocess: "False"     
+        save_model: "False"
+        model_path: "my_model.pth"
+        write_output: "Partial"
+        parallel: "True"
+        seed: 0   
+        ###specific options  
+        #List of models to use: (Example: "CGCNN_demo,MPNN_demo,SchNet_demo,MEGNet_demo" or "CGCNN_demo,CGCNN_demo,CGCNN_demo,CGCNN_demo")
+        ensemble_list: "CGCNN_demo,CGCNN_demo,CGCNN_demo,CGCNN_demo,CGCNN_demo"
+    Analysis:
+        job_name: "my_job" 
+        reprocess: "False"   
+        model: CGCNN_demo   
+        model_path: "my_model.pth"
+        write_output: "True"
+        seed: 0     
+    
+Processing:
+    #Whether to use "inmemory" or "large" format for pytorch-geometric dataset. Reccomend inmemory unless the dataset is too large
+    dataset_type: "inmemory"  
+    #Path to data files
+    data_path: "/data" 
+    #Path to target file within data_path
+    target_path: "targets.csv"
+    #Method of obtaining atom idctionary: available:(provided, default, blank, generated)
+    dictionary_source: "default"   
+    #Path to atom dictionary file within data_path
+    dictionary_path: "atom_dict.json"     
+    #Format of data files (limit to those supported by ASE)
+    data_format: "json"
+    #Print out processing info 
+    verbose: "True"
+    #graph specific settings 
+    graph_max_radius : 8.0
+    graph_max_neighbors : 12
+    voronoi: "False"
+    edge_features: "True"
+    graph_edge_length : 50 
+    #SM specific settings
+    SM_descriptor: "False"
+    #SOAP specific settings
+    SOAP_descriptor: "False"
+    SOAP_rcut : 8.0
+    SOAP_nmax : 6
+    SOAP_lmax : 4
+    SOAP_sigma : 0.3
+
+Training:     
+    #Index of target column in targets.csv
+    target_index: 0
+    #Loss functions (from pytorch) examples: l1_loss, mse_loss, binary_cross_entropy
+    loss: "l1_loss"       
+    #Ratios for train/val/test split out of a total of 1  
+    train_ratio: 0.8
+    val_ratio: 0.05
+    test_ratio: 0.15
+    #Training print out frequency (print per n number of epochs)
+    verbosity: 5
+    
+Models:        
+    CGCNN_demo:
+        model: CGCNN
+        dim1: 100
+        dim2: 150
+        pre_fc_count: 1
+        gc_count: 4
+        post_fc_count: 3
+        pool: "global_mean_pool"
+        pool_order: "early"
+        batch_norm: "True"
+        batch_track_stats: "True"
+        act: "relu"
+        dropout_rate: 0.0
+        epochs: 250
+        lr: 0.002
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}  
+    SUPER_CGCNN_demo:
+        model: SUPER_CGCNN
+        dim1: 100
+        dim2: 150
+        pre_fc_count: 1
+        gc_count: 10
+        post_fc_count: 3
+        pool: "global_mean_pool"
+        pool_order: "early"
+        batch_norm: "True"
+        batch_track_stats: "True"
+        act: "relu"
+        dropout_rate: 0.0
+        epochs: 250
+        lr: 0.002
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}    
+    GATGNN_demo:
+        model: GATGNN
+        dim1: 64
+        dim2: 150
+        pre_fc_count: 1
+        gc_count: 5
+        post_fc_count: 0
+        pool: "global_add_pool"
+        pool_order: "early"
+        batch_norm: "True"
+        batch_track_stats: "True"
+        act: "softplus"
+        dropout_rate: 0.0
+        epochs: 250
+        lr: 0.005
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}   
+    DEEP_GATGNN_demo:
+        model: DEEP_GATGNN
+        dim1: 64
+        dim2: 150
+        pre_fc_count: 1
+        gc_count: 20
+        post_fc_count: 0
+        pool: "global_add_pool"
+        pool_order: "early"
+        batch_norm: "True"
+        batch_track_stats: "True"
+        act: "softplus"
+        dropout_rate: 0.0
+        epochs: 500
+        lr: 0.005
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}
+    MPNN_demo:
+        model: MPNN
+        dim1: 100
+        dim2: 100
+        dim3: 100
+        pre_fc_count: 1
+        gc_count: 4
+        post_fc_count: 3
+        pool: "global_mean_pool"
+        pool_order: "early"
+        batch_norm: "True"
+        batch_track_stats: "True"
+        act: "relu"
+        dropout_rate: 0.0
+        epochs: 250
+        lr: 0.001
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}
+    SUPER_MPNN_demo:
+        model: SUPER_MPNN
+        dim1: 100
+        dim2: 100
+        dim3: 100
+        pre_fc_count: 1
+        gc_count: 10
+        post_fc_count: 3
+        pool: "global_mean_pool"
+        pool_order: "early"
+        batch_norm: "True"
+        batch_track_stats: "True"
+        act: "relu"
+        dropout_rate: 0.0
+        epochs: 250
+        lr: 0.001
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}               
+    SchNet_demo:
+        model: SchNet
+        dim1: 100
+        dim2: 100
+        dim3: 150
+        cutoff: 8
+        pre_fc_count: 1
+        gc_count: 4
+        post_fc_count: 3
+        pool: "global_max_pool"
+        pool_order: "early"
+        batch_norm: "True"
+        batch_track_stats: "True"
+        act: "relu"
+        dropout_rate: 0.0
+        epochs: 250
+        lr: 0.0005
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}
+    SUPER_SchNet_demo:
+        model: SUPER_SchNet
+        dim1: 100
+        dim2: 100
+        dim3: 150
+        cutoff: 8
+        pre_fc_count: 1
+        gc_count: 10
+        post_fc_count: 3
+        pool: "global_max_pool"
+        pool_order: "early"
+        batch_norm: "True"
+        batch_track_stats: "True"
+        act: "relu"
+        dropout_rate: 0.0
+        epochs: 250
+        lr: 0.0005
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}        
+    MEGNet_demo:
+        model: MEGNet
+        dim1: 100
+        dim2: 100
+        dim3: 100
+        pre_fc_count: 1
+        gc_count: 4
+        gc_fc_count: 1
+        post_fc_count: 3
+        pool: "global_mean_pool"
+        pool_order: "early"
+        batch_norm: "True"
+        batch_track_stats: "True"
+        act: "relu"
+        dropout_rate: 0.0
+        epochs: 250
+        lr: 0.0005
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}
+    SUPER_MEGNet_demo:
+        model: SUPER_MEGNet
+        dim1: 100
+        dim2: 100
+        dim3: 100
+        pre_fc_count: 1
+        gc_count: 10
+        gc_fc_count: 1
+        post_fc_count: 3
+        pool: "global_mean_pool"
+        pool_order: "early"
+        batch_norm: "True"
+        batch_track_stats: "True"
+        act: "relu"
+        dropout_rate: 0.0
+        epochs: 250
+        lr: 0.0005
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}              
+    GCN_demo:
+        model: GCN
+        dim1: 100
+        dim2: 150
+        pre_fc_count: 1
+        gc_count: 4
+        post_fc_count: 3
+        pool: "global_mean_pool"
+        pool_order: "early"
+        batch_norm: "True"
+        batch_track_stats: "True"
+        act: "relu"
+        dropout_rate: 0.0
+        epochs: 250
+        lr: 0.002
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}     
+    SM_demo:
+        model: SM
+        dim1: 100
+        fc_count: 2
+        epochs: 200
+        lr: 0.002
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}               
+    SOAP_demo:
+        model: SOAP
+        dim1: 100
+        fc_count: 2
+        epochs: 200
+        lr: 0.002
+        batch_size: 100
+        optimizer: "AdamW"
+        optimizer_args: {}
+        scheduler: "ReduceLROnPlateau"
+        scheduler_args: {"mode":"min", "factor":0.8, "patience":10, "min_lr":0.00001, "threshold":0.0002}          
