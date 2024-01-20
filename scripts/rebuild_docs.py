@@ -47,7 +47,7 @@ SCALED_ERRORS_JSON_PATH = SCALED_ERRORS_PATH.replace(".html", ".json")
 SCALED_ERRORS_NON_GP_PATH = os.path.join(STATIC_DOCS_DIR, SCALED_ERRORS_NON_GP_FILENAME)
 SCALED_ERRORS_NON_GP_JSON_PATH = SCALED_ERRORS_NON_GP_PATH.replace(".html", ".json")
 
-pio.templates.default = "plotly_white"
+pio.templates.default = "plotly_dark"
 
 
 def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERRORS_PATH, title_txt="General purpose", title_subtext=""):
@@ -159,8 +159,9 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERR
                               legend_title_font_size=14,
                               legend_title_text="Algorithm",
                               yaxis_title="Scaled MAE (regression) or <br> (1-ROCAUC)/0.5 (classification)",
-                              xaxis_title="", paper_bgcolor='rgba(0,0,0,0)',
-                              plot_bgcolor='rgba(0,0,0,0)',
+                              xaxis_title="",
+                              paper_bgcolor="rgba(0, 0, 0, 0)",
+                              plot_bgcolor="rgba(0, 0, 0, 0)",
                               font={"color": "white"},
                               legend={"yanchor": "top", "y": -0.10, "xanchor": "left", "x": 0.01})
 
@@ -184,10 +185,11 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERR
             fig.update_traces(hoverlabel={"bgcolor": "black"}, selector=dict(type='scatter'))
             fig.update_xaxes(linecolor="grey", gridcolor="grey")
             fig.update_yaxes(linecolor="grey", gridcolor="grey")
-            fig.write_html(output_fname.format(bmark_name=bmark_name))
+            fig_div = pio.to_html(fig, full_html=False, default_height="1200px")
+
 
             if output_fname in (SCALED_ERRORS_PATH, SCALED_ERRORS_NON_GP_PATH):
-                # Update layout for showing on white background on mp website
+                # Update layout and write files for showing on white background on mp website
                 output_path = {
                     SCALED_ERRORS_PATH: SCALED_ERRORS_JSON_PATH,
                     SCALED_ERRORS_NON_GP_PATH: SCALED_ERRORS_NON_GP_JSON_PATH
@@ -201,9 +203,11 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERR
             else:
                 print(f"Output filename {output_fname} not required to write to disk.")
 
+            return fig_div
+
 
 # NOTE: MUST BE CALLED AFTER CREATING generate_scaled_errors_graph
-def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, total_info_counts):
+def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, total_info_counts, leaderboard_divs=None):
     """
     Generate both the general purpose leaderboard and scaled errors graph on the main leaderboard page.
 
@@ -222,6 +226,10 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
     Returns:
 
     """
+    if not leaderboard_divs:
+        print("No leaderboard divs generated! No GP/NonGP leaderboards will be included in the docs...")
+        leaderboard_divs = []
+
     gp_leaderboard_txt = ""
     for bmark, gp_data in gp_leaderboard_data_by_bmark.items():
 
@@ -267,9 +275,12 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
 
             table += f"| {task_name_link} | {samples} | {algorithm} | {score} | {notes} |\n"
         table += "\n\n"
-        scaled_errors_plot_txt = f'\n<iframe src="static/{SCALED_ERRORS_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>\n\n'
-        scaled_errors_non_gp_plt_txt = f'\n<iframe src="static/{SCALED_ERRORS_NON_GP_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>\n\n'
-        gp_leaderboard_txt += table_header + table_explanation + table + scaled_errors_plot_txt + scaled_errors_non_gp_plt_txt
+        # scaled_errors_plot_txt = f'\n<iframe src="static/{SCALED_ERRORS_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0" allowtransparency="true"> </iframe>\n\n'
+        # scaled_errors_non_gp_plt_txt = f'\n<iframe src="static/{SCALED_ERRORS_NON_GP_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>\n\n'
+        gp_leaderboard_txt += table_header + table_explanation + table
+
+        for div_txt in leaderboard_divs:
+            gp_leaderboard_txt += div_txt
 
     # Load Janosh's leaderboard from json
 
@@ -450,24 +461,20 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
                               title_font_size=15,
                               showlegend=False,
                               yaxis_title=metric,
-                              xaxis_title="", paper_bgcolor='rgba(0,0,0,0)',
-                              plot_bgcolor='rgba(0,0,0,0)',
+                              xaxis_title="",
+                              paper_bgcolor="rgba(0,0,0,0)",
+                              plot_bgcolor="rgba(0,0,0,0)",
                               font={"color": "white"})
             fig.update_yaxes(linecolor="grey", gridcolor="grey")
             fig.update_xaxes(linecolor="rgba(0,0,0,0)", gridcolor="rgba(0,0,0,0)")
 
-            fig_path = f"task_{bmark_name}_{task}.html"
-            fig.write_html(os.path.join(STATIC_DOCS_DIR, fig_path))
-            fig.write_json(os.path.join(STATIC_DOCS_DIR, fig_path.replace(".html", ".json")))
-
-            fig_reference = f'\n<iframe src="../../static/{fig_path}" class="is-fullwidth" height="700px" width="1000px" frameBorder="0"> </iframe>\n\n'
-
+            fig_div = pio.to_html(fig, full_html=False, default_height="700px")
             task_leaderboard_page = header + \
                                     subheader + \
                                     explanation + \
                                     table_header + \
                                     table + \
-                                    fig_reference + \
+                                    fig_div + \
                                     info_header + \
                                     info_body + \
                                     metadata_header + \
@@ -969,7 +976,7 @@ if __name__ == "__main__":
     generate_metadata_pages(task_leaderboards_data_by_bmark)
 
     # must be called before generating the gp leaderboard
-    generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERRORS_PATH, title_txt="General Purpose Algorithms'", title_subtext="<br><sup>(only broadly applicable algorithms)</sup>")
-    generate_scaled_errors_graph(non_gp_graph_data_by_bmark, output_fname=SCALED_ERRORS_NON_GP_PATH, title_txt="All Algorithms'", title_subtext="<br><sup>(includes task-specific algorithms)</sup>")
+    gp_div = generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERRORS_PATH, title_txt="General Purpose Algorithms'", title_subtext="<br><sup>(only broadly applicable algorithms)</sup>")
+    non_gp_div = generate_scaled_errors_graph(non_gp_graph_data_by_bmark, output_fname=SCALED_ERRORS_NON_GP_PATH, title_txt="All Algorithms'", title_subtext="<br><sup>(includes task-specific algorithms)</sup>")
 
-    generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, total_info_counts)
+    generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, total_info_counts, leaderboard_divs=[gp_div, non_gp_div])
