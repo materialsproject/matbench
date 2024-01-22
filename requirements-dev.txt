@@ -1,5 +1,5 @@
 pytest
-coverage==6.4.3
+coverage==7.4.0
 wheel==0.37.1
 monty==2022.4.26
 isort==5.10.1
