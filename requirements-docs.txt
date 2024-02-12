@@ -1,4 +1,4 @@
-mkdocs-material==9.5.4
+mkdocs-material==9.5.9
 plotly==5.18.0
 mkdocstrings==0.24.0
 mkdocstrings-python==1.8.0
