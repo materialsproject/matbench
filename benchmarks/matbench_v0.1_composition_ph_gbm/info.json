@@ -1,0 +1,19 @@
+{
+  "authors": "nkwork9999 (GitHub)",
+  "algorithm": "CompPHGBM",
+  "algorithm_long": "Composition plus persistent-homology structure features with scikit-learn HistGradientBoostingRegressor. The composition branch uses the local composition_features_v2 descriptor set. The structure branch computes a 51-dimensional persistent-homology feature track from periodic point clouds: H0 and H1 Vietoris-Rips persistence statistics and histograms with declared element-blind geometry and density companions. The submitted tasks are matbench_log_gvrh and matbench_log_kvrh. For each task and outer fold, hyperparameters were selected using an inner 90/10 split inside the official training fold, then the selected model was refit on the complete official training fold and evaluated once on the official test fold.",
+  "bibtex_refs": "@article{Dunn2020Matbench, title={Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm}, author={Dunn, Alexander and Wang, Qi and Ganose, Alex and Dopp, Daniel and Jain, Anubhav}, journal={npj Computational Materials}, volume={6}, number={1}, pages={138}, year={2020}, doi={10.1038/s41524-020-00406-3}}",
+  "notes": "Local source layout before PR packaging: python/matbench_gvrh/ph_features.py, python/matbench_gvrh/run_matbench_gvrh.py, python/matbench_kvrh/ph_features.py, python/matbench_kvrh/run_matbench_kvrh.py, python/discovery/composition_features_v2.py, outputs/matbench_gvrh/results.json.gz, and outputs/matbench_kvrh/results.json.gz. HomCloud could not build locally because CGAL headers were absent, so the planned ripser/persim fallback was used. The canonical local GVRH artifact had mean MAE 0.0813; the canonical local KVRH artifact had mean MAE 0.0636. The bundle merges those two validated task records into one MatbenchBenchmark-shaped results.json.gz without mutating the source artifacts.",
+  "requirements": {
+    "python": [
+      "python==3.10.17",
+      "matbench==0.6",
+      "numpy==2.2.6",
+      "pandas==2.3.3",
+      "scikit-learn==1.7.2",
+      "pymatgen",
+      "ripser==0.6.15",
+      "persim==0.3.8"
+    ]
+  }
+}

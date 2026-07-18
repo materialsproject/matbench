@@ -1,0 +1,16 @@
+{
+  "authors": "nkwork9999 (GitHub)",
+  "algorithm": "CompGBM",
+  "algorithm_long": "Composition-only baseline using the local composition_features_v2 descriptor set and a scikit-learn HistGradientBoostingClassifier. The descriptor vector contains 156 numeric composition features: element fractions, global composition statistics, and property-statistic features. The submitted task is matbench_glass only. Hyperparameters were selected inside each official training fold using an inner validation split, then the selected model was refit on the complete official training fold and evaluated once on the official test fold. The artifact uses the official Matbench v0.1 validation fold IDs and the Matbench v0.1 classification metric keys.",
+  "bibtex_refs": "@article{Dunn2020Matbench, title={Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm}, author={Dunn, Alexander and Wang, Qi and Ganose, Alex and Dopp, Daniel and Jain, Anubhav}, journal={npj Computational Materials}, volume={6}, number={1}, pages={138}, year={2020}, doi={10.1038/s41524-020-00406-3}}",
+  "notes": "Local source layout before PR packaging: python/matbench_glass/run_matbench_glass.py, python/discovery/composition_features_v2.py, and outputs/matbench_glass/results.json.gz. The local environment could not import matbench==0.6 because its scikit-learn==1.0.1 build failed on this platform, so the artifact was constructed to the MatbenchBenchmark JSON schema and validated against the official fold JSON. Mean official-fold rocauc was 0.8658; under the Matbench v0.1 classification scorer this equals balanced_accuracy because float predictions are thresholded at 0.5 before rocauc is computed.",
+  "requirements": {
+    "python": [
+      "python==3.10.17",
+      "matbench==0.6",
+      "numpy==2.2.6",
+      "pandas==2.3.3",
+      "scikit-learn==1.7.2"
+    ]
+  }
+}
