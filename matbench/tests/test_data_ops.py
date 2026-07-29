@@ -47,12 +47,9 @@ class TestDataOps(unittest.TestCase):
             )
 
             problem_type = metadata["task_type"]
-            test_types = (
-                [np.bool_, bool]
-                if problem_type == CLF_KEY
-                else [np.float_, np.float32, np.float64, float]
-            )
-            self.assertIn(df[metadata["target"]].dtypes, test_types)
+            target_dtype = df[metadata["target"]].dtype
+            expected_dtype = np.bool_ if problem_type == CLF_KEY else np.floating
+            self.assertTrue(np.issubdtype(target_dtype, expected_dtype))
 
     def test_score_array(self):
         # test for regression
