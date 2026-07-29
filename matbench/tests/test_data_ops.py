@@ -78,7 +78,19 @@ class TestDataOps(unittest.TestCase):
         true = [True, False]
         test = [0.7, 0.65]
         ans = score_array(true, test, task_type=CLF_KEY)
-        self.assertDictEqual(ans, true_ans)
+        probability_ans = dict(true_ans, rocauc=1.0)
+        self.assertDictEqual(ans, probability_ans)
+
+        # numpy probability scores must also remain unthresholded for ROC-AUC
+        test = np.array([0.4, 0.6], dtype=np.float32)
+        ans = score_array(true, test, task_type=CLF_KEY)
+        reverse_probability_ans = {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "f1": 0.0,
+            "rocauc": 0.0,
+        }
+        self.assertDictEqual(ans, reverse_probability_ans)
 
     def test_mean_absolute_percentage_error(self):
 
@@ -101,6 +113,9 @@ class TestDataOps(unittest.TestCase):
         self.assertAlmostEqual(probs[1], 0.0, places=5)
         self.assertAlmostEqual(probs[2], 1.0, places=5)
         self.assertAlmostEqual(probs[3], 1.0, places=5)
+
+        numpy_probs = homogenize_clf_array(np.array(bools), to_probs=True)
+        self.assertListEqual(numpy_probs, probs)
 
         labels = homogenize_clf_array(floats, to_labels=True, thresh=0.5)
         self.assertTrue(labels[0])
