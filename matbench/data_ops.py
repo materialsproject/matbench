@@ -105,21 +105,25 @@ def score_array(true_array, pred_array, task_type):
             f"'task_type' must be one of {[REG_KEY, CLF_KEY]}, not '{task_type}'"
         )
 
+    # Keep the original prediction scores for ROC-AUC.  Label-based metrics need
+    # thresholded predictions, but thresholding must not mutate ``pred_array``:
+    # ROC-AUC is deliberately threshold-independent.
+    pred_labels = pred_array
+    if task_type == CLF_KEY and isinstance(pred_array[0], (float, np.floating)):
+        pred_labels = homogenize_clf_array(pred_array, to_labels=True)
+
     for metric in metrics:
         mfunc = METRIC_MAP[metric]
 
         if metric == "rocauc":
-            # Both arrays must be in probability form
-            # if pred. array is given in probabilities
-            if isinstance(pred_array[0], float):
-                true_array = homogenize_clf_array(true_array, to_probs=True)
-
-        # Other clf metrics always be converted to labels
+            metric_predictions = pred_array
+        # Other classification metrics always use labels.
         elif metric in CLF_METRICS:
-            if isinstance(pred_array[0], float):
-                pred_array = homogenize_clf_array(pred_array, to_labels=True)
+            metric_predictions = pred_labels
+        else:
+            metric_predictions = pred_array
 
-        computed[metric] = mfunc(true_array, pred_array)
+        computed[metric] = mfunc(true_array, metric_predictions)
     return computed
 
 
@@ -180,16 +184,16 @@ def homogenize_clf_array(array, to_probs=False, to_labels=False, thresh=CLF_THRE
         )
 
     if to_probs:
-        if all([isinstance(i, bool) for i in array]):
+        if all([isinstance(i, (bool, np.bool_)) for i in array]):
             # The source array is bools
-            homogenized = [1.0 if i is True else 0.0 for i in array]
+            homogenized = [1.0 if bool(i) else 0.0 for i in array]
             return homogenized
         else:
             raise TypeError(
                 "Cannot convert non-bool type in clf array to " "probabilities."
             )
     elif to_labels:
-        if all([isinstance(i, float) for i in array]):
+        if all([isinstance(i, (float, np.floating)) for i in array]):
             # The source array is probabilities
             homogenized = np.asarray(array) > thresh
             return homogenized.tolist()
