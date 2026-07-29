@@ -31,7 +31,7 @@ jobs:
           coverage run -m unittest discover
           coverage json
       - name: Upload coverage artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage_artifact
           path: coverage.json
@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download coverage artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: coverage_artifact
       - name: Check coverage
