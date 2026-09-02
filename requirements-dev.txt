@@ -1,6 +1,8 @@
 pytest
 coverage==6.4.3
 wheel==0.37.1
+# The current test suite still references np.float_, removed in NumPy 2.
+numpy<2
 # Matminer and pymatgen installed by matbench require a current Monty.  The
 # previous 2022 pin downgraded the compatible version selected by pip and made
 # both the test and benchmark-submission jobs fail during import.
