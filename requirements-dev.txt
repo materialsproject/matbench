@@ -1,7 +1,10 @@
 pytest
 coverage==6.4.3
 wheel==0.37.1
-monty==2022.4.26
+# Matminer and pymatgen installed by matbench require a current Monty.  The
+# previous 2022 pin downgraded the compatible version selected by pip and made
+# both the test and benchmark-submission jobs fail during import.
+monty>=2024.7.29
 isort==5.10.1
 black==22.3.0
 flake8==4.0.1
