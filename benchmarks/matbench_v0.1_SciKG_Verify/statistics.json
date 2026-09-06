@@ -1,0 +1,13 @@
+{
+  "estimand": "mean official-fold paired MAE reduction",
+  "paired_mae_reduction": 0.019921801941789444,
+  "bootstrap_95_percent_interval": [
+    0.01604759425046051,
+    0.023865664127118196
+  ],
+  "one_sided_sign_flip_p": 4.999750012499375e-05,
+  "resampling": "paired within each fixed official fold; conditional on fitted predictions",
+  "draws": 20000,
+  "seed": 20260906,
+  "uncertainty_scope": "row-resampling uncertainty, not training-seed or dataset uncertainty"
+}

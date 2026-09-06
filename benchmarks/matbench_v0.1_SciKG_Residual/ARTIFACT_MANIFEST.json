@@ -1,0 +1,25 @@
+{
+  "release": "scikg-dielectric-20260906-v2",
+  "variant": "nonlinear",
+  "task": "matbench_dielectric",
+  "rows": 4764,
+  "base_mae": 0.27110192416632367,
+  "mae": 0.24728747764262607,
+  "reduction_percent": 8.784314828059724,
+  "comparison_sha256": "a1bf3e1a9667cc6981628ebf21ba40f119d353ceb132f8744f273ac2db412054",
+  "hashes": {
+    "results.json.gz": "2139d623223be81bdd1fed4c1edbb78be2553385ee92e547b2da7c065ee83352",
+    "reference.json.gz": "d3055ac9ae576df7b986d6d3601dfaa2f64e443a0551e990ad9628efc2740492",
+    "statistics.json": "7f854af98a9c1e6eb5a777d5cad5f8b8555c21d3831cb303432a124802c056a5",
+    "info.json": "a96eede494db3cdda0f13232d3f724afdd5552b5349c00c94033613cd9a6fd88",
+    "submission_client.py": "7308ae18603e257e4911fea3026fcd9557d0e895be7291aef55407fd27b147d6"
+  },
+  "folds": {
+    "0": 0.1492487654143906,
+    "1": 0.21280008842939888,
+    "2": 0.359168979806848,
+    "3": 0.2568909916360868,
+    "4": 0.25832856292640605
+  },
+  "service_url": "https://scikg-dielectric-20260906-v2.sahu-gaurav719.workers.dev"
+}

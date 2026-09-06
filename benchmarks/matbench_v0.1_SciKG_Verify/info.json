@@ -1,15 +1,14 @@
 {
   "authors": "Gaurav Sahu",
   "algorithm": "SciKG Verify",
-  "algorithm_long": "A temporally filtered scientific-knowledge-graph verifier applied to frozen MODNet v0.1.12 MatBench dielectric predictions. The method retrieves compatible pre-cutoff external measurements and relations, applies strict structure/property/source compatibility checks, and uses nested out-of-fold selection to decide whether and how strongly to correct each prediction.",
-  "bibtex_refs": "",
-  "notes": "Evidence-augmented evaluation: the method uses external literature and database evidence available before the benchmark cutoff at inference time. Mean official-fold MAE is 0.24932956785914703. The outer fold is excluded from all selector fitting and parameter selection. This external-evidence contract should be displayed explicitly in any leaderboard entry.",
+  "algorithm_long": "Scientific-evidence correction of MODNet refractive-index predictions. The original selector chooses between a direct-evidence correction and a nonlinear residual correction. For each outer fold, correction-training base predictions come from MODNet models excluding that outer fold and the prediction fold. The official outer-fold MODNet predictions remain unchanged. The same original v2 evidence snapshot is retained. The benchmark driver uses a versioned hosted verifier; models and evidence remain on the service.",
+  "bibtex_refs": "@article{Dunn2020, title={Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm}, author={Dunn, Alexander and Wang, Qi and Ganose, Alex and Dopp, Daniel and Jain, Anubhav}, journal={npj Computational Materials}, year={2020}, doi={10.1038/s41524-020-00406-3}}",
+  "notes": "Five official folds; 4,764 candidates; mean MAE 0.251180122225. Prior literature/database evidence is used by the verifier. This release repairs the outer-test training dependency while keeping the original correction rules fixed. V2 evidence matching is retained, not replaced by later StructureMatcher-confirmed evidence. The selector and nonlinear variant are reported together. Hosted inference reproduces the saved predictions; full retraining requires access to the service-side assets.",
   "requirements": {
     "python": [
       "matbench==0.6",
-      "numpy",
-      "pandas",
-      "scikit-learn"
+      "numpy<2",
+      "pandas"
     ]
   }
 }
