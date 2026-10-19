@@ -1,0 +1,30 @@
+{
+  "authors": "Bhaskar Gurram",
+  "algorithm": "DFT-Stack",
+  "algorithm_long": "DFT-Stack: a cross-fitted, simplex-weighted stack of composition experts for the four Matbench v0.1 composition tasks, using Materials Project DFT data as transfer-learning input features. EXTERNAL DATA DISCLOSURE: besides the formula-derived descriptors, every expert receives a block of Materials Project PBE DFT features taken from matminer's matbench_mp_gap (PBE band gap) and matbench_mp_e_form (PBE formation energy) datasets, matched to each task composition by reduced formula (most stable polymorph by formation energy, plus polymorph aggregates; unmatched compositions get missing values and a dft_matched = 0 indicator). No experimental external labels are used: the only experimental labels seen are the task's own training-fold labels. Features: matminer/pymatgen composition descriptors (Magpie and other ElementProperty presets, element fractions, Stoichiometry, ValenceOrbital, IonProperty, BandCenter, AtomicOrbitals, Meredig, Miedema, YangSolidSolution, AtomicPackingEfficiency, WenAlloys, TMetalFraction) and CBFV Oliynyk statistics; all are label-free functions of the formula. Experts: Optuna-tuned LightGBM, XGBoost, CatBoost, extra trees (two feature sets and element fractions), kernel ridge (regression) or RBF SVM (classification), k-nearest neighbours and an MLP; for matbench_expt_gap additionally hurdle experts for the zero-inflated band gap (a classifier for gap > 0 combined with a regressor fitted on the non-zero gaps). Protocol: nested cross-validation inside each official training fold. Five inner folds produce out-of-fold predictions for every expert; hyperparameters, the non-negative stack weights (summing to one; L1 loss for regression, Brier score for classification) and an optional novelty-damped local out-of-fold residual correction are all chosen on these inner folds, and the correction is kept only if a further nested inner-CV check confirms it (it was kept in 0 of 20 task-folds). The official test folds are never used for fitting or selection. Classification: hard labels are recorded at a decision threshold that maximises balanced accuracy on the training-fold out-of-fold predictions (inner-CV threshold), so the board's ROC-AUC for these tasks equals balanced accuracy. The configuration was frozen (SHA-256 hashes of the code) before the official test folds were predicted.",
+  "bibtex_refs": [
+    "@article{dunn2020matbench,\n  author = {Alexander Dunn and Qi Wang and Alex Ganose and Daniel Dopp and Anubhav Jain},\n  title = {Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm},\n  journal = {npj Computational Materials},\n  year = {2020},\n  volume = {6},\n  pages = {138},\n  doi = {10.1038/s41524-020-00406-3}\n}",
+    "@article{ward2018matminer,\n  author = {Logan Ward and Alexander Dunn and Alireza Faghaninia and Nils E.R. Zimmermann and Saurabh Bajaj and Qi Wang and Joseph Montoya and Jiming Chen and Kyle Bystrom and Maxwell Dylla and Kyle Chard and Mark Asta and Kristin A. Persson and G. Jeffrey Snyder and Ian Foster and Anubhav Jain},\n  title = {Matminer: An open source toolkit for materials data mining},\n  journal = {Computational Materials Science},\n  year = {2018},\n  volume = {152},\n  pages = {60--69},\n  doi = {10.1016/j.commatsci.2018.05.018}\n}",
+    "@article{jain2013mp,\n  author = {Anubhav Jain and Shyue Ping Ong and Geoffroy Hautier and Wei Chen and William Davidson Richards and Stephen Dacek and Shreyas Cholia and Dan Gunter and David Skinner and Gerbrand Ceder and Kristin A. Persson},\n  title = {Commentary: The Materials Project: A materials genome approach to accelerating materials innovation},\n  journal = {APL Materials},\n  year = {2013},\n  volume = {1},\n  pages = {011002},\n  doi = {10.1063/1.4812323}\n}",
+    "@unpublished{gurram_dftstack_inprep,\n  author = {Bhaskar Gurram},\n  title = {DFT-informed stacked ensembles for experimental composition--property prediction: two pre-registered, fully nested evaluations on Matbench},\n  note = {Manuscript in preparation. Placeholder entry: no DOI or preprint identifier yet; to be updated on publication},\n  year = {2026}\n}"
+  ],
+  "notes": "CPU-only (no GPU): 5 parallel workers x 4 threads on one 24-core workstation; 14.3 worker-hours for all 20 task-folds; median wall time per fold: matbench_steels 9 min, matbench_expt_gap 62 min, matbench_expt_is_metal 48 min, matbench_glass 57 min. DFT-block coverage (compositions matched by reduced formula): matbench_steels: 0/312 (0%); matbench_expt_gap: 3347/4604 (73%); matbench_expt_is_metal: 3613/4921 (73%); matbench_glass: 60/5680 (1%). matbench==0.6 was installed with --no-deps because its scikit-learn==1.0 / monty pins do not build on Python 3.12; the newer versions listed in requirements were used. The folder is self-contained: run_submission.py plus the dftstack/ package (verbatim copies of the frozen research modules) reproduce results.json.gz and record every fold with task.record; the Matbench tasks and the matminer DFT datasets are downloaded on first use. Full research repository (analysis plan, freeze hashes, per-fold predictions, ablations): https://github.com/bhaskargurram-ai/matbench-composition-stack. results.json.gz contains the labels variant of the frozen run; its user_metadata still carries the internal run name 'XStack-A2'. The matbench 0.6 wheel writes plain JSON even for a .gz filename; the file here is the byte-identical JSON gzip-compressed, which is what MatbenchBenchmark.from_file on the current main branch reads (run_submission.py compresses its output the same way).",
+  "requirements": {
+    "python": [
+      "matbench==0.6",
+      "matminer==0.10.1",
+      "pymatgen==2026.9.24",
+      "monty==2026.7.16",
+      "scikit-learn==1.9.1",
+      "numpy==2.5.4",
+      "scipy==1.18.1",
+      "pandas==2.3.3",
+      "lightgbm==4.7.0",
+      "xgboost==3.4.1",
+      "catboost==1.2.10",
+      "optuna==5.0.0",
+      "joblib==1.6.0",
+      "CBFV==1.1.0"
+    ]
+  }
+}
