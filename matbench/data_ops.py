@@ -118,6 +118,24 @@ def score_array(true_array, pred_array, task_type):
     return computed
 
 
+def is_label_only(pred_array):
+    """Determine if classification predictions are hard labels only.
+
+    ROC-AUC computed on hard labels (bools, or floats that are all exactly
+    0 or 1) equals balanced accuracy. It is not comparable to ROC-AUC
+    computed on probability estimates.
+
+    Args:
+        pred_array (list or np.array): The predicted (test) array for a
+            classification task.
+
+    Returns:
+        (bool): True if every prediction is 0, 1, True, or False.
+    """
+    pred_array = np.asarray(pred_array, dtype=float)
+    return bool(np.isin(pred_array, (0.0, 1.0)).all())
+
+
 def mean_absolute_percentage_error(y_true, y_pred, threshold=1e-5):
     """Compute mean absolute percentage error, masked
 
