@@ -29,6 +29,7 @@ plugins:
   - mkdocstrings
 
 markdown_extensions:
+  - admonition
   - meta
   - pymdownx.highlight
   - pymdownx.superfences

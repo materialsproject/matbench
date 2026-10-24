@@ -19,9 +19,11 @@ from sklearn.metrics import (
 )
 
 from matbench.constants import (
+    BOOL_TYPES,
     CLF_KEY,
     CLF_METRICS,
     CLF_THRESH,
+    FLOAT_TYPES,
     MBID_KEY,
     REG_KEY,
     REG_METRICS,
@@ -108,18 +110,22 @@ def score_array(true_array, pred_array, task_type):
     for metric in metrics:
         mfunc = METRIC_MAP[metric]
 
+        # Convert per metric without overwriting the inputs, so that one
+        # metric's conversion does not leak into the metrics after it
+        metric_true, metric_pred = true_array, pred_array
+
         if metric == "rocauc":
             # Both arrays must be in probability form
             # if pred. array is given in probabilities
-            if isinstance(pred_array[0], float):
-                true_array = homogenize_clf_array(true_array, to_probs=True)
+            if isinstance(pred_array[0], FLOAT_TYPES):
+                metric_true = homogenize_clf_array(true_array, to_probs=True)
 
         # Other clf metrics always be converted to labels
         elif metric in CLF_METRICS:
-            if isinstance(pred_array[0], float):
-                pred_array = homogenize_clf_array(pred_array, to_labels=True)
+            if isinstance(pred_array[0], FLOAT_TYPES):
+                metric_pred = homogenize_clf_array(pred_array, to_labels=True)
 
-        computed[metric] = mfunc(true_array, pred_array)
+        computed[metric] = mfunc(metric_true, metric_pred)
     return computed
 
 
@@ -180,16 +186,16 @@ def homogenize_clf_array(array, to_probs=False, to_labels=False, thresh=CLF_THRE
         )
 
     if to_probs:
-        if all([isinstance(i, bool) for i in array]):
+        if all([isinstance(i, BOOL_TYPES) for i in array]):
             # The source array is bools
-            homogenized = [1.0 if i is True else 0.0 for i in array]
+            homogenized = [1.0 if i else 0.0 for i in array]
             return homogenized
         else:
             raise TypeError(
                 "Cannot convert non-bool type in clf array to " "probabilities."
             )
     elif to_labels:
-        if all([isinstance(i, float) for i in array]):
+        if all([isinstance(i, FLOAT_TYPES) for i in array]):
             # The source array is probabilities
             homogenized = np.asarray(array) > thresh
             return homogenized.tolist()

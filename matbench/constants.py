@@ -3,6 +3,8 @@ Source of ground truth for all constants used across matbench.
 """
 import os
 
+import numpy as np
+
 # single place for defining version
 VERSION = "0.6"
 
@@ -34,6 +36,11 @@ CLF_METRICS = ["accuracy", "balanced_accuracy", "f1", "rocauc"]
 
 # threshold for converting probabilities to labels
 CLF_THRESH = 0.5
+
+# types accepted as clf probabilities and labels; numpy scalars
+# (e.g. np.float32, np.bool_) are not subclasses of the builtins
+FLOAT_TYPES = (float, np.floating)
+BOOL_TYPES = (bool, np.bool_)
 
 # scoring on a single task among folds
 FOLD_DIST_METRICS = ["mean", "max", "min", "std"]

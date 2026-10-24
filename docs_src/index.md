@@ -16,6 +16,9 @@
 
 Find more information about this benchmark on [the benchmark info page](Benchmark%20Info/matbench_v0.1.md)
 
+!!! warning "Classification ROC-AUC scores are outdated"
+    ROC-AUC scores on the matbench_v0.1 classification leaderboards were computed on predictions thresholded at 0.5. They therefore equal balanced accuracy, not true ROC-AUC, and understate submissions that provided probabilities. This is fixed for future scoring; existing scores have not been recomputed. See [#137](https://github.com/materialsproject/matbench/issues/137) and [#181](https://github.com/materialsproject/matbench/issues/181).
+
 | Task name | Samples | Algorithm | Verified MAE (unit) or ROCAUC | Notes |
 |------------------|---------|-----------|----------------------|-------|
 | [matbench_steels](Leaderboards%20Per-Task/matbench_v0.1_matbench_steels.md) | 312 | [MODNet (v0.1.12)](Full%20Benchmark%20Data/matbench_v0.1_modnet_v0.1.12.md) | **87.7627 (MPa)** |  |
