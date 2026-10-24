@@ -1835,7 +1835,7 @@ record new predictions. Recording and saving your data with matbench should take
 <li>The <code>MatbenchBenchmark</code> class.</li>
 </ol>
 <p>Here's an example of running an entire benchmark (13 tasks) using matbench.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">matbench.bench</span> <span class="kn">import</span> <span class="n">MatbenchBenchmark</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">matbench.bench</span><span class="w"> </span><span class="kn">import</span> <span class="n">MatbenchBenchmark</span>
 
 <span class="n">mb</span> <span class="o">=</span> <span class="n">MatbenchBenchmark</span><span class="p">(</span><span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
@@ -1863,7 +1863,7 @@ record new predictions. Recording and saving your data with matbench should take
         <span class="n">task</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">fold</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
 
 <span class="c1"># Save your results</span>
-<span class="n">mb</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s2">&quot;my_models_benchmark.json.gz&quot;</span><span class="p">)</span>
+<span class="n">mb</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s2">"my_models_benchmark.json.gz"</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>And you're done! Your benchmark has been recorded and saved.</strong></p>
 <p>The output file, in this case <code>my_models_benchmark.json.gz</code> contains everything predicted by your 
@@ -1876,7 +1876,7 @@ and use the same code as above. The repo accepts subsets of matbench tasks as we
 <h2 id="recording-hyperparameters-and-user-metadata">Recording hyperparameters and user metadata</h2>
 <h3 id="hyperparameters-for-each-fold">Hyperparameters for each fold</h3>
 <p>Record parameters (<code>dict</code> type) for each fold using the <code>parameters</code> argument to <code>MatbenchBenchmark.record</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">matbench.bench</span> <span class="kn">import</span> <span class="n">MatbenchBenchmark</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">matbench.bench</span><span class="w"> </span><span class="kn">import</span> <span class="n">MatbenchBenchmark</span>
 
 <span class="n">mb</span> <span class="o">=</span> <span class="n">MatbenchBenchmark</span><span class="p">(</span><span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
@@ -1888,7 +1888,7 @@ and use the same code as above. The repo accepts subsets of matbench tasks as we
         <span class="n">test_inputs</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">get_test_data</span><span class="p">(</span><span class="n">fold</span><span class="p">,</span> <span class="n">include_target</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">predictions</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_inputs</span><span class="p">)</span>
 
-        <span class="c1"># Get your model&#39;s parameters </span>
+        <span class="c1"># Get your model's parameters </span>
         <span class="c1"># Parameters must be a dictionary of python native types, e.g., lists of strings, dicts, etc.</span>
         <span class="n">params</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">get_parameters_as_dictionary</span><span class="p">()</span>
         <span class="n">task</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">fold</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
@@ -1899,11 +1899,11 @@ not large arrays or weight matrices.</p>
 <h3 id="user-metadata-for-benchmark">User metadata for benchmark</h3>
 <p>Add arbitrary metadata about your algorithm, in <code>dict</code> format, to the benchmark. This will be included as shown on the benchmark leaderboard on the website.</p>
 <div class="highlight"><pre><span></span><code><span class="n">my_metadata</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;algorithm_version&quot;</span><span class="p">:</span> <span class="s2">&quot;v1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;tree_type&quot;</span><span class="p">:</span> <span class="s2">&quot;entropy&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;configuration&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;some_param&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-        <span class="s2">&quot;other_vector&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="s2">"algorithm_version"</span><span class="p">:</span> <span class="s2">"v1"</span><span class="p">,</span>
+    <span class="s2">"tree_type"</span><span class="p">:</span> <span class="s2">"entropy"</span><span class="p">,</span>
+    <span class="s2">"configuration"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"some_param"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s2">"other_vector"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
     <span class="p">}</span>
 <span class="p">}</span>
 

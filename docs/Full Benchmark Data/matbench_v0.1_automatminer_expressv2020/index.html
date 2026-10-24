@@ -2959,35 +2959,35 @@
 <p>All data was generated using the same config (express, default). The automatminer version requirement specifies the versions of many dependent packages, such as matminer, which are required for the algorithm to work in your virtualenv.</p>
 <p>Raw data download and example notebook available <a href="https://github.com/hackingmaterials/matbench/tree/main/benchmarks/matbench_v0.1_automatminer_expressv2020">on the matbench repo</a>.</p>
 <h3 id="references-in-bibtex-format">References (in bibtex format):</h3>
-<div class="highlight"><pre><span></span><code>(&#39;@article{Dunn2020,\n&#39;
- &#39;  doi = {10.1038/s41524-020-00406-3},\n&#39;
- &#39;  url = {https://doi.org/10.1038/s41524-020-00406-3},\n&#39;
- &#39;  year = {2020},\n&#39;
- &#39;  month = sep,\n&#39;
- &#39;  publisher = {Springer Science and Business Media {LLC}},\n&#39;
- &#39;  volume = {6},\n&#39;
- &#39;  number = {1},\n&#39;
- &#39;  author = {Alexander Dunn and Qi Wang and Alex Ganose and Daniel Dopp and &#39;
- &#39;Anubhav Jain},\n&#39;
- &#39;  title = {Benchmarking materials property prediction methods: the Matbench &#39;
- &#39;test set and Automatminer reference algorithm},\n&#39;
- &#39;  journal = {npj Computational Materials}\n&#39;
- &#39;}&#39;)
+<div class="highlight"><pre><span></span><code>('@article{Dunn2020,\n'
+ '  doi = {10.1038/s41524-020-00406-3},\n'
+ '  url = {https://doi.org/10.1038/s41524-020-00406-3},\n'
+ '  year = {2020},\n'
+ '  month = sep,\n'
+ '  publisher = {Springer Science and Business Media {LLC}},\n'
+ '  volume = {6},\n'
+ '  number = {1},\n'
+ '  author = {Alexander Dunn and Qi Wang and Alex Ganose and Daniel Dopp and '
+ 'Anubhav Jain},\n'
+ '  title = {Benchmarking materials property prediction methods: the Matbench '
+ 'test set and Automatminer reference algorithm},\n'
+ '  journal = {npj Computational Materials}\n'
+ '}')
 </code></pre></div>
 <h3 id="user-metadata">User metadata:</h3>
-<div class="highlight"><pre><span></span><code>{&#39;autofeaturizer_kwargs&#39;: {&#39;n_jobs&#39;: 10, &#39;preset&#39;: &#39;express&#39;},
- &#39;cleaner_kwargs&#39;: {&#39;feature_na_method&#39;: &#39;drop&#39;,
-                    &#39;max_na_frac&#39;: 0.1,
-                    &#39;na_method_fit&#39;: &#39;mean&#39;,
-                    &#39;na_method_transform&#39;: &#39;mean&#39;},
- &#39;learner_kwargs&#39;: {&#39;max_eval_time_mins&#39;: 20,
-                    &#39;max_time_mins&#39;: 1440,
-                    &#39;memory&#39;: &#39;auto&#39;,
-                    &#39;n_jobs&#39;: 10,
-                    &#39;population_size&#39;: 200},
- &#39;learner_name&#39;: &#39;TPOTAdaptor&#39;,
- &#39;reducer_kwargs&#39;: {&#39;reducers&#39;: [&#39;corr&#39;, &#39;tree&#39;],
-                    &#39;tree_importance_percentile&#39;: 0.99}}
+<div class="highlight"><pre><span></span><code>{'autofeaturizer_kwargs': {'n_jobs': 10, 'preset': 'express'},
+ 'cleaner_kwargs': {'feature_na_method': 'drop',
+                    'max_na_frac': 0.1,
+                    'na_method_fit': 'mean',
+                    'na_method_transform': 'mean'},
+ 'learner_kwargs': {'max_eval_time_mins': 20,
+                    'max_time_mins': 1440,
+                    'memory': 'auto',
+                    'n_jobs': 10,
+                    'population_size': 200},
+ 'learner_name': 'TPOTAdaptor',
+ 'reducer_kwargs': {'reducers': ['corr', 'tree'],
+                    'tree_importance_percentile': 0.99}}
 </code></pre></div>
 <h3 id="metadata">Metadata:</h3>
 <table>
@@ -3021,7 +3021,7 @@
 </tbody>
 </table>
 <h3 id="software-requirements">Software Requirements</h3>
-<div class="highlight"><pre><span></span><code>{&#39;python&#39;: [&#39;automatminer==1.0.3.20200727&#39;, &#39;matbench==0.1.0&#39;]}
+<div class="highlight"><pre><span></span><code>{'python': ['automatminer==1.0.3.20200727', 'matbench==0.1.0']}
 </code></pre></div>
 <h3 id="task-data">Task data:</h3>
 <h4 id="matbench_dielectric"><code>matbench_dielectric</code></h4>
