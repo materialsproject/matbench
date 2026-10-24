@@ -18,7 +18,7 @@
 ╚══════════════════════════════════════════════════════════════════════╝
 """
 
-import os, copy, json, time, logging, warnings, shutil, urllib.request
+import os, copy, json, time, logging, warnings, shutil, urllib.request, hashlib
 warnings.filterwarnings('ignore')
 
 import numpy as np
@@ -101,11 +101,45 @@ class ExpandedFeaturizer:
 
         self.scaler = None
         os.makedirs(cache, exist_ok=True)
+
+        # Bind binary Mat2Vec inputs to the SHA-256 manifest captured from
+        # the official upstream Google Cloud Storage objects (October 2026).
+        # The historical Kaggle cache could not be independently recovered.
+        manifest_file = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), "mat2vec_sha256.json"
+        )
+        with open(manifest_file, "r", encoding="utf-8") as handle:
+            manifest = json.load(handle)
+        if manifest.get("source") != self.GCS or set(manifest.get("files", {})) != set(self.FILES):
+            raise RuntimeError("Invalid or incomplete Mat2Vec integrity manifest")
+
         for f in self.FILES:
+            expected = manifest["files"][f]["sha256"]
             p = os.path.join(cache, f)
-            if not os.path.exists(p):
-                log.info(f"  Downloading {f}...")
-                urllib.request.urlretrieve(self.GCS + f, p)
+            if not os.path.isfile(p):
+                log.info(f"  Downloading verified upstream Mat2Vec asset {f}...")
+                temporary = p + ".download"
+                try:
+                    urllib.request.urlretrieve(self.GCS + f, temporary)
+                    with open(temporary, "rb") as stream:
+                        digest = hashlib.file_digest(stream, "sha256").hexdigest()
+                    if digest != expected:
+                        raise RuntimeError(f"Mat2Vec SHA-256 mismatch for download {f}")
+                    os.replace(temporary, p)
+                finally:
+                    if os.path.exists(temporary):
+                        os.remove(temporary)
+            # Never load pre-existing cache files without verifying them.
+            with open(p, "rb") as stream:
+                digest = hashlib.file_digest(stream, "sha256").hexdigest()
+            if digest != expected:
+                raise RuntimeError(
+                    f"Mat2Vec cache checksum mismatch: {f}. "
+                    "Remove the mismatched cached file to redownload."
+                )
+            if os.path.getsize(p) != manifest["files"][f]["size_bytes"]:
+                raise RuntimeError(f"Mat2Vec file size mismatch: {f}")
+
         self.m2v = Word2Vec.load(os.path.join(cache, "pretrained_embeddings"))
         self.emb = {w: self.m2v.wv[w] for w in self.m2v.wv.index_to_key}
 

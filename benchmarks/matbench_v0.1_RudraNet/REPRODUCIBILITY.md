@@ -80,26 +80,25 @@ versions actually used for the submitted training run.
 Training environment reported by the author: Kaggle, a single NVIDIA T4 GPU.
 Author-reported training runtime: **under 20 minutes** on one NVIDIA T4 GPU. The exact timing was not recorded or independently verified.
 
-## Mat2Vec checksum capture (pending upstream bytes)
+## Mat2Vec SHA-256 pinning (current upstream verified)
 
-The author's training code used the official Mat2Vec pretrained model set:
-`pretrained_embeddings`, `pretrained_embeddings.wv.vectors.npy`, and
-`pretrained_embeddings.trainables.syn1neg.npy` from
-`https://storage.googleapis.com/mat2vec/`.
+GitHub Actions downloaded each of the three **original upstream** Mat2Vec
+model components directly from `https://storage.googleapis.com/mat2vec/`
+without deserializing them. The recorded SHA-256 hashes, byte sizes, GCS
+generation IDs, and Last-Modified values are committed in
+`mat2vec_sha256.json`; the manifest was independently fetched from the
+temporary TRIADS audit branch at
+https://github.com/Rtx09x/TRIADS/blob/audit/mat2vec-sha256-20261024/audits/mat2vec_sha256_20261024.json
 
-Run in a networked, trusted environment (for example Kaggle):
+All three upstream objects report a June 22, 2019 Last-Modified date.
+The `ExpandedFeaturizer` in `trm13.py` checks both SHA-256 and file
+length **before** `Word2Vec.load` for cached and downloaded files,
+rejects mismatches, and atomically installs verified new downloads.
+`mat2vec_integrity.py verify` also verifies a pre-existing cache.
 
-```sh
-python mat2vec_integrity.py capture --cache ./mat2vec_cache
-python mat2vec_integrity.py verify --cache ./mat2vec_cache
-```
-
-This writes `mat2vec_sha256.json` with observed SHA-256 hashes, lengths,
-source metadata, and UTC capture time. Only after checking the real bytes
-and the source should that manifest be committed and checksum verification
-be enforced in `trm13.py` before `Word2Vec.load`. **No placeholder hashes
-are included.** A first download from HTTPS records current content but
-cannot, alone, establish which exact bytes were used historically.
+These checks pin the **current official upstream bytes**, not the exact
+identity of the original unrecovered Kaggle cache. The author reports
+using the original/latest upstream version for historical experiments.
 
 ## Open reproducibility issues
 
@@ -107,16 +106,11 @@ cannot, alone, establish which exact bytes were used historically.
   been independently regenerated from archived weights.
 - Comparison of V10-V13 and V13A/B on test-fold scores, and its impact
   on model selection, remains under scientific review.
-- The original training script loads Mat2Vec Word2Vec pickle-compatible
-  files from `https://storage.googleapis.com/mat2vec/` without
-  independently pinned checksums. The three official source filenames have
-  been confirmed in the original Mat2Vec project's documentation, but a
-  trusted SHA-256 digest has **not** been retrieved or pinned yet.
-  `mat2vec_integrity.py` provides a read-only-to-model SHA-256 capture and
-  validation workflow. It does not unpickle the model; a completed manifest
-  must be independently reviewed and committed before treating downloads
-  as authenticated. The historic Kaggle file identity cannot be established
-  merely by hashing the current upstream objects.
+- Current official Mat2Vec files are pinned by SHA-256, and the
+  verified source was last modified in June 2019. Original Kaggle cache
+  hashes remain unavailable, so exact historical file identity cannot
+  be independently proven. Mat2Vec deserialization remains restricted
+  to verified upstream bytes, not arbitrary model files.
 - Per-seed averages are preserved in the TRIADS archive; individual
   seed-by-fold metrics have not been restored from an original run log.
 
