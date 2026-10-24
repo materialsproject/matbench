@@ -1,4 +1,4 @@
-name: Rebuild docs
+name: rebuild docs
 
 # build docs on PRs; rebuild and commit them on updates to main
 on:
