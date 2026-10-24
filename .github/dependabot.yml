@@ -13,3 +13,7 @@ updates:
     ignore:
       - dependency-name: "plotly"
       - dependency-name: "mkdocs"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
