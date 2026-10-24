@@ -38,7 +38,7 @@ All stored predictions, including the classification predictions, are floating-p
 | `matbench_glass` | 0.0036448804 | 0.9989999 |
 | `matbench_mp_is_metal` | 0.00019700835 | 0.99985945 |
 
-For all 15 classification folds, the stored ROC-AUC equals stored balanced accuracy to `1e-12`. This is consistent with the historical thresholded-prediction scoring issue fixed in main; it is not evidence of data leakage. The table reports those historical values transparently and does not relabel them as probability-based ROC-AUC. Corrected scoring requires independently aligned target labels and the stored prediction scores. A scoring audit must be reported separately and must not silently overwrite this artifact.
+For all 15 classification folds, the stored ROC-AUC equals stored balanced accuracy to `1e-12`. This is consistent with the historical thresholded-prediction scoring issue fixed in main; it is not evidence of data leakage. The table reports those historical values transparently and does not relabel them as probability-based ROC-AUC. Independent rescoring with verified labels and the stored sample-ID-to-prediction maps is now reported separately in [RESCORING.md](RESCORING.md). That audit identifies corrected probability-based scores and its remaining data-version limit without silently overwriting this artifact.
 
 ## Read-only validation
 

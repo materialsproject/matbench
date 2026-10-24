@@ -3,7 +3,7 @@
   "algorithm": "AlchemBERT",
   "algorithm_long": "Using natural language to describe a material structure or chemical formula, then employing BERT for regression or classification. Currently, only a very simple description method has been tested, and there is room for further improvement.",
   "bibtex_refs": "@article{liu2024alchembert, title={AlchemBERT: Exploring Lightweight Language Models for Materials Informatics}, author={Liu, X and Liu, X and Wen, X}, year={2024}, journal={ChemRxiv}, note={This content is a preprint and has not been peer-reviewed}, doi={10.26434/chemrxiv-2024-r4dnl}, url={https://chemrxiv.org/engage/chemrxiv/article-details/67540a28085116a133a62b85}}",
-  "notes": "See the local README.md and RESULTS.md for source provenance, preserved historical scores, validation, and unresolved reproduction requirements. Official source: https://gitee.com/liuxiaotong15/alchemBERT (audited snapshot 3ff872f6510cc88e96061844a2ca41d0c6041c8f; not established as the historical run commit).",
+  "notes": "See local README.md, RESULTS.md, RESCORING.md, INPUT_AUDIT.md and RUNNING.md for preserved historical scores, independent audits, corrected prospective training/recording tools and remaining original-experiment evidence. Official source: https://gitee.com/liuxiaotong15/alchemBERT (audited snapshot 3ff872f6510cc88e96061844a2ca41d0c6041c8f; not established as the historical run commit). Historical requirements below are retained; tested new CPU tools use requirements-rerun-cpu.txt.",
   "requirements": {
     "python": [
       "fire==0.6.0",

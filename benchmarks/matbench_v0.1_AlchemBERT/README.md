@@ -1,10 +1,12 @@
 # AlchemBERT benchmark: source and reproducibility status
 
-This submission preserves the original `results.json.gz` and adds inspectable
-source, provenance, and read-only checks. It does **not** claim that historical
-training has been reproduced or that all review questions have been resolved.
-See [RESULTS.md](RESULTS.md) for every task's stored score and the historical
-classification-scoring limitation.
+This submission preserves the original `results.json.gz`, adds inspectable
+source and provenance, and supplies a corrected pipeline for new experiments.
+It does **not** claim that historical training has been reproduced or that all
+review questions have been resolved. See [RESULTS.md](RESULTS.md) for the
+historical scores, [RESCORING.md](RESCORING.md) for independent score checks,
+[INPUT_AUDIT.md](INPUT_AUDIT.md) for input identity checks, and
+[RUNNING.md](RUNNING.md) for preparation, training, prediction and recording.
 
 ## Scope and preserved evidence
 
@@ -55,6 +57,13 @@ Hash agreement establishes file identity, not their use in the historical run.
 
 ## What the recovered code establishes
 
+The original preprint has now also been checked. It reports Nvidia RTX 4090
+hardware and settings consistent with several source defaults. The exact
+historical per-run hardware, runtime and model identities remain unverified.
+[PAPER_EVIDENCE.md](PAPER_EVIDENCE.md) separates paper-reported facts from
+independently checked artifacts. Public Matbench-Discovery weights are for a
+different benchmark and have not been substituted here.
+
 The scheduler explicitly selects `bert-base-cased`, encoder fine-tuning, every
 Matbench task and folds 0–4. The training script's default is instead
 `bert-base-uncased`; reproducing the scheduler requires its explicit arguments.
@@ -101,14 +110,17 @@ whole-word scan of `input` for `band[- ]gap`, `yield strength`, `metallic`,
 `refractive`, `glass`, `target`, `True`, `False`, `MPa`, and `eV` found no matches.
 This is a limited check, not proof of the absence of semantic proxies or leakage.
 
-For the four composition tasks above, all 40 archive lengths match official
-fold sizes. Assigning official ordered fold IDs to rows gives the same complete
-row for every ID across all five folds, with zero conflicts; train/test complete
-rows do not intersect within a fold. This establishes internal partition
-consistency, but cannot rule out a consistent global permutation. The official
-dataset endpoint returned HTTP 403 in this environment, preventing an independent
-material-to-ID comparison. The archives lack explicit sample IDs. Actual input
-identity and original prediction order therefore still require verification.
+The material-to-ID check for the four composition tasks has now been completed
+against checksummed official data references: 40 archives and 77,585 row
+appearances. Every label and fixed instruction agrees. Glass formulas and steels
+element percentages agree; each expt task has one formula spelling correction
+relative to its older official Figshare reference, repeated across five folds.
+The independently verified Kingsbury derivative also confirms the expt-gap
+correction without any label or index change. Details and limits are in
+[INPUT_AUDIT.md](INPUT_AUDIT.md). The current expt-is-metal file is still missing;
+its older official reference is explicitly identified, not passed off as the
+current version. This audit does not verify full structure descriptions, prove
+which archives were used historically, or link predictions to trained models.
 
 ## Known reproduction problems, not hidden by this update
 
@@ -124,14 +136,19 @@ identity and original prediction order therefore still require verification.
    preprocessing. This does not establish outer-test leakage. A corrected run
    must split first, fit only inner-training labels, transform validation with
    that fitted transformer and save the transformer with its checkpoint.
-   Such a change needs a new experiment; it cannot validate the old scores.
+   This is implemented in `train_fold.py` for new experiments and covered by a
+   test that changes validation labels without changing the fitted transform.
+   It cannot retroactively validate the old scores.
 3. **Classification scoring.** Original test logging rounds probabilities for
    ROC-AUC, while prediction CSVs retain unrounded values. All 15 stored
    classification fold ROC-AUC values equal balanced accuracy to 1e-12,
    consistent with the historical Matbench scoring issue. Updating main or a
-   logging expression does not repair historical stored scores. Independently
-   re-score aligned official labels/probabilities into a separate report before
-   deciding with the maintainer how to present these results.
+   logging expression does not repair historical stored scores. The serialized
+   artifact already maps predictions to official IDs, enabling independent
+   rescoring without the original CSVs. [RESCORING.md](RESCORING.md) reports the
+   verified tasks and corrected probability-based AUC values separately. The
+   original artifact remains intact, and its leaderboard values have not been
+   silently replaced.
 4. **Prediction identity.** Original CSVs contain predictions and ratings but no
    sample IDs; the original recorder assumes row order. It also reads
    `nl_results/bert-base-cased`, while training writes a differently named log
@@ -166,6 +183,22 @@ be overwritten. The original unlabelled CSV format is intentionally rejected:
 the author must supply a trustworthy ID mapping. This utility is not evidence
 that the historical predictions came from the archived model code.
 
+## Corrected preparation, training and prediction
+
+[RUNNING.md](RUNNING.md) provides an executable preparation-to-recording path.
+`prepare_inputs.py` creates identified, target-free input files from official
+Matbench inputs using an explicitly new deterministic v2-derived template.
+`train_fold.py` enforces input hashes and immutable model/tokenizer revisions,
+isolates inner validation labels from preprocessing, and saves per-fold model
+weights, tokenizer, transformer, split IDs, logs, environment and file hashes.
+Its prediction command reloads saved artifacts and exports official IDs and
+unrounded probabilities. Existing runs and historical results are protected.
+
+The new CPU tool dependencies in `requirements-rerun-cpu.txt` were installed and
+checked successfully. The historical dependency declarations remain archived.
+These repairs make new experiments possible; confirming or rerunning the old
+experiments still needs the evidence below.
+
 ## Evidence still needed from the original experiment
 
 - Exact source revision and commands that produced the submitted artifact;
@@ -176,7 +209,8 @@ that the historical predictions came from the archived model code.
   The source tree contains no checkpoints or original CSVs; the original PR
   offers about 25 GB of models on request.
 - A working original Python/CUDA/dependency lockfile resolving the conflicting
-  pins; actual random seeds, deterministic settings, hardware and training time.
+  pins; actual random seeds, deterministic settings and training time. The paper
+  reports RTX 4090, but per-run hardware has not been verified from logs.
 - Training/validation logs, selected epochs, hyperparameter trials and selection
   policy, and evidence that outer test data were not used for model selection.
 - Details of any continued pretraining and evidence relevant to corpus overlap.
@@ -195,10 +229,20 @@ python -m unittest scripts/test_submission.py
 ```
 
 Local validation against main `4b7d071` confirmed the original hash and
-`is_valid`, `is_complete`, `is_recorded` for 13 tasks/65 folds. New recorder
-unit tests cover identity checks and overwrite protection, without training a
-model. The sparse local submission check covers this benchmark only. The full
-upstream CI matrix and documentation build must be checked on the updated PR;
-July's successful checks do not establish success for this revision. A local
-full data-operations test encountered a failed official dataset download/hash
-check, so it is not reported as passing. No new training run has been performed.
+`is_valid`, `is_complete`, `is_recorded` for 13 tasks/65 folds. The benchmark-local
+suite passed all 31 tests, covering preparation, input identity, preprocessing isolation, scoring and
+recording. Three optional CPU tests actually train a tiny randomly initialized
+BERT, replay its checkpoint and recover after a simulated prediction failure.
+They use synthetic data, not a historical checkpoint or full benchmark run.
+Preparation was also exercised on the official steels fold 0 (249 training and
+63 test inputs). The sparse local submission check passed both tests and covers
+this benchmark only; all three core data-operations tests also passed using
+verified official cached data.
+
+The upstream [CI](https://github.com/materialsproject/matbench/actions/runs/40102651561)
+and [documentation build](https://github.com/materialsproject/matbench/actions/runs/40102651716)
+passed on the earlier cleanup commit `afe593a`. The current revision's checks
+are shown on [PR #358](https://github.com/materialsproject/matbench/pull/358/checks).
+Those workflows are unchanged and do not automatically run the benchmark-local
+tests; run the explicit command above for those. No full real-data model training
+or historical experiment reproduction is claimed.

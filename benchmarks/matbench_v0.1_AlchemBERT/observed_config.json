@@ -127,5 +127,11 @@
       "property_instruction": "if it is a glass",
       "units": ""
     }
+  },
+  "paper_reported_hardware": {
+    "hardware": "Nvidia RTX 4090",
+    "source": "10.26434/chemrxiv-2024-r4dnl",
+    "location": "Original preprint, Methods, page 8",
+    "status": "Reported in the paper; not verified from original per-run logs."
   }
 }

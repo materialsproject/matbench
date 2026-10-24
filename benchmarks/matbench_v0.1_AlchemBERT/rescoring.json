@@ -1,0 +1,1666 @@
+{
+  "artifact_sha256": "a0bb054a3a32b09041940aa90a7adc4e63a538811af430194057736ea5bd3daf",
+  "fold_count": 60,
+  "not_rescored": [
+    "matbench_expt_is_metal"
+  ],
+  "not_rescored_data_requirements": {
+    "matbench_expt_is_metal": {
+      "filename": "matbench_expt_is_metal.json.gz",
+      "sha256": "8f2a4f9bacdcbc5c2c73615629ee7986f09d39bed40ba7db52b61b2889730887",
+      "url": "https://ml.materialsproject.org/projects/matbench_expt_is_metal.json.gz"
+    }
+  },
+  "prediction_alignment": "Exact official fold-ID sets; values looked up by sample ID",
+  "scope": "Re-score stored ID-keyed predictions; no retraining or proof of prediction provenance",
+  "software": {
+    "data_ops_sha256": "f791263c675c45b6938c78d856676a6821ac6879526bc9aca7d82523303c3414",
+    "ijson": "3.6.0",
+    "matbench": "0.6",
+    "numpy": "2.3.5",
+    "rescore_script_sha256": "3889b0f348e28eb99c045dcdc9429a5cc2c3f36400ba300ed158512e9ed116e0",
+    "scikit-learn": "1.8.0"
+  },
+  "spec_sha256": {
+    "matbench_v0.1_dataset_metadata.json": "bd8d2962406a1829bda984c38c36b4f3ce6acc20e46d34a42d3ba5294a1df787",
+    "matbench_v0.1_validation.json": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d"
+  },
+  "task_count": 12,
+  "tasks": {
+    "matbench_dielectric": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 953,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.23815791461424762,
+            "mape": 0.08266346219325373,
+            "max_error": 14.505836544501845,
+            "rmse": 0.7001456010055934
+          },
+          "stored_scores": {
+            "mae": 0.23815791461424762,
+            "mape": 0.08266346219325373,
+            "max_error": 14.505836544501845,
+            "rmse": 0.7001456010055934
+          }
+        },
+        "fold_1": {
+          "n_samples": 953,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.3108184170649739,
+            "mape": 0.09372623791734422,
+            "max_error": 19.693459842224282,
+            "rmse": 1.086609984456592
+          },
+          "stored_scores": {
+            "mae": 0.3108184170649739,
+            "mape": 0.09372623791734422,
+            "max_error": 19.693459842224282,
+            "rmse": 1.086609984456592
+          }
+        },
+        "fold_2": {
+          "n_samples": 953,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.4506525077918948,
+            "mape": 0.09388835010646714,
+            "max_error": 59.057765664303055,
+            "rmse": 2.962076032608174
+          },
+          "stored_scores": {
+            "mae": 0.4506525077918948,
+            "mape": 0.09388835010646714,
+            "max_error": 59.057765664303055,
+            "rmse": 2.962076032608174
+          }
+        },
+        "fold_3": {
+          "n_samples": 953,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.34003888705804536,
+            "mape": 0.07723912260756667,
+            "max_error": 53.51224305995247,
+            "rmse": 2.320464835177712
+          },
+          "stored_scores": {
+            "mae": 0.34003888705804536,
+            "mape": 0.07723912260756667,
+            "max_error": 53.51224305995247,
+            "rmse": 2.320464835177712
+          }
+        },
+        "fold_4": {
+          "n_samples": 952,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.3329187850473747,
+            "mape": 0.09510369740032784,
+            "max_error": 28.14636804076117,
+            "rmse": 1.6259235632904117
+          },
+          "stored_scores": {
+            "mae": 0.3329187850473747,
+            "mape": 0.09510369740032784,
+            "max_error": 28.14636804076117,
+            "rmse": 1.6259235632904117
+          }
+        }
+      },
+      "label_source": {
+        "filename": "matbench_dielectric.json.gz",
+        "kind": "official_matminer_dataset",
+        "sha256": "83befa09bc2ec2f4b6143afc413157827a90e5e2e42c1eb507ccfa01bf26a1d6",
+        "url": "https://ml.materialsproject.org/projects/matbench_dielectric.json.gz",
+        "verified_public_mirror": "https://ndownloader.figshare.com/files/17476067"
+      },
+      "means": {
+        "mae": {
+          "recomputed": 0.3345173023153073,
+          "stored": 0.3345173023153073
+        },
+        "mape": {
+          "recomputed": 0.08852417404499192,
+          "stored": 0.08852417404499192
+        },
+        "max_error": {
+          "recomputed": 34.983134630348566,
+          "stored": 34.983134630348566
+        },
+        "rmse": {
+          "recomputed": 1.7390440033076966,
+          "stored": 1.7390440033076966
+        }
+      },
+      "n_samples": 4764,
+      "task_type": "regression"
+    },
+    "matbench_expt_gap": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 921,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.36287029089,
+            "mape": 0.36807016770888723,
+            "max_error": 6.6809187,
+            "rmse": 0.8566279148549333
+          },
+          "stored_scores": {
+            "mae": 0.36287029089,
+            "mape": 0.36807016770888723,
+            "max_error": 6.6809187,
+            "rmse": 0.8566279148549333
+          }
+        },
+        "fold_1": {
+          "n_samples": 921,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.37449394268163955,
+            "mape": 0.3274719274952096,
+            "max_error": 7.3185970000000005,
+            "rmse": 0.8235985594161604
+          },
+          "stored_scores": {
+            "mae": 0.37449394268163955,
+            "mape": 0.3274719274952096,
+            "max_error": 7.3185970000000005,
+            "rmse": 0.8235985594161604
+          }
+        },
+        "fold_2": {
+          "n_samples": 921,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.4127963428781613,
+            "mape": 0.3933912893991718,
+            "max_error": 9.858255358000001,
+            "rmse": 0.9444167370471646
+          },
+          "stored_scores": {
+            "mae": 0.4127963428781613,
+            "mape": 0.3933912893991718,
+            "max_error": 9.858255358000001,
+            "rmse": 0.9444167370471646
+          }
+        },
+        "fold_3": {
+          "n_samples": 921,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.36670462656254615,
+            "mape": 0.3969696131945897,
+            "max_error": 7.1650163000000004,
+            "rmse": 0.8409678016397601
+          },
+          "stored_scores": {
+            "mae": 0.36670462656254615,
+            "mape": 0.3969696131945897,
+            "max_error": 7.1650163000000004,
+            "rmse": 0.8409678016397601
+          }
+        },
+        "fold_4": {
+          "n_samples": 920,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.35603583345444456,
+            "mape": 0.4507769441894911,
+            "max_error": 4.761064,
+            "rmse": 0.7973229969356164
+          },
+          "stored_scores": {
+            "mae": 0.35603583345444456,
+            "mape": 0.4507769441894911,
+            "max_error": 4.761064,
+            "rmse": 0.7973229969356164
+          }
+        }
+      },
+      "label_source": {
+        "filename": "expt_gap_kingsbury.json.gz",
+        "identity_evidence": "Matminer describes expt_gap_kingsbury as identical to matbench_expt_gap, with likely MP IDs added and columns renamed. Use expt_gap as the target in the unchanged integer index order.",
+        "identity_evidence_url": "https://github.com/hackingmaterials/matminer/blob/be0f096b6b4f59374a9ae00b8fd84321fc3dccbc/src/matminer/datasets/dataset_metadata.json",
+        "kind": "official_matminer_derivative",
+        "original_benchmark_archive_sha256": "783e7d1461eb83b00b2f2942da4b95fda5e58a0d1ae26b581c24cf8a82ca75b2",
+        "sha256": "b36bf5bfe3782c2a2372422c64b8a86fd1d30709559a6dc0c30e4c8ac5ab3e96",
+        "url": "https://ndownloader.figshare.com/files/28232598"
+      },
+      "means": {
+        "mae": {
+          "recomputed": 0.37458020729335834,
+          "stored": 0.37458020729335834
+        },
+        "mape": {
+          "recomputed": 0.38733598839746985,
+          "stored": 0.38733598839746985
+        },
+        "max_error": {
+          "recomputed": 7.1567702716,
+          "stored": 7.1567702716
+        },
+        "rmse": {
+          "recomputed": 0.8525868019787269,
+          "stored": 0.8525868019787269
+        }
+      },
+      "n_samples": 4604,
+      "task_type": "regression"
+    },
+    "matbench_glass": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 1136,
+          "recomputed_minus_stored": {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "f1": 0.0,
+            "rocauc": 0.1400831629021142
+          },
+          "recomputed_scores": {
+            "accuracy": 0.8318661971830986,
+            "balanced_accuracy": 0.7610365984565146,
+            "f1": 0.8870490833826138,
+            "rocauc": 0.9011197613586288
+          },
+          "stored_scores": {
+            "accuracy": 0.8318661971830986,
+            "balanced_accuracy": 0.7610365984565146,
+            "f1": 0.8870490833826138,
+            "rocauc": 0.7610365984565146
+          }
+        },
+        "fold_1": {
+          "n_samples": 1136,
+          "recomputed_minus_stored": {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "f1": 0.0,
+            "rocauc": 0.11616064601906573
+          },
+          "recomputed_scores": {
+            "accuracy": 0.8098591549295775,
+            "balanced_accuracy": 0.7572494472755487,
+            "f1": 0.8682926829268293,
+            "rocauc": 0.8734100932946144
+          },
+          "stored_scores": {
+            "accuracy": 0.8098591549295775,
+            "balanced_accuracy": 0.7572494472755487,
+            "f1": 0.8682926829268293,
+            "rocauc": 0.7572494472755487
+          }
+        },
+        "fold_2": {
+          "n_samples": 1136,
+          "recomputed_minus_stored": {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "f1": 0.0,
+            "rocauc": 0.09410063163128102
+          },
+          "recomputed_scores": {
+            "accuracy": 0.8204225352112676,
+            "balanced_accuracy": 0.7718858167327676,
+            "f1": 0.8753056234718827,
+            "rocauc": 0.8659864483640486
+          },
+          "stored_scores": {
+            "accuracy": 0.8204225352112676,
+            "balanced_accuracy": 0.7718858167327676,
+            "f1": 0.8753056234718827,
+            "rocauc": 0.7718858167327676
+          }
+        },
+        "fold_3": {
+          "n_samples": 1136,
+          "recomputed_minus_stored": {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "f1": 0.0,
+            "rocauc": 0.11398929578950145
+          },
+          "recomputed_scores": {
+            "accuracy": 0.8318661971830986,
+            "balanced_accuracy": 0.7862415867240671,
+            "f1": 0.8831804281345565,
+            "rocauc": 0.9002308825135685
+          },
+          "stored_scores": {
+            "accuracy": 0.8318661971830986,
+            "balanced_accuracy": 0.7862415867240671,
+            "f1": 0.8831804281345565,
+            "rocauc": 0.7862415867240671
+          }
+        },
+        "fold_4": {
+          "n_samples": 1136,
+          "recomputed_minus_stored": {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "f1": 0.0,
+            "rocauc": 0.10102899025623047
+          },
+          "recomputed_scores": {
+            "accuracy": 0.8230633802816901,
+            "balanced_accuracy": 0.7746447309446598,
+            "f1": 0.8772144166157605,
+            "rocauc": 0.8756737212008903
+          },
+          "stored_scores": {
+            "accuracy": 0.8230633802816901,
+            "balanced_accuracy": 0.7746447309446598,
+            "f1": 0.8772144166157605,
+            "rocauc": 0.7746447309446598
+          }
+        }
+      },
+      "label_source": {
+        "filename": "matbench_glass.json.gz",
+        "kind": "official_matminer_dataset",
+        "sha256": "36beb654e2a463ee2a6572105bea0ca2961eee7c7b26a25377bff2c3b338e53a",
+        "url": "https://ml.materialsproject.org/projects/matbench_glass.json.gz",
+        "verified_public_mirror": "https://ndownloader.figshare.com/files/17494637"
+      },
+      "means": {
+        "accuracy": {
+          "recomputed": 0.8234154929577465,
+          "stored": 0.8234154929577465
+        },
+        "balanced_accuracy": {
+          "recomputed": 0.7702116360267115,
+          "stored": 0.7702116360267115
+        },
+        "f1": {
+          "recomputed": 0.8782084469063286,
+          "stored": 0.8782084469063286
+        },
+        "rocauc": {
+          "recomputed": 0.8832841813463501,
+          "stored": 0.7702116360267115
+        }
+      },
+      "n_samples": 5680,
+      "task_type": "classification"
+    },
+    "matbench_jdft2d": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 128,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 34.17463261882389,
+            "mape": 39.2753311665886,
+            "max_error": 270.349895,
+            "rmse": 56.04086831235156
+          },
+          "stored_scores": {
+            "mae": 34.17463261882389,
+            "mape": 39.2753311665886,
+            "max_error": 270.349895,
+            "rmse": 56.04086831235156
+          }
+        },
+        "fold_1": {
+          "n_samples": 127,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 45.25020297058192,
+            "mape": 0.3003970160088413,
+            "max_error": 656.7111950000002,
+            "rmse": 110.5915711625609
+          },
+          "stored_scores": {
+            "mae": 45.25020297058192,
+            "mape": 0.3003970160088413,
+            "max_error": 656.7111950000002,
+            "rmse": 110.5915711625609
+          }
+        },
+        "fold_2": {
+          "n_samples": 127,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 65.84994815023126,
+            "mape": 0.6655669836303689,
+            "max_error": 1061.2963999999997,
+            "rmse": 181.95616442123566
+          },
+          "stored_scores": {
+            "mae": 65.84994815023126,
+            "mape": 0.6655669836303689,
+            "max_error": 1061.2963999999997,
+            "rmse": 181.95616442123566
+          }
+        },
+        "fold_3": {
+          "n_samples": 127,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 36.208589326756574,
+            "mape": 0.3011751510491364,
+            "max_error": 321.2863985714288,
+            "rmse": 70.50719184419339
+          },
+          "stored_scores": {
+            "mae": 36.208589326756574,
+            "mape": 0.3011751510491364,
+            "max_error": 321.2863985714288,
+            "rmse": 70.50719184419339
+          }
+        },
+        "fold_4": {
+          "n_samples": 127,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 45.97575049408035,
+            "mape": 0.5383941745219982,
+            "max_error": 1523.8740057142857,
+            "rmse": 160.20513282880196
+          },
+          "stored_scores": {
+            "mae": 45.97575049408035,
+            "mape": 0.5383941745219982,
+            "max_error": 1523.8740057142857,
+            "rmse": 160.20513282880196
+          }
+        }
+      },
+      "label_source": {
+        "filename": "matbench_jdft2d.json.gz",
+        "kind": "official_matminer_dataset",
+        "sha256": "26057dc4524e193e32abffb296ce819b58b6e11d1278cae329a2f97817a4eddf",
+        "url": "https://ml.materialsproject.org/projects/matbench_jdft2d.json.gz",
+        "verified_public_mirror": "https://ndownloader.figshare.com/files/17476046"
+      },
+      "means": {
+        "mae": {
+          "recomputed": 45.4918247120948,
+          "stored": 45.4918247120948
+        },
+        "mape": {
+          "recomputed": 8.216172898359789,
+          "stored": 8.216172898359789
+        },
+        "max_error": {
+          "recomputed": 766.7035788571429,
+          "stored": 766.7035788571429
+        },
+        "rmse": {
+          "recomputed": 115.8601857138287,
+          "stored": 115.8601857138287
+        }
+      },
+      "n_samples": 636,
+      "task_type": "regression"
+    },
+    "matbench_log_gvrh": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 2198,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.10258575075247624,
+            "mape": 0.08279839288537535,
+            "max_error": 0.9980258452803377,
+            "rmse": 0.15295392878740202
+          },
+          "stored_scores": {
+            "mae": 0.10258575075247624,
+            "mape": 0.08279839288537535,
+            "max_error": 0.9980258452803377,
+            "rmse": 0.15295392878740202
+          }
+        },
+        "fold_1": {
+          "n_samples": 2198,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.10027916523762095,
+            "mape": 0.07895918551226108,
+            "max_error": 1.3257027043360188,
+            "rmse": 0.1493528030103816
+          },
+          "stored_scores": {
+            "mae": 0.10027916523762095,
+            "mape": 0.07895918551226108,
+            "max_error": 1.3257027043360188,
+            "rmse": 0.1493528030103816
+          }
+        },
+        "fold_2": {
+          "n_samples": 2197,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.09625441583679265,
+            "mape": 0.07712821839037995,
+            "max_error": 1.0372632496163563,
+            "rmse": 0.14522764369604685
+          },
+          "stored_scores": {
+            "mae": 0.09625441583679265,
+            "mape": 0.07712821839037995,
+            "max_error": 1.0372632496163563,
+            "rmse": 0.14522764369604685
+          }
+        },
+        "fold_3": {
+          "n_samples": 2197,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.09944971861364901,
+            "mape": 0.07807577918872285,
+            "max_error": 0.96012735,
+            "rmse": 0.14554236600763187
+          },
+          "stored_scores": {
+            "mae": 0.09944971861364901,
+            "mape": 0.07807577918872285,
+            "max_error": 0.96012735,
+            "rmse": 0.14554236600763187
+          }
+        },
+        "fold_4": {
+          "n_samples": 2197,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.10053362339787081,
+            "mape": 0.07886522102586839,
+            "max_error": 0.8615641956639811,
+            "rmse": 0.14777091028128003
+          },
+          "stored_scores": {
+            "mae": 0.10053362339787081,
+            "mape": 0.07886522102586839,
+            "max_error": 0.8615641956639811,
+            "rmse": 0.14777091028128003
+          }
+        }
+      },
+      "label_source": {
+        "filename": "matbench_log_gvrh.json.gz",
+        "kind": "official_matminer_dataset",
+        "sha256": "098af941f4c663270f1fe21abf20ffad6fb85ecbfcba5786ceac03983ac29da7",
+        "url": "https://ml.materialsproject.org/projects/matbench_log_gvrh.json.gz",
+        "verified_public_mirror": "https://ndownloader.figshare.com/files/17476064"
+      },
+      "means": {
+        "mae": {
+          "recomputed": 0.09982053476768193,
+          "stored": 0.09982053476768193
+        },
+        "mape": {
+          "recomputed": 0.07916535940052152,
+          "stored": 0.07916535940052152
+        },
+        "max_error": {
+          "recomputed": 1.0365366689793387,
+          "stored": 1.0365366689793387
+        },
+        "rmse": {
+          "recomputed": 0.14816953035654848,
+          "stored": 0.14816953035654848
+        }
+      },
+      "n_samples": 10987,
+      "task_type": "regression"
+    },
+    "matbench_log_kvrh": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 2198,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.07738683970579006,
+            "mape": 0.05229856156905093,
+            "max_error": 1.6711653,
+            "rmse": 0.13822526606808275
+          },
+          "stored_scores": {
+            "mae": 0.07738683970579006,
+            "mape": 0.05229856156905093,
+            "max_error": 1.6711653,
+            "rmse": 0.13822526606808275
+          }
+        },
+        "fold_1": {
+          "n_samples": 2198,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.07459974760869206,
+            "mape": 0.04898338493435812,
+            "max_error": 1.720463,
+            "rmse": 0.1339273383376429
+          },
+          "stored_scores": {
+            "mae": 0.07459974760869206,
+            "mape": 0.04898338493435812,
+            "max_error": 1.720463,
+            "rmse": 0.1339273383376429
+          }
+        },
+        "fold_2": {
+          "n_samples": 2197,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.07435966786702312,
+            "mape": 0.04951752414911857,
+            "max_error": 1.0924042452803375,
+            "rmse": 0.1281648159661161
+          },
+          "stored_scores": {
+            "mae": 0.07435966786702312,
+            "mape": 0.04951752414911857,
+            "max_error": 1.0924042452803375,
+            "rmse": 0.1281648159661161
+          }
+        },
+        "fold_3": {
+          "n_samples": 2197,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.07794950534225503,
+            "mape": 0.05656752339095201,
+            "max_error": 1.0314042043360188,
+            "rmse": 0.13442790386128953
+          },
+          "stored_scores": {
+            "mae": 0.07794950534225503,
+            "mape": 0.05656752339095201,
+            "max_error": 1.0314042043360188,
+            "rmse": 0.13442790386128953
+          }
+        },
+        "fold_4": {
+          "n_samples": 2197,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.0783041308039184,
+            "mape": 0.05268751373619498,
+            "max_error": 1.4255846,
+            "rmse": 0.13889857047375853
+          },
+          "stored_scores": {
+            "mae": 0.0783041308039184,
+            "mape": 0.05268751373619498,
+            "max_error": 1.4255846,
+            "rmse": 0.13889857047375853
+          }
+        }
+      },
+      "label_source": {
+        "filename": "matbench_log_kvrh.json.gz",
+        "kind": "official_matminer_dataset",
+        "sha256": "44b113ddb7e23aa18731a62c74afa7e5aa654199e0db5f951c8248a00955c9cd",
+        "url": "https://ml.materialsproject.org/projects/matbench_log_kvrh.json.gz",
+        "verified_public_mirror": "https://ndownloader.figshare.com/files/17476061"
+      },
+      "means": {
+        "mae": {
+          "recomputed": 0.07651997826553573,
+          "stored": 0.07651997826553573
+        },
+        "mape": {
+          "recomputed": 0.05201090155593492,
+          "stored": 0.05201090155593492
+        },
+        "max_error": {
+          "recomputed": 1.3882042699232713,
+          "stored": 1.3882042699232713
+        },
+        "rmse": {
+          "recomputed": 0.13472877894137797,
+          "stored": 0.13472877894137797
+        }
+      },
+      "n_samples": 10987,
+      "task_type": "regression"
+    },
+    "matbench_mp_e_form": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 26551,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": -1.1102230246251565e-16,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.0646640246970713,
+            "mape": 0.5567368548442828,
+            "max_error": 4.135247264314516,
+            "rmse": 0.14330265269328513
+          },
+          "stored_scores": {
+            "mae": 0.0646640246970713,
+            "mape": 0.5567368548442829,
+            "max_error": 4.135247264314516,
+            "rmse": 0.14330265269328513
+          }
+        },
+        "fold_1": {
+          "n_samples": 26551,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": -1.1102230246251565e-16,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.062485358478935785,
+            "mape": 0.34254487560913105,
+            "max_error": 3.270692995198573,
+            "rmse": 0.14047280540180587
+          },
+          "stored_scores": {
+            "mae": 0.062485358478935785,
+            "mape": 0.34254487560913116,
+            "max_error": 3.270692995198573,
+            "rmse": 0.14047280540180587
+          }
+        },
+        "fold_2": {
+          "n_samples": 26550,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 5.551115123125783e-17,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.0602650981709599,
+            "mape": 0.3086973792443748,
+            "max_error": 2.48749903475,
+            "rmse": 0.13071776275089694
+          },
+          "stored_scores": {
+            "mae": 0.0602650981709599,
+            "mape": 0.30869737924437474,
+            "max_error": 2.48749903475,
+            "rmse": 0.13071776275089694
+          }
+        },
+        "fold_3": {
+          "n_samples": 26550,
+          "recomputed_minus_stored": {
+            "mae": -6.938893903907228e-18,
+            "mape": 5.551115123125783e-17,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.06165908741609175,
+            "mape": 0.37051373097710905,
+            "max_error": 2.5467860931249997,
+            "rmse": 0.13607684796673386
+          },
+          "stored_scores": {
+            "mae": 0.06165908741609176,
+            "mape": 0.370513730977109,
+            "max_error": 2.5467860931249997,
+            "rmse": 0.13607684796673386
+          }
+        },
+        "fold_4": {
+          "n_samples": 26550,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.060374941271426126,
+            "mape": 0.4014019704411697,
+            "max_error": 2.7423705369050007,
+            "rmse": 0.13021804333507414
+          },
+          "stored_scores": {
+            "mae": 0.060374941271426126,
+            "mape": 0.4014019704411697,
+            "max_error": 2.7423705369050007,
+            "rmse": 0.13021804333507414
+          }
+        }
+      },
+      "label_source": {
+        "filename": "matbench_mp_e_form.json.gz",
+        "kind": "official_matminer_dataset",
+        "sha256": "dedcb1d4ba2e3e50dbdd45ba5bc647a00e9c2bcf8f8bf556dc8e92caa39eb21f",
+        "url": "https://ml.materialsproject.org/projects/matbench_mp_e_form.json.gz",
+        "verified_public_mirror": "https://ndownloader.figshare.com/files/17476028"
+      },
+      "means": {
+        "mae": {
+          "recomputed": 0.061889702006896974,
+          "stored": 0.061889702006896974
+        },
+        "mape": {
+          "recomputed": 0.3959789622232135,
+          "stored": 0.3959789622232135
+        },
+        "max_error": {
+          "recomputed": 3.036519184858618,
+          "stored": 3.036519184858618
+        },
+        "rmse": {
+          "recomputed": 0.1361576224295592,
+          "stored": 0.1361576224295592
+        }
+      },
+      "n_samples": 132752,
+      "task_type": "regression"
+    },
+    "matbench_mp_gap": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 21223,
+          "recomputed_minus_stored": {
+            "mae": 5.551115123125783e-17,
+            "mape": 4.440892098500626e-16,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.25195842573041904,
+            "mape": 2.652236912404293,
+            "max_error": 6.7687154,
+            "rmse": 0.5736860407775006
+          },
+          "stored_scores": {
+            "mae": 0.251958425730419,
+            "mape": 2.6522369124042924,
+            "max_error": 6.7687154,
+            "rmse": 0.5736860407775006
+          }
+        },
+        "fold_1": {
+          "n_samples": 21223,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.2558527953404153,
+            "mape": 3.121163554115212,
+            "max_error": 7.831303,
+            "rmse": 0.585453815934538
+          },
+          "stored_scores": {
+            "mae": 0.2558527953404153,
+            "mape": 3.121163554115212,
+            "max_error": 7.831303,
+            "rmse": 0.585453815934538
+          }
+        },
+        "fold_2": {
+          "n_samples": 21223,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.25384978822250936,
+            "mape": 4.933653524349654,
+            "max_error": 7.5589372699999995,
+            "rmse": 0.5745460663332509
+          },
+          "stored_scores": {
+            "mae": 0.25384978822250936,
+            "mape": 4.933653524349654,
+            "max_error": 7.5589372699999995,
+            "rmse": 0.5745460663332509
+          }
+        },
+        "fold_3": {
+          "n_samples": 21222,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 1.1102230246251565e-16
+          },
+          "recomputed_scores": {
+            "mae": 0.25160545402767226,
+            "mape": 7.794125098618771,
+            "max_error": 7.3476291,
+            "rmse": 0.5723721092547509
+          },
+          "stored_scores": {
+            "mae": 0.25160545402767226,
+            "mape": 7.794125098618771,
+            "max_error": 7.3476291,
+            "rmse": 0.5723721092547508
+          }
+        },
+        "fold_4": {
+          "n_samples": 21222,
+          "recomputed_minus_stored": {
+            "mae": 5.551115123125783e-17,
+            "mape": 1.7763568394002505e-15,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.25843875141165057,
+            "mape": 7.755663891986251,
+            "max_error": 6.6484307000000005,
+            "rmse": 0.5863328586115711
+          },
+          "stored_scores": {
+            "mae": 0.2584387514116505,
+            "mape": 7.7556638919862495,
+            "max_error": 6.6484307000000005,
+            "rmse": 0.5863328586115711
+          }
+        }
+      },
+      "label_source": {
+        "filename": "matbench_mp_gap.json.gz",
+        "kind": "official_matminer_dataset",
+        "sha256": "58b65746bd88329986ed66031a2ac1369c7c522f7bc9f9081528e07097c2c057",
+        "url": "https://ml.materialsproject.org/projects/matbench_mp_gap.json.gz",
+        "verified_public_mirror": "https://ndownloader.figshare.com/files/17084741"
+      },
+      "means": {
+        "mae": {
+          "recomputed": 0.2543410429465333,
+          "stored": 0.25434104294653326
+        },
+        "mape": {
+          "recomputed": 5.251368596294836,
+          "stored": 5.251368596294836
+        },
+        "max_error": {
+          "recomputed": 7.231003094,
+          "stored": 7.231003094
+        },
+        "rmse": {
+          "recomputed": 0.5784781781823223,
+          "stored": 0.5784781781823223
+        }
+      },
+      "n_samples": 106113,
+      "task_type": "regression"
+    },
+    "matbench_mp_is_metal": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 21223,
+          "recomputed_minus_stored": {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "f1": 0.0,
+            "rocauc": 0.0667674643000038
+          },
+          "recomputed_scores": {
+            "accuracy": 0.8954436224850398,
+            "balanced_accuracy": 0.8907143197200895,
+            "f1": 0.8766605524984714,
+            "rocauc": 0.9574817840200933
+          },
+          "stored_scores": {
+            "accuracy": 0.8954436224850398,
+            "balanced_accuracy": 0.8907143197200895,
+            "f1": 0.8766605524984714,
+            "rocauc": 0.8907143197200895
+          }
+        },
+        "fold_1": {
+          "n_samples": 21223,
+          "recomputed_minus_stored": {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "f1": 0.0,
+            "rocauc": 0.0686496158512111
+          },
+          "recomputed_scores": {
+            "accuracy": 0.892522263581963,
+            "balanced_accuracy": 0.884323019233231,
+            "f1": 0.8692312102275984,
+            "rocauc": 0.9529726350844421
+          },
+          "stored_scores": {
+            "accuracy": 0.892522263581963,
+            "balanced_accuracy": 0.884323019233231,
+            "f1": 0.8692312102275984,
+            "rocauc": 0.884323019233231
+          }
+        },
+        "fold_2": {
+          "n_samples": 21223,
+          "recomputed_minus_stored": {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "f1": 0.0,
+            "rocauc": 0.07352229782480924
+          },
+          "recomputed_scores": {
+            "accuracy": 0.8892239551430052,
+            "balanced_accuracy": 0.8808756400919864,
+            "f1": 0.8651098743473521,
+            "rocauc": 0.9543979379167956
+          },
+          "stored_scores": {
+            "accuracy": 0.8892239551430052,
+            "balanced_accuracy": 0.8808756400919864,
+            "f1": 0.8651098743473521,
+            "rocauc": 0.8808756400919864
+          }
+        },
+        "fold_3": {
+          "n_samples": 21222,
+          "recomputed_minus_stored": {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "f1": 0.0,
+            "rocauc": 0.07056771144648988
+          },
+          "recomputed_scores": {
+            "accuracy": 0.890208274432193,
+            "balanced_accuracy": 0.8835878487427877,
+            "f1": 0.868376454637894,
+            "rocauc": 0.9541555601892775
+          },
+          "stored_scores": {
+            "accuracy": 0.890208274432193,
+            "balanced_accuracy": 0.8835878487427877,
+            "f1": 0.868376454637894,
+            "rocauc": 0.8835878487427876
+          }
+        },
+        "fold_4": {
+          "n_samples": 21222,
+          "recomputed_minus_stored": {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "f1": 0.0,
+            "rocauc": 0.06599990007784196
+          },
+          "recomputed_scores": {
+            "accuracy": 0.8943549147111488,
+            "balanced_accuracy": 0.8906131986148946,
+            "f1": 0.876487439400617,
+            "rocauc": 0.9566130986927364
+          },
+          "stored_scores": {
+            "accuracy": 0.8943549147111488,
+            "balanced_accuracy": 0.8906131986148946,
+            "f1": 0.876487439400617,
+            "rocauc": 0.8906131986148944
+          }
+        }
+      },
+      "label_source": {
+        "filename": "matbench_mp_is_metal.json.gz",
+        "kind": "official_matminer_dataset",
+        "sha256": "9a028ed5750a4c76ca36e9f3c8d48fe0bf3fb21b76ec2289e58ae7048d527919",
+        "url": "https://ml.materialsproject.org/projects/matbench_mp_is_metal.json.gz",
+        "verified_public_mirror": "https://ndownloader.figshare.com/files/17476034"
+      },
+      "means": {
+        "accuracy": {
+          "recomputed": 0.89235060607067,
+          "stored": 0.89235060607067
+        },
+        "balanced_accuracy": {
+          "recomputed": 0.8860228052805978,
+          "stored": 0.8860228052805978
+        },
+        "f1": {
+          "recomputed": 0.8711731062223866,
+          "stored": 0.8711731062223866
+        },
+        "rocauc": {
+          "recomputed": 0.9551242031806689,
+          "stored": 0.8860228052805977
+        }
+      },
+      "n_samples": 106113,
+      "task_type": "classification"
+    },
+    "matbench_perovskites": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 3786,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.04497263495454305,
+            "mape": 0.048068640269500265,
+            "max_error": 0.8168839000000001,
+            "rmse": 0.07601903697746992
+          },
+          "stored_scores": {
+            "mae": 0.04497263495454305,
+            "mape": 0.048068640269500265,
+            "max_error": 0.8168839000000001,
+            "rmse": 0.07601903697746992
+          }
+        },
+        "fold_1": {
+          "n_samples": 3786,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.045990059254754356,
+            "mape": 0.048857451684078075,
+            "max_error": 0.9536842000000001,
+            "rmse": 0.07837632539777387
+          },
+          "stored_scores": {
+            "mae": 0.045990059254754356,
+            "mape": 0.048857451684078075,
+            "max_error": 0.9536842000000001,
+            "rmse": 0.07837632539777387
+          }
+        },
+        "fold_2": {
+          "n_samples": 3786,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.04147494963515584,
+            "mape": 0.042576439792224044,
+            "max_error": 0.7387906300000001,
+            "rmse": 0.06473010353061863
+          },
+          "stored_scores": {
+            "mae": 0.04147494963515584,
+            "mape": 0.042576439792224044,
+            "max_error": 0.7387906300000001,
+            "rmse": 0.06473010353061863
+          }
+        },
+        "fold_3": {
+          "n_samples": 3785,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.04142014425136063,
+            "mape": 0.04232505589132722,
+            "max_error": 0.78827746,
+            "rmse": 0.06740200994340864
+          },
+          "stored_scores": {
+            "mae": 0.04142014425136063,
+            "mape": 0.04232505589132722,
+            "max_error": 0.78827746,
+            "rmse": 0.06740200994340864
+          }
+        },
+        "fold_4": {
+          "n_samples": 3785,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 0.04208276620412153,
+            "mape": 0.03899663320633436,
+            "max_error": 0.8759793,
+            "rmse": 0.07161238243197633
+          },
+          "stored_scores": {
+            "mae": 0.04208276620412153,
+            "mape": 0.03899663320633436,
+            "max_error": 0.8759793,
+            "rmse": 0.07161238243197633
+          }
+        }
+      },
+      "label_source": {
+        "filename": "matbench_perovskites.json.gz",
+        "kind": "official_matminer_dataset",
+        "sha256": "4641e2417f8ec8b50096d2230864468dfa08278dc9d257c327f65d0305278483",
+        "url": "https://ml.materialsproject.org/projects/matbench_perovskites.json.gz",
+        "verified_public_mirror": "https://ndownloader.figshare.com/files/17494805"
+      },
+      "means": {
+        "mae": {
+          "recomputed": 0.04318811085998708,
+          "stored": 0.04318811085998708
+        },
+        "mape": {
+          "recomputed": 0.04416484416869279,
+          "stored": 0.04416484416869279
+        },
+        "max_error": {
+          "recomputed": 0.8347230980000001,
+          "stored": 0.8347230980000001
+        },
+        "rmse": {
+          "recomputed": 0.07162797165624948,
+          "stored": 0.07162797165624948
+        }
+      },
+      "n_samples": 18928,
+      "task_type": "regression"
+    },
+    "matbench_phonons": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 253,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 44.63375805639965,
+            "mape": 0.06303959102288592,
+            "max_error": 2487.057193797173,
+            "rmse": 177.5047367389532
+          },
+          "stored_scores": {
+            "mae": 44.63375805639965,
+            "mape": 0.06303959102288592,
+            "max_error": 2487.057193797173,
+            "rmse": 177.5047367389532
+          }
+        },
+        "fold_1": {
+          "n_samples": 253,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 44.4785107311546,
+            "mape": 0.07876945225951831,
+            "max_error": 771.3553626443852,
+            "rmse": 94.26918179562215
+          },
+          "stored_scores": {
+            "mae": 44.4785107311546,
+            "mape": 0.07876945225951831,
+            "max_error": 771.3553626443852,
+            "rmse": 94.26918179562215
+          }
+        },
+        "fold_2": {
+          "n_samples": 253,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 41.8526945297667,
+            "mape": 0.06774850708810194,
+            "max_error": 961.9970994346995,
+            "rmse": 96.55276434144086
+          },
+          "stored_scores": {
+            "mae": 41.8526945297667,
+            "mape": 0.06774850708810194,
+            "max_error": 961.9970994346995,
+            "rmse": 96.55276434144086
+          }
+        },
+        "fold_3": {
+          "n_samples": 253,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 49.50335194533133,
+            "mape": 0.07642458347648952,
+            "max_error": 2486.928390938709,
+            "rmse": 182.70230136476988
+          },
+          "stored_scores": {
+            "mae": 49.50335194533133,
+            "mape": 0.07642458347648952,
+            "max_error": 2486.928390938709,
+            "rmse": 182.70230136476988
+          }
+        },
+        "fold_4": {
+          "n_samples": 253,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 44.46875554667688,
+            "mape": 0.07475393756303737,
+            "max_error": 932.5536098031923,
+            "rmse": 100.30570528970432
+          },
+          "stored_scores": {
+            "mae": 44.46875554667688,
+            "mape": 0.07475393756303737,
+            "max_error": 932.5536098031923,
+            "rmse": 100.30570528970432
+          }
+        }
+      },
+      "label_source": {
+        "filename": "matbench_phonons.json.gz",
+        "kind": "official_matminer_dataset",
+        "sha256": "4db551f21ec5f577e6202725f10e34dfc509aa7df3a6bdaac497da7f6dbbb9b3",
+        "url": "https://ml.materialsproject.org/projects/matbench_phonons.json.gz",
+        "verified_public_mirror": "https://ndownloader.figshare.com/files/17476037"
+      },
+      "means": {
+        "mae": {
+          "recomputed": 44.987414161865836,
+          "stored": 44.987414161865836
+        },
+        "mape": {
+          "recomputed": 0.07214721428200661,
+          "stored": 0.07214721428200661
+        },
+        "max_error": {
+          "recomputed": 1527.978331323632,
+          "stored": 1527.978331323632
+        },
+        "rmse": {
+          "recomputed": 130.2669379060981,
+          "stored": 130.2669379060981
+        }
+      },
+      "n_samples": 1265,
+      "task_type": "regression"
+    },
+    "matbench_steels": {
+      "folds": {
+        "fold_0": {
+          "n_samples": 63,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 132.66319682539682,
+            "mape": 0.08794631981210463,
+            "max_error": 674.3863999999999,
+            "rmse": 191.61794795093599
+          },
+          "stored_scores": {
+            "mae": 132.66319682539682,
+            "mape": 0.08794631981210463,
+            "max_error": 674.3863999999999,
+            "rmse": 191.61794795093599
+          }
+        },
+        "fold_1": {
+          "n_samples": 63,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 131.03884603174603,
+            "mape": 0.09375491288953583,
+            "max_error": 692.3775999999998,
+            "rmse": 180.49915132531478
+          },
+          "stored_scores": {
+            "mae": 131.03884603174603,
+            "mape": 0.09375491288953583,
+            "max_error": 692.3775999999998,
+            "rmse": 180.49915132531478
+          }
+        },
+        "fold_2": {
+          "n_samples": 62,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 146.1359112903226,
+            "mape": 0.1031717286385073,
+            "max_error": 574.9950000000001,
+            "rmse": 200.8732888195285
+          },
+          "stored_scores": {
+            "mae": 146.1359112903226,
+            "mape": 0.1031717286385073,
+            "max_error": 574.9950000000001,
+            "rmse": 200.8732888195285
+          }
+        },
+        "fold_3": {
+          "n_samples": 62,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 130.31321612903224,
+            "mape": 0.08959616748743071,
+            "max_error": 405.58040000000005,
+            "rmse": 165.3391443156957
+          },
+          "stored_scores": {
+            "mae": 130.31321612903224,
+            "mape": 0.08959616748743071,
+            "max_error": 405.58040000000005,
+            "rmse": 165.3391443156957
+          }
+        },
+        "fold_4": {
+          "n_samples": 62,
+          "recomputed_minus_stored": {
+            "mae": 0.0,
+            "mape": 0.0,
+            "max_error": 0.0,
+            "rmse": 0.0
+          },
+          "recomputed_scores": {
+            "mae": 124.40948225806449,
+            "mape": 0.09046074823771556,
+            "max_error": 387.1785,
+            "rmse": 159.10947566362407
+          },
+          "stored_scores": {
+            "mae": 124.40948225806449,
+            "mape": 0.09046074823771556,
+            "max_error": 387.1785,
+            "rmse": 159.10947566362407
+          }
+        }
+      },
+      "label_source": {
+        "filename": "matbench_steels.json.gz",
+        "kind": "official_matminer_dataset",
+        "sha256": "473bc4957b2ea5e6465aef84bc29bb48ac34db27d69ea4ec5f508745c6fae252",
+        "url": "https://ml.materialsproject.org/projects/matbench_steels.json.gz",
+        "verified_public_mirror": "https://ndownloader.figshare.com/files/17476040"
+      },
+      "means": {
+        "mae": {
+          "recomputed": 132.91213050691243,
+          "stored": 132.91213050691243
+        },
+        "mape": {
+          "recomputed": 0.09298597541305881,
+          "stored": 0.09298597541305881
+        },
+        "max_error": {
+          "recomputed": 546.9035799999999,
+          "stored": 546.9035799999999
+        },
+        "rmse": {
+          "recomputed": 179.4878016150198,
+          "stored": 179.4878016150198
+        }
+      },
+      "n_samples": 312,
+      "task_type": "regression"
+    }
+  },
+  "upstream_commit": "4b7d0714849a917814115be380a64e7ace94be55"
+}
