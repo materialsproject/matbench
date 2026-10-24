@@ -71,12 +71,22 @@ path for subsequent runs.
 
 ## Dependencies and compute
 
-`requirements-reproduction.txt` documents an **invalid candidate environment**, detected by a GitHub
-Actions dependency-resolution check: `matbench==0.6` requires
-`matminer==0.7.4`, conflicting with the former candidate pin
-`matminer==0.9.3`. The original Kaggle `pip freeze` is unavailable.
-A separately tested model-inference environment and Matbench export
-environment are still required; no reproduced predictions are claimed.
+`requirements-reproduction.txt` now describes a **resolver-tested steels-specific**
+Python 3.11 environment based on `Rtx09x/TRIADS/main/requirements.txt`.
+GitHub Actions `pip install --dry-run` passed with the pinned versions on
+2026-10-24. This excludes `torch-geometric`, used for graph tasks rather than
+steels, and the `matbench` package, used only for official result export.
+
+Matbench 0.6 depends on matminer 0.7.4; the steels inference pins matminer
+0.9.3. These must **not** be installed together. A separate export
+environment handles Matbench's official validation API. The old Kaggle
+`pip freeze` is unavailable, so these candidate pins are not claimed to
+reproduce the historical training environment. The resolver test is not
+equivalent to a successful import or full checkpoint-level reproduction.
+
+The public Hugging Face model repository's actual steels path is
+`Rtx09x/TRIADS:weights/steels/weights.pt`; the old TRIADS README example
+`Rtx09/TRIADS:steels/weights.pt` is not the confirmed published path.
 
 Training environment reported by the author: Kaggle, a single NVIDIA T4 GPU.
 Author-reported training runtime: **under 20 minutes** on one NVIDIA T4 GPU. The exact timing was not recorded or independently verified.

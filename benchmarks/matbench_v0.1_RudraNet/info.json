@@ -15,7 +15,7 @@
       "gensim==4.3.3",
       "matplotlib==3.9.1",
       "tqdm==4.66.4",
-      "matbench==0.6"
+      "huggingface_hub==0.24.7"
     ]
   },
   "bibtex_refs": "@misc{tiwari2026triads,\n author = {Rudra Tiwari},\n title = {TRIADS: Tiny Recursive Information-Attention with Deep Supervision},\n year = {2026},\n doi = {10.5281/zenodo.19200579},\n url = {https://doi.org/10.5281/zenodo.19200579},\n note = {Research archive: https://github.com/Rtx09x/TRIADS}\n}\n@article{tshitoyan2019unsupervised,\n title = {Unsupervised word embeddings capture latent knowledge from materials science literature},\n author = {Tshitoyan, Vahe and others},\n journal = {Nature},\n year = {2019},\n doi = {10.1038/s41586-019-1335-8}\n}"
