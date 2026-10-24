@@ -50,6 +50,26 @@ mean is **99.7841 MPa** and the population standard deviation is
 **91.2028 MPa**. These numbers are recovered from the archived V13
 summary, not from new retraining.
 
+## Exact feature behavior in the verified environment
+
+The source featurizer builds Magpie (132 dimensions), the pretrained
+Mat2Vec context (200 dimensions), and an optional Matminer
+extra-descriptor block. With the pinned `matminer==0.9.3` stack, the
+original `MultipleFeaturizer` combination raises a charge-balance
+exception on the 312 fractional steel compositions. The original
+training code catches this exception and supplies a **200-dimensional
+zero-filled block** for those extra descriptors.
+
+An independent audit of all 312 compositions confirmed this behavior
+for every row, yielding uniform descriptor width and a model input of
+132 + 200 + 200 = 532 values. The archived five fold-level model
+states have a pooling-layer input dimension of 264 (64 attended
+features + 200 extra channels), matching the 200-channel fallback.
+Thus, the supplementary Matminer block is *inactive* for this tested
+steels pipeline, while Magpie and Mat2Vec remain the informative
+input components. This clarification does not alter the historical
+predictions or recorded MAEs.
+
 ## Verified software and export
 
 - **Inference environment:** [requirements-reproduction.txt](requirements-reproduction.txt)
@@ -97,7 +117,11 @@ The published Hugging Face repository
 (https://huggingface.co/Rtx09x/TRIADS) contains
 `weights/steels/weights.pt`. Its archive has **five fold-level state
 dictionaries** labelled `avg_42_123_7_0_99`, each containing weights for
-the 224,685-parameter V13A model. These are archived fold-level
+the 224,685-parameter V13A model. These five model states have been
+strictly loaded into the original architecture with PyTorch 2.3.1 CPU,
+and each produced finite outputs. For loading this archive, the input
+width is derived from the saved tensor shapes (200 extra channels)
+rather than relying on the archive's descriptive `n_extra` value. These are archived fold-level
 weights, not an identified set of 25 separately saved seed/fold
 checkpoints. The package, protocol, prediction-to-score mapping,
 and model weights should not be conflated with a verified replay of all
