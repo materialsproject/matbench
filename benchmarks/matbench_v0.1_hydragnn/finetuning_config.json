@@ -1,0 +1,63 @@
+{
+    "Verbosity": {
+        "level": 2
+    },
+    "NeuralNetwork": {
+        "Profile": {"enable": 1},
+        "Architecture": {
+            "freeze_conv_layers": false,
+            "output_heads": {
+                "graph": [
+                    {
+                        "type": "branch-0",
+                        "architecture": {
+                            "dim_pretrained": 50,
+                            "num_sharedlayers": 2,
+                            "dim_sharedlayers": 5,
+                            "num_headlayers": 2,
+                            "dim_headlayers": [
+                                50,
+                                25
+                            ]
+                        }
+                    }
+                ]
+            },
+            "task_weights": [1.0],
+            "output_dim": [
+                1
+            ],
+            "output_type": [
+                "graph"
+            ]
+        },
+        "Variables_of_interest": {
+            "input_node_features": [0, 1, 2, 3],
+            "output_names": ["pred"],
+            "output_index": [0],
+            "output_dim": [1],
+            "type": ["graph"],
+            "denormalize_output": false
+        },
+        "Training": {
+            "Checkpoint" : true,
+            "num_epoch": 10,
+            "perc_train": 0.7,
+            "loss_function_types": ["mae"],
+            "batch_size": 32,
+            "precision": "fp64",
+            "energy_target_mode": "total",
+            "continue": 1,
+            "startfrom": "existing_model",
+            "Optimizer": {
+                "type": "AdamW",
+                "learning_rate": 1e-4
+            }
+        }
+    },
+    "Visualization": {
+        "plot_init_solution": true,
+        "plot_hist_solution": false,
+        "create_plots": true
+    }
+}
