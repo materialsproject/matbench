@@ -4,5 +4,5 @@ mkdocstrings==1.0.8
 mkdocstrings-python==2.0.10
 mkdocs-autorefs==1.4.5
 griffelib==2.4.1
-pymatviz==0.4.4
+pymatviz==0.18.0
 matplotlib==3.8.4
