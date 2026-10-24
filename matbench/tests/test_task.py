@@ -452,6 +452,64 @@ class TestMatbenchTask(unittest.TestCase):
             with self.assertRaises(TypeError):
                 MatbenchTask.from_dict(wrong_dtype)
 
+    def test_partial_MSONability(self):
+        # A partially recorded task can be written and read back (#134)
+        ds = "matbench_steels"
+        mbt = MatbenchTask(ds, autoload=True)
+        recorded_folds = [1, 3]
+        for fold in recorded_folds:
+            _, test_outputs = mbt.get_test_data(
+                fold, as_type="tuple", include_target=True
+            )
+            mbt.record(fold, predictions=test_outputs)
+
+        partial_fname = os.path.join(TEST_DIR, f"partial_{ds}_output.json")
+        mbt.to_file(partial_fname)
+        mbt_partial = MatbenchTask.from_file(partial_fname)
+
+        self.assertFalse(mbt_partial.all_folds_recorded)
+        self.assertEqual(
+            [f for f, rec in mbt_partial.is_recorded.items() if rec],
+            recorded_folds,
+        )
+        for fold in recorded_folds:
+            fold_key = mbt.folds_map[fold]
+            self.assertEqual(
+                mbt_partial.results[fold_key].data, mbt.results[fold_key].data
+            )
+
+        # Full validation still requires all folds to be recorded
+        with self.assertRaises(ValueError):
+            mbt_partial.validate()
+
+        # Remaining folds can be recorded after loading
+        mbt_partial.load()
+        for fold in mbt_partial.folds:
+            if fold not in recorded_folds:
+                _, test_outputs = mbt_partial.get_test_data(
+                    fold, as_type="tuple", include_target=True
+                )
+                mbt_partial.record(fold, predictions=test_outputs)
+        self.assertTrue(mbt_partial.all_folds_recorded)
+        mbt_partial.validate()
+
+        # Folds which were never touched are allowed to be missing
+        partial = copy.deepcopy(mbt.as_dict())
+        partial["results"].pop("fold_0")
+        MatbenchTask.from_dict(partial)
+
+        # Unrecorded folds must not hold other results
+        leftover_results = copy.deepcopy(mbt.as_dict())
+        leftover_results["results"]["fold_3"].pop(MatbenchTask._DATA_KEY)
+        with self.assertRaises(ValueError):
+            MatbenchTask.from_dict(leftover_results)
+
+        # Extra fold keys are not allowed
+        extra_fold = copy.deepcopy(mbt.as_dict())
+        extra_fold["results"]["fold_99"] = {MatbenchTask._DATA_KEY: {}}
+        with self.assertRaises(KeyError):
+            MatbenchTask.from_dict(extra_fold)
+
     def test_autoload(self):
         mbt = MatbenchTask("matbench_steels", autoload=False)
         with self.assertRaises(ValueError):
