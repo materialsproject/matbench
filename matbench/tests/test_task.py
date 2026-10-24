@@ -493,19 +493,24 @@ class TestMatbenchTask(unittest.TestCase):
         self.assertTrue(mbt_partial.all_folds_recorded)
         mbt_partial.validate()
 
+        # Copy from the serialized json: as_dict() holds RecursiveDotDicts,
+        # which cannot be deep-copied
+        with open(partial_fname) as f:
+            partial_dict = json.load(f)
+
         # Folds which were never touched are allowed to be missing
-        partial = copy.deepcopy(mbt.as_dict())
+        partial = copy.deepcopy(partial_dict)
         partial["results"].pop("fold_0")
         MatbenchTask.from_dict(partial)
 
         # Unrecorded folds must not hold other results
-        leftover_results = copy.deepcopy(mbt.as_dict())
+        leftover_results = copy.deepcopy(partial_dict)
         leftover_results["results"]["fold_3"].pop(MatbenchTask._DATA_KEY)
         with self.assertRaises(ValueError):
             MatbenchTask.from_dict(leftover_results)
 
         # Extra fold keys are not allowed
-        extra_fold = copy.deepcopy(mbt.as_dict())
+        extra_fold = copy.deepcopy(partial_dict)
         extra_fold["results"]["fold_99"] = {MatbenchTask._DATA_KEY: {}}
         with self.assertRaises(KeyError):
             MatbenchTask.from_dict(extra_fold)
