@@ -1,7 +1,7 @@
 """
 ╔══════════════════════════════════════════════════════════════════════╗
 ║  TRM-MatSci V13 — 2-Layer SA + Multi-Seed Ensemble                   ║
-║  Dataset: matbench_steels │ 312 samples │ 5-Fold Nested CV          ║
+║  Dataset: matbench_steels │ 312 samples │ 5-Fold CV + inner holdout          ║
 ║                                                                      ║
 ║  V13A  2-Layer Self-Attention + Standard Deep Supervision            ║
 ║        d_attn=64, nhead=4, d_hidden=96, ff_dim=150, 20 steps       ║
