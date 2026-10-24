@@ -10,12 +10,16 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
+    groups:
+      pip:
+        patterns: ["*"]
     ignore:
       - dependency-name: "plotly"
       - dependency-name: "mkdocs"
-      # pymatviz>=0.5 requires plotly>=6, which is pinned above
-      - dependency-name: "pymatviz"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]
