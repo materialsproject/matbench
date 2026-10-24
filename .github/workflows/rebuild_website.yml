@@ -5,6 +5,11 @@ on:
   push:
     branches: [ main ]
 
+# only the newest run should rebuild and push docs; older ones would be rejected as non-fast-forward
+concurrency:
+  group: rebuild-docs
+  cancel-in-progress: true
+
 jobs:
   rebuild_docs:
     runs-on: ubuntu-latest
