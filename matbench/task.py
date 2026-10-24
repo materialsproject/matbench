@@ -452,6 +452,8 @@ class MatbenchTask(MSONable, MSONable2File):
             for one sample, it must be specified for all samples.
             If ci is specified but std is not, that must be
             consistent for all samples.
+        - Uncertainty must be recorded for either all folds or
+            none of them.
         Returns:
             (NoneType): Errors are thrown if benchmark not valid.
 
@@ -621,6 +623,27 @@ class MatbenchTask(MSONable, MSONable2File):
 
                 # Params key has no required form;
                 # it is up to the model to determine it.
+
+        # Uncertainty must be recorded for either all folds or none of them
+        folds_with_uncertainty = [
+            fold_key
+            for fold_key in self.folds_keys
+            if self.results[fold_key].get(self._UNCERTAINTY_KEY)
+        ]
+        if folds_with_uncertainty and len(folds_with_uncertainty) != len(
+            self.folds_keys
+        ):
+            folds_without_uncertainty = [
+                fold_key
+                for fold_key in self.folds_keys
+                if fold_key not in folds_with_uncertainty
+            ]
+            raise ValueError(
+                f"Uncertainty must be recorded for all folds or none for task "
+                f"{self.dataset_name}. Found uncertainty for folds "
+                f"{folds_with_uncertainty} but not for folds "
+                f"{folds_without_uncertainty}."
+            )
 
         logger.debug(f"Data for {self.dataset_name} successfully validated.")
 
