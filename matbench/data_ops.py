@@ -19,18 +19,16 @@ from sklearn.metrics import (
 )
 
 from matbench.constants import (
+    BOOL_TYPES,
     CLF_KEY,
     CLF_METRICS,
     CLF_THRESH,
+    FLOAT_TYPES,
     MBID_KEY,
     REG_KEY,
     REG_METRICS,
 )
 from matbench.metadata import mbv01_metadata
-
-# numpy scalars (e.g. np.float32, np.bool_) are not subclasses of the builtins
-FLOAT_TYPES = (float, np.floating)
-BOOL_TYPES = (bool, np.bool_)
 
 logger = logging.getLogger(__name__)
 
