@@ -3277,7 +3277,30 @@ task, including the training and testing splits for each fold.</p>
 <span class="normal">707</span>
 <span class="normal">708</span>
 <span class="normal">709</span>
-<span class="normal">710</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MatbenchTask</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">MSONable2File</span><span class="p">):</span>
+<span class="normal">710</span>
+<span class="normal">711</span>
+<span class="normal">712</span>
+<span class="normal">713</span>
+<span class="normal">714</span>
+<span class="normal">715</span>
+<span class="normal">716</span>
+<span class="normal">717</span>
+<span class="normal">718</span>
+<span class="normal">719</span>
+<span class="normal">720</span>
+<span class="normal">721</span>
+<span class="normal">722</span>
+<span class="normal">723</span>
+<span class="normal">724</span>
+<span class="normal">725</span>
+<span class="normal">726</span>
+<span class="normal">727</span>
+<span class="normal">728</span>
+<span class="normal">729</span>
+<span class="normal">730</span>
+<span class="normal">731</span>
+<span class="normal">732</span>
+<span class="normal">733</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MatbenchTask</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">MSONable2File</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""The core interface for running a Matbench task and recording its results.</span>
 
 <span class="sd">    MatbenchTask handles creating training/validation and testing sets, as</span>
@@ -3704,6 +3727,8 @@ task, including the training and testing splits for each fold.</p>
 <span class="sd">            for one sample, it must be specified for all samples.</span>
 <span class="sd">            If ci is specified but std is not, that must be</span>
 <span class="sd">            consistent for all samples.</span>
+<span class="sd">        - Uncertainty must be recorded for either all folds or</span>
+<span class="sd">            none of them.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            (NoneType): Errors are thrown if benchmark not valid.</span>
 
@@ -3873,6 +3898,27 @@ task, including the training and testing splits for each fold.</p>
 
                 <span class="c1"># Params key has no required form;</span>
                 <span class="c1"># it is up to the model to determine it.</span>
+
+        <span class="c1"># Uncertainty must be recorded for either all folds or none of them</span>
+        <span class="n">folds_with_uncertainty</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">fold_key</span>
+            <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">folds_with_uncertainty</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">folds_with_uncertainty</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
+        <span class="p">):</span>
+            <span class="n">folds_without_uncertainty</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">fold_key</span>
+                <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
+                <span class="k">if</span> <span class="n">fold_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">folds_with_uncertainty</span>
+            <span class="p">]</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"Uncertainty must be recorded for all folds or none for task "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">. Found uncertainty for folds "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folds_with_uncertainty</span><span class="si">}</span><span class="s2"> but not for folds "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folds_without_uncertainty</span><span class="si">}</span><span class="s2">."</span>
+            <span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Data for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> successfully validated."</span><span class="p">)</span>
 
@@ -5297,6 +5343,8 @@ docstring.</p>
     for one sample, it must be specified for all samples.
     If ci is specified but std is not, that must be
     consistent for all samples.
+- Uncertainty must be recorded for either all folds or
+    none of them.
 Returns:
     (NoneType): Errors are thrown if benchmark not valid.</p>
 
@@ -5489,7 +5537,30 @@ Returns:
 <span class="normal">622</span>
 <span class="normal">623</span>
 <span class="normal">624</span>
-<span class="normal">625</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">625</span>
+<span class="normal">626</span>
+<span class="normal">627</span>
+<span class="normal">628</span>
+<span class="normal">629</span>
+<span class="normal">630</span>
+<span class="normal">631</span>
+<span class="normal">632</span>
+<span class="normal">633</span>
+<span class="normal">634</span>
+<span class="normal">635</span>
+<span class="normal">636</span>
+<span class="normal">637</span>
+<span class="normal">638</span>
+<span class="normal">639</span>
+<span class="normal">640</span>
+<span class="normal">641</span>
+<span class="normal">642</span>
+<span class="normal">643</span>
+<span class="normal">644</span>
+<span class="normal">645</span>
+<span class="normal">646</span>
+<span class="normal">647</span>
+<span class="normal">648</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Validate a task after all folds have been recorded.</span>
 
 <span class="sd">    There are a few requirements for a task to be validated:</span>
@@ -5505,6 +5576,8 @@ Returns:
 <span class="sd">        for one sample, it must be specified for all samples.</span>
 <span class="sd">        If ci is specified but std is not, that must be</span>
 <span class="sd">        consistent for all samples.</span>
+<span class="sd">    - Uncertainty must be recorded for either all folds or</span>
+<span class="sd">        none of them.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        (NoneType): Errors are thrown if benchmark not valid.</span>
 
@@ -5674,6 +5747,27 @@ Returns:
 
             <span class="c1"># Params key has no required form;</span>
             <span class="c1"># it is up to the model to determine it.</span>
+
+    <span class="c1"># Uncertainty must be recorded for either all folds or none of them</span>
+    <span class="n">folds_with_uncertainty</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">fold_key</span>
+        <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">if</span> <span class="n">folds_with_uncertainty</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">folds_with_uncertainty</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
+    <span class="p">):</span>
+        <span class="n">folds_without_uncertainty</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">fold_key</span>
+            <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
+            <span class="k">if</span> <span class="n">fold_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">folds_with_uncertainty</span>
+        <span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"Uncertainty must be recorded for all folds or none for task "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">. Found uncertainty for folds "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folds_with_uncertainty</span><span class="si">}</span><span class="s2"> but not for folds "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folds_without_uncertainty</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
 
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Data for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> successfully validated."</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
