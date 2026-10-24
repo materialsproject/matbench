@@ -49,7 +49,8 @@ or when the behavior looks intended or the issue is a duplicate.
 Code style for this repo. This overrides the lines above, but never the
 "Never" list:
 
-- None listed yet.
+- Very pythonic and robust. This is a benchmarking library: write code to
+  that standard, not throwaway code.
 
 ## 3. Write the summary, then publish
 

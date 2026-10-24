@@ -9,7 +9,7 @@ on:
   # Delete the schedule block to run only when tagged or run by hand.
   # How many PRs each sweep may act on is max_prs_per_run in autotriage.conf.
   schedule:
-    - cron: "0 16 * * 1-5"
+    - cron: "0 16 * * 1"
   workflow_dispatch: # run manually from the Actions tab
   # A maintainer tags @claude on an issue or PR. A comment that is only
   # "@claude sweep" (or "@claude cron") runs the scheduled sweep now.
