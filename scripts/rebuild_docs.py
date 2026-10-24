@@ -12,10 +12,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 import plotly.io as pio
 import tqdm
-from matminer.datasets import load_dataset
 from monty.serialization import loadfn
-from pymatviz import ptable_heatmap_plotly, spacegroup_sunburst
-from pymatviz.utils import get_crystal_sys
 
 from matbench.bench import MatbenchBenchmark
 from matbench.constants import CLF_KEY, MBV01_KEY, REG_KEY
@@ -847,82 +844,6 @@ def nuke_docs(check=True):
 
 def convert_bool_to_unicode_check(t_or_f):
     return "✓" if t_or_f else "✗"
-
-
-def generate_pymatviz_eda_figs(regenerate_artifacts: bool = False) -> None:
-    for dataset in mbv01_metadata.keys:
-        # cache crystal_system and spacegroup numbers for matbench datasets so we
-        # don't have to recompute every time we regenerate the plots
-        artifact_path = os.path.join(THIS_DIR, "artifacts", f"{dataset}.json.bz2")
-        if not regenerate_artifacts and os.path.exists(artifact_path):
-            df = pd.read_json(artifact_path)
-        else:
-            print(f"Regenerating artifact for {dataset}")
-            df = load_dataset(dataset)
-
-            if "composition" not in df:
-                df["composition"] = [x.formula for x in df.structure]
-
-            df[["spg_symbol", "spg_num"]] = [
-                struct.get_space_group_info() for struct in df.structure
-            ]
-
-            df["crys_sys"] = [get_crystal_sys(x) for x in df.spg_num]
-
-            # don't store structures in artifacts to save disk space and increase
-            # read speed
-            df.drop(columns=["structure"], errors="ignore").to_json(artifact_path)
-
-        dataset_title = dataset.replace("_", " ").title()
-
-        fig = ptable_heatmap_plotly(df.composition)
-        title = f"Elements in {dataset_title}"
-        fig.update_layout(
-            title=dict(text=f"<b>{title}</b>", x=0.4, y=0.94, font_size=20)
-        )
-        fig.write_html(
-            f"{STATIC_DOCS_DIR}/{dataset}_elements.html", include_plotlyjs="cdn"
-        )
-
-        # below plots only apply to structure-containing datasets
-        if "spg_num" not in df:
-            continue
-
-        fig = spacegroup_sunburst(df.spg_num, show_counts="percent")
-        title = f"{dataset_title} Spacegroup Sunburst"
-        fig.update_layout(
-            title=dict(text=f"<b>{title}</b>", x=0.4, y=0.94, font_size=20)
-        )
-        fig.write_html(
-            f"{STATIC_DOCS_DIR}/{dataset}_spacegroup_sunburst.html",
-            include_plotlyjs="cdn",
-        )
-
-        target = df.columns[2]
-        labels = {
-            "crys_sys": "Crystal system",
-            "spg_num": "Space group",
-        }
-
-        fig = px.violin(
-            df,
-            color="crys_sys",
-            x="crys_sys",
-            y=target,
-            labels=labels,
-            points="all",
-            hover_data=["spg_num"],
-            hover_name="composition",
-        ).update_traces(jitter=1)
-        fig.update_layout(
-            title=f"{dataset_title} {target} distribution by crystal system",
-            margin=dict(b=10, l=10, r=10, t=50),
-            showlegend=False,
-        )
-        fig.write_html(
-            f"{STATIC_DOCS_DIR}/{dataset}_{target}_by_crystal_system.html",
-            include_plotlyjs="cdn",
-        )
 
 
 if __name__ == "__main__":
