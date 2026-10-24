@@ -1,7 +1,7 @@
 pytest
-coverage==7.10.7
+coverage==7.16.2
 wheel==0.48.0
 monty==2025.3.3
-isort==6.1.0
-black==25.11.0
-flake8==7.3.0
+isort==9.0.2
+black==26.10.1
+flake8==7.4.1

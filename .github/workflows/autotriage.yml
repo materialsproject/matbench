@@ -53,7 +53,7 @@ jobs:
     steps:
       # Checks out the default branch only. PR code is never executed; Claude
       # reads diffs via gh. Full history lets it check data provenance.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 

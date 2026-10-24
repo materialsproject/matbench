@@ -13,6 +13,8 @@ updates:
     ignore:
       - dependency-name: "plotly"
       - dependency-name: "mkdocs"
+      # pymatviz>=0.5 requires plotly>=6, which is pinned above
+      - dependency-name: "pymatviz"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
