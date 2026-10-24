@@ -108,18 +108,22 @@ def score_array(true_array, pred_array, task_type):
     for metric in metrics:
         mfunc = METRIC_MAP[metric]
 
+        # Convert per metric without overwriting the inputs, so that one
+        # metric's conversion does not leak into the metrics after it
+        metric_true, metric_pred = true_array, pred_array
+
         if metric == "rocauc":
             # Both arrays must be in probability form
             # if pred. array is given in probabilities
             if isinstance(pred_array[0], float):
-                true_array = homogenize_clf_array(true_array, to_probs=True)
+                metric_true = homogenize_clf_array(true_array, to_probs=True)
 
         # Other clf metrics always be converted to labels
         elif metric in CLF_METRICS:
             if isinstance(pred_array[0], float):
-                pred_array = homogenize_clf_array(pred_array, to_labels=True)
+                metric_pred = homogenize_clf_array(pred_array, to_labels=True)
 
-        computed[metric] = mfunc(true_array, pred_array)
+        computed[metric] = mfunc(metric_true, metric_pred)
     return computed
 
 

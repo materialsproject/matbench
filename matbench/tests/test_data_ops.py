@@ -78,7 +78,15 @@ class TestDataOps(unittest.TestCase):
         true = [True, False]
         test = [0.7, 0.65]
         ans = score_array(true, test, task_type=CLF_KEY)
-        self.assertDictEqual(ans, true_ans)
+        # rocauc uses the probabilities, which rank both samples correctly
+        self.assertDictEqual(ans, {**true_ans, "rocauc": 1.0})
+
+        # rocauc must not be computed on thresholded labels (issue #181)
+        true = 8 * [True] + 2 * [False]
+        test = 8 * [0.4] + 2 * [0.2]
+        ans = score_array(true, test, task_type=CLF_KEY)
+        self.assertEqual(ans["rocauc"], 1.0)
+        self.assertEqual(ans["accuracy"], 0.2)
 
     def test_mean_absolute_percentage_error(self):
 
