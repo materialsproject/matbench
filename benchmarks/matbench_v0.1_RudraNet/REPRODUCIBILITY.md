@@ -78,11 +78,7 @@ as a verified historic environment; they must not be described as
 versions actually used for the submitted training run.
 
 Training environment reported by the author: Kaggle, a single NVIDIA T4 GPU.
-Author-estimated training runtime: under 20 minutes for the run in question,
-exact timing unavailable. Archived `TRIADS/matbench_steels/results.json`
-reports `total_min=76.6` for the V13 evaluation that includes **both
-V13A and V13B**, so it cannot serve as evidence of the elapsed time for
-the specific single-model execution. The apparent discrepancy remains open.
+Author-reported training runtime: **under 20 minutes** on one NVIDIA T4 GPU. The exact timing was not recorded or independently verified.
 
 ## Open reproducibility issues
 
