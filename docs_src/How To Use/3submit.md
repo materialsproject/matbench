@@ -39,7 +39,7 @@ The files should look like:
 
 2. Find instructions for creating a [PR here.](https://guides.github.com/activities/hello-world/#:~:text=Pull%20Requests%20are%20the%20heart,merge%20them%20into%20their%20branch.&text=You%20can%20even%20open%20pull,repository%20and%20merge%20them%20yourself.)
 
-3. Label your PR with the "new_benchmark" label.
+3. Say in your PR description that it is a new benchmark submission. Only maintainers can add labels on GitHub, so a maintainer will add the "new_benchmark" label to your PR for you.
 
 
 ![pr example](../static/pr_example.png)
