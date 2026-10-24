@@ -252,6 +252,34 @@ class TestMatbenchTask(unittest.TestCase):
 
         self._test_record(uq_type="ci")
 
+    def test_validate_uncertainty_all_or_no_folds(self):
+        # uncertainty must be recorded for either all folds or none of them
+        def record_folds(folds_with_std):
+            mbt = MatbenchTask(self.test_datasets[0], autoload=True)
+            for fold in mbt.folds:
+                _, test_outputs = mbt.get_test_data(
+                    fold, as_type="tuple", include_target=True
+                )
+                n_test = len(test_outputs)
+                std = [1.0] * n_test if fold in folds_with_std else None
+                mbt.record(fold, test_outputs, std=std)
+            return mbt
+
+        all_folds = MatbenchTask(self.test_datasets[0], autoload=False).folds
+
+        # consistent: no folds or all folds have uncertainty
+        record_folds(folds_with_std=()).validate()
+        record_folds(folds_with_std=all_folds).validate()
+
+        # inconsistent: only some folds have uncertainty
+        mbt = record_folds(folds_with_std=all_folds[:1])
+        with self.assertRaises(ValueError):
+            mbt.validate()
+
+        # inconsistent results are also rejected when loading from a dict
+        with self.assertRaises(ValueError):
+            MatbenchTask.from_dict(mbt.as_dict())
+
     def _test_record(self, uq_type=None):
         for ds in self.test_datasets:
             if ds == "matbench_glass":

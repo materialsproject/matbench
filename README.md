@@ -2,6 +2,8 @@
 
 matbench is an ImageNet for materials science; a set of 13 (with more to come!) curated machine learning tasks for benchmarking and performance testing.
 
+> **⚠️ Note on classification scores:** ROC-AUC scores on the `matbench_v0.1` classification leaderboards were computed on predictions thresholded at 0.5. They therefore equal balanced accuracy, not true ROC-AUC, and understate submissions that provided probabilities. This is fixed for future scoring; existing leaderboard scores have not been recomputed. See [#137](https://github.com/materialsproject/matbench/issues/137) and [#181](https://github.com/materialsproject/matbench/issues/181).
+
 
 | Tests  |   Release |
 |:----------:|:------:|

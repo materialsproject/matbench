@@ -105,25 +105,16 @@ def score_array(true_array, pred_array, task_type):
             f"'task_type' must be one of {[REG_KEY, CLF_KEY]}, not '{task_type}'"
         )
 
-    # Keep the original prediction scores for ROC-AUC.  Label-based metrics need
-    # thresholded predictions, but thresholding must not mutate ``pred_array``:
-    # ROC-AUC is deliberately threshold-independent.
-    pred_labels = pred_array
-    if task_type == CLF_KEY and isinstance(pred_array[0], (float, np.floating)):
-        pred_labels = homogenize_clf_array(pred_array, to_labels=True)
-
     for metric in metrics:
         mfunc = METRIC_MAP[metric]
 
-        if metric == "rocauc":
-            metric_predictions = pred_array
-        # Other classification metrics always use labels.
-        elif metric in CLF_METRICS:
-            metric_predictions = pred_labels
+        if metric in CLF_METRICS and metric != "rocauc":
+            # Discretize predictions, if metric is for classification and not rocauc.
+            pred_array_bool = (np.asarray(pred_array) > CLF_THRESH).tolist()
+            computed[metric] = mfunc(true_array, pred_array_bool)
         else:
-            metric_predictions = pred_array
+            computed[metric] = mfunc(true_array, pred_array)
 
-        computed[metric] = mfunc(true_array, metric_predictions)
     return computed
 
 
@@ -156,51 +147,6 @@ def mean_absolute_percentage_error(y_true, y_pred, threshold=1e-5):
     y_true = y_true[mask]
     y_pred = y_pred[mask]
     return np.mean(np.fabs((y_true - y_pred) / y_true))
-
-
-def homogenize_clf_array(array, to_probs=False, to_labels=False, thresh=CLF_THRESH):
-    """
-    Homogenize an array of either:
-
-    1. labels (True, False) to probabilities (1.0, 0.0)
-    2. probabilities (between 0 and 1) to labels (True, False)
-        based on a threshold float
-
-    Args:
-        array ([bool], [float]): A list of bools or a list of floats 0-1.
-        to_probs (bool): Convert the input array to all probabilities
-        to_labels (bool): Convert the input array to all labels based on
-            the threshold value thresh.
-        thresh (float): A number 0-1, which will decide the threshold
-            of probabilities if to_labels is True
-
-    Returns:
-        list
-    """
-    if sum([to_probs, to_labels]) != 1:
-        raise ValueError(
-            "Set ONE of to_probs or to_labels to True to define "
-            "the conversion, NOT both."
-        )
-
-    if to_probs:
-        if all([isinstance(i, (bool, np.bool_)) for i in array]):
-            # The source array is bools
-            homogenized = [1.0 if bool(i) else 0.0 for i in array]
-            return homogenized
-        else:
-            raise TypeError(
-                "Cannot convert non-bool type in clf array to " "probabilities."
-            )
-    elif to_labels:
-        if all([isinstance(i, (float, np.floating)) for i in array]):
-            # The source array is probabilities
-            homogenized = np.asarray(array) > thresh
-            return homogenized.tolist()
-        else:
-            raise TypeError(
-                "Cannot convert non-float types in clf array to" "labels."
-            )
 
 
 METRIC_MAP = {

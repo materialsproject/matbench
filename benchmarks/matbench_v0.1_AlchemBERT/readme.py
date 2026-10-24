@@ -1,12 +1,12 @@
-"""
-This script contains code for AlchemBERT.
-Our code is hosted at https://gitee.com/liuxiaotong15/alchemBERT.
+"""Entry point to the AlchemBERT source and reproducibility documentation.
 
-If needed, you can contact us to obtain the trained models for each task 
-and each fold, totaling 25GB.
+Original source: https://gitee.com/liuxiaotong15/alchemBERT
+The original submission offers trained per-task/per-fold models (about 25 GB)
+on request. They were not present in the audited public source snapshot.
+See README.md for recovered source, provenance and remaining evidence gaps.
 """
+
+from pathlib import Path
 
 if __name__ == "__main__":
-    print("Our code is hosted at https://gitee.com/liuxiaotong15/alchemBERT.")
-    print("If needed, you can contact us to obtain the pre-trained models for each task and each fold, totaling 25GB.")
-
+    print(Path(__file__).with_name("README.md").read_text(encoding="utf-8"))

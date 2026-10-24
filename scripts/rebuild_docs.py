@@ -12,10 +12,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 import plotly.io as pio
 import tqdm
-from matminer.datasets import load_dataset
 from monty.serialization import loadfn
-from pymatviz import ptable_heatmap_plotly, spacegroup_sunburst
-from pymatviz.utils import get_crystal_sys
 
 from matbench.bench import MatbenchBenchmark
 from matbench.constants import CLF_KEY, MBV01_KEY, REG_KEY
@@ -37,6 +34,20 @@ FULL_DATA_DIR_PREFIX = "Full%20Benchmark%20Data/"
 METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
 METADATA_DIR_PREFIX = "Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
+
+# Warning shown above classification leaderboards; see issues #137 and #181
+CLF_ROCAUC_NOTE = "!!! warning \"Classification ROC-AUC scores are outdated\"\n" \
+                  "    ROC-AUC scores on the matbench_v0.1 classification leaderboards were computed on " \
+                  "predictions thresholded at 0.5. They therefore equal balanced accuracy, not true ROC-AUC, " \
+                  "and understate submissions that provided probabilities. This is fixed for future scoring; " \
+                  "existing scores have not been recomputed. See " \
+                  "[#137](https://github.com/materialsproject/matbench/issues/137) and " \
+                  "[#181](https://github.com/materialsproject/matbench/issues/181).\n\n"
+
+# Pointer to Matbench Discovery, which has its own leaderboard; see issue #388
+MATBENCH_DISCOVERY_NOTE = "!!! tip \"Benchmarking ML for materials discovery?\"\n" \
+                          "    For DFT-based materials discovery campaigns, use " \
+                          "[Matbench Discovery](https://matbench-discovery.materialsproject.org/).\n\n"
 
 
 # mp website statics locations
@@ -271,22 +282,10 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
         table += "\n\n"
         # scaled_errors_plot_txt = f'\n<iframe src="static/{SCALED_ERRORS_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0" allowtransparency="true"> </iframe>\n\n'
         # scaled_errors_non_gp_plt_txt = f'\n<iframe src="static/{SCALED_ERRORS_NON_GP_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>\n\n'
-        gp_leaderboard_txt += table_header + table_explanation + table
+        gp_leaderboard_txt += table_header + table_explanation + CLF_ROCAUC_NOTE + table
 
         for div_txt in leaderboard_divs:
             gp_leaderboard_txt += div_txt
-
-    # Load Janosh's leaderboard from json
-
-    table_header_discovery = f"## Leaderboard-Discovery: General Purpose Algorithms on `matbench_discovery 0.1.0`\n\n"
-    table_explanation_discovery = f"[Matbench Discovery](https://matbench-discovery.materialsproject.org/) is an interactive leaderboard and associated PyPI package which together make it easy to benchmark ML energy models on a task designed to closely simulate a high-throughput discovery campaign for new stable inorganic crystals. Matbench-discovery compares ML structure-relaxation methods on the [WBM dataset](https://www.nature.com/articles/s41524-020-00481-6) for ranking ~250k generated structures according to predicted hull stability (42k stable). [Matbench Discovery](https://matbench-discovery.materialsproject.org/) is developed by Janosh Riebesell.\n\n"
-
-    with open(os.path.join(SNIPPETS_DIR, "metrics-table.svelte"), encoding="utf-8") as f:
-        mdb_table = f.read()
-        mdb_table = mdb_table.replace("sans-serif", "Helvetica")
-
-    with open(os.path.join(SNIPPETS_DIR, "cumulative-clf-metrics.svelte"), encoding="utf-8") as f:
-        mdb_figs = f.read()
 
     # Load the static index from the snippets dir
     with open(os.path.join(SNIPPETS_DIR, "index_0.md"), encoding="utf-8") as f:
@@ -299,27 +298,22 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
     n_tasks = total_info_counts["tasks"]
     n_benchmarks = total_info_counts["benchmarks"]
 
-    num_tr_blocks = mdb_table.count("<tr>")
-    n_algos_discovery = num_tr_blocks - 1
-    n_tasks_discovery = num_tr_blocks - 1
-    n_benchmarks_discovery = 1
-
     page_header = f"# Leaderboard \n\n" \
                   f"**Matbench is an automated leaderboard** for benchmarking state of the art ML algorithms predicting a **diverse range of solid materials' properties**. " \
                   f"It is hosted and maintained by [the Materials Project](https://materialsproject.org). \n\n ![crystal](static/crystals.png)\n\n" \
-                  
+                  f"{MATBENCH_DISCOVERY_NOTE}"
 
     # Define the table content as a nested list
-    table_header = "|             | [<span style='color: #1e90ff'>Materials Properties</span>](/#leaderboard-property-general-purpose-algorithms-on-matbench_v01) | [<span style='color: #1e90ff'>Materials Discovery</span>](/#leaderboard-discovery-general-purpose-algorithms-on-matbench_discovery-010) |\n" \
-               "|-------------|---------------------|---------------------|\n"
+    table_header = "|             | [<span style='color: #1e90ff'>Materials Properties</span>](/#leaderboard-property-general-purpose-algorithms-on-matbench_v01) |\n" \
+               "|-------------|---------------------|\n"
 
-    table_rows = f"| Task Submissions |        `{n_tasks}`          |        `{n_tasks_discovery}`          |\n" \
-                f"| Algorithms      |          `{n_algos}`         |          `{n_algos_discovery}`         |\n" \
-                f"| Benchmark Task Suite |         `{n_benchmarks}`        |         `{n_benchmarks_discovery}`        |\n\n"
-            
-    
+    table_rows = f"| Task Submissions |        `{n_tasks}`          |\n" \
+                f"| Algorithms      |          `{n_algos}`         |\n" \
+                f"| Benchmark Task Suite |         `{n_benchmarks}`        |\n\n"
+
+
     load_plotly = f"<script src='https://cdn.plot.ly/plotly-latest.min.js'></script> \n\n"
-    final_txt = load_plotly + page_header + table_header + table_rows + gp_leaderboard_txt + static_txt_0 + table_header_discovery + table_explanation_discovery + mdb_table + mdb_figs + static_txt
+    final_txt = load_plotly + page_header + table_header + table_rows + gp_leaderboard_txt + static_txt_0 + "\n" + static_txt
 
 
     with open(os.path.join(DOCS_DIR, "index.md"), "w", encoding="utf-8") as f:
@@ -405,6 +399,8 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             explanation = "_Leaderboard for an individual task. Algorithms shown here may include " \
                           "both general purpose and specialized algorithms (i.e., algorithms which " \
                           "are only valid for a subset of tasks in the benchmark._\n\n"
+            if task_type == CLF_KEY:
+                explanation += CLF_ROCAUC_NOTE
 
 
 
@@ -848,82 +844,6 @@ def nuke_docs(check=True):
 
 def convert_bool_to_unicode_check(t_or_f):
     return "✓" if t_or_f else "✗"
-
-
-def generate_pymatviz_eda_figs(regenerate_artifacts: bool = False) -> None:
-    for dataset in mbv01_metadata.keys:
-        # cache crystal_system and spacegroup numbers for matbench datasets so we
-        # don't have to recompute every time we regenerate the plots
-        artifact_path = os.path.join(THIS_DIR, "artifacts", f"{dataset}.json.bz2")
-        if not regenerate_artifacts and os.path.exists(artifact_path):
-            df = pd.read_json(artifact_path)
-        else:
-            print(f"Regenerating artifact for {dataset}")
-            df = load_dataset(dataset)
-
-            if "composition" not in df:
-                df["composition"] = [x.formula for x in df.structure]
-
-            df[["spg_symbol", "spg_num"]] = [
-                struct.get_space_group_info() for struct in df.structure
-            ]
-
-            df["crys_sys"] = [get_crystal_sys(x) for x in df.spg_num]
-
-            # don't store structures in artifacts to save disk space and increase
-            # read speed
-            df.drop(columns=["structure"], errors="ignore").to_json(artifact_path)
-
-        dataset_title = dataset.replace("_", " ").title()
-
-        fig = ptable_heatmap_plotly(df.composition)
-        title = f"Elements in {dataset_title}"
-        fig.update_layout(
-            title=dict(text=f"<b>{title}</b>", x=0.4, y=0.94, font_size=20)
-        )
-        fig.write_html(
-            f"{STATIC_DOCS_DIR}/{dataset}_elements.html", include_plotlyjs="cdn"
-        )
-
-        # below plots only apply to structure-containing datasets
-        if "spg_num" not in df:
-            continue
-
-        fig = spacegroup_sunburst(df.spg_num, show_counts="percent")
-        title = f"{dataset_title} Spacegroup Sunburst"
-        fig.update_layout(
-            title=dict(text=f"<b>{title}</b>", x=0.4, y=0.94, font_size=20)
-        )
-        fig.write_html(
-            f"{STATIC_DOCS_DIR}/{dataset}_spacegroup_sunburst.html",
-            include_plotlyjs="cdn",
-        )
-
-        target = df.columns[2]
-        labels = {
-            "crys_sys": "Crystal system",
-            "spg_num": "Space group",
-        }
-
-        fig = px.violin(
-            df,
-            color="crys_sys",
-            x="crys_sys",
-            y=target,
-            labels=labels,
-            points="all",
-            hover_data=["spg_num"],
-            hover_name="composition",
-        ).update_traces(jitter=1)
-        fig.update_layout(
-            title=f"{dataset_title} {target} distribution by crystal system",
-            margin=dict(b=10, l=10, r=10, t=50),
-            showlegend=False,
-        )
-        fig.write_html(
-            f"{STATIC_DOCS_DIR}/{dataset}_{target}_by_crystal_system.html",
-            include_plotlyjs="cdn",
-        )
 
 
 if __name__ == "__main__":
