@@ -50,7 +50,7 @@ class TestDataOps(unittest.TestCase):
             test_types = (
                 [np.bool_, bool]
                 if problem_type == CLF_KEY
-                else [np.float_, np.float32, np.float64, float]
+                else [np.float32, np.float64, float]
             )
             self.assertIn(df[metadata["target"]].dtypes, test_types)
 
