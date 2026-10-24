@@ -113,6 +113,13 @@ class ExpandedFeaturizer:
         if manifest.get("source") != self.GCS or set(manifest.get("files", {})) != set(self.FILES):
             raise RuntimeError("Invalid or incomplete Mat2Vec integrity manifest")
 
+        def _mat2vec_sha256(path):
+            h = hashlib.sha256()
+            with open(path, "rb") as stream:
+                for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                    h.update(chunk)
+            return h.hexdigest()
+
         for f in self.FILES:
             expected = manifest["files"][f]["sha256"]
             p = os.path.join(cache, f)
@@ -121,8 +128,7 @@ class ExpandedFeaturizer:
                 temporary = p + ".download"
                 try:
                     urllib.request.urlretrieve(self.GCS + f, temporary)
-                    with open(temporary, "rb") as stream:
-                        digest = hashlib.file_digest(stream, "sha256").hexdigest()
+                    digest = _mat2vec_sha256(temporary)
                     if digest != expected:
                         raise RuntimeError(f"Mat2Vec SHA-256 mismatch for download {f}")
                     os.replace(temporary, p)
@@ -130,8 +136,7 @@ class ExpandedFeaturizer:
                     if os.path.exists(temporary):
                         os.remove(temporary)
             # Never load pre-existing cache files without verifying them.
-            with open(p, "rb") as stream:
-                digest = hashlib.file_digest(stream, "sha256").hexdigest()
+            digest = _mat2vec_sha256(p)
             if digest != expected:
                 raise RuntimeError(
                     f"Mat2Vec cache checksum mismatch: {f}. "
