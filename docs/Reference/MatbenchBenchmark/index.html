@@ -2812,8 +2812,8 @@ mb.matbench_dielectric</p>
 <span class="normal">660</span>
 <span class="normal">661</span>
 <span class="normal">662</span>
-<span class="normal">663</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MatbenchBenchmark</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">MSONable2File</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The core class for benchmarking with Matbench.</span>
+<span class="normal">663</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MatbenchBenchmark</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">MSONable2File</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""The core class for benchmarking with Matbench.</span>
 
 <span class="sd">    MatbenchBenchmark is capable of benchmarking and validating arbitrary</span>
 <span class="sd">    materials science benchmarks. It is a container class for sets of</span>
@@ -2824,7 +2824,7 @@ mb.matbench_dielectric</p>
 <span class="sd">    each metric.</span>
 
 <span class="sd">    MatbenchBenchmark can run any benchmark as long as it has a corresponding</span>
-<span class="sd">    benchmark name key. Matbench v0.1 (&quot;matbench_v0.1&quot;) is the only benchmark</span>
+<span class="sd">    benchmark name key. Matbench v0.1 ("matbench_v0.1") is the only benchmark</span>
 <span class="sd">    currently configured for use with MatbenchBenchmark.</span>
 
 <span class="sd">    MatbenchBenchmark is capable of running benchmark subsets; for example,</span>
@@ -2834,7 +2834,7 @@ mb.matbench_dielectric</p>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        benchmark_name (str): The benchmark name, defaults to the original</span>
-<span class="sd">            Matbench v0.1 &quot;matbench_v0.1&quot;. Should have an associated</span>
+<span class="sd">            Matbench v0.1 "matbench_v0.1". Should have an associated</span>
 <span class="sd">            validation file in order for the MatbenchTasks to work</span>
 <span class="sd">            correctly.</span>
 <span class="sd">        metadata (dict): The corresponding metadata file for this benchmark,</span>
@@ -2853,51 +2853,51 @@ mb.matbench_dielectric</p>
 <span class="sd">            mb.matbench_dielectric</span>
 
 <span class="sd">            &lt;&lt;MatbenchTask object&gt;&gt;</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="c1"># For serialization</span>
-    <span class="n">_VERSION_KEY</span> <span class="o">=</span> <span class="s2">&quot;version&quot;</span>
-    <span class="n">_BENCHMARK_KEY</span> <span class="o">=</span> <span class="s2">&quot;benchmark_name&quot;</span>
-    <span class="n">_USER_METADATA_KEY</span> <span class="o">=</span> <span class="s2">&quot;user_metadata&quot;</span>
-    <span class="n">_TASKS_KEY</span> <span class="o">=</span> <span class="s2">&quot;tasks&quot;</span>
-    <span class="n">_DATESTAMP_KEY</span> <span class="o">=</span> <span class="s2">&quot;datestamp&quot;</span>
-    <span class="n">_DATESTAMP_FMT</span> <span class="o">=</span> <span class="s2">&quot;%Y.%m.</span><span class="si">%d</span><span class="s2"> %H:%M.%S&quot;</span>
-    <span class="n">_HASH_KEY</span> <span class="o">=</span> <span class="s2">&quot;hash&quot;</span>
+    <span class="n">_VERSION_KEY</span> <span class="o">=</span> <span class="s2">"version"</span>
+    <span class="n">_BENCHMARK_KEY</span> <span class="o">=</span> <span class="s2">"benchmark_name"</span>
+    <span class="n">_USER_METADATA_KEY</span> <span class="o">=</span> <span class="s2">"user_metadata"</span>
+    <span class="n">_TASKS_KEY</span> <span class="o">=</span> <span class="s2">"tasks"</span>
+    <span class="n">_DATESTAMP_KEY</span> <span class="o">=</span> <span class="s2">"datestamp"</span>
+    <span class="n">_DATESTAMP_FMT</span> <span class="o">=</span> <span class="s2">"%Y.%m.</span><span class="si">%d</span><span class="s2"> %H:%M.%S"</span>
+    <span class="n">_HASH_KEY</span> <span class="o">=</span> <span class="s2">"hash"</span>
 
     <span class="c1"># For class usage</span>
-    <span class="n">ALL_KEY</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span>
+    <span class="n">ALL_KEY</span> <span class="o">=</span> <span class="s2">"all"</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">MBV01_KEY</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">MBV01_KEY</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            benchmark (str): The name of the benchmark. Only supported benchmark</span>
-<span class="sd">                currently is &quot;matbench_v0.1&quot;, though more will be added in the</span>
+<span class="sd">                currently is "matbench_v0.1", though more will be added in the</span>
 <span class="sd">                future.</span>
 <span class="sd">            autoload (bool): If True, automatically load the dataset into memory</span>
-<span class="sd">                For a full benchmark, this can take some time. If False, you&#39;ll</span>
+<span class="sd">                For a full benchmark, this can take some time. If False, you'll</span>
 <span class="sd">                need to load each task with .load before you can access the raw</span>
 <span class="sd">                data.</span>
 <span class="sd">            subset ([str]): A list of task names to use as a subset of a full</span>
 <span class="sd">                benchmark. Only the named tasks will be contained in the class.</span>
 <span class="sd">                Must correspond to the metadata file defined by the benchmark</span>
 <span class="sd">                name.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="k">if</span> <span class="n">benchmark</span> <span class="o">==</span> <span class="n">MBV01_KEY</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span> <span class="o">=</span> <span class="n">MBV01_KEY</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">mbv01_metadata</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Only &#39;</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">&#39; available. No other benchmarks defined!&quot;</span>
+                <span class="sa">f</span><span class="s2">"Only '</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">' available. No other benchmarks defined!"</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">subset</span><span class="p">:</span>
             <span class="n">not_datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">subset</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">not_datasets</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Some tasks in </span><span class="si">{</span><span class="n">subset</span><span class="si">}</span><span class="s2"> are not benchmark=&quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="si">}</span><span class="s2">&#39; datasets! Remove </span><span class="si">{</span><span class="n">not_datasets</span><span class="si">}</span><span class="s2">.&quot;</span>
+                    <span class="sa">f</span><span class="s2">"Some tasks in </span><span class="si">{</span><span class="n">subset</span><span class="si">}</span><span class="s2"> are not benchmark="</span>
+                    <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="si">}</span><span class="s2">' datasets! Remove </span><span class="si">{</span><span class="n">not_datasets</span><span class="si">}</span><span class="s2">."</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">available_tasks</span> <span class="o">=</span> <span class="n">subset</span>
@@ -2913,13 +2913,13 @@ mb.matbench_dielectric</p>
             <span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Initialized benchmark &#39;</span><span class="si">{</span><span class="n">benchmark</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">available_tasks</span><span class="p">)</span><span class="si">}</span><span class="s2"> tasks: </span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">available_tasks</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">"Initialized benchmark '</span><span class="si">{</span><span class="n">benchmark</span><span class="si">}</span><span class="s2">' "</span>
+            <span class="sa">f</span><span class="s2">"with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">available_tasks</span><span class="p">)</span><span class="si">}</span><span class="s2"> tasks: </span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">available_tasks</span><span class="p">))</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Enable MatbenchBenchmark.task_name behavior.</span>
 
 <span class="sd">        Args:</span>
@@ -2930,28 +2930,28 @@ mb.matbench_dielectric</p>
 <span class="sd">            (object): The attr, if not in the metadata defined by the benchmark</span>
 <span class="sd">                If the attr is a task name, returns that MatBenchTask object.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks_map</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_preset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">,</span> <span class="n">preset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_preset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">,</span> <span class="n">preset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        The following presets are defined for each benchmark:</span>
 
-<span class="sd">        benchmark: &#39;matbench_v0.1&#39;:</span>
+<span class="sd">        benchmark: 'matbench_v0.1':</span>
 
-<span class="sd">            - preset: &#39;structure&#39; - Only structure problems</span>
-<span class="sd">            - preset: &#39;composition&#39; - Only composition problems</span>
-<span class="sd">            - preset: &#39;regression&#39; - Only regression problems</span>
-<span class="sd">            - preset: &#39;classification&#39; - Only classification problems</span>
-<span class="sd">            - preset: &#39;all&#39; - All problems in matbench v0.1</span>
+<span class="sd">            - preset: 'structure' - Only structure problems</span>
+<span class="sd">            - preset: 'composition' - Only composition problems</span>
+<span class="sd">            - preset: 'regression' - Only regression problems</span>
+<span class="sd">            - preset: 'classification' - Only classification problems</span>
+<span class="sd">            - preset: 'all' - All problems in matbench v0.1</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            benchmark (str): Name of the benchmark set you&#39;d like to use. The</span>
-<span class="sd">                only supported benchmark set currently is &quot;matbench_v0.1&quot;</span>
+<span class="sd">            benchmark (str): Name of the benchmark set you'd like to use. The</span>
+<span class="sd">                only supported benchmark set currently is "matbench_v0.1"</span>
 <span class="sd">            preset_name (str): The name of the preset</span>
 <span class="sd">            autoload (bool): If true, automatically loads all the datasets</span>
 <span class="sd">                upon instantiation. Be warned; this can take a while.</span>
@@ -2960,7 +2960,7 @@ mb.matbench_dielectric</p>
 <span class="sd">            (MatbenchBenchmark object): A ready-to-use MatbenchBenchmark</span>
 <span class="sd">                object.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">benchmark</span> <span class="o">==</span> <span class="n">MBV01_KEY</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">preset_name</span> <span class="o">==</span> <span class="n">STRUCTURE_KEY</span><span class="p">:</span>
                 <span class="n">available_tasks</span> <span class="o">=</span> <span class="p">[</span>
@@ -2993,20 +2993,20 @@ mb.matbench_dielectric</p>
                     <span class="bp">cls</span><span class="o">.</span><span class="n">ALL_KEY</span><span class="p">,</span>
                 <span class="p">]</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Preset name &#39;</span><span class="si">{</span><span class="n">preset_name</span><span class="si">}</span><span class="s2">&#39; not recognized for &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;benchmark &#39;</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">&#39;! Select from &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">valid_keys</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">"Preset name '</span><span class="si">{</span><span class="n">preset_name</span><span class="si">}</span><span class="s2">' not recognized for "</span>
+                    <span class="sa">f</span><span class="s2">"benchmark '</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">'! Select from "</span>
+                    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">valid_keys</span><span class="si">}</span><span class="s2">"</span>
                 <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Only &#39;</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">&#39; available. No other benchmarks defined!&quot;</span>
+                <span class="sa">f</span><span class="s2">"Only '</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">' available. No other benchmarks defined!"</span>
             <span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">benchmark</span><span class="o">=</span><span class="n">benchmark</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="n">autoload</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="n">available_tasks</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a MatbenchBenchmark object from a dictionary.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Create a MatbenchBenchmark object from a dictionary.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            d (dict): The benchmark as a dictionary.</span>
@@ -3014,10 +3014,10 @@ mb.matbench_dielectric</p>
 <span class="sd">        Returns:</span>
 <span class="sd">            (MatbenchBenchmark): The benchmark as an object.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">required_keys</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s2">&quot;@module&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;@class&quot;</span><span class="p">,</span>
+            <span class="s2">"@module"</span><span class="p">,</span>
+            <span class="s2">"@class"</span><span class="p">,</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">,</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">,</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">_TASKS_KEY</span><span class="p">,</span>
@@ -3038,17 +3038,17 @@ mb.matbench_dielectric</p>
 
         <span class="k">if</span> <span class="n">missing_keys</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">extra_keys</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Required keys </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;not found!&quot;</span>
+                <span class="sa">f</span><span class="s2">"Required keys </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> "</span>
+                <span class="sa">f</span><span class="s2">"not found!"</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="n">missing_keys</span> <span class="ow">and</span> <span class="n">extra_keys</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Extra keys </span><span class="si">{</span><span class="n">extra_keys</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span> <span class="sa">f</span><span class="s2">&quot;present!&quot;</span>
+                <span class="sa">f</span><span class="s2">"Extra keys </span><span class="si">{</span><span class="n">extra_keys</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> "</span> <span class="sa">f</span><span class="s2">"present!"</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">missing_keys</span> <span class="ow">and</span> <span class="n">extra_keys</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Missing required keys </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2"> and extra keys &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">extra_keys</span><span class="si">}</span><span class="s2"> present!&quot;</span>
+                <span class="sa">f</span><span class="s2">"Missing required keys </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2"> and extra keys "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">extra_keys</span><span class="si">}</span><span class="s2"> present!"</span>
             <span class="p">)</span>
 
         <span class="c1"># Check all tasks to make sure their benchmark name is matching in the</span>
@@ -3059,8 +3059,8 @@ mb.matbench_dielectric</p>
                 <span class="n">not_matching_bench</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t_dict</span><span class="p">[</span><span class="n">MatbenchTask</span><span class="o">.</span><span class="n">_DATASET_KEY</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">not_matching_bench</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Tasks </span><span class="si">{</span><span class="n">not_matching_bench</span><span class="si">}</span><span class="s2"> do not have a benchmark name &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;matching the benchmark (</span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">]</span><span class="si">}</span><span class="s2">)!&quot;</span>
+                <span class="sa">f</span><span class="s2">"Tasks </span><span class="si">{</span><span class="n">not_matching_bench</span><span class="si">}</span><span class="s2"> do not have a benchmark name "</span>
+                <span class="sa">f</span><span class="s2">"matching the benchmark (</span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">]</span><span class="si">}</span><span class="s2">)!"</span>
             <span class="p">)</span>
 
         <span class="c1"># Ensure the hash is matching, i.e., the data was not modified after</span>
@@ -3069,8 +3069,8 @@ mb.matbench_dielectric</p>
         <span class="n">m</span> <span class="o">=</span> <span class="n">hash_dictionary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">m</span> <span class="o">!=</span> <span class="n">m_from_dict</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Hash of dictionary does not match it&#39;s reported value! </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2"> &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;!= </span><span class="si">{</span><span class="n">m_from_dict</span><span class="si">}</span><span class="s2"> . Was the data modified after saving?)&quot;</span>
+                <span class="sa">f</span><span class="s2">"Hash of dictionary does not match it's reported value! </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2"> "</span>
+                <span class="sa">f</span><span class="s2">"!= </span><span class="si">{</span><span class="n">m_from_dict</span><span class="si">}</span><span class="s2"> . Was the data modified after saving?)"</span>
             <span class="p">)</span>
 
         <span class="c1"># Check to see if any tasks have task names not matching their key</span>
@@ -3082,16 +3082,16 @@ mb.matbench_dielectric</p>
                 <span class="n">not_matching_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">task_name</span><span class="p">,</span> <span class="n">key_as_per_task</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">not_matching_tasks</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Task names in benchmark and task names in tasks not &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;matching: </span><span class="si">{</span><span class="n">not_matching_tasks</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">"Task names in benchmark and task names in tasks not "</span>
+                <span class="sa">f</span><span class="s2">"matching: </span><span class="si">{</span><span class="n">not_matching_tasks</span><span class="si">}</span><span class="s2">"</span>
             <span class="p">)</span>
 
         <span class="c1"># Warn if versions are not matching</span>
         <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">]</span> <span class="o">!=</span> <span class="n">VERSION</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Warning! Versions not matching: &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;(data file has version </span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;this package is </span><span class="si">{</span><span class="n">VERSION</span><span class="si">}</span><span class="s2">).&quot;</span>
+                <span class="sa">f</span><span class="s2">"Warning! Versions not matching: "</span>
+                <span class="sa">f</span><span class="s2">"(data file has version </span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">]</span><span class="si">}</span><span class="s2">, "</span>
+                <span class="sa">f</span><span class="s2">"this package is </span><span class="si">{</span><span class="n">VERSION</span><span class="si">}</span><span class="s2">)."</span>
             <span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_from_args</span><span class="p">(</span>
@@ -3101,8 +3101,8 @@ mb.matbench_dielectric</p>
         <span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_from_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">benchmark_name</span><span class="p">,</span> <span class="n">tasks_dict</span><span class="p">,</span> <span class="n">user_metadata</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a MatbenchBenchmark object from arguments</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">benchmark_name</span><span class="p">,</span> <span class="n">tasks_dict</span><span class="p">,</span> <span class="n">user_metadata</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Create a MatbenchBenchmark object from arguments</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            benchmark_name (str): name of the benchmark</span>
@@ -3111,7 +3111,7 @@ mb.matbench_dielectric</p>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (MatbenchBenchmark)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">subset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tasks_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">benchmark</span><span class="o">=</span><span class="n">benchmark_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="n">subset</span><span class="p">)</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">tasks_map</span> <span class="o">=</span> <span class="n">RecursiveDotDict</span><span class="p">(</span>
@@ -3122,30 +3122,30 @@ mb.matbench_dielectric</p>
         <span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-            <span class="s2">&quot;To add new data to this benchmark, the &quot;</span>
-            <span class="s2">&quot;benchmark must be loaded with .load(). Alternatively, &quot;</span>
-            <span class="s2">&quot;load individual tasks with MatbenchTask.load().&quot;</span>
+            <span class="s2">"To add new data to this benchmark, the "</span>
+            <span class="s2">"benchmark must be loaded with .load(). Alternatively, "</span>
+            <span class="s2">"load individual tasks with MatbenchTask.load()."</span>
         <span class="p">)</span>
 
         <span class="c1"># MatbenchTask automatically validates files during its from_dict</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">user_metadata</span> <span class="o">=</span> <span class="n">user_metadata</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully converted dict/args to &#39;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Successfully converted dict/args to '</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">'."</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">obj</span>
 
-    <span class="k">def</span> <span class="nf">_determine_completeness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">completeness_type</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine the completeness of this benchmark.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_determine_completeness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">completeness_type</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Determine the completeness of this benchmark.</span>
 
 <span class="sd">        Completeness means the tasks are included (but not</span>
 <span class="sd">        necessarily recorded yet) in the benchmark.</span>
 
 <span class="sd">        Supported completeness types are:</span>
-<span class="sd">        - &quot;all&quot;: All tasks are included</span>
-<span class="sd">        - &quot;composition&quot;: All composition tasks are included</span>
-<span class="sd">        - &quot;structure&quot;: All structure tasks are included</span>
-<span class="sd">        - &quot;regression&quot;: All regression problems</span>
-<span class="sd">        - &quot;classification&quot;: All classification problems</span>
+<span class="sd">        - "all": All tasks are included</span>
+<span class="sd">        - "composition": All composition tasks are included</span>
+<span class="sd">        - "structure": All structure tasks are included</span>
+<span class="sd">        - "regression": All regression problems</span>
+<span class="sd">        - "classification": All classification problems</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            completeness_type (str): One of the above completeness</span>
@@ -3155,7 +3155,7 @@ mb.matbench_dielectric</p>
 <span class="sd">            (bool) True if this benchmark object is complete</span>
 <span class="sd">                with respect to the completeness type.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">completeness_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ALL_KEY</span><span class="p">:</span>
             <span class="n">required_tasks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="k">elif</span> <span class="n">completeness_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">COMPOSITION_KEY</span><span class="p">,</span> <span class="n">STRUCTURE_KEY</span><span class="p">):</span>
@@ -3179,8 +3179,8 @@ mb.matbench_dielectric</p>
                 <span class="n">CLF_KEY</span><span class="p">,</span>
             <span class="p">]</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Only supported completeness types are &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">allowed_completeness_types</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="s2">"Only supported completeness types are "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">allowed_completeness_types</span><span class="si">}</span><span class="s2">"</span>
             <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">required_tasks</span><span class="p">:</span>
@@ -3189,19 +3189,19 @@ mb.matbench_dielectric</p>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Overridden from MSONable.as_dict, get dict repr of this obj</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Overridden from MSONable.as_dict, get dict repr of this obj</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            d (dict): the object as a dictionary.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">tasksd</span> <span class="o">=</span> <span class="p">{</span><span class="n">mbt</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">:</span> <span class="n">mbt</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">mbt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">}</span>
         <span class="n">tasksd_jsonable</span> <span class="o">=</span> <span class="n">immutify_dictionary</span><span class="p">(</span><span class="n">tasksd</span><span class="p">)</span>
 
         <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;@module&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
-            <span class="s2">&quot;@class&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="s2">"@module"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
+            <span class="s2">"@class"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">:</span> <span class="n">VERSION</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_TASKS_KEY</span><span class="p">:</span> <span class="n">tasksd_jsonable</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_USER_METADATA_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_metadata</span><span class="p">,</span>
@@ -3215,22 +3215,22 @@ mb.matbench_dielectric</p>
         <span class="c1"># and then stringify it</span>
         <span class="n">d</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_HASH_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">hash_dictionary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Successfully converted </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> to dictionary.&quot;</span>
+            <span class="sa">f</span><span class="s2">"Successfully converted </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> to dictionary."</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">d</span>
 
-    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log info about the benchmark to the respective logging handlers.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Log info about the benchmark to the respective logging handlers.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (NoneType): Output is sent to logger.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">add_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add freeform information about this run to the object</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Add freeform information about this run to the object</span>
 <span class="sd">        (and subsequent json), accessible thru the</span>
-<span class="sd">        &#39;user_metadata&#39; attr.</span>
+<span class="sd">        'user_metadata' attr.</span>
 
 
 <span class="sd">        All keys must be strings.</span>
@@ -3252,38 +3252,38 @@ mb.matbench_dielectric</p>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (NoneType): None. Logger provides information.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Use logging here so bad metadata addition does not</span>
         <span class="c1"># ruin an entire run...</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;User metadata must be reducible to dict format, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;not type(</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="sa">f</span><span class="s2">"User metadata must be reducible to dict format, "</span>
+                <span class="sa">f</span><span class="s2">"not type(</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span><span class="si">}</span><span class="s2">)"</span>
             <span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User metadata not added.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"User metadata not added."</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_metadata</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;User metadata already exists! Overwriting...&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"User metadata already exists! Overwriting..."</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">user_metadata</span> <span class="o">=</span> <span class="n">immutify_dictionary</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User metadata added successfully!&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"User metadata added successfully!"</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load all tasks in this benchmark.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Load all tasks in this benchmark.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            (NoneType): Datasets are kept in attributes.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">:</span>
             <span class="n">t</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run validation on each task in this benchmark.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Run validation on each task in this benchmark.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ({str: str}): dict of errors, if they exist</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">errors</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">t_obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
@@ -3293,139 +3293,139 @@ mb.matbench_dielectric</p>
         <span class="k">return</span> <span class="n">errors</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the tasks as a list.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the tasks as a list.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ([MatbenchTask]): A list of matbench tasks in this benchmark</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks_map</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get all score metrics for all tasks as a dictionary.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Get all score metrics for all tasks as a dictionary.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (RecursiveDotDict): A nested dictionary-like object of scores</span>
 <span class="sd">                for each task.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">RecursiveDotDict</span><span class="p">({</span><span class="n">t</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">scores</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">})</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a formatted string of info about this benchmark and its current</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Get a formatted string of info about this benchmark and its current</span>
 <span class="sd">        state.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            s (str): A formatted string describing this benchmark&#39;s state.</span>
+<span class="sd">            s (str): A formatted string describing this benchmark's state.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="n">complete</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_complete</span>
         <span class="n">recorded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span>
         <span class="n">valid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_valid</span>
 
-        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">""</span>
         <span class="n">s</span> <span class="o">+=</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Matbench package </span><span class="si">{</span><span class="n">VERSION</span><span class="si">}</span><span class="s2"> running benchmark &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Matbench package </span><span class="si">{</span><span class="n">VERSION</span><span class="si">}</span><span class="s2"> running benchmark "</span>
+            <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="si">}</span><span class="s2">'"</span>
         <span class="p">)</span>
-        <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">is complete: </span><span class="si">{</span><span class="n">complete</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">is recorded: </span><span class="si">{</span><span class="n">recorded</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">is valid: </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">is complete: </span><span class="si">{</span><span class="n">complete</span><span class="si">}</span><span class="s2">"</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">is recorded: </span><span class="si">{</span><span class="n">recorded</span><span class="si">}</span><span class="s2">"</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">is valid: </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2">"</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">recorded</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">+=</span> <span class="p">(</span>
-                <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2"> Benchmark is not fully recorded; limited information &quot;</span> <span class="s2">&quot;shown.&quot;</span>
+                <span class="s2">"</span><span class="se">\n\n</span><span class="s2"> Benchmark is not fully recorded; limited information "</span> <span class="s2">"shown."</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
-            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2"> Benchmark is not valid; limited information shown.&quot;</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2"> Benchmark is not valid; limited information shown."</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">valid</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">recorded</span><span class="p">:</span>
-            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Tasks:&quot;</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2">Tasks:"</span>
             <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks_map</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-                <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">- &#39;</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">: recorded=</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">all_folds_recorded</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">- '</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">: recorded=</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">all_folds_recorded</span><span class="si">}</span><span class="s2">"</span>
 
         <span class="k">if</span> <span class="n">valid</span> <span class="ow">and</span> <span class="n">recorded</span><span class="p">:</span>
-            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Results:&quot;</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2">Results:"</span>
             <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">:</span>
 
                 <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="n">REG_KEY</span><span class="p">:</span>
                     <span class="n">score_text</span> <span class="o">=</span> <span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;MAE mean: &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">]</span><span class="o">.</span><span class="n">mae</span><span class="o">.</span><span class="n">mean</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">"MAE mean: "</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">]</span><span class="o">.</span><span class="n">mae</span><span class="o">.</span><span class="n">mean</span><span class="si">}</span><span class="s2">"</span>
                     <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">score_text</span> <span class="o">=</span> <span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;ROCAUC mean: &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">]</span><span class="o">.</span><span class="n">rocauc</span><span class="o">.</span><span class="n">mean</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">"ROCAUC mean: "</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">]</span><span class="o">.</span><span class="n">rocauc</span><span class="o">.</span><span class="n">mean</span><span class="si">}</span><span class="s2">"</span>
                     <span class="p">)</span>
-                <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">- &#39;</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">&#39; </span><span class="si">{</span><span class="n">score_text</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">- '</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">' </span><span class="si">{</span><span class="n">score_text</span><span class="si">}</span><span class="s2">"</span>
 
         <span class="k">return</span> <span class="n">s</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if all available tasks are included in this benchmark.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Determine if all available tasks are included in this benchmark.</span>
 
 <span class="sd">        For matbench v0.1, this means all 13 tasks are in the benchmark.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (bool): Whether benchmark is entirely complete.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_completeness</span><span class="p">(</span><span class="n">completeness_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ALL_KEY</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_composition_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if all composition tasks for this benchmark are included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_composition_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Determine if all composition tasks for this benchmark are included</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (bool): Whether benchmark is composition complete.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_completeness</span><span class="p">(</span><span class="n">completeness_type</span><span class="o">=</span><span class="n">COMPOSITION_KEY</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_structure_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if all structure tasks for this benchmark are included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_structure_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Determine if all structure tasks for this benchmark are included</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (bool): Whether benchmark is structure complete.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_completeness</span><span class="p">(</span><span class="n">completeness_type</span><span class="o">=</span><span class="n">STRUCTURE_KEY</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_regression_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if all regression tasks for this benchmark are included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_regression_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Determine if all regression tasks for this benchmark are included</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (bool): Whether benchmark is regression complete.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_completeness</span><span class="p">(</span><span class="n">completeness_type</span><span class="o">=</span><span class="n">REG_KEY</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_classification_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if all classification tasks for this benchmark are included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_classification_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Determine if all classification tasks for this benchmark are included</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (bool): Whether benchmark is classification complete.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_completeness</span><span class="p">(</span><span class="n">completeness_type</span><span class="o">=</span><span class="n">CLF_KEY</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_recorded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;All tasks in this benchmark (whether or not it includes all tasks in</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_recorded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""All tasks in this benchmark (whether or not it includes all tasks in</span>
 <span class="sd">        the benchmark set) are recorded.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (bool): True if all tasks (even if only a subset of all matbench)</span>
 <span class="sd">            for this benchmark are recorded.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">all_folds_recorded</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks_map</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks all tasks are recorded and valid, as per each task&#39;s</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Checks all tasks are recorded and valid, as per each task's</span>
 <span class="sd">        validation procedure.</span>
 
 <span class="sd">        Can take some time, especially if the tasks are not already</span>
@@ -3433,12 +3433,12 @@ mb.matbench_dielectric</p>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (bool): True if all tasks are valid</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">errors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
             <span class="n">formatted_errors</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Benchmark has errors! &quot;</span> <span class="sa">f</span><span class="s2">&quot;Errors:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">formatted_errors</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">"Benchmark has errors! "</span> <span class="sa">f</span><span class="s2">"Errors:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">formatted_errors</span><span class="si">}</span><span class="s2">"</span>
             <span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
@@ -3990,8 +3990,8 @@ for each task.</p>
 <span class="normal">152</span>
 <span class="normal">153</span>
 <span class="normal">154</span>
-<span class="normal">155</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="normal">155</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Enable MatbenchBenchmark.task_name behavior.</span>
 
 <span class="sd">    Args:</span>
@@ -4002,7 +4002,7 @@ for each task.</p>
 <span class="sd">        (object): The attr, if not in the metadata defined by the benchmark</span>
 <span class="sd">            If the attr is a task name, returns that MatBenchTask object.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks_map</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
@@ -4144,37 +4144,37 @@ name.</p>
 <span class="normal">134</span>
 <span class="normal">135</span>
 <span class="normal">136</span>
-<span class="normal">137</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">MBV01_KEY</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="normal">137</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">MBV01_KEY</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        benchmark (str): The name of the benchmark. Only supported benchmark</span>
-<span class="sd">            currently is &quot;matbench_v0.1&quot;, though more will be added in the</span>
+<span class="sd">            currently is "matbench_v0.1", though more will be added in the</span>
 <span class="sd">            future.</span>
 <span class="sd">        autoload (bool): If True, automatically load the dataset into memory</span>
-<span class="sd">            For a full benchmark, this can take some time. If False, you&#39;ll</span>
+<span class="sd">            For a full benchmark, this can take some time. If False, you'll</span>
 <span class="sd">            need to load each task with .load before you can access the raw</span>
 <span class="sd">            data.</span>
 <span class="sd">        subset ([str]): A list of task names to use as a subset of a full</span>
 <span class="sd">            benchmark. Only the named tasks will be contained in the class.</span>
 <span class="sd">            Must correspond to the metadata file defined by the benchmark</span>
 <span class="sd">            name.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">if</span> <span class="n">benchmark</span> <span class="o">==</span> <span class="n">MBV01_KEY</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span> <span class="o">=</span> <span class="n">MBV01_KEY</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">mbv01_metadata</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Only &#39;</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">&#39; available. No other benchmarks defined!&quot;</span>
+            <span class="sa">f</span><span class="s2">"Only '</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">' available. No other benchmarks defined!"</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">subset</span><span class="p">:</span>
         <span class="n">not_datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">subset</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">not_datasets</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Some tasks in </span><span class="si">{</span><span class="n">subset</span><span class="si">}</span><span class="s2"> are not benchmark=&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="si">}</span><span class="s2">&#39; datasets! Remove </span><span class="si">{</span><span class="n">not_datasets</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="sa">f</span><span class="s2">"Some tasks in </span><span class="si">{</span><span class="n">subset</span><span class="si">}</span><span class="s2"> are not benchmark="</span>
+                <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="si">}</span><span class="s2">' datasets! Remove </span><span class="si">{</span><span class="n">not_datasets</span><span class="si">}</span><span class="s2">."</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">available_tasks</span> <span class="o">=</span> <span class="n">subset</span>
@@ -4190,9 +4190,9 @@ name.</p>
         <span class="p">)</span>
 
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Initialized benchmark &#39;</span><span class="si">{</span><span class="n">benchmark</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">available_tasks</span><span class="p">)</span><span class="si">}</span><span class="s2"> tasks: </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">available_tasks</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">"Initialized benchmark '</span><span class="si">{</span><span class="n">benchmark</span><span class="si">}</span><span class="s2">' "</span>
+        <span class="sa">f</span><span class="s2">"with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">available_tasks</span><span class="p">)</span><span class="si">}</span><span class="s2"> tasks: </span><span class="se">\n</span><span class="s2">"</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">available_tasks</span><span class="p">))</span><span class="si">}</span><span class="s2">"</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
           </details>
@@ -4325,10 +4325,10 @@ run on this benchmark.</p>
 <span class="normal">485</span>
 <span class="normal">486</span>
 <span class="normal">487</span>
-<span class="normal">488</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add freeform information about this run to the object</span>
+<span class="normal">488</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Add freeform information about this run to the object</span>
 <span class="sd">    (and subsequent json), accessible thru the</span>
-<span class="sd">    &#39;user_metadata&#39; attr.</span>
+<span class="sd">    'user_metadata' attr.</span>
 
 
 <span class="sd">    All keys must be strings.</span>
@@ -4350,22 +4350,22 @@ run on this benchmark.</p>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        (NoneType): None. Logger provides information.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># Use logging here so bad metadata addition does not</span>
     <span class="c1"># ruin an entire run...</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;User metadata must be reducible to dict format, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;not type(</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">"User metadata must be reducible to dict format, "</span>
+            <span class="sa">f</span><span class="s2">"not type(</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span><span class="si">}</span><span class="s2">)"</span>
         <span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User metadata not added.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"User metadata not added."</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_metadata</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;User metadata already exists! Overwriting...&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"User metadata already exists! Overwriting..."</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">user_metadata</span> <span class="o">=</span> <span class="n">immutify_dictionary</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User metadata added successfully!&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"User metadata added successfully!"</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
           </details>
   </div>
@@ -4441,19 +4441,19 @@ run on this benchmark.</p>
 <span class="normal">435</span>
 <span class="normal">436</span>
 <span class="normal">437</span>
-<span class="normal">438</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Overridden from MSONable.as_dict, get dict repr of this obj</span>
+<span class="normal">438</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Overridden from MSONable.as_dict, get dict repr of this obj</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        d (dict): the object as a dictionary.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">tasksd</span> <span class="o">=</span> <span class="p">{</span><span class="n">mbt</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">:</span> <span class="n">mbt</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">mbt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">}</span>
     <span class="n">tasksd_jsonable</span> <span class="o">=</span> <span class="n">immutify_dictionary</span><span class="p">(</span><span class="n">tasksd</span><span class="p">)</span>
 
     <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;@module&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
-        <span class="s2">&quot;@class&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="s2">"@module"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
+        <span class="s2">"@class"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">:</span> <span class="n">VERSION</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_TASKS_KEY</span><span class="p">:</span> <span class="n">tasksd_jsonable</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_USER_METADATA_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_metadata</span><span class="p">,</span>
@@ -4467,7 +4467,7 @@ run on this benchmark.</p>
     <span class="c1"># and then stringify it</span>
     <span class="n">d</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_HASH_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">hash_dictionary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Successfully converted </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> to dictionary.&quot;</span>
+        <span class="sa">f</span><span class="s2">"Successfully converted </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> to dictionary."</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">d</span>
 </code></pre></div></td></tr></table></div>
@@ -4646,8 +4646,8 @@ run on this benchmark.</p>
 <span class="normal">317</span>
 <span class="normal">318</span>
 <span class="normal">319</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a MatbenchBenchmark object from a dictionary.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Create a MatbenchBenchmark object from a dictionary.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        d (dict): The benchmark as a dictionary.</span>
@@ -4655,10 +4655,10 @@ run on this benchmark.</p>
 <span class="sd">    Returns:</span>
 <span class="sd">        (MatbenchBenchmark): The benchmark as an object.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">required_keys</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;@module&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;@class&quot;</span><span class="p">,</span>
+        <span class="s2">"@module"</span><span class="p">,</span>
+        <span class="s2">"@class"</span><span class="p">,</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">,</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">,</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_TASKS_KEY</span><span class="p">,</span>
@@ -4679,17 +4679,17 @@ run on this benchmark.</p>
 
     <span class="k">if</span> <span class="n">missing_keys</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">extra_keys</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Required keys </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;not found!&quot;</span>
+            <span class="sa">f</span><span class="s2">"Required keys </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> "</span>
+            <span class="sa">f</span><span class="s2">"not found!"</span>
         <span class="p">)</span>
     <span class="k">elif</span> <span class="ow">not</span> <span class="n">missing_keys</span> <span class="ow">and</span> <span class="n">extra_keys</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Extra keys </span><span class="si">{</span><span class="n">extra_keys</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span> <span class="sa">f</span><span class="s2">&quot;present!&quot;</span>
+            <span class="sa">f</span><span class="s2">"Extra keys </span><span class="si">{</span><span class="n">extra_keys</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> "</span> <span class="sa">f</span><span class="s2">"present!"</span>
         <span class="p">)</span>
     <span class="k">elif</span> <span class="n">missing_keys</span> <span class="ow">and</span> <span class="n">extra_keys</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Missing required keys </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2"> and extra keys &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">extra_keys</span><span class="si">}</span><span class="s2"> present!&quot;</span>
+            <span class="sa">f</span><span class="s2">"Missing required keys </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2"> and extra keys "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">extra_keys</span><span class="si">}</span><span class="s2"> present!"</span>
         <span class="p">)</span>
 
     <span class="c1"># Check all tasks to make sure their benchmark name is matching in the</span>
@@ -4700,8 +4700,8 @@ run on this benchmark.</p>
             <span class="n">not_matching_bench</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t_dict</span><span class="p">[</span><span class="n">MatbenchTask</span><span class="o">.</span><span class="n">_DATASET_KEY</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">not_matching_bench</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Tasks </span><span class="si">{</span><span class="n">not_matching_bench</span><span class="si">}</span><span class="s2"> do not have a benchmark name &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;matching the benchmark (</span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">]</span><span class="si">}</span><span class="s2">)!&quot;</span>
+            <span class="sa">f</span><span class="s2">"Tasks </span><span class="si">{</span><span class="n">not_matching_bench</span><span class="si">}</span><span class="s2"> do not have a benchmark name "</span>
+            <span class="sa">f</span><span class="s2">"matching the benchmark (</span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">]</span><span class="si">}</span><span class="s2">)!"</span>
         <span class="p">)</span>
 
     <span class="c1"># Ensure the hash is matching, i.e., the data was not modified after</span>
@@ -4710,8 +4710,8 @@ run on this benchmark.</p>
     <span class="n">m</span> <span class="o">=</span> <span class="n">hash_dictionary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">m</span> <span class="o">!=</span> <span class="n">m_from_dict</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Hash of dictionary does not match it&#39;s reported value! </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;!= </span><span class="si">{</span><span class="n">m_from_dict</span><span class="si">}</span><span class="s2"> . Was the data modified after saving?)&quot;</span>
+            <span class="sa">f</span><span class="s2">"Hash of dictionary does not match it's reported value! </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2"> "</span>
+            <span class="sa">f</span><span class="s2">"!= </span><span class="si">{</span><span class="n">m_from_dict</span><span class="si">}</span><span class="s2"> . Was the data modified after saving?)"</span>
         <span class="p">)</span>
 
     <span class="c1"># Check to see if any tasks have task names not matching their key</span>
@@ -4723,16 +4723,16 @@ run on this benchmark.</p>
             <span class="n">not_matching_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">task_name</span><span class="p">,</span> <span class="n">key_as_per_task</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">not_matching_tasks</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Task names in benchmark and task names in tasks not &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;matching: </span><span class="si">{</span><span class="n">not_matching_tasks</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">"Task names in benchmark and task names in tasks not "</span>
+            <span class="sa">f</span><span class="s2">"matching: </span><span class="si">{</span><span class="n">not_matching_tasks</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span>
 
     <span class="c1"># Warn if versions are not matching</span>
     <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">]</span> <span class="o">!=</span> <span class="n">VERSION</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Warning! Versions not matching: &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;(data file has version </span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;this package is </span><span class="si">{</span><span class="n">VERSION</span><span class="si">}</span><span class="s2">).&quot;</span>
+            <span class="sa">f</span><span class="s2">"Warning! Versions not matching: "</span>
+            <span class="sa">f</span><span class="s2">"(data file has version </span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_VERSION_KEY</span><span class="p">]</span><span class="si">}</span><span class="s2">, "</span>
+            <span class="sa">f</span><span class="s2">"this package is </span><span class="si">{</span><span class="n">VERSION</span><span class="si">}</span><span class="s2">)."</span>
         <span class="p">)</span>
 
     <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_from_args</span><span class="p">(</span>
@@ -4765,11 +4765,11 @@ run on this benchmark.</p>
   
       <p>The following presets are defined for each benchmark:</p>
 <p>benchmark: 'matbench_v0.1':</p>
-<div class="highlight"><pre><span></span><code>- preset: &#39;structure&#39; - Only structure problems
-- preset: &#39;composition&#39; - Only composition problems
-- preset: &#39;regression&#39; - Only regression problems
-- preset: &#39;classification&#39; - Only classification problems
-- preset: &#39;all&#39; - All problems in matbench v0.1
+<div class="highlight"><pre><span></span><code>- preset: 'structure' - Only structure problems
+- preset: 'composition' - Only composition problems
+- preset: 'regression' - Only regression problems
+- preset: 'classification' - Only classification problems
+- preset: 'all' - All problems in matbench v0.1
 </code></pre></div>
 
 
@@ -4926,21 +4926,21 @@ object.</p>
 <span class="normal">221</span>
 <span class="normal">222</span>
 <span class="normal">223</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span> <span class="nf">from_preset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">,</span> <span class="n">preset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">from_preset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">,</span> <span class="n">preset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The following presets are defined for each benchmark:</span>
 
-<span class="sd">    benchmark: &#39;matbench_v0.1&#39;:</span>
+<span class="sd">    benchmark: 'matbench_v0.1':</span>
 
-<span class="sd">        - preset: &#39;structure&#39; - Only structure problems</span>
-<span class="sd">        - preset: &#39;composition&#39; - Only composition problems</span>
-<span class="sd">        - preset: &#39;regression&#39; - Only regression problems</span>
-<span class="sd">        - preset: &#39;classification&#39; - Only classification problems</span>
-<span class="sd">        - preset: &#39;all&#39; - All problems in matbench v0.1</span>
+<span class="sd">        - preset: 'structure' - Only structure problems</span>
+<span class="sd">        - preset: 'composition' - Only composition problems</span>
+<span class="sd">        - preset: 'regression' - Only regression problems</span>
+<span class="sd">        - preset: 'classification' - Only classification problems</span>
+<span class="sd">        - preset: 'all' - All problems in matbench v0.1</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        benchmark (str): Name of the benchmark set you&#39;d like to use. The</span>
-<span class="sd">            only supported benchmark set currently is &quot;matbench_v0.1&quot;</span>
+<span class="sd">        benchmark (str): Name of the benchmark set you'd like to use. The</span>
+<span class="sd">            only supported benchmark set currently is "matbench_v0.1"</span>
 <span class="sd">        preset_name (str): The name of the preset</span>
 <span class="sd">        autoload (bool): If true, automatically loads all the datasets</span>
 <span class="sd">            upon instantiation. Be warned; this can take a while.</span>
@@ -4949,7 +4949,7 @@ object.</p>
 <span class="sd">        (MatbenchBenchmark object): A ready-to-use MatbenchBenchmark</span>
 <span class="sd">            object.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">benchmark</span> <span class="o">==</span> <span class="n">MBV01_KEY</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">preset_name</span> <span class="o">==</span> <span class="n">STRUCTURE_KEY</span><span class="p">:</span>
             <span class="n">available_tasks</span> <span class="o">=</span> <span class="p">[</span>
@@ -4982,13 +4982,13 @@ object.</p>
                 <span class="bp">cls</span><span class="o">.</span><span class="n">ALL_KEY</span><span class="p">,</span>
             <span class="p">]</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Preset name &#39;</span><span class="si">{</span><span class="n">preset_name</span><span class="si">}</span><span class="s2">&#39; not recognized for &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;benchmark &#39;</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">&#39;! Select from &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">valid_keys</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">"Preset name '</span><span class="si">{</span><span class="n">preset_name</span><span class="si">}</span><span class="s2">' not recognized for "</span>
+                <span class="sa">f</span><span class="s2">"benchmark '</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">'! Select from "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">valid_keys</span><span class="si">}</span><span class="s2">"</span>
             <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Only &#39;</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">&#39; available. No other benchmarks defined!&quot;</span>
+            <span class="sa">f</span><span class="s2">"Only '</span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2">' available. No other benchmarks defined!"</span>
         <span class="p">)</span>
 
     <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">benchmark</span><span class="o">=</span><span class="n">benchmark</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="n">autoload</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="n">available_tasks</span><span class="p">)</span>
@@ -5045,12 +5045,12 @@ object.</p>
 <span class="normal">443</span>
 <span class="normal">444</span>
 <span class="normal">445</span>
-<span class="normal">446</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Log info about the benchmark to the respective logging handlers.</span>
+<span class="normal">446</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Log info about the benchmark to the respective logging handlers.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        (NoneType): Output is sent to logger.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
           </details>
@@ -5083,11 +5083,11 @@ Returns:
 <span class="normal">493</span>
 <span class="normal">494</span>
 <span class="normal">495</span>
-<span class="normal">496</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load all tasks in this benchmark.</span>
+<span class="normal">496</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Load all tasks in this benchmark.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        (NoneType): Datasets are kept in attributes.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">:</span>
         <span class="n">t</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
@@ -5150,13 +5150,13 @@ Returns:
 <span class="normal">508</span>
 <span class="normal">509</span>
 <span class="normal">510</span>
-<span class="normal">511</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run validation on each task in this benchmark.</span>
+<span class="normal">511</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Run validation on each task in this benchmark.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        ({str: str}): dict of errors, if they exist</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">errors</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">t_obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">try</span><span class="p">:</span>

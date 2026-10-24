@@ -2,5 +2,7 @@ mkdocs-material==9.7.7
 plotly==5.18.0
 mkdocstrings==1.0.8
 mkdocstrings-python==2.0.10
+mkdocs-autorefs==1.4.5
+griffelib==2.4.1
 pymatviz==0.4.4
 matplotlib==3.8.4

@@ -151,6 +151,16 @@ class TestMatbenchBenchmark(unittest.TestCase):
         with self.assertRaises(ValueError):
             MatbenchBenchmark.from_dict(d_test)
 
+    def test_datestamp(self):
+        mb = MatbenchBenchmark(benchmark=MBV01_KEY, subset=["matbench_steels"])
+        self.assertIsNone(mb.datestamp)
+
+        with open(self.static_full_bench_json) as f:
+            datestamp_truth = json.load(f)[MatbenchBenchmark._DATESTAMP_KEY]
+
+        mb = MatbenchBenchmark.from_file(self.static_full_bench_json)
+        self.assertEqual(mb.datestamp, datestamp_truth)
+
     def test_completeness(self):
         mb = MatbenchBenchmark(benchmark=MBV01_KEY, subset=["matbench_steels"])
 

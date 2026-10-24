@@ -2789,8 +2789,8 @@ task, including the training and testing splits for each fold.</p>
 <span class="normal">707</span>
 <span class="normal">708</span>
 <span class="normal">709</span>
-<span class="normal">710</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MatbenchTask</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">MSONable2File</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The core interface for running a Matbench task and recording its results.</span>
+<span class="normal">710</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MatbenchTask</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">MSONable2File</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""The core interface for running a Matbench task and recording its results.</span>
 
 <span class="sd">    MatbenchTask handles creating training/validation and testing sets, as</span>
 <span class="sd">    well as recording and managing all data in a consistent fashion.</span>
@@ -2830,27 +2830,27 @@ task, including the training and testing splits for each fold.</p>
 <span class="sd">        folds_map ({int: str}): Mapping of folds_nums to folds_keys</span>
 <span class="sd">        folds ([int]): Alias for folds_nums</span>
 <span class="sd">        results (RecursiveDotDict): all raw results in dict-like form.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="n">_RESULTS_KEY</span> <span class="o">=</span> <span class="s2">&quot;results&quot;</span>
-    <span class="n">_BENCHMARK_KEY</span> <span class="o">=</span> <span class="s2">&quot;benchmark_name&quot;</span>
-    <span class="n">_DATASET_KEY</span> <span class="o">=</span> <span class="s2">&quot;dataset_name&quot;</span>
-    <span class="n">_DATA_KEY</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
-    <span class="n">_UNCERTAINTY_KEY</span> <span class="o">=</span> <span class="s2">&quot;uncertainty&quot;</span>
-    <span class="n">_PARAMS_KEY</span> <span class="o">=</span> <span class="s2">&quot;parameters&quot;</span>
-    <span class="n">_SCORES_KEY</span> <span class="o">=</span> <span class="s2">&quot;scores&quot;</span>
+    <span class="n">_RESULTS_KEY</span> <span class="o">=</span> <span class="s2">"results"</span>
+    <span class="n">_BENCHMARK_KEY</span> <span class="o">=</span> <span class="s2">"benchmark_name"</span>
+    <span class="n">_DATASET_KEY</span> <span class="o">=</span> <span class="s2">"dataset_name"</span>
+    <span class="n">_DATA_KEY</span> <span class="o">=</span> <span class="s2">"data"</span>
+    <span class="n">_UNCERTAINTY_KEY</span> <span class="o">=</span> <span class="s2">"uncertainty"</span>
+    <span class="n">_PARAMS_KEY</span> <span class="o">=</span> <span class="s2">"parameters"</span>
+    <span class="n">_SCORES_KEY</span> <span class="o">=</span> <span class="s2">"scores"</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">MBV01_KEY</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">MBV01_KEY</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            dataset_name (str): Name of the task. Must belong to the benchmark</span>
-<span class="sd">                given in the &#39;benchmark&#39; argument.</span>
-<span class="sd">            autoload (bool): If True, will load the benchmark&#39;s raw data. This</span>
+<span class="sd">                given in the 'benchmark' argument.</span>
+<span class="sd">            autoload (bool): If True, will load the benchmark's raw data. This</span>
 <span class="sd">                includes deserializing many large structures for some datasets,</span>
 <span class="sd">                so loading make take some time. If False, you will need to</span>
 <span class="sd">                run .load() before running .get_*_data() methods.</span>
 <span class="sd">            benchmark (str): Name of the benchmark this task belongs to.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span> <span class="o">=</span> <span class="n">dataset_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">)</span> <span class="k">if</span> <span class="n">autoload</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">get_all_dataset_info</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
@@ -2864,7 +2864,7 @@ task, including the training and testing splits for each fold.</p>
             <span class="bp">self</span><span class="o">.</span><span class="n">validation</span> <span class="o">=</span> <span class="n">mbv01_validation</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Only </span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2"> available. No other benchmarks defined!&quot;</span>
+                <span class="sa">f</span><span class="s2">"Only </span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2"> available. No other benchmarks defined!"</span>
             <span class="p">)</span>
 
         <span class="c1"># keeping track of folds</span>
@@ -2876,55 +2876,55 @@ task, including the training and testing splits for each fold.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">folds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_nums</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="n">RecursiveDotDict</span><span class="p">({})</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">keys</span> <span class="o">=</span> <span class="s2">&quot;input_type mad n_samples target task_type unit&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="s2">"input_type mad n_samples target task_type unit"</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
 
-        <span class="n">md_str</span> <span class="o">=</span> <span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">  &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">)</span>
+        <span class="n">md_str</span> <span class="o">=</span> <span class="s2">",</span><span class="se">\n</span><span class="s2">  "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="se">\n</span><span class="s2">  dataset_name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">  version&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;matbench_v&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">  </span><span class="si">{</span><span class="n">md_str</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="se">\n</span><span class="s2">  dataset_name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">  version"</span>
+            <span class="sa">f</span><span class="s2">"=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'matbench_v'</span><span class="p">,</span><span class="w"> </span><span class="s1">''</span><span class="p">)</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">  </span><span class="si">{</span><span class="n">md_str</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">)"</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_data_from_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">as_type</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Private function to get fold data from the task dataframe.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_data_from_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">as_type</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Private function to get fold data from the task dataframe.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            ids (list-like): List of string indices to grab from the df.</span>
-<span class="sd">            as_type (str): either &quot;df&quot; or &quot;tuple&quot;. If &quot;df&quot;, returns the</span>
-<span class="sd">                data as a subset of the task df. If &quot;tuple&quot;, returns</span>
+<span class="sd">            as_type (str): either "df" or "tuple". If "df", returns the</span>
+<span class="sd">                data as a subset of the task df. If "tuple", returns</span>
 <span class="sd">                list-likes of the inputs and outputs as a 2-tuple.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (pd.DataFrame or (list-like, list-like))</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">relevant_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ids</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">&quot;df&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">"df"</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">relevant_df</span>
-        <span class="k">elif</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">&quot;tuple&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">"tuple"</span><span class="p">:</span>
             <span class="c1"># inputs, outputs</span>
             <span class="k">return</span> <span class="p">(</span>
                 <span class="n">relevant_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">input_type</span><span class="p">],</span>
                 <span class="n">relevant_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">target</span><span class="p">],</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_check_is_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Private method to check if the dataset is loaded.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_is_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Private method to check if the dataset is loaded.</span>
 
 <span class="sd">        Throws error if the dataset is not loaded.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Task dataset is not loaded! Run MatbenchTask.load() to &quot;</span>
-                <span class="s2">&quot;load the dataset into memory.&quot;</span>
+                <span class="s2">"Task dataset is not loaded! Run MatbenchTask.load() to "</span>
+                <span class="s2">"load the dataset into memory."</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_check_all_folds_recorded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Private method to check if all folds have been recorded.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_all_folds_recorded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Private method to check if all folds have been recorded.</span>
 
 <span class="sd">        Throws error if all folds have not been recorded.</span>
 
@@ -2933,17 +2933,17 @@ task, including the training and testing splits for each fold.</p>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_folds_recorded</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">; folds &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">[</span><span class="n">f</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="p">[</span><span class="n">f</span><span class="p">]]</span><span class="si">}</span><span class="s2"> &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;not recorded!&quot;</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">; folds "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="p">[</span><span class="n">f</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="p">[</span><span class="n">f</span><span class="p">]]</span><span class="si">}</span><span class="s2"> "</span>
+                <span class="sa">f</span><span class="s2">"not recorded!"</span>
             <span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a MatbenchTask from a dictionary input.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Create a MatbenchTask from a dictionary input.</span>
 
 <span class="sd">        Required method from MSONable.</span>
 
@@ -2953,20 +2953,20 @@ task, including the training and testing splits for each fold.</p>
 <span class="sd">        Returns:</span>
 <span class="sd">            (MatbenchTask): The MatbenchTask object.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">req_base_keys</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s2">&quot;@module&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;@class&quot;</span><span class="p">,</span>
+            <span class="s2">"@module"</span><span class="p">,</span>
+            <span class="s2">"@class"</span><span class="p">,</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">_DATASET_KEY</span><span class="p">,</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">_RESULTS_KEY</span><span class="p">,</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">req_base_keys</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required key &#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Required key '</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">' not found."</span><span class="p">)</span>
         <span class="n">extra_base_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">req_base_keys</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">extra_base_keys</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extra keys </span><span class="si">{</span><span class="n">extra_base_keys</span><span class="si">}</span><span class="s2"> not allowed.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Extra keys </span><span class="si">{</span><span class="n">extra_base_keys</span><span class="si">}</span><span class="s2"> not allowed."</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_from_args</span><span class="p">(</span>
             <span class="n">dataset_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_DATASET_KEY</span><span class="p">],</span>
             <span class="n">benchmark_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">],</span>
@@ -2974,8 +2974,8 @@ task, including the training and testing splits for each fold.</p>
         <span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_from_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">benchmark_name</span><span class="p">,</span> <span class="n">results_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate a MatbenchTask from a arguments</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">benchmark_name</span><span class="p">,</span> <span class="n">results_dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Instantiate a MatbenchTask from a arguments</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            dataset_name (str): The name of the dataset/task</span>
@@ -2984,33 +2984,33 @@ task, including the training and testing splits for each fold.</p>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (MatbenchTask): The matbench task object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">benchmark_name</span><span class="p">)</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="n">RecursiveDotDict</span><span class="p">(</span><span class="n">results_dict</span><span class="p">)</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">obj</span>
 
-    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load the dataset for this task into memory.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Load the dataset for this task into memory.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (NoneType):  The dataset is stored as an attribute.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading dataset &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">&#39;...&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loading dataset '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">'..."</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> loaded.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Dataset '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> loaded."</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Dataset </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> already loaded; &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;not reloading dataset.&quot;</span>
+                <span class="sa">f</span><span class="s2">"Dataset </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> already loaded; "</span>
+                <span class="sa">f</span><span class="s2">"not reloading dataset."</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_train_and_val_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">&quot;tuple&quot;</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_train_and_val_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">"tuple"</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        The training + validation data. All model tuning and</span>
 <span class="sd">        hyperparameter selection must be done on this data, NOT test data.</span>
 
@@ -3021,14 +3021,14 @@ task, including the training and testing splits for each fold.</p>
 <span class="sd">            (pd.Dataframe) or (tuple): Returns either a dataframe of</span>
 <span class="sd">                training data or a 2-tuple of training data.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_loaded</span><span class="p">()</span>
         <span class="n">fold_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span>
         <span class="n">ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">train</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">as_type</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_test_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">&quot;tuple&quot;</span><span class="p">,</span> <span class="n">include_target</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_test_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">"tuple"</span><span class="p">,</span> <span class="n">include_target</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        The test data used for recording benchmarks.</span>
 
 <span class="sd">        Args:</span>
@@ -3038,22 +3038,22 @@ task, including the training and testing splits for each fold.</p>
 <span class="sd">            (tuple) or (pd.Dataframe): Data for inference. If target is</span>
 <span class="sd">                not included (it should not be, usually) then it should</span>
 <span class="sd">                be a single column if a df or a 1-tuple if a tuple.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_loaded</span><span class="p">()</span>
         <span class="n">fold_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span>
         <span class="n">ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">test</span>
         <span class="k">if</span> <span class="n">include_target</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">as_type</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">&quot;tuple&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">"tuple"</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">as_type</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">&quot;df&quot;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">"df"</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">as_type</span><span class="p">)[</span>
                     <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">input_type</span><span class="p">]</span>
                 <span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Record the test data as well as parameters about the model</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Record the test data as well as parameters about the model</span>
 <span class="sd">        trained on this fold.</span>
 
 <span class="sd">        Args:</span>
@@ -3075,10 +3075,10 @@ task, including the training and testing splits for each fold.</p>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (NoneType): Recorded data is stored in attributes.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Fold number </span><span class="si">{</span><span class="n">fold_number</span><span class="si">}</span><span class="s2"> already recorded! Aborting record...&quot;</span>
+                <span class="sa">f</span><span class="s2">"Fold number </span><span class="si">{</span><span class="n">fold_number</span><span class="si">}</span><span class="s2"> already recorded! Aborting record..."</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># avoid problems with json serialization</span>
@@ -3093,9 +3093,9 @@ task, including the training and testing splits for each fold.</p>
 
             <span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ci</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<span class="w">                    </span><span class="sd">&quot;&quot;&quot;Both standard deviation (`std`) and confidence</span>
+<span class="w">                    </span><span class="sd">"""Both standard deviation (`std`) and confidence</span>
 <span class="sd">                    intervals (`ci`) were specified as kwargs. Only one</span>
-<span class="sd">                    should be specified, not both.&quot;&quot;&quot;</span>
+<span class="sd">                    should be specified, not both."""</span>
                 <span class="p">)</span>
 
             <span class="n">fold_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span>
@@ -3106,19 +3106,19 @@ task, including the training and testing splits for each fold.</p>
             <span class="n">split_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">test</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Prediction outputs must be the same length as the &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;inputs! </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">"Prediction outputs must be the same length as the "</span>
+                    <span class="sa">f</span><span class="s2">"inputs! </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
                 <span class="p">)</span>
 
             <span class="n">ids_to_predictions</span> <span class="o">=</span> <span class="p">{</span><span class="n">split_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_DATA_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">ids_to_predictions</span>
 
             <span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ci</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;task_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">"task_type"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"classification"</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="s2">&quot;`std` and `ci` are not valid kwargs for classification &quot;</span>
-                        <span class="o">+</span> <span class="s2">&quot;tasks. See &quot;</span>
-                        <span class="o">+</span> <span class="s2">&quot;https://github.com/materialsproject/matbench/pull/99/files#issuecomment-1022662192.&quot;</span>  <span class="c1"># noqa: E501</span>
+                        <span class="s2">"`std` and `ci` are not valid kwargs for classification "</span>
+                        <span class="o">+</span> <span class="s2">"tasks. See "</span>
+                        <span class="o">+</span> <span class="s2">"https://github.com/materialsproject/matbench/pull/99/files#issuecomment-1022662192."</span>  <span class="c1"># noqa: E501</span>
                     <span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">ci</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -3151,13 +3151,13 @@ task, including the training and testing splits for each fold.</p>
 
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">):</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Confidence interval outputs (derived from standard</span>
+                        <span class="sa">f</span><span class="s2">"""Confidence interval outputs (derived from standard</span>
 <span class="s2">                         deviations if `std` was supplied) must be the same</span>
-<span class="s2">                         length as the inputs! </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                         length as the inputs! </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">"""</span>
                     <span class="p">)</span>
 
                 <span class="n">ids_to_uncertainties</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="n">split_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="p">{</span><span class="s2">&quot;ci_lower&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;ci_upper&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">s</span><span class="p">}</span>
+                    <span class="n">split_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="p">{</span><span class="s2">"ci_lower"</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"ci_upper"</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">"std"</span><span class="p">:</span> <span class="n">s</span><span class="p">}</span>
                     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">std</span><span class="p">))</span>
                 <span class="p">}</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">ids_to_uncertainties</span>
@@ -3166,42 +3166,42 @@ task, including the training and testing splits for each fold.</p>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Parameters must be stored as a dictionary, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">params</span><span class="p">)</span><span class="si">}</span><span class="s2">!&quot;</span>
+                    <span class="sa">f</span><span class="s2">"Parameters must be stored as a dictionary, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">params</span><span class="p">)</span><span class="si">}</span><span class="s2">!"</span>
                 <span class="p">)</span>
             <span class="n">params</span> <span class="o">=</span> <span class="n">immutify_dictionary</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="n">params</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_PARAMS_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="p">{}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Recorded fold &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_number</span><span class="si">}</span><span class="s2"> successfully.&quot;</span>
+                <span class="sa">f</span><span class="s2">"Recorded fold "</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_number</span><span class="si">}</span><span class="s2"> successfully."</span>
             <span class="p">)</span>
 
-            <span class="n">truth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">split_ids</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">&quot;tuple&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">truth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">split_ids</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">"tuple"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_SCORES_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">score_array</span><span class="p">(</span>
                 <span class="n">truth</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span>
             <span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Scored fold &#39;&quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2"> successfully.&quot;</span>
+                <span class="sa">f</span><span class="s2">"Scored fold '"</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2"> successfully."</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a MatbenchTask object as a dictionary.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return a MatbenchTask object as a dictionary.</span>
 
 <span class="sd">        Required method from MSONAble.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (dict): The object as a serialized dictionary.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;@module&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
-            <span class="s2">&quot;@class&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="s2">"@module"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
+            <span class="s2">"@class"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_DATASET_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_RESULTS_KEY</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">),</span>
         <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate a task after all folds have been recorded.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Validate a task after all folds have been recorded.</span>
 
 <span class="sd">        There are a few requirements for a task to be validated:</span>
 <span class="sd">        - Data types of each predicted sample must match those</span>
@@ -3219,10 +3219,10 @@ task, including the training and testing splits for each fold.</p>
 <span class="sd">        Returns:</span>
 <span class="sd">            (NoneType): Errors are thrown if benchmark not valid.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_all_folds_recorded</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Cannot validate task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;unless all folds recorded!&quot;</span>
+            <span class="sa">f</span><span class="s2">"Cannot validate task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
+            <span class="sa">f</span><span class="s2">"unless all folds recorded!"</span>
         <span class="p">)</span>
         <span class="n">task_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span>
 
@@ -3230,15 +3230,15 @@ task, including the training and testing splits for each fold.</p>
         <span class="n">extra_fold_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">extra_fold_keys</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Extra fold keys </span><span class="si">{</span><span class="n">extra_fold_keys</span><span class="si">}</span><span class="s2"> for task &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not allowed.&quot;</span>
+                <span class="sa">f</span><span class="s2">"Extra fold keys </span><span class="si">{</span><span class="n">extra_fold_keys</span><span class="si">}</span><span class="s2"> for task "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not allowed."</span>
             <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">fold_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Required fold data for fold &#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not found.&quot;</span>
+                    <span class="sa">f</span><span class="s2">"Required fold data for fold '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">' "</span>
+                    <span class="sa">f</span><span class="s2">"for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not found."</span>
                 <span class="p">)</span>
 
             <span class="c1"># Check for extra or missing keys inside each fold:</span>
@@ -3251,8 +3251,8 @@ task, including the training and testing splits for each fold.</p>
                 <span class="n">extra_subfold_keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">extra_subfold_keys</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Extra keys </span><span class="si">{</span><span class="n">extra_subfold_keys</span><span class="si">}</span><span class="s2"> for fold results of &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39; for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">  not allowed.&quot;</span>
+                    <span class="sa">f</span><span class="s2">"Extra keys </span><span class="si">{</span><span class="n">extra_subfold_keys</span><span class="si">}</span><span class="s2"> for fold results of "</span>
+                    <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">' for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">  not allowed."</span>
                 <span class="p">)</span>
             <span class="n">req_subfold_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">subkey</span> <span class="ow">in</span> <span class="n">req_subfold_keys</span><span class="p">:</span>
@@ -3262,8 +3262,8 @@ task, including the training and testing splits for each fold.</p>
                     <span class="ow">and</span> <span class="n">subkey</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fold_results</span>
                 <span class="p">):</span>
                     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Required key &#39;</span><span class="si">{</span><span class="n">subkey</span><span class="si">}</span><span class="s2">&#39; for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;not found for fold &#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+                        <span class="sa">f</span><span class="s2">"Required key '</span><span class="si">{</span><span class="n">subkey</span><span class="si">}</span><span class="s2">' for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
+                        <span class="sa">f</span><span class="s2">"not found for fold '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">'."</span>
                     <span class="p">)</span>
                 <span class="k">if</span> <span class="n">subkey</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SCORES_KEY</span><span class="p">:</span>
                     <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="n">subkey</span><span class="p">]</span>
@@ -3271,22 +3271,22 @@ task, including the training and testing splits for each fold.</p>
                     <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">m</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">scores</span><span class="p">:</span>
                             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                                <span class="sa">f</span><span class="s2">&quot;Required score &#39;</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&#39; for task &quot;</span>
-                                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
-                                <span class="sa">f</span><span class="s2">&quot;not found for &#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+                                <span class="sa">f</span><span class="s2">"Required score '</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">' for task "</span>
+                                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
+                                <span class="sa">f</span><span class="s2">"not found for '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">'."</span>
                             <span class="p">)</span>
                         <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="nb">float</span><span class="p">):</span>
                             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                                <span class="sa">f</span><span class="s2">&quot;Required score &#39;</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&#39; for task &quot;</span>
-                                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
-                                <span class="sa">f</span><span class="s2">&quot;is not float-type for &#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39;!&quot;</span>
+                                <span class="sa">f</span><span class="s2">"Required score '</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">' for task "</span>
+                                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
+                                <span class="sa">f</span><span class="s2">"is not float-type for '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">'!"</span>
                             <span class="p">)</span>
                     <span class="n">extra_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">scores</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">]</span>
                     <span class="k">if</span> <span class="n">extra_metrics</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;Extra keys </span><span class="si">{</span><span class="n">extra_metrics</span><span class="si">}</span><span class="s2"> for fold scores of &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39; for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;not allowed.&quot;</span>
+                            <span class="sa">f</span><span class="s2">"Extra keys </span><span class="si">{</span><span class="n">extra_metrics</span><span class="si">}</span><span class="s2"> for fold scores of "</span>
+                            <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">' for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
+                            <span class="sa">f</span><span class="s2">"not allowed."</span>
                         <span class="p">)</span>
 
                 <span class="c1"># results data indices are cast by json to be strings,</span>
@@ -3310,40 +3310,40 @@ task, including the training and testing splits for each fold.</p>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">datum</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
                                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                                    <span class="sa">f</span><span class="s2">&quot;Data point &#39;</span><span class="si">{</span><span class="n">ix</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">datum</span><span class="si">}</span><span class="s2">&#39; has data type &quot;</span>
-                                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">datum</span><span class="p">)</span><span class="si">}</span><span class="s2"> while required type is &quot;</span>
-                                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">allowed_types</span><span class="si">}</span><span class="s2"> for task &quot;</span>
-                                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> !&quot;</span>
+                                    <span class="sa">f</span><span class="s2">"Data point '</span><span class="si">{</span><span class="n">ix</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">datum</span><span class="si">}</span><span class="s2">' has data type "</span>
+                                    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">datum</span><span class="p">)</span><span class="si">}</span><span class="s2"> while required type is "</span>
+                                    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">allowed_types</span><span class="si">}</span><span class="s2"> for task "</span>
+                                    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> !"</span>
                                 <span class="p">)</span>
                             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="n">CLF_KEY</span><span class="p">:</span>
                                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">datum</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
                                     <span class="k">if</span> <span class="n">datum</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">datum</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                                         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                            <span class="sa">f</span><span class="s2">&quot;Probability estimate &#39;</span><span class="si">{</span><span class="n">ix</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">datum</span><span class="si">}</span><span class="s2">&quot;</span>
-                                            <span class="sa">f</span><span class="s2">&quot;for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> outside &quot;</span>
-                                            <span class="sa">f</span><span class="s2">&quot;of range [0, 1].&quot;</span>
+                                            <span class="sa">f</span><span class="s2">"Probability estimate '</span><span class="si">{</span><span class="n">ix</span><span class="si">}</span><span class="s2">': </span><span class="si">{</span><span class="n">datum</span><span class="si">}</span><span class="s2">"</span>
+                                            <span class="sa">f</span><span class="s2">"for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> outside "</span>
+                                            <span class="sa">f</span><span class="s2">"of range [0, 1]."</span>
                                         <span class="p">)</span>
 
                             <span class="n">remaining_indices</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ix</span><span class="p">)</span>
 
                     <span class="k">if</span> <span class="n">extra_indices</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">remaining_indices</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> extra indices for problem &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> are not allowed (found in &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_indices</span><span class="si">}</span><span class="s2">&quot;</span>
+                            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> extra indices for problem "</span>
+                            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> are not allowed (found in "</span>
+                            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_indices</span><span class="si">}</span><span class="s2">"</span>
                         <span class="p">)</span>
                     <span class="k">elif</span> <span class="ow">not</span> <span class="n">extra_indices</span> <span class="ow">and</span> <span class="n">remaining_indices</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> required indices &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;for problem </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;found for </span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_indices</span><span class="si">}</span><span class="s2">&quot;</span>
+                            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> required indices "</span>
+                            <span class="sa">f</span><span class="s2">"for problem </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not "</span>
+                            <span class="sa">f</span><span class="s2">"found for </span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_indices</span><span class="si">}</span><span class="s2">"</span>
                         <span class="p">)</span>
                     <span class="k">elif</span> <span class="n">extra_indices</span> <span class="ow">and</span> <span class="n">remaining_indices</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> required indices &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;for problem </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;found and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> not &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;allowed indices found for </span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">!&quot;</span>
+                            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> required indices "</span>
+                            <span class="sa">f</span><span class="s2">"for problem </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not "</span>
+                            <span class="sa">f</span><span class="s2">"found and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> not "</span>
+                            <span class="sa">f</span><span class="s2">"allowed indices found for </span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">!"</span>
                         <span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">pass</span>
@@ -3354,43 +3354,43 @@ task, including the training and testing splits for each fold.</p>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">uncertainties</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="k">if</span> <span class="n">uncertainties</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">std</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span>
-                        <span class="n">ci</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">&quot;ci&quot;</span><span class="p">]</span>
+                        <span class="n">std</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">"std"</span><span class="p">]</span>
+                        <span class="n">ci</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">"ci"</span><span class="p">]</span>
 
                         <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
                             <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
                                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
                                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                        <span class="s2">&quot;std specified for all samples &quot;</span>
-                                        <span class="s2">&quot;but ci not specified for some.&quot;</span>
+                                        <span class="s2">"std specified for all samples "</span>
+                                        <span class="s2">"but ci not specified for some."</span>
                                     <span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
                                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                    <span class="s2">&quot;std is specified for some, but not for all.&quot;</span>
+                                    <span class="s2">"std is specified for some, but not for all."</span>
                                 <span class="p">)</span>
 
                         <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
                             <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
                                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
                                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                        <span class="s2">&quot;ci specified for all samples &quot;</span>
-                                        <span class="s2">&quot;but ci not specified for some.&quot;</span>
+                                        <span class="s2">"ci specified for all samples "</span>
+                                        <span class="s2">"but ci not specified for some."</span>
                                     <span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
                                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                    <span class="s2">&quot;ci is specified for some, but not for all.&quot;</span>
+                                    <span class="s2">"ci is specified for some, but not for all."</span>
                                 <span class="p">)</span>
 
                 <span class="c1"># Params key has no required form;</span>
                 <span class="c1"># it is up to the model to determine it.</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> successfully validated.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Data for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> successfully validated."</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Comprehensive score metrics for this task.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Comprehensive score metrics for this task.</span>
 
 <span class="sd">        Gets means, maxes, mins, and more distribution stats (across folds)</span>
 <span class="sd">        for all scoring metrics defined for this task.</span>
@@ -3400,12 +3400,12 @@ task, including the training and testing splits for each fold.</p>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (dict): A dictionary of all the scores for this task.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">metric_keys</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">REG_METRICS</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="n">REG_KEY</span> <span class="k">else</span> <span class="n">CLF_METRICS</span>
         <span class="p">)</span>
         <span class="n">scores</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_check_all_folds_recorded</span><span class="p">(</span><span class="s2">&quot;Cannot score unless all folds are recorded!&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_all_folds_recorded</span><span class="p">(</span><span class="s2">"Cannot score unless all folds are recorded!"</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">mk</span> <span class="ow">in</span> <span class="n">metric_keys</span><span class="p">:</span>
             <span class="n">metric</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -3420,13 +3420,13 @@ task, including the training and testing splits for each fold.</p>
         <span class="k">return</span> <span class="n">RecursiveDotDict</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_recorded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine what folds in the task are recorded.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_recorded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Determine what folds in the task are recorded.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ({int: bool}): Keys are fold numbers, values are whether the</span>
 <span class="sd">                fold is recorded or not.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">is_recorded</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">fnum</span><span class="p">,</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fkey</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_DATA_KEY</span><span class="p">]:</span>
@@ -3436,35 +3436,35 @@ task, including the training and testing splits for each fold.</p>
         <span class="k">return</span> <span class="n">is_recorded</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">all_folds_recorded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if all folds are recorded.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">all_folds_recorded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Determine if all folds are recorded.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (bool): True if all folds are recorded, False otherwise.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">has_polymorphs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if a task&#39;s raw data contains polymorphs.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_polymorphs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Determine if a task's raw data contains polymorphs.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (bool): If true, contains polymorphs.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">checker_key</span> <span class="o">=</span> <span class="s2">&quot;pmg_composition&quot;</span>
+<span class="sd">        """</span>
+        <span class="n">checker_key</span> <span class="o">=</span> <span class="s2">"pmg_composition"</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_loaded</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">input_type</span> <span class="o">==</span> <span class="s2">&quot;composition&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">input_type</span> <span class="o">==</span> <span class="s2">"composition"</span><span class="p">:</span>
             <span class="n">stc</span> <span class="o">=</span> <span class="n">StrToComposition</span><span class="p">(</span><span class="n">target_col_id</span><span class="o">=</span><span class="n">checker_key</span><span class="p">,</span> <span class="n">reduce</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">comps</span> <span class="o">=</span> <span class="n">stc</span><span class="o">.</span><span class="n">featurize_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="s2">&quot;composition&quot;</span><span class="p">)[</span>
+            <span class="n">comps</span> <span class="o">=</span> <span class="n">stc</span><span class="o">.</span><span class="n">featurize_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="s2">"composition"</span><span class="p">)[</span>
                 <span class="n">checker_key</span>
             <span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">input_type</span> <span class="o">==</span> <span class="s2">&quot;structure&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">input_type</span> <span class="o">==</span> <span class="s2">"structure"</span><span class="p">:</span>
             <span class="n">stc</span> <span class="o">=</span> <span class="n">StructureToComposition</span><span class="p">(</span><span class="n">target_col_id</span><span class="o">=</span><span class="n">checker_key</span><span class="p">,</span> <span class="n">reduce</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">comps</span> <span class="o">=</span> <span class="n">stc</span><span class="o">.</span><span class="n">featurize_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="s2">&quot;structure&quot;</span><span class="p">)[</span><span class="n">checker_key</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">comps</span> <span class="o">=</span> <span class="n">stc</span><span class="o">.</span><span class="n">featurize_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="s2">"structure"</span><span class="p">)[</span><span class="n">checker_key</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Cannot check for polymorphs without input type in &quot;</span>
-                <span class="s2">&quot;(structure, composition)!&quot;</span>
+                <span class="s2">"Cannot check for polymorphs without input type in "</span>
+                <span class="s2">"(structure, composition)!"</span>
             <span class="p">)</span>
 
         <span class="n">unique_comps</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">comps</span><span class="p">)</span>
@@ -3784,17 +3784,17 @@ run .load() before running .get_*_data() methods.</p>
 <span class="normal">110</span>
 <span class="normal">111</span>
 <span class="normal">112</span>
-<span class="normal">113</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">MBV01_KEY</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="normal">113</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">MBV01_KEY</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Args:</span>
 <span class="sd">        dataset_name (str): Name of the task. Must belong to the benchmark</span>
-<span class="sd">            given in the &#39;benchmark&#39; argument.</span>
-<span class="sd">        autoload (bool): If True, will load the benchmark&#39;s raw data. This</span>
+<span class="sd">            given in the 'benchmark' argument.</span>
+<span class="sd">        autoload (bool): If True, will load the benchmark's raw data. This</span>
 <span class="sd">            includes deserializing many large structures for some datasets,</span>
 <span class="sd">            so loading make take some time. If False, you will need to</span>
 <span class="sd">            run .load() before running .get_*_data() methods.</span>
 <span class="sd">        benchmark (str): Name of the benchmark this task belongs to.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span> <span class="o">=</span> <span class="n">dataset_name</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">)</span> <span class="k">if</span> <span class="n">autoload</span> <span class="k">else</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">get_all_dataset_info</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
@@ -3808,7 +3808,7 @@ run .load() before running .get_*_data() methods.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">validation</span> <span class="o">=</span> <span class="n">mbv01_validation</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Only </span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2"> available. No other benchmarks defined!&quot;</span>
+            <span class="sa">f</span><span class="s2">"Only </span><span class="si">{</span><span class="n">MBV01_KEY</span><span class="si">}</span><span class="s2"> available. No other benchmarks defined!"</span>
         <span class="p">)</span>
 
     <span class="c1"># keeping track of folds</span>
@@ -3881,17 +3881,17 @@ run .load() before running .get_*_data() methods.</p>
 <span class="normal">434</span>
 <span class="normal">435</span>
 <span class="normal">436</span>
-<span class="normal">437</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a MatbenchTask object as a dictionary.</span>
+<span class="normal">437</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return a MatbenchTask object as a dictionary.</span>
 
 <span class="sd">    Required method from MSONAble.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        (dict): The object as a serialized dictionary.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;@module&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
-        <span class="s2">&quot;@class&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="s2">"@module"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
+        <span class="s2">"@class"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">benchmark_name</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_DATASET_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_RESULTS_KEY</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">),</span>
@@ -4009,8 +4009,8 @@ run .load() before running .get_*_data() methods.</p>
 <span class="normal">208</span>
 <span class="normal">209</span>
 <span class="normal">210</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a MatbenchTask from a dictionary input.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Create a MatbenchTask from a dictionary input.</span>
 
 <span class="sd">    Required method from MSONable.</span>
 
@@ -4020,20 +4020,20 @@ run .load() before running .get_*_data() methods.</p>
 <span class="sd">    Returns:</span>
 <span class="sd">        (MatbenchTask): The MatbenchTask object.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">req_base_keys</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;@module&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;@class&quot;</span><span class="p">,</span>
+        <span class="s2">"@module"</span><span class="p">,</span>
+        <span class="s2">"@class"</span><span class="p">,</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_DATASET_KEY</span><span class="p">,</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_RESULTS_KEY</span><span class="p">,</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">,</span>
     <span class="p">]</span>
     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">req_base_keys</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required key &#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Required key '</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">' not found."</span><span class="p">)</span>
     <span class="n">extra_base_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">req_base_keys</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">extra_base_keys</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extra keys </span><span class="si">{</span><span class="n">extra_base_keys</span><span class="si">}</span><span class="s2"> not allowed.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Extra keys </span><span class="si">{</span><span class="n">extra_base_keys</span><span class="si">}</span><span class="s2"> not allowed."</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_from_args</span><span class="p">(</span>
         <span class="n">dataset_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_DATASET_KEY</span><span class="p">],</span>
         <span class="n">benchmark_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_BENCHMARK_KEY</span><span class="p">],</span>
@@ -4051,7 +4051,7 @@ run .load() before running .get_*_data() methods.</p>
 
 
 <h2 id="matbench.task.MatbenchTask.get_test_data" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">get_test_data</span><span class="p">(</span><span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s1">&#39;tuple&#39;</span><span class="p">,</span> <span class="n">include_target</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">get_test_data</span><span class="p">(</span><span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s1">'tuple'</span><span class="p">,</span> <span class="n">include_target</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 </h2>
 
@@ -4141,8 +4141,8 @@ be a single column if a df or a 1-tuple if a tuple.</p>
 <span class="normal">286</span>
 <span class="normal">287</span>
 <span class="normal">288</span>
-<span class="normal">289</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_test_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">&quot;tuple&quot;</span><span class="p">,</span> <span class="n">include_target</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="normal">289</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_test_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">"tuple"</span><span class="p">,</span> <span class="n">include_target</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The test data used for recording benchmarks.</span>
 
 <span class="sd">    Args:</span>
@@ -4152,16 +4152,16 @@ be a single column if a df or a 1-tuple if a tuple.</p>
 <span class="sd">        (tuple) or (pd.Dataframe): Data for inference. If target is</span>
 <span class="sd">            not included (it should not be, usually) then it should</span>
 <span class="sd">            be a single column if a df or a 1-tuple if a tuple.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_loaded</span><span class="p">()</span>
     <span class="n">fold_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span>
     <span class="n">ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">test</span>
     <span class="k">if</span> <span class="n">include_target</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">as_type</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">&quot;tuple&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">"tuple"</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">as_type</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">&quot;df&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">as_type</span> <span class="o">==</span> <span class="s2">"df"</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">as_type</span><span class="p">)[</span>
                 <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">input_type</span><span class="p">]</span>
             <span class="p">]</span>
@@ -4177,7 +4177,7 @@ be a single column if a df or a 1-tuple if a tuple.</p>
 
 
 <h2 id="matbench.task.MatbenchTask.get_train_and_val_data" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">get_train_and_val_data</span><span class="p">(</span><span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s1">&#39;tuple&#39;</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">get_train_and_val_data</span><span class="p">(</span><span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s1">'tuple'</span><span class="p">)</span></code>
 
 </h2>
 
@@ -4260,8 +4260,8 @@ training data or a 2-tuple of training data.</p>
 <span class="normal">261</span>
 <span class="normal">262</span>
 <span class="normal">263</span>
-<span class="normal">264</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_train_and_val_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">&quot;tuple&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="normal">264</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_train_and_val_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">"tuple"</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The training + validation data. All model tuning and</span>
 <span class="sd">    hyperparameter selection must be done on this data, NOT test data.</span>
 
@@ -4272,7 +4272,7 @@ training data or a 2-tuple of training data.</p>
 <span class="sd">        (pd.Dataframe) or (tuple): Returns either a dataframe of</span>
 <span class="sd">            training data or a 2-tuple of training data.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_loaded</span><span class="p">()</span>
     <span class="n">fold_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span>
     <span class="n">ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">train</span>
@@ -4338,20 +4338,20 @@ training data or a 2-tuple of training data.</p>
 <span class="normal">240</span>
 <span class="normal">241</span>
 <span class="normal">242</span>
-<span class="normal">243</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the dataset for this task into memory.</span>
+<span class="normal">243</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Load the dataset for this task into memory.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        (NoneType):  The dataset is stored as an attribute.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading dataset &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">&#39;...&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loading dataset '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">'..."</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> loaded.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Dataset '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> loaded."</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Dataset </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> already loaded; &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;not reloading dataset.&quot;</span>
+            <span class="sa">f</span><span class="s2">"Dataset </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> already loaded; "</span>
+            <span class="sa">f</span><span class="s2">"not reloading dataset."</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
           </details>
@@ -4640,8 +4640,8 @@ docstring.</p>
 <span class="normal">418</span>
 <span class="normal">419</span>
 <span class="normal">420</span>
-<span class="normal">421</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Record the test data as well as parameters about the model</span>
+<span class="normal">421</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Record the test data as well as parameters about the model</span>
 <span class="sd">    trained on this fold.</span>
 
 <span class="sd">    Args:</span>
@@ -4663,10 +4663,10 @@ docstring.</p>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        (NoneType): Recorded data is stored in attributes.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Fold number </span><span class="si">{</span><span class="n">fold_number</span><span class="si">}</span><span class="s2"> already recorded! Aborting record...&quot;</span>
+            <span class="sa">f</span><span class="s2">"Fold number </span><span class="si">{</span><span class="n">fold_number</span><span class="si">}</span><span class="s2"> already recorded! Aborting record..."</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># avoid problems with json serialization</span>
@@ -4681,9 +4681,9 @@ docstring.</p>
 
         <span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ci</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<span class="w">                </span><span class="sd">&quot;&quot;&quot;Both standard deviation (`std`) and confidence</span>
+<span class="w">                </span><span class="sd">"""Both standard deviation (`std`) and confidence</span>
 <span class="sd">                intervals (`ci`) were specified as kwargs. Only one</span>
-<span class="sd">                should be specified, not both.&quot;&quot;&quot;</span>
+<span class="sd">                should be specified, not both."""</span>
             <span class="p">)</span>
 
         <span class="n">fold_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span>
@@ -4694,19 +4694,19 @@ docstring.</p>
         <span class="n">split_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">test</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Prediction outputs must be the same length as the &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;inputs! </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">"Prediction outputs must be the same length as the "</span>
+                <span class="sa">f</span><span class="s2">"inputs! </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
             <span class="p">)</span>
 
         <span class="n">ids_to_predictions</span> <span class="o">=</span> <span class="p">{</span><span class="n">split_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_DATA_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">ids_to_predictions</span>
 
         <span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ci</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;task_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">"task_type"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"classification"</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;`std` and `ci` are not valid kwargs for classification &quot;</span>
-                    <span class="o">+</span> <span class="s2">&quot;tasks. See &quot;</span>
-                    <span class="o">+</span> <span class="s2">&quot;https://github.com/materialsproject/matbench/pull/99/files#issuecomment-1022662192.&quot;</span>  <span class="c1"># noqa: E501</span>
+                    <span class="s2">"`std` and `ci` are not valid kwargs for classification "</span>
+                    <span class="o">+</span> <span class="s2">"tasks. See "</span>
+                    <span class="o">+</span> <span class="s2">"https://github.com/materialsproject/matbench/pull/99/files#issuecomment-1022662192."</span>  <span class="c1"># noqa: E501</span>
                 <span class="p">)</span>
 
             <span class="k">if</span> <span class="n">ci</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -4739,13 +4739,13 @@ docstring.</p>
 
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Confidence interval outputs (derived from standard</span>
+                    <span class="sa">f</span><span class="s2">"""Confidence interval outputs (derived from standard</span>
 <span class="s2">                     deviations if `std` was supplied) must be the same</span>
-<span class="s2">                     length as the inputs! </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                     length as the inputs! </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">split_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">"""</span>
                 <span class="p">)</span>
 
             <span class="n">ids_to_uncertainties</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="n">split_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="p">{</span><span class="s2">&quot;ci_lower&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;ci_upper&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">s</span><span class="p">}</span>
+                <span class="n">split_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="p">{</span><span class="s2">"ci_lower"</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"ci_upper"</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">"std"</span><span class="p">:</span> <span class="n">s</span><span class="p">}</span>
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">std</span><span class="p">))</span>
             <span class="p">}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">ids_to_uncertainties</span>
@@ -4754,22 +4754,22 @@ docstring.</p>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Parameters must be stored as a dictionary, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">params</span><span class="p">)</span><span class="si">}</span><span class="s2">!&quot;</span>
+                <span class="sa">f</span><span class="s2">"Parameters must be stored as a dictionary, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">params</span><span class="p">)</span><span class="si">}</span><span class="s2">!"</span>
             <span class="p">)</span>
         <span class="n">params</span> <span class="o">=</span> <span class="n">immutify_dictionary</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="n">params</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_PARAMS_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Recorded fold &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_number</span><span class="si">}</span><span class="s2"> successfully.&quot;</span>
+            <span class="sa">f</span><span class="s2">"Recorded fold "</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_number</span><span class="si">}</span><span class="s2"> successfully."</span>
         <span class="p">)</span>
 
-        <span class="n">truth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">split_ids</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">&quot;tuple&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">truth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_from_df</span><span class="p">(</span><span class="n">split_ids</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">"tuple"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_SCORES_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">score_array</span><span class="p">(</span>
             <span class="n">truth</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span>
         <span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Scored fold &#39;&quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2"> successfully.&quot;</span>
+            <span class="sa">f</span><span class="s2">"Scored fold '"</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2"> successfully."</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
           </details>
@@ -4995,8 +4995,8 @@ Returns:
 <span class="normal">622</span>
 <span class="normal">623</span>
 <span class="normal">624</span>
-<span class="normal">625</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate a task after all folds have been recorded.</span>
+<span class="normal">625</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Validate a task after all folds have been recorded.</span>
 
 <span class="sd">    There are a few requirements for a task to be validated:</span>
 <span class="sd">    - Data types of each predicted sample must match those</span>
@@ -5014,10 +5014,10 @@ Returns:
 <span class="sd">    Returns:</span>
 <span class="sd">        (NoneType): Errors are thrown if benchmark not valid.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_all_folds_recorded</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Cannot validate task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;unless all folds recorded!&quot;</span>
+        <span class="sa">f</span><span class="s2">"Cannot validate task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
+        <span class="sa">f</span><span class="s2">"unless all folds recorded!"</span>
     <span class="p">)</span>
     <span class="n">task_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span>
 
@@ -5025,15 +5025,15 @@ Returns:
     <span class="n">extra_fold_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">extra_fold_keys</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Extra fold keys </span><span class="si">{</span><span class="n">extra_fold_keys</span><span class="si">}</span><span class="s2"> for task &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not allowed.&quot;</span>
+            <span class="sa">f</span><span class="s2">"Extra fold keys </span><span class="si">{</span><span class="n">extra_fold_keys</span><span class="si">}</span><span class="s2"> for task "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not allowed."</span>
         <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">fold_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Required fold data for fold &#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not found.&quot;</span>
+                <span class="sa">f</span><span class="s2">"Required fold data for fold '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">' "</span>
+                <span class="sa">f</span><span class="s2">"for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not found."</span>
             <span class="p">)</span>
 
         <span class="c1"># Check for extra or missing keys inside each fold:</span>
@@ -5046,8 +5046,8 @@ Returns:
             <span class="n">extra_subfold_keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">extra_subfold_keys</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Extra keys </span><span class="si">{</span><span class="n">extra_subfold_keys</span><span class="si">}</span><span class="s2"> for fold results of &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39; for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">  not allowed.&quot;</span>
+                <span class="sa">f</span><span class="s2">"Extra keys </span><span class="si">{</span><span class="n">extra_subfold_keys</span><span class="si">}</span><span class="s2"> for fold results of "</span>
+                <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">' for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">  not allowed."</span>
             <span class="p">)</span>
         <span class="n">req_subfold_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">subkey</span> <span class="ow">in</span> <span class="n">req_subfold_keys</span><span class="p">:</span>
@@ -5057,8 +5057,8 @@ Returns:
                 <span class="ow">and</span> <span class="n">subkey</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fold_results</span>
             <span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Required key &#39;</span><span class="si">{</span><span class="n">subkey</span><span class="si">}</span><span class="s2">&#39; for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;not found for fold &#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+                    <span class="sa">f</span><span class="s2">"Required key '</span><span class="si">{</span><span class="n">subkey</span><span class="si">}</span><span class="s2">' for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
+                    <span class="sa">f</span><span class="s2">"not found for fold '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">'."</span>
                 <span class="p">)</span>
             <span class="k">if</span> <span class="n">subkey</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SCORES_KEY</span><span class="p">:</span>
                 <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="n">subkey</span><span class="p">]</span>
@@ -5066,22 +5066,22 @@ Returns:
                 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">m</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">scores</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;Required score &#39;</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&#39; for task &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;not found for &#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+                            <span class="sa">f</span><span class="s2">"Required score '</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">' for task "</span>
+                            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
+                            <span class="sa">f</span><span class="s2">"not found for '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">'."</span>
                         <span class="p">)</span>
                     <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="nb">float</span><span class="p">):</span>
                         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;Required score &#39;</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&#39; for task &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;is not float-type for &#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39;!&quot;</span>
+                            <span class="sa">f</span><span class="s2">"Required score '</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">' for task "</span>
+                            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
+                            <span class="sa">f</span><span class="s2">"is not float-type for '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">'!"</span>
                         <span class="p">)</span>
                 <span class="n">extra_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">scores</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">extra_metrics</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Extra keys </span><span class="si">{</span><span class="n">extra_metrics</span><span class="si">}</span><span class="s2"> for fold scores of &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">&#39; for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;not allowed.&quot;</span>
+                        <span class="sa">f</span><span class="s2">"Extra keys </span><span class="si">{</span><span class="n">extra_metrics</span><span class="si">}</span><span class="s2"> for fold scores of "</span>
+                        <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">' for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
+                        <span class="sa">f</span><span class="s2">"not allowed."</span>
                     <span class="p">)</span>
 
             <span class="c1"># results data indices are cast by json to be strings,</span>
@@ -5105,40 +5105,40 @@ Returns:
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">datum</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
                             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                                <span class="sa">f</span><span class="s2">&quot;Data point &#39;</span><span class="si">{</span><span class="n">ix</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">datum</span><span class="si">}</span><span class="s2">&#39; has data type &quot;</span>
-                                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">datum</span><span class="p">)</span><span class="si">}</span><span class="s2"> while required type is &quot;</span>
-                                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">allowed_types</span><span class="si">}</span><span class="s2"> for task &quot;</span>
-                                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> !&quot;</span>
+                                <span class="sa">f</span><span class="s2">"Data point '</span><span class="si">{</span><span class="n">ix</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">datum</span><span class="si">}</span><span class="s2">' has data type "</span>
+                                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">datum</span><span class="p">)</span><span class="si">}</span><span class="s2"> while required type is "</span>
+                                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">allowed_types</span><span class="si">}</span><span class="s2"> for task "</span>
+                                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> !"</span>
                             <span class="p">)</span>
                         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="n">CLF_KEY</span><span class="p">:</span>
                             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">datum</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
                                 <span class="k">if</span> <span class="n">datum</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">datum</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                        <span class="sa">f</span><span class="s2">&quot;Probability estimate &#39;</span><span class="si">{</span><span class="n">ix</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">datum</span><span class="si">}</span><span class="s2">&quot;</span>
-                                        <span class="sa">f</span><span class="s2">&quot;for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> outside &quot;</span>
-                                        <span class="sa">f</span><span class="s2">&quot;of range [0, 1].&quot;</span>
+                                        <span class="sa">f</span><span class="s2">"Probability estimate '</span><span class="si">{</span><span class="n">ix</span><span class="si">}</span><span class="s2">': </span><span class="si">{</span><span class="n">datum</span><span class="si">}</span><span class="s2">"</span>
+                                        <span class="sa">f</span><span class="s2">"for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> outside "</span>
+                                        <span class="sa">f</span><span class="s2">"of range [0, 1]."</span>
                                     <span class="p">)</span>
 
                         <span class="n">remaining_indices</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ix</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">extra_indices</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">remaining_indices</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> extra indices for problem &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> are not allowed (found in &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_indices</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> extra indices for problem "</span>
+                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> are not allowed (found in "</span>
+                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_indices</span><span class="si">}</span><span class="s2">"</span>
                     <span class="p">)</span>
                 <span class="k">elif</span> <span class="ow">not</span> <span class="n">extra_indices</span> <span class="ow">and</span> <span class="n">remaining_indices</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> required indices &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;for problem </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;found for </span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_indices</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> required indices "</span>
+                        <span class="sa">f</span><span class="s2">"for problem </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not "</span>
+                        <span class="sa">f</span><span class="s2">"found for </span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_indices</span><span class="si">}</span><span class="s2">"</span>
                     <span class="p">)</span>
                 <span class="k">elif</span> <span class="n">extra_indices</span> <span class="ow">and</span> <span class="n">remaining_indices</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> required indices &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;for problem </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;found and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> not &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;allowed indices found for </span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">!&quot;</span>
+                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> required indices "</span>
+                        <span class="sa">f</span><span class="s2">"for problem </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not "</span>
+                        <span class="sa">f</span><span class="s2">"found and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> not "</span>
+                        <span class="sa">f</span><span class="s2">"allowed indices found for </span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">!"</span>
                     <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">pass</span>
@@ -5149,39 +5149,39 @@ Returns:
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">uncertainties</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="k">if</span> <span class="n">uncertainties</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">std</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span>
-                    <span class="n">ci</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">&quot;ci&quot;</span><span class="p">]</span>
+                    <span class="n">std</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">"std"</span><span class="p">]</span>
+                    <span class="n">ci</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">"ci"</span><span class="p">]</span>
 
                     <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
                         <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
                             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
                                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                    <span class="s2">&quot;std specified for all samples &quot;</span>
-                                    <span class="s2">&quot;but ci not specified for some.&quot;</span>
+                                    <span class="s2">"std specified for all samples "</span>
+                                    <span class="s2">"but ci not specified for some."</span>
                                 <span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
                             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                <span class="s2">&quot;std is specified for some, but not for all.&quot;</span>
+                                <span class="s2">"std is specified for some, but not for all."</span>
                             <span class="p">)</span>
 
                     <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
                         <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
                             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
                                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                    <span class="s2">&quot;ci specified for all samples &quot;</span>
-                                    <span class="s2">&quot;but ci not specified for some.&quot;</span>
+                                    <span class="s2">"ci specified for all samples "</span>
+                                    <span class="s2">"but ci not specified for some."</span>
                                 <span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
                             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                <span class="s2">&quot;ci is specified for some, but not for all.&quot;</span>
+                                <span class="s2">"ci is specified for some, but not for all."</span>
                             <span class="p">)</span>
 
             <span class="c1"># Params key has no required form;</span>
             <span class="c1"># it is up to the model to determine it.</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> successfully validated.&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Data for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> successfully validated."</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
           </details>
   </div>

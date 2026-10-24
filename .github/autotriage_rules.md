@@ -54,14 +54,117 @@ includes read-only users, and MEMBER includes anyone in the organization.
 
 Any change to these is escalated (rule 1) in every mode, however small.
 
-- None listed yet. Until some are, treat any change to formulas, constants,
-  units, default parameters, or data files as a domain risk area.
+- `benchmarks/*`: leaderboard submissions. Review each one under
+  "Benchmark submissions" below, then escalate with that review.
+- Until more are listed, treat any change to formulas, constants, units,
+  default parameters, or data files as a domain risk area.
 
 ## Contribution requirements
 
 Besides tests for every behavior change, contributions to this repo must:
 
 - Nothing else listed yet.
+
+## Benchmark submissions
+
+A benchmark submission is a PR that adds or changes a folder
+`benchmarks/<benchmark name>_<algorithm name>/`. It puts results on the
+public leaderboard, which people cite. Review it with much more scrutiny
+than other PRs. Read every file in the folder: `info.json`, the source
+(`.py` or `.ipynb`), and any supporting files, plus the PR description.
+You can't open `results.json.gz` or fetch the cited papers, so judge the
+results from the source that produced them and the submission CI, and the
+paper from what `info.json` and the PR say about it.
+
+Check each point below. For each, say what you found and the evidence
+(file and line, or cell). If you can't tell, say so: never assume a point
+passes.
+
+**Data leakage.** This is the most important check. Any information from a
+test fold must not reach the model for that fold, directly or indirectly.
+- Training, validation, early stopping, hyperparameter tuning, model or
+  checkpoint selection, and ensemble weighting use only
+  `task.get_train_and_val_data(fold)`. Never the test data, and never data
+  from other folds' test sets.
+- The model predicts on `task.get_test_data(fold, include_target=False)`.
+  Targets for the test fold are never loaded before `task.record`.
+- A fresh model is trained per fold. No model, scaler, or state carries
+  over from one fold to the next.
+- Preprocessing (scalers, feature selection, imputation, PCA, target
+  transforms) is fit on the training data of that fold only. Fitting on the
+  full dataset, including test inputs, is leakage, even if unsupervised;
+  flag it.
+- Hyperparameters were not chosen using the full dataset or the test folds,
+  including in an earlier study the submission reuses. Check the paper and
+  notes, not only the code.
+- **Pretrained and foundation models.** Most Matbench datasets come from
+  Materials Project, JARVIS, or published experimental sets. A model
+  pretrained on Materials Project, OQMD, JARVIS, Alexandria, OMat, MPtrj, or
+  similar likely saw the test structures, and often the same or a closely
+  related property. Identify the pretraining data and whether it overlaps
+  the task's data. Say how strongly it likely affects the result. Overlap
+  doesn't forbid a submission, but it must be stated clearly in
+  `info.json` and the leaderboard entry.
+- **Features from outside data.** Features looked up per material from a
+  database (e.g. Materials Project properties, DFT results) can contain the
+  target or a close proxy, e.g. the DFT band gap as a feature for
+  `matbench_expt_gap`, or formation energy for `matbench_mp_e_form`. Flag
+  any feature computed from the same calculations as the target.
+- **Other Matbench tasks.** Using another task's targets as features or for
+  transfer learning can leak, since tasks share materials. Flag it.
+- Augmented or generated data must come only from that fold's training
+  data.
+- A large-language-model method may have seen the datasets in its training
+  text. Say so if relevant.
+
+**Protocol and validity.**
+- Uses the folds Matbench defines; never re-splits, reshuffles, or drops
+  samples.
+- Records predictions for every fold of every task it reports. Partial
+  submissions (a subset of tasks) are allowed; partial folds are not.
+- Uses only the inputs the task gives: composition-only tasks are not given
+  structures. A method that adds structure to a composition task (e.g. by
+  lookup) must say so; flag it.
+- Classification predictions are in the form Matbench expects, and the
+  metrics are not computed by the submitter in a way that differs from
+  Matbench's.
+- The submission CI (`scripts/test_submission.py`) passes: required files,
+  `info.json` fields, valid results, unique `algorithm` name, no file over
+  10 MB besides the results.
+
+**Reproducibility.**
+- The source contains all code to train and predict on every reported task,
+  including the `mb.record(...)` calls. No hidden steps, missing files, or
+  paths to the author's machine.
+- `requirements` pins the versions used, including `matbench`.
+- Random seeds are set, or the notes say how results vary between runs.
+- Compute used (hardware, time) is in the notes, if training is expensive.
+
+**Scientific soundness.**
+- Summarize the method: model, inputs, training procedure, and what is new
+  compared with earlier entries.
+- Compare the results with the current leaderboard for each task. A large
+  jump over the best entry, or a result much better than the cited paper
+  reports, needs an explanation. Look harder for leakage before accepting
+  it.
+- Check that `algorithm_long`, `notes`, and the cited references describe
+  what the code actually does. Flag any claim the code doesn't support.
+- Check that a new version of an existing entry (same algorithm, new
+  version) explains what changed.
+
+**Scope.**
+- Only files under the one `benchmarks/` folder change. Changes to core
+  code, data, docs, or the leaderboard pages belong in a separate PR.
+- Flag anything in the source that is unsafe to run: network downloads of
+  unpinned code or weights, `pickle` loading of untrusted files, shell
+  commands.
+
+Always escalate a benchmark submission (rule 1), in every mode, with this
+review in the comment. Unlike other comments, give the full detail here.
+Put the bottom line first: whether you found leakage or protocol problems,
+and what the submitter or maintainer must do. Then one section per heading
+above. Ask the submitter directly about anything you couldn't determine,
+e.g. what the pretraining data was.
 
 ## When a maintainer tags you
 
@@ -314,7 +417,10 @@ Bottom line.
 Style for this repo. This overrides the lines above, but never the bottom
 line:
 
-- None listed yet.
+- Ultra short and to the point. Give detail only if necessary.
+- Exception, benchmark submissions: examine the submission in depth, as in
+  "Benchmark submissions". Explain every scientific point and the methods in
+  full detail.
 
 ## General conduct
 
