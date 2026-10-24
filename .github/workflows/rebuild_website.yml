@@ -1,4 +1,4 @@
-name: rebuild docs
+name: rebuild-docs
 
 # build docs on PRs; rebuild and commit them on updates to main
 on:
@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  rebuild_docs:
+  rebuild-docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
