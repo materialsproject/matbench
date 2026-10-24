@@ -80,6 +80,27 @@ versions actually used for the submitted training run.
 Training environment reported by the author: Kaggle, a single NVIDIA T4 GPU.
 Author-reported training runtime: **under 20 minutes** on one NVIDIA T4 GPU. The exact timing was not recorded or independently verified.
 
+## Mat2Vec checksum capture (pending upstream bytes)
+
+The author's training code used the official Mat2Vec pretrained model set:
+`pretrained_embeddings`, `pretrained_embeddings.wv.vectors.npy`, and
+`pretrained_embeddings.trainables.syn1neg.npy` from
+`https://storage.googleapis.com/mat2vec/`.
+
+Run in a networked, trusted environment (for example Kaggle):
+
+```sh
+python mat2vec_integrity.py capture --cache ./mat2vec_cache
+python mat2vec_integrity.py verify --cache ./mat2vec_cache
+```
+
+This writes `mat2vec_sha256.json` with observed SHA-256 hashes, lengths,
+source metadata, and UTC capture time. Only after checking the real bytes
+and the source should that manifest be committed and checksum verification
+be enforced in `trm13.py` before `Word2Vec.load`. **No placeholder hashes
+are included.** A first download from HTTPS records current content but
+cannot, alone, establish which exact bytes were used historically.
+
 ## Open reproducibility issues
 
 - Original individual checkpoint-to-prediction correspondence has not
@@ -88,9 +109,14 @@ Author-reported training runtime: **under 20 minutes** on one NVIDIA T4 GPU. The
   on model selection, remains under scientific review.
 - The original training script loads Mat2Vec Word2Vec pickle-compatible
   files from `https://storage.googleapis.com/mat2vec/` without
-  independently pinned checksums. Do not treat those binary downloads
-  as trusted solely because the host is known. A verified SHA-256 manifest
-  and/or a trustworthy content-addressed snapshot is still needed.
+  independently pinned checksums. The three official source filenames have
+  been confirmed in the original Mat2Vec project's documentation, but a
+  trusted SHA-256 digest has **not** been retrieved or pinned yet.
+  `mat2vec_integrity.py` provides a read-only-to-model SHA-256 capture and
+  validation workflow. It does not unpickle the model; a completed manifest
+  must be independently reviewed and committed before treating downloads
+  as authenticated. The historic Kaggle file identity cannot be established
+  merely by hashing the current upstream objects.
 - Per-seed averages are preserved in the TRIADS archive; individual
   seed-by-fold metrics have not been restored from an original run log.
 
