@@ -694,6 +694,8 @@ def run_benchmark():
     all_results = {}
     all_hists = {}
     all_conf_weights = {}
+    # Raw V13A ensemble outputs, exported by MBID for official Matbench recording.
+    v13a_export = {}
 
     for cname, cfg in configs.items():
         print(f"\n{'▓'*72}")
@@ -775,6 +777,13 @@ def run_benchmark():
             # Average predictions across all seeds for this fold
             all_seed_preds = torch.stack([seed_fold_preds[s][fi] for s in SEEDS])
             ensemble_pred = all_seed_preds.mean(dim=0)
+            if cname == 'V13A-2xSA-StdDS':
+                # IDs correspond to original matminer row positions, matching
+                # Matbench's mb-steels-XXX ID assignment for this dataset.
+                v13a_export[f'fold_{fi}'] = {
+                    f'mb-steels-{int(row_index) + 1:03d}': float(value)
+                    for row_index, value in zip(te_i, ensemble_pred.tolist())
+                }
 
             ens_mae = F.l1_loss(ensemble_pred, te_tgt_t).item()
             ensemble_fold_maes.append(ens_mae)
@@ -883,6 +892,13 @@ def run_benchmark():
             print(f"    {cn}: avg peak step={avg_peak:.1f}, "
                   f"population peak=step {peak_step}")
     print()
+
+    # Preserve raw V13A predictions so a separate environment with Matbench
+    # can validate and serialize the exact sample-to-prediction mapping.
+    if len(v13a_export) != 5:
+        raise RuntimeError('Expected 5 V13A prediction folds for export')
+    with open('trm_models_v13/v13a_fold_predictions_by_mbid.json', 'w') as f:
+        json.dump(v13a_export, f, indent=2)
 
     generate_plots(all_results, all_hists, all_conf_weights)
     save_summary(all_results, all_hists, all_conf_weights, tt)
