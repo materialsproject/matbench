@@ -88,6 +88,16 @@ class TestDataOps(unittest.TestCase):
         self.assertEqual(ans["rocauc"], 1.0)
         self.assertEqual(ans["accuracy"], 0.2)
 
+        # numpy scalar types score the same as their builtin equivalents
+        true = [True, False]
+        test = [0.7, 0.65]
+        ans_builtin = score_array(true, test, task_type=CLF_KEY)
+        ans_numpy = score_array(
+            np.array(true), np.array(test, dtype=np.float32), task_type=CLF_KEY
+        )
+        for metric, value in ans_builtin.items():
+            self.assertAlmostEqual(ans_numpy[metric], value, places=10)
+
     def test_mean_absolute_percentage_error(self):
 
         true = [1, 100, 1000, 0, 0.00000001]

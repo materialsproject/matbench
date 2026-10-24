@@ -28,6 +28,10 @@ from matbench.constants import (
 )
 from matbench.metadata import mbv01_metadata
 
+# numpy scalars (e.g. np.float32, np.bool_) are not subclasses of the builtins
+FLOAT_TYPES = (float, np.floating)
+BOOL_TYPES = (bool, np.bool_)
+
 logger = logging.getLogger(__name__)
 
 
@@ -115,12 +119,12 @@ def score_array(true_array, pred_array, task_type):
         if metric == "rocauc":
             # Both arrays must be in probability form
             # if pred. array is given in probabilities
-            if isinstance(pred_array[0], float):
+            if isinstance(pred_array[0], FLOAT_TYPES):
                 metric_true = homogenize_clf_array(true_array, to_probs=True)
 
         # Other clf metrics always be converted to labels
         elif metric in CLF_METRICS:
-            if isinstance(pred_array[0], float):
+            if isinstance(pred_array[0], FLOAT_TYPES):
                 metric_pred = homogenize_clf_array(pred_array, to_labels=True)
 
         computed[metric] = mfunc(metric_true, metric_pred)
@@ -184,16 +188,16 @@ def homogenize_clf_array(array, to_probs=False, to_labels=False, thresh=CLF_THRE
         )
 
     if to_probs:
-        if all([isinstance(i, bool) for i in array]):
+        if all([isinstance(i, BOOL_TYPES) for i in array]):
             # The source array is bools
-            homogenized = [1.0 if i is True else 0.0 for i in array]
+            homogenized = [1.0 if i else 0.0 for i in array]
             return homogenized
         else:
             raise TypeError(
                 "Cannot convert non-bool type in clf array to " "probabilities."
             )
     elif to_labels:
-        if all([isinstance(i, float) for i in array]):
+        if all([isinstance(i, FLOAT_TYPES) for i in array]):
             # The source array is probabilities
             homogenized = np.asarray(array) > thresh
             return homogenized.tolist()

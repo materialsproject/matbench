@@ -38,6 +38,15 @@ METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
 METADATA_DIR_PREFIX = "Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
 
+# Warning shown above classification leaderboards; see issues #137 and #181
+CLF_ROCAUC_NOTE = "!!! warning \"Classification ROC-AUC scores are outdated\"\n" \
+                  "    ROC-AUC scores on the matbench_v0.1 classification leaderboards were computed on " \
+                  "predictions thresholded at 0.5. They therefore equal balanced accuracy, not true ROC-AUC, " \
+                  "and understate submissions that provided probabilities. This is fixed for future scoring; " \
+                  "existing scores have not been recomputed. See " \
+                  "[#137](https://github.com/materialsproject/matbench/issues/137) and " \
+                  "[#181](https://github.com/materialsproject/matbench/issues/181).\n\n"
+
 
 # mp website statics locations
 SCALED_ERRORS_PATH = os.path.join(STATIC_DOCS_DIR, "scaled_errors_{bmark_name}.json")
@@ -271,7 +280,7 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
         table += "\n\n"
         # scaled_errors_plot_txt = f'\n<iframe src="static/{SCALED_ERRORS_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0" allowtransparency="true"> </iframe>\n\n'
         # scaled_errors_non_gp_plt_txt = f'\n<iframe src="static/{SCALED_ERRORS_NON_GP_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>\n\n'
-        gp_leaderboard_txt += table_header + table_explanation + table
+        gp_leaderboard_txt += table_header + table_explanation + CLF_ROCAUC_NOTE + table
 
         for div_txt in leaderboard_divs:
             gp_leaderboard_txt += div_txt
@@ -405,6 +414,8 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             explanation = "_Leaderboard for an individual task. Algorithms shown here may include " \
                           "both general purpose and specialized algorithms (i.e., algorithms which " \
                           "are only valid for a subset of tasks in the benchmark._\n\n"
+            if task_type == CLF_KEY:
+                explanation += CLF_ROCAUC_NOTE
 
 
 

@@ -4,6 +4,9 @@
 
 _Leaderboard for an individual task. Algorithms shown here may include both general purpose and specialized algorithms (i.e., algorithms which are only valid for a subset of tasks in the benchmark._
 
+!!! warning "Classification ROC-AUC scores are outdated"
+    ROC-AUC scores on the matbench_v0.1 classification leaderboards were computed on predictions thresholded at 0.5. They therefore equal balanced accuracy, not true ROC-AUC, and understate submissions that provided probabilities. This is fixed for future scoring; existing scores have not been recomputed. See [#137](https://github.com/materialsproject/matbench/issues/137) and [#181](https://github.com/materialsproject/matbench/issues/181).
+
 ### Leaderboard
 
 | algorithm | mean rocauc | std rocauc | mean f1 | mean balanced_accuracy |
