@@ -108,7 +108,7 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           existing=$(gh label list -R "$REPO" --limit 500 --json name --jq '.[].name')
-          for label in "review requested" "not ready to merge" "do not merge"; do
+          for label in "review requested" "not ready to merge" "do not merge" "new_benchmark"; do
             grep -qixF "$label" <<<"$existing" || gh label create "$label" -R "$REPO"
           done
 
