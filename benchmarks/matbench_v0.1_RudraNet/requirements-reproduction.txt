@@ -1,12 +1,10 @@
-# TRIADS steels inference/training dependencies, Python 3.11, Linux.
-# Derived from Rtx09x/TRIADS/main/requirements.txt and tested with
-# pip install --dry-run on GitHub Actions (2026-10-24).
-# This is a resolver-tested candidate, NOT the original Kaggle pip freeze.
-# Full install, import tests, and checkpoint prediction equality are separate checks.
-# 'torch-geometric' from TRIADS is phonon/graph-task specific, not used by steels.
-# 'matbench' must NOT be installed in this environment: its published v0.6
-# metadata requires matminer==0.7.4, incompatible with this inference pin.
-# The official Matbench exporter uses a separate environment.
+# RudraNet / TRIADS V13A inference environment, Linux, CPython 3.11
+# Versions derived from https://github.com/Rtx09x/TRIADS
+# Installed and tested by GitHub Actions with a finite-output forward pass.
+# For CPU-only Torch use:
+#   python -m pip install torch==2.3.1 --index-url https://download.pytorch.org/whl/cpu
+#   python -m pip install -r requirements-reproduction.txt
+# Official Matbench result export uses its own Python 3.12 environment.
 torch==2.3.1
 numpy==1.26.4
 pandas==2.2.2
@@ -15,6 +13,6 @@ scikit-learn==1.5.1
 pymatgen==2024.7.18
 matminer==0.9.3
 gensim==4.3.3
-matplotlib==3.9.1
+matplotlib==3.9.4
 tqdm==4.66.4
 huggingface_hub==0.24.7

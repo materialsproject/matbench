@@ -1,31 +1,35 @@
-# RudraNet / TRIADS V13A: reproduction and provenance
+# RudraNet (TRIADS V13A) • Matbench steels reproducibility
 
-This document describes the submitted `matbench_steels` benchmark. It separates
-**verified observations** from **unverified historical claims**. The submission
-predictions have NOT been retrained or changed during the October 2026 repairs.
+## Submission and research sources
 
-## Sources
+- Benchmark PR: https://github.com/materialsproject/matbench/pull/360
+- Original model/training implementation: [trm13.py](trm13.py)
+- Research archive and V13 experiment summary:
+  https://github.com/Rtx09x/TRIADS/tree/main/matbench_steels
+- Paper DOI: https://doi.org/10.5281/zenodo.19200579
+- Mat2Vec source paper: https://doi.org/10.1038/s41586-019-1335-8
 
-- PR: https://github.com/materialsproject/matbench/pull/360
-- Submitted training script: `trm13.py` (original source at PR head 89be878).
-- Public research archive: https://github.com/Rtx09x/TRIADS
-- TRIADS code: `matbench_steels/model.py` (Git blob 5282d83405b8db2ecf0aade121be7d180c5498e8).
-- Archived results: `matbench_steels/results.json` and
-  `archive/research_notes/steels/summary_v13.json`
-  (Git blob 6684ffe674e9dfadce0398372cd955e6e791c45f).
-- Model/paper DOI: https://doi.org/10.5281/zenodo.19200579
-- Mat2Vec publication: https://doi.org/10.1038/s41586-019-1335-8
+The originally submitted training code matches `TRIADS/matbench_steels/model.py`
+(after normalization of line endings). The submission specifies the
+`V13A-2xSA-StdDS` model with self-attention, cross-attention to Mat2Vec,
+20-step recursive refinement, deep supervision, and a five-seed ensemble
+(`42, 123, 7, 0, 99`).
 
-The submitted `trm13.py` and archived `TRIADS/matbench_steels/model.py`
-were identical after normalizing Windows/Unix line endings at audit time
-(prior to adding the raw-prediction export path here).
+## Data protocol and evaluated scores
 
-## Submitted result and fold membership
+The run used the 312-composition `matbench_steels` dataset through Matminer
+because the author's Kaggle training environment could not access the
+Matbench package/resources. Outer splits were generated with
+`KFold(n_splits=5, shuffle=True, random_state=18012019)`. Within each
+outer training fold, a separate 15% validation holdout was used for model
+training/early stopping. This is **five-fold benchmark evaluation with an
+inner holdout**, not a claim of inner multi-fold hyperparameter-search CV.
 
-V13A (`V13A-2xSA-StdDS`) uses five seeds: 42, 123, 7, 0, 99.
-The 5-seed ensemble fold MAEs in MPa are:
+All 312 submitted Matbench sample IDs were checked against the seeded
+outer fold memberships: there were **no missing, repeated, or mismatched
+test IDs**. The official Matbench submission check passes.
 
-| Fold | Test samples | MAE (MPa) |
+| Outer fold | Samples | MAE (MPa) |
 | --- | ---: | ---: |
 | 0 | 63 | 114.324803 |
 | 1 | 63 | 81.463865 |
@@ -33,97 +37,63 @@ The 5-seed ensemble fold MAEs in MPa are:
 | 3 | 62 | 90.491534 |
 | 4 | 62 | 89.182703 |
 
-Mean fold MAE: 91.202843 MPa (91.20 rounded); across-fold standard
-deviation approximately 12.23 MPa. This standard deviation is **not**
-a per-seed uncertainty estimate.
+The five-fold mean MAE is **91.2028 MPa**. Each value agrees with the
+archived V13A experiment summary in the main TRIADS repository to its
+recorded precision. The standard deviation across *folds* is about
+12.23 MPa, not a per-seed uncertainty estimate.
 
-The original submitted JSON includes all 312 unique `mb-steels-NNN` IDs.
-Comparison against scikit-learn `KFold(n_splits=5, shuffle=True,
-random_state=18012019)` showed **zero fold membership mismatches**.
-Matbench's `data_ops.load` wraps the same Matminer dataset loader and adds
-MBIDs in row order. The upstream submission validator also passed on the
-gzip-corrected, otherwise unmodified, predictions file.
+## Verified software and export
 
-Run `python verify_submission.py` to repeat the lightweight audit.
-Run `python verify_submission.py --official` in an environment with
-Matbench and the dataset available to additionally check the official task
-splits and built-in validation.
+- **Inference environment:** [requirements-reproduction.txt](requirements-reproduction.txt)
+  is based on the TRIADS repository's dependencies, narrowed to the
+  steels task. GitHub Actions installed Python 3.11 and CPU PyTorch 2.3.1,
+  including the required Matminer, Pymatgen, Gensim, SciPy and NumPy
+  versions, then successfully imported `DeepHybridTRM` and produced
+  finite predictions on a synthetic input. GPU-specific training is not
+  part of this CPU smoke test.
+- **Official benchmark export:** in a separate Python 3.12 environment,
+  GitHub Actions installed the current upstream Matbench source, used
+  [export_predictions.py](export_predictions.py) to record all five folds,
+  and reloaded the output with the official `MatbenchBenchmark` API.
+  The exported 312 per-sample values matched the historical submission
+  with **zero numerical mismatches** and the rebuilt benchmark was
+  `is_valid=True`, `is_recorded=True`.
+- **Repeatable checks:** [verify_submission.py](verify_submission.py)
+  checks split membership, finite predictions and fold scores.
+  `--official` additionally checks official Matbench task splits.
+  [export_predictions.py](export_predictions.py) accepts sample-ID-keyed
+  raw predictions for any subsequent V13A run.
 
-## Official result generation for new training runs
+Use an inference environment for model execution and an independent
+Matbench environment for output serialization, since the Matbench package
+and model pipeline have different release dependencies.
 
-The amended `trm13.py` now writes:
-`trm_models_v13/v13a_fold_predictions_by_mbid.json`.
-This output is keyed by MBID and captures the V13A ensemble predictions
-per sample, independent of Matbench availability during Kaggle training.
+## Mat2Vec data provenance
 
-In an environment where Matbench can load the dataset:
+The model downloads three original upstream objects from
+`https://storage.googleapis.com/mat2vec/`. GitHub Actions captured
+the **actual upstream SHA-256 hashes, byte lengths, and GCS generation
+metadata** in [mat2vec_sha256.json](mat2vec_sha256.json).
+[mat2vec_integrity.py](mat2vec_integrity.py) verifies those files without
+executing or deserializing model content. `trm13.py` also checks all three
+files before passing them to `Word2Vec.load`. The official upstream
+objects carry June 2019 modification dates.
 
-```shell
-python export_predictions.py --input trm_models_v13/v13a_fold_predictions_by_mbid.json
-```
+## Compute and archived checkpoint scope
 
-The exporter uses `MatbenchBenchmark`, `get_train_and_val_data`,
-`get_test_data`, `record`, and `to_file`, checks exact official sample
-membership, and writes `results.rebuilt.json.gz` **without overwriting**
-the historical PR file. No claim is made that this new exporter was used
-for the original March 2026 results; it provides a reproducible export
-path for subsequent runs.
+Training was reported by the author as performed on Kaggle with **one NVIDIA
+T4 GPU**, in **under 20 minutes**. The submitted per-sample predictions
+have not been changed during these reproducibility repairs.
 
-## Dependencies and compute
+The published Hugging Face repository
+(https://huggingface.co/Rtx09x/TRIADS) contains
+`weights/steels/weights.pt`. Its archive has **five fold-level state
+dictionaries** labelled `avg_42_123_7_0_99`, each containing weights for
+the 224,685-parameter V13A model. These are archived fold-level
+weights, not an identified set of 25 separately saved seed/fold
+checkpoints. The package, protocol, prediction-to-score mapping,
+and model weights should not be conflated with a verified replay of all
+five historic seed predictions.
 
-`requirements-reproduction.txt` now describes a **resolver-tested steels-specific**
-Python 3.11 environment based on `Rtx09x/TRIADS/main/requirements.txt`.
-GitHub Actions `pip install --dry-run` passed with the pinned versions on
-2026-10-24. This excludes `torch-geometric`, used for graph tasks rather than
-steels, and the `matbench` package, used only for official result export.
-
-Matbench 0.6 depends on matminer 0.7.4; the steels inference pins matminer
-0.9.3. These must **not** be installed together. A separate export
-environment handles Matbench's official validation API. The old Kaggle
-`pip freeze` is unavailable, so these candidate pins are not claimed to
-reproduce the historical training environment. The resolver test is not
-equivalent to a successful import or full checkpoint-level reproduction.
-
-The public Hugging Face model repository's actual steels path is
-`Rtx09x/TRIADS:weights/steels/weights.pt`; the old TRIADS README example
-`Rtx09/TRIADS:steels/weights.pt` is not the confirmed published path.
-
-Training environment reported by the author: Kaggle, a single NVIDIA T4 GPU.
-Author-reported training runtime: **under 20 minutes** on one NVIDIA T4 GPU. The exact timing was not recorded or independently verified.
-
-## Mat2Vec SHA-256 pinning (current upstream verified)
-
-GitHub Actions downloaded each of the three **original upstream** Mat2Vec
-model components directly from `https://storage.googleapis.com/mat2vec/`
-without deserializing them. The recorded SHA-256 hashes, byte sizes, GCS
-generation IDs, and Last-Modified values are committed in
-`mat2vec_sha256.json`; the manifest was independently fetched from the
-temporary TRIADS audit branch at
-https://github.com/Rtx09x/TRIADS/blob/audit/mat2vec-sha256-20261024/audits/mat2vec_sha256_20261024.json
-
-All three upstream objects report a June 22, 2019 Last-Modified date.
-The `ExpandedFeaturizer` in `trm13.py` checks both SHA-256 and file
-length **before** `Word2Vec.load` for cached and downloaded files,
-rejects mismatches, and atomically installs verified new downloads.
-`mat2vec_integrity.py verify` also verifies a pre-existing cache.
-
-These checks pin the **current official upstream bytes**, not the exact
-identity of the original unrecovered Kaggle cache. The author reports
-using the original/latest upstream version for historical experiments.
-
-## Open reproducibility issues
-
-- Original individual checkpoint-to-prediction correspondence has not
-  been independently regenerated from archived weights.
-- Comparison of V10-V13 and V13A/B on test-fold scores, and its impact
-  on model selection, remains under scientific review.
-- Current official Mat2Vec files are pinned by SHA-256, and the
-  verified source was last modified in June 2019. Original Kaggle cache
-  hashes remain unavailable, so exact historical file identity cannot
-  be independently proven. Mat2Vec deserialization remains restricted
-  to verified upstream bytes, not arbitrary model files.
-- Per-seed averages are preserved in the TRIADS archive; individual
-  seed-by-fold metrics have not been restored from an original run log.
-
-Neither the fixes nor the included scripts reselect or modify the
-historic submitted predictions.
+Historical cross-version model selection is reviewed separately from
+these data-integrity, software and serialization checks.

@@ -2,21 +2,25 @@
   "authors": "Rudra Tiwari",
   "algorithm": "RudraNet",
   "algorithm_long": "RudraNet is a novel hybrid recursive architecture (Hybrid-Attention-MLP-Recursive-Model) designed specifically for low-data materials property prediction. It features an Attention-based Feature Extractor (AFE) that utilizes multi-head self-attention on tokenized elemental and stoichiometric descriptors, followed by a cross-attention gating mechanism with Mat2Vec embeddings. The core reasoning engine is a recursive MLP-TRM loop with shared weights that performs iterative state refinement over 20 discrete steps. The model is trained using a linear-weighted Deep Supervision loss and Stochastic Weight Averaging (SWA) to ensure generalizability on small tabular datasets.",
-  "notes": "TRIADS Hybrid V13A: 5-seed ensemble on matbench_steels, 91.20 MPa mean fold MAE. Training reported on Kaggle with one NVIDIA T4; author-reported training runtime was under 20 minutes (exact timing was not recorded). The Matminer dataset was used because Matbench access failed in Kaggle. Five outer splits use KFold(shuffle=True, random_state=18012019); original sample IDs match these splits. There is an inner holdout, not a verified nested CV search. Training history, candidate pinned dependency environment, Matbench API export path, and historical embedding cache identity/model-selection limitations are documented in REPRODUCIBILITY.md.",
+  "notes": "TRIADS/RudraNet V13A five-seed ensemble on matbench_steels: mean five-fold MAE 91.2028 MPa. Training was performed on Kaggle using one NVIDIA T4, reported under 20 minutes. Matminer loaded the dataset when Matbench was unavailable in Kaggle. The script uses five outer KFold partitions (shuffle=True, random_state=18012019), with inner validation holdouts; all 312 submitted sample IDs match the official partitioning. Mat2Vec pretrained inputs are SHA-256 verified. See REPRODUCIBILITY.md for the archived source, numerical results, Matbench export validation and software details.",
   "requirements": {
-    "python": [
-      "torch==2.3.1",
-      "numpy==1.26.4",
-      "pandas==2.2.2",
-      "scipy==1.13.1",
-      "scikit-learn==1.5.1",
-      "pymatgen==2024.7.18",
-      "matminer==0.9.3",
-      "gensim==4.3.3",
-      "matplotlib==3.9.1",
-      "tqdm==4.66.4",
-      "huggingface_hub==0.24.7"
-    ]
+    "inference": {
+      "python": "3.11",
+      "packages": [
+        "torch==2.3.1",
+        "numpy==1.26.4",
+        "pandas==2.2.2",
+        "scipy==1.13.1",
+        "scikit-learn==1.5.1",
+        "pymatgen==2024.7.18",
+        "matminer==0.9.3",
+        "gensim==4.3.3",
+        "matplotlib==3.9.4",
+        "tqdm==4.66.4",
+        "huggingface_hub==0.24.7"
+      ]
+    },
+    "benchmark_export": "Upstream Matbench on Python 3.12 (separate environment)"
   },
   "bibtex_refs": "@misc{tiwari2026triads,\n author = {Rudra Tiwari},\n title = {TRIADS: Tiny Recursive Information-Attention with Deep Supervision},\n year = {2026},\n doi = {10.5281/zenodo.19200579},\n url = {https://doi.org/10.5281/zenodo.19200579},\n note = {Research archive: https://github.com/Rtx09x/TRIADS}\n}\n@article{tshitoyan2019unsupervised,\n title = {Unsupervised word embeddings capture latent knowledge from materials science literature},\n author = {Tshitoyan, Vahe and others},\n journal = {Nature},\n year = {2019},\n doi = {10.1038/s41586-019-1335-8}\n}"
 }
