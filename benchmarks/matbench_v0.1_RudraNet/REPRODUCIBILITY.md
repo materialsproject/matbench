@@ -42,6 +42,14 @@ archived V13A experiment summary in the main TRIADS repository to its
 recorded precision. The standard deviation across *folds* is about
 12.23 MPa, not a per-seed uncertainty estimate.
 
+The archived individual-seed mean MAEs (MPa) are **98.7218** (42),
+**96.7742** (123), **98.7624** (7), **102.5524** (0), and
+**102.1098** (99). Across these five seed-level means, the arithmetic
+mean is **99.7841 MPa** and the population standard deviation is
+**2.2047 MPa**. The separately averaged five-seed predictions yield
+**91.2028 MPa**. These numbers are recovered from the archived V13
+summary, not from new retraining.
+
 ## Verified software and export
 
 - **Inference environment:** [requirements-reproduction.txt](requirements-reproduction.txt)
