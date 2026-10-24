@@ -1,0 +1,14 @@
+# Label PRs by changed files (.github/labeler.yml). pull_request_target so fork
+# PRs can be labeled; it reads only the file list and never checks out PR code.
+name: labeler
+
+on: pull_request_target
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/labeler@v5

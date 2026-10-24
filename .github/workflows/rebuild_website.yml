@@ -1,19 +1,26 @@
 name: Rebuild docs
 
-# only rebuild docs when there is an update to main
+# build docs on PRs; rebuild and commit them on updates to main
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# only the newest run should rebuild and push docs; older ones would be rejected as non-fast-forward
+concurrency:
+  group: rebuild-docs-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   rebuild_docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up python 3.9
+      - name: Set up python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: "3.12"
       - name: Build docs
         run: |
           pip install --upgrade pip
@@ -25,6 +32,7 @@ jobs:
           mkdocs build
           cp docs_src/CNAME docs/CNAME
       - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version
+        if: github.event_name == 'push'
         with:
           # The arguments for the `git add` command (see the paragraph below for more info)
           # Default: '.'
