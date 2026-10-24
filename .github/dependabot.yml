@@ -16,15 +16,6 @@ updates:
     ignore:
       - dependency-name: "plotly"
       - dependency-name: "mkdocs"
-      # these releases need Python 3.10+; CI tests on 3.9
-      - dependency-name: "black"
-        versions: [">=26"]
-      - dependency-name: "coverage"
-        versions: [">=7.11"]
-      - dependency-name: "flake8"
-        versions: [">=7.4"]
-      - dependency-name: "isort"
-        versions: [">=7"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
