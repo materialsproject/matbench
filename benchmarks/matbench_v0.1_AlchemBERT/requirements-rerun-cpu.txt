@@ -1,0 +1,16 @@
+# Tested prospective tools on Python 3.12; not the historical training lockfile.
+# Install Matbench from this checkout separately with `pip install -e .`.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.9.1+cpu
+transformers==4.57.6
+tokenizers==0.22.2
+huggingface-hub==0.36.2
+safetensors==0.8.0
+numpy==2.3.5
+pandas==2.2.3
+scipy==1.17.0
+scikit-learn==1.8.0
+pymatgen==2026.10.24
+matminer==0.10.1
+inflect==7.5.0
+ijson==3.6.0
