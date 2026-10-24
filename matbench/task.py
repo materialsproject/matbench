@@ -1,4 +1,5 @@
 import copy
+import gc
 import logging
 
 import numpy as np
@@ -49,7 +50,8 @@ class MatbenchTask(MSONable, MSONable2File):
     datasets themselves. However, to get training and testing data,
     you must load the datasets. Tasks loaded from files do not
     automatically load the dataset into memory; to load a dataset into memory,
-    use MatbenchTask.load().
+    use MatbenchTask.load(). To free that memory again while keeping recorded
+    results, use MatbenchTask.unload().
 
     See the full documentation online for more info and tutorials on
     using MatbenchTask.
@@ -241,6 +243,22 @@ class MatbenchTask(MSONable, MSONable2File):
                 f"Dataset {self.dataset_name} already loaded; "
                 f"not reloading dataset."
             )
+
+    def unload(self):
+        """Remove the dataset for this task from memory.
+
+        Recorded results and scores are kept. Run MatbenchTask.load() to load
+        the dataset again, e.g. before getting data or recording more folds.
+
+        Returns:
+            (NoneType): The dataset attribute is set to None.
+        """
+        if self.df is None:
+            logger.info(f"Dataset {self.dataset_name} not loaded; nothing to unload.")
+        else:
+            self.df = None
+            gc.collect()
+            logger.info(f"Dataset '{self.dataset_name}' unloaded.")
 
     def get_info(self):
         logger.info(self.info)
