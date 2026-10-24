@@ -71,11 +71,12 @@ path for subsequent runs.
 
 ## Dependencies and compute
 
-`requirements-reproduction.txt` contains an exact-version **candidate
-reproduction target** for Python 3.11. The original Kaggle `pip freeze`
-is unavailable. These versions have not been installed and run together
-as a verified historic environment; they must not be described as
-versions actually used for the submitted training run.
+`requirements-reproduction.txt` documents an **invalid candidate environment**, detected by a GitHub
+Actions dependency-resolution check: `matbench==0.6` requires
+`matminer==0.7.4`, conflicting with the former candidate pin
+`matminer==0.9.3`. The original Kaggle `pip freeze` is unavailable.
+A separately tested model-inference environment and Matbench export
+environment are still required; no reproduced predictions are claimed.
 
 Training environment reported by the author: Kaggle, a single NVIDIA T4 GPU.
 Author-reported training runtime: **under 20 minutes** on one NVIDIA T4 GPU. The exact timing was not recorded or independently verified.
