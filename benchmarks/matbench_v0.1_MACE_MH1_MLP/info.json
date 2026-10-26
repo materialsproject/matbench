@@ -1,0 +1,10 @@
+{
+  "authors": "Mark Alence",
+  "algorithm": "MACE-MH-1 Frozen Descriptors + MLP",
+  "algorithm_long": "Frozen invariant descriptors (1024d) from pretrained MACE-MH-1 (mean-pooled over atoms), combined with MACE calculator features (energy, forces, atom energies; 19d) and Magpie composition features (132d). Total 1175 input features fed to a 3-layer MLP (256-128-1, SiLU, LayerNorm, dropout=0.1). Trained with AdamW (lr=1e-3, weight_decay=1e-4), CosineAnnealingLR, L1 loss, 200 epochs, batch_size=512. StandardScaler normalization, median imputation for NaN features.",
+  "bibtex_refs": "@article{batatia2024foundationmodelatomisticmaterials, title={A foundation model for atomistic materials chemistry}, author={Ilyes Batatia and Philipp Benber and Yuan Chiang and Alin M. Elena and Dávid P. Kovács and Janosh Riebesell and Xavier R. Advincula and Mark Asta and Matthew Cliffe and Benjamin Cohen and others}, year={2024}, eprint={2401.00096}, archivePrefix={arXiv}}",
+  "notes": "Trained on NVIDIA A10G GPU. Descriptor extraction ~36 min for 132k structures. MLP training ~4 min per fold. No fine-tuning of MACE backbone.",
+  "requirements": {
+    "python": ["matbench==0.6", "torch>=2.0", "mace-torch", "matminer", "scikit-learn", "numpy"]
+  }
+}
