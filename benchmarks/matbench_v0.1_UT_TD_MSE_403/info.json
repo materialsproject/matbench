@@ -1,0 +1,8 @@
+{
+  "authors": "Tony Dong, Jason Hattrick-Simpers",
+  "algorithm": "UT_TD_MSE_403",
+  "algorithm_long": "This was an undergraduate class project in MSE403HS at the University of Toronto. The key difference between this work and previous RFC tools was that the student (Tony Dong) used LASSO to perform feature elimination, dropping the standard Magpie feature set from 132 to 15. Other than that, and a modest amount of hyperparameter tuning, base RFC was used to get a mean AUC of 0.972",
+  "bibtex_refs": "",
+  "notes": "",
+  "requirements": {"python":  ["scikit-learn==0.24.1", "numpy==1.20.1", "matbench==0.1.0"]}
+}
