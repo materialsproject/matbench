@@ -1,0 +1,29 @@
+{
+  "frozen_utc": "2026-10-05T01:23:44.230185+00:00",
+  "name": "Atomic-Affine-Bagged-QRF",
+  "reference_seed": 417,
+  "repeats": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "primary": "bayesian_affine",
+  "ablations": [
+    "bayesian_shift"
+  ],
+  "bootstrap_draws": 128,
+  "bootstrap_seed": 19072026,
+  "coefficient_sum_bounds": [
+    0.0,
+    2.0
+  ],
+  "primary_rule": "For every Bayesian-bootstrap Exp(1) normalized draw, fit nonnegative coefficients with sum <= 2 and an unrestricted intercept to minimize weighted OOF absolute loss. Average all 128 coefficient vectors and intercepts. Same 32 cached mean/median training-only predictors as the existing method. No additional hyperparameter selection.",
+  "ablation_rule": "bayesian_shift enforces coefficient sum=1 but retains unrestricted intercept; isolates intercept from scale calibration. Original Bayesian-simplex control kept for every matched seed.",
+  "centering": "Subtract outer-training median response from targets and every OOF predictor; scale by 100 MPa for LP conditioning. Undo centering exactly at prediction.",
+  "refits": "Reuse previously fully reproduced training-only OOFs and final components, train any newly active missing configuration at unchanged 900-tree settings.",
+  "scope": "Public retrospective benchmark development after all bagged-simplex outcomes known. Affine/shift outcomes not computed or viewed at freeze. All declared seeds and policies will be reported, with seed417 reference retained regardless of repeats or ablation.",
+  "claim_scope": "Numerical exact-official-fold comparison; not prospective independence or accepted leaderboard record. No physical qualification, no realized saving.",
+  "verified": false
+}
