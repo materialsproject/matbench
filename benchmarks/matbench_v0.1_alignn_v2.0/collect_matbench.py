@@ -4,10 +4,14 @@ Reads each fold's prediction_results_test_set.csv (id,target,prediction;
 ids carry .vasp) from --preds_root/mb_run_<task>_f<fold>/, maps ids back
 to matbench test order via the local fold_manifest.json written by
 make_matbench_dataset.py, records with task.record, prints per-fold and
-task scores, and writes results.json.gz.
+task scores, and writes results.json.gz. For classification
+(mp_is_metal) the trainer writes the predicted class (argmax of the two
+logits, i.e. a 0.5 threshold on the metal probability) and those hard
+labels are recorded as booleans.
 
-Run locally (needs matbench). Tasks with any missing fold are skipped
-with a warning, so partial collections work during the campaign.
+Run locally (needs matbench). All folds of a task are checked before any
+is recorded; a task with a missing fold is skipped with a warning, so
+partial collections work during the campaign.
 """
 import argparse
 import csv
@@ -51,7 +55,7 @@ def main():
     for task in mb.tasks:
         name = task.dataset_name
         task.load()
-        complete = True
+        paths = {}
         for fold in task.folds:
             tag = "%s_f%d" % (short(name), fold)
             pred_csv = os.path.join(args.preds_root, "mb_run_" + tag,
@@ -60,43 +64,27 @@ def main():
                                     "fold_manifest.json")
             if not (os.path.exists(pred_csv) and os.path.exists(manifest)):
                 print("MISSING fold:", tag, "- skipping task", name)
-                complete = False
                 break
+            paths[fold] = (tag, pred_csv, manifest)
+        if len(paths) != len(task.folds):
+            continue
+        for fold in task.folds:
+            tag, pred_csv, manifest = paths[fold]
             test_ids = json.load(open(manifest))["test_ids"]
-            # Classification: matbench 0.6 computes every clf metric from
-            # labels (its rocauc branch sees a pred_array the accuracy branch
-            # already rebound to labels), so recording probabilities gains
-            # nothing and the decision threshold is the only knob. Use the
-            # validation-selected threshold when matbench_clf_probs.py wrote
-            # one, else fall back to the 0.5 labels train.py produced.
-            threshold = 0.5
-            if name in CLF_TASKS:
-                run_dir = os.path.join(args.preds_root, "mb_run_" + tag)
-                prob_csv = os.path.join(run_dir,
-                                        "prediction_probs_test_set.csv")
-                thr_json = os.path.join(run_dir, "clf_threshold.json")
-                if os.path.exists(prob_csv):
-                    pred_csv = prob_csv
-                    if os.path.exists(thr_json):
-                        with open(thr_json) as fh:
-                            threshold = json.load(fh)["threshold"]
-                    print("  %s: probabilities, threshold %.2f"
-                          % (tag, threshold))
             preds = load_preds(pred_csv)
             missing = [i for i in test_ids if i not in preds]
             assert not missing, "%s: %d test ids without predictions" % (
                 tag, len(missing))
             vals = [preds[i] for i in test_ids]
             if name in CLF_TASKS:
-                vals = [v > threshold for v in vals]
+                vals = [v > 0.5 for v in vals]
             task.record(fold, pd.Series(vals, index=test_ids))
             fold_key = "fold_%d" % fold
             fold_scores = task.results.get(fold_key, {}).get("scores", {})
             print("recorded", tag, "| fold scores:",
                   json.dumps(dict(fold_scores), default=str))
-        if complete:
-            print(name, "task scores:",
-                  json.dumps(task.scores, default=str))
+        print(name, "task scores:",
+              json.dumps(task.scores, default=str))
 
     mb.to_file(args.out)
     print("wrote", args.out, "| complete:", mb.is_complete,

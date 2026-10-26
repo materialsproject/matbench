@@ -4,11 +4,17 @@ For a task and fold, pulls the official matbench fold data, converts
 pymatgen Structures to POSCARs, and writes a train_alignn --root_dir
 (id_prop.csv ordered train -> val -> test; val = last --val_frac of the
 training fold) plus a per-fold config derived from --base_config with
-the exact keep_data_order split lock. Test rows carry their real
-targets (matbench provides them; scoring still happens only via
-task.record on our predictions) so per-fold Test MAE lines in logs are
-meaningful. Classification tasks (mp_is_metal) get 0/1 targets and
-classification=True in the config.
+the exact keep_data_order split lock. Test targets are never loaded:
+test rows are read with get_test_data(include_target=False) and carry a
+placeholder target (0.0; alternating 0/1 for classification), so any
+test-set loss or score the trainer prints is meaningless. The trainer
+needs a finite value per row (rows with a NaN target are dropped, which
+would break the n_test lock), and its end-of-run ROC-AUC print needs
+both classes present. Scoring happens only via task.record on our
+predictions. Classification tasks (mp_is_metal) get 0/1 train targets,
+classification=True and classification_threshold 0.5 (the trainer then
+uses a 2-logit head with NLL loss) and energy_mult_natoms=False in the
+config.
 
 Run locally (needs matbench + matminer + jarvis), then tar and scp.
 """
@@ -54,7 +60,7 @@ def main():
 
     for fold in folds:
         tr_in, tr_out = task.get_train_and_val_data(fold)
-        te_in, te_out = task.get_test_data(fold, include_target=True)
+        te_in = task.get_test_data(fold, include_target=False)
         # matbench returns folds in original dataset order; shuffle
         # deterministically so the val tail is an unbiased sample
         order = list(tr_in.index)
@@ -72,17 +78,22 @@ def main():
         def tgt(v):
             return float(bool(v)) if is_clf else float(v)
 
+        def placeholder(k):
+            return float(k % 2) if is_clf else 0.0
+
         test_ids = []
         with open(os.path.join(out_dir, "id_prop.csv"), "w") as f:
-            for series_in, series_out, is_test in (
-                    (tr_in, tr_out, False), (te_in, te_out, True)):
-                for mbid in series_in.index:
-                    name = "%s.vasp" % mbid
-                    pmg_to_atoms(series_in[mbid]).write_poscar(
-                        os.path.join(out_dir, name))
-                    f.write("%s,%s\n" % (name, tgt(series_out[mbid])))
-                    if is_test:
-                        test_ids.append(mbid)
+            for mbid in tr_in.index:
+                name = "%s.vasp" % mbid
+                pmg_to_atoms(tr_in[mbid]).write_poscar(
+                    os.path.join(out_dir, name))
+                f.write("%s,%s\n" % (name, tgt(tr_out[mbid])))
+            for k, mbid in enumerate(te_in.index):
+                name = "%s.vasp" % mbid
+                pmg_to_atoms(te_in[mbid]).write_poscar(
+                    os.path.join(out_dir, name))
+                f.write("%s,%s\n" % (name, placeholder(k)))
+                test_ids.append(mbid)
         json.dump({"task": args.task, "fold": fold,
                    "test_ids": test_ids},
                   open(os.path.join(out_dir, "fold_manifest.json"), "w"))
@@ -95,9 +106,13 @@ def main():
         cfg["epochs"] = EPOCHS.get(args.task, 200)
         cfg["output_dir"] = "mb_run_" + tag
         if is_clf:
+            # the trainer switches to NLL loss on a 2-logit head when
+            # classification_threshold is set; the per-atom energy
+            # scaling does not apply to class logits
             cfg["classification_threshold"] = 0.5
             cfg["model"] = dict(cfg["model"])
             cfg["model"]["classification"] = True
+            cfg["model"]["energy_mult_natoms"] = False
         cfg_path = os.path.join(args.out_root,
                                 "config_mb_%s.json" % tag)
         json.dump(cfg, open(cfg_path, "w"), indent=2)
