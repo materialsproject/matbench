@@ -1,0 +1,22 @@
+{
+  "authors": "nkwork9999 (GitHub)",
+  "algorithm": "CompGBM",
+  "algorithm_long": "Composition-only baseline with a fixed 156-dimensional static composition descriptor and HistGradientBoostingClassifier. The task is matbench_glass. Within each official training fold, select max_iter in {300,600} and max_leaf_nodes in {31,63}, learning_rate=0.1, using a seeded 90/10 inner split. Selection uses probability ROC-AUC for classification or MAE for regression. Refit on the entire official training fold. MatbenchTask.get_test_data(include_target=False) supplies inference inputs and MatbenchTask.record owns outer targets/scoring. Seed=42. Current pinned official Matbench computes probability ROC-AUC and all four regression scores including MAPE. No learned feature transform or external training data is used.",
+  "bibtex_refs": "@article{Dunn2020Matbench, title={Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm}, author={Dunn, Alexander and Wang, Qi and Ganose, Alex and Dopp, Daniel and Jain, Anubhav}, journal={npj Computational Materials}, volume={6}, number={1}, pages={138}, year={2020}, doi={10.1038/s41524-020-00406-3}}",
+  "notes": "Corrected replacement for PR #363. Earlier outer-fold scores for alternative tracks/models were inspected; no historical preregistration evidence or original hardware/timing record was recovered. This revised procedure fixes the declared feature track before refitting and discloses that the benchmark folds are not newly unseen holdouts. It does not claim that rerunning erases historical exposure. All submitted results are regenerated with the real pinned official API, not a handwritten JSON schema. See notebook.md, requirements.txt and validation.json for the new execution environment, measured timings, input/code hashes, and verified scores. No leaderboard-rank claim or topology-only attribution is made.",
+  "requirements": {
+    "python": [
+      "python==3.12.10",
+      "matbench @ git+https://github.com/materialsproject/matbench.git@4b7d0714849a917814115be380a64e7ace94be55",
+      "numpy==2.2.6",
+      "pandas==2.3.3",
+      "scikit-learn==1.7.2",
+      "pymatgen==2025.10.7",
+      "ripser==0.6.15",
+      "persim==0.3.8",
+      "pyarrow==19.0.1",
+      "threadpoolctl==3.6.0"
+    ],
+    "lockfile": "requirements.txt (full tested dependency set)"
+  }
+}
