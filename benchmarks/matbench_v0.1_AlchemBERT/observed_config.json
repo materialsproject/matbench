@@ -1,0 +1,137 @@
+{
+  "status": "Observed in the pinned source; not a recovered historical run manifest.",
+  "source_commit": "3ff872f6510cc88e96061844a2ca41d0c6041c8f",
+  "model_name_in_scheduler": "bert-base-cased",
+  "model_name_default_in_train_py": "bert-base-uncased",
+  "model_type": "auto",
+  "fine_tune_encoder": true,
+  "torch_seed": 42,
+  "python_random_seed": null,
+  "numpy_seed": null,
+  "deterministic_algorithms": null,
+  "tokenizer_max_length": 512,
+  "batch_size_train": 32,
+  "batch_size_validation": 32,
+  "batch_size_test": 1,
+  "optimizer": "AdamW",
+  "learning_rate_fine_tuned": 1e-05,
+  "learning_rate_frozen_encoder": 0.0001,
+  "outer_folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "inner_validation_fraction": 0.1,
+  "inner_split": "torch random_split, unstratified",
+  "max_epochs": 5000,
+  "early_stopping_patience": 200,
+  "checkpoint_selection": "minimum val_loss",
+  "regression_training_loss": "MSE",
+  "regression_validation_metric": "MAE in transformed space when transformation enabled",
+  "classification_loss": "binary_cross_entropy",
+  "historical_checkpoint_revision": null,
+  "historical_hardware": null,
+  "historical_training_time": null,
+  "historical_hyperparameter_selection": null,
+  "tasks": {
+    "matbench_jdft2d": {
+      "input_type": "structure",
+      "task_type": "regression",
+      "yeo_johnson": true,
+      "property_instruction": "exfoliation energy",
+      "units": "(meV/atom) "
+    },
+    "matbench_phonons": {
+      "input_type": "structure",
+      "task_type": "regression",
+      "yeo_johnson": true,
+      "property_instruction": "last phdos peak",
+      "units": "(cm^-1) "
+    },
+    "matbench_dielectric": {
+      "input_type": "structure",
+      "task_type": "regression",
+      "yeo_johnson": true,
+      "property_instruction": "refractive index",
+      "units": "(unitless) "
+    },
+    "matbench_log_gvrh": {
+      "input_type": "structure",
+      "task_type": "regression",
+      "yeo_johnson": false,
+      "property_instruction": "base 10 logarithm of the DFT Voigt-Reuss-Hill average shear moduli",
+      "units": "(log10(GPa)) "
+    },
+    "matbench_log_kvrh": {
+      "input_type": "structure",
+      "task_type": "regression",
+      "yeo_johnson": false,
+      "property_instruction": "base 10 logarithm of the DFT Voigt-Reuss-Hill average bulk moduli",
+      "units": "(log10(GPa)) "
+    },
+    "matbench_perovskites": {
+      "input_type": "structure",
+      "task_type": "regression",
+      "yeo_johnson": false,
+      "property_instruction": "formation energy",
+      "units": "(eV/unit cell) "
+    },
+    "matbench_mp_gap": {
+      "input_type": "structure",
+      "task_type": "regression",
+      "yeo_johnson": false,
+      "property_instruction": "PBE band gap",
+      "units": "(eV) "
+    },
+    "matbench_mp_e_form": {
+      "input_type": "structure",
+      "task_type": "regression",
+      "yeo_johnson": false,
+      "property_instruction": "formation energy",
+      "units": "(eV/atom) "
+    },
+    "matbench_mp_is_metal": {
+      "input_type": "structure",
+      "task_type": "classification",
+      "yeo_johnson": false,
+      "property_instruction": "if it is a metal",
+      "units": ""
+    },
+    "matbench_steels": {
+      "input_type": "composition",
+      "task_type": "regression",
+      "yeo_johnson": true,
+      "property_instruction": "yield strength",
+      "units": "(MPa) "
+    },
+    "matbench_expt_gap": {
+      "input_type": "composition",
+      "task_type": "regression",
+      "yeo_johnson": false,
+      "property_instruction": "experiment band gap",
+      "units": "(eV) "
+    },
+    "matbench_expt_is_metal": {
+      "input_type": "composition",
+      "task_type": "classification",
+      "yeo_johnson": false,
+      "property_instruction": "if it is a metal",
+      "units": ""
+    },
+    "matbench_glass": {
+      "input_type": "composition",
+      "task_type": "classification",
+      "yeo_johnson": false,
+      "property_instruction": "if it is a glass",
+      "units": ""
+    }
+  },
+  "paper_reported_hardware": {
+    "hardware": "Nvidia RTX 4090",
+    "source": "10.26434/chemrxiv-2024-r4dnl",
+    "location": "Original preprint, Methods, page 8",
+    "status": "Reported in the paper; not verified from original per-run logs."
+  }
+}
