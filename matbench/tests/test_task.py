@@ -557,6 +557,36 @@ class TestMatbenchTask(unittest.TestCase):
         self.assertAlmostEqual(mbt.scores["rocauc"]["mean"], 1.0, places=5)
         self.assertAlmostEqual(mbt.scores["rocauc"]["std"], 0.0, places=5)
 
+    def test_label_only_folds(self):
+        # label-only predictions are flagged per fold (issue #397)
+        mbt = MatbenchTask("matbench_glass", autoload=True)
+        self.assertEqual(mbt.label_only_folds, {})
+        self.assertFalse(mbt.has_label_only_predictions)
+
+        for fold in mbt.folds:
+            inputs, targets = mbt.get_test_data(fold, include_target=True)
+            if fold == 0:
+                pred = np.random.random(len(targets))
+            else:
+                pred = [bool(t) for t in targets]
+            mbt.record(fold, pred)
+
+        expected = {fold: fold != 0 for fold in mbt.folds}
+        self.assertEqual(mbt.label_only_folds, expected)
+        self.assertTrue(mbt.has_label_only_predictions)
+
+        # probability predictions on every fold are not flagged
+        mbt = MatbenchTask("matbench_glass", autoload=True)
+        for fold in mbt.folds:
+            test_inputs = mbt.get_test_data(fold)
+            mbt.record(fold, np.random.random(len(test_inputs)))
+        self.assertFalse(mbt.has_label_only_predictions)
+
+        # regression tasks have no label-only predictions
+        mbt = MatbenchTask("matbench_steels", autoload=True)
+        with self.assertRaises(ValueError):
+            mbt.label_only_folds
+
     def test_has_polymorphs(self):
         # Test a composition input type
         mbt = MatbenchTask("matbench_steels", autoload=True)

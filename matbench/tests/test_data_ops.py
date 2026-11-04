@@ -5,6 +5,7 @@ from pymatgen.core import Structure
 
 from matbench.constants import CLF_KEY, REG_KEY
 from matbench.data_ops import (
+    is_label_only,
     load,
     mean_absolute_percentage_error,
     score_array,
@@ -101,6 +102,19 @@ class TestDataOps(unittest.TestCase):
         ans = score_array(true, test, task_type=CLF_KEY)
         self.assertEqual(ans["rocauc"], 1.0)
         self.assertEqual(ans["accuracy"], 0.2)
+
+    def test_is_label_only(self):
+        # label-based rocauc equals balanced accuracy (issue #397)
+        true = [True, True, False, False]
+        labels = [True, False, False, False]
+        ans = score_array(true, labels, task_type=CLF_KEY)
+        self.assertAlmostEqual(ans["rocauc"], ans["balanced_accuracy"])
+
+        self.assertTrue(is_label_only(labels))
+        self.assertTrue(is_label_only([1.0, 0.0, 0.0, 1.0]))
+        self.assertTrue(is_label_only(np.array([1, 0, 1])))
+        self.assertFalse(is_label_only([1.0, 0.0, 0.7, 1.0]))
+        self.assertFalse(is_label_only(np.array([0.2, 0.9])))
 
     def test_mean_absolute_percentage_error(self):
 

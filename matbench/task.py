@@ -18,7 +18,7 @@ from matbench.constants import (
     REG_KEY,
     REG_METRICS,
 )
-from matbench.data_ops import load, score_array
+from matbench.data_ops import is_label_only, load, score_array
 from matbench.metadata import mbv01_metadata, mbv01_validation
 from matbench.util import MSONable2File, RecursiveDotDict, immutify_dictionary
 
@@ -419,6 +419,12 @@ class MatbenchTask(MSONable, MSONable2File):
             logger.debug(
                 f"Scored fold '" f"{self.dataset_name}-{fold_key} successfully."
             )
+            if self.metadata.task_type == CLF_KEY and is_label_only(predictions):
+                logger.warning(
+                    f"Predictions for fold '{self.dataset_name}-{fold_key}' are "
+                    f"labels only, so its ROC-AUC equals balanced accuracy. "
+                    f"Record probability estimates for a true ROC-AUC."
+                )
 
     def as_dict(self):
         """Return a MatbenchTask object as a dictionary.
@@ -702,6 +708,39 @@ class MatbenchTask(MSONable, MSONable2File):
             (bool): True if all folds are recorded, False otherwise.
         """
         return all([v for v in self.is_recorded.values()])
+
+    @property
+    def label_only_folds(self):
+        """Determine which recorded folds have label-only predictions.
+
+        ROC-AUC on label-only predictions equals balanced accuracy, and is
+        not comparable to ROC-AUC on probability estimates.
+
+        Returns:
+            ({int: bool}): Keys are numbers of recorded folds, values are
+                whether that fold's predictions are labels only.
+        """
+        if self.metadata.task_type != CLF_KEY:
+            raise ValueError(
+                f"Label-only predictions are only defined for "
+                f"{CLF_KEY} tasks, not '{self.metadata.task_type}'."
+            )
+        return {
+            fnum: is_label_only(
+                list(self.results[self.folds_map[fnum]][self._DATA_KEY].values())
+            )
+            for fnum, recorded in self.is_recorded.items()
+            if recorded
+        }
+
+    @property
+    def has_label_only_predictions(self):
+        """Determine if the task's predictions are labels only on any fold.
+
+        Returns:
+            (bool): True if any recorded fold has label-only predictions.
+        """
+        return any(self.label_only_folds.values())
 
     @property
     def has_polymorphs(self):
