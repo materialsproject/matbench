@@ -223,8 +223,43 @@ class MatbenchTask(MSONable, MSONable2File):
         """
         obj = cls(dataset_name, autoload=False, benchmark=benchmark_name)
         obj.results = RecursiveDotDict(results_dict)
-        obj.validate()
+        # Partially recorded tasks (e.g. folds run as separate jobs) can be
+        # loaded; full validation only applies once all folds are recorded.
+        if obj.all_folds_recorded:
+            obj.validate()
+        else:
+            obj._check_partial_results()
         return obj
+
+    def _check_partial_results(self):
+        """Check the results of a partially recorded task.
+
+        Only checks that there are no extra fold keys and that each
+        unrecorded fold holds no results. Recorded folds are fully checked
+        by validate() once all folds are recorded.
+
+        Returns:
+            (NoneType): Errors are thrown if the results are not valid.
+        """
+        extra_fold_keys = [k for k in self.results if k not in self.folds_keys]
+        if extra_fold_keys:
+            raise KeyError(
+                f"Extra fold keys {extra_fold_keys} for task "
+                f"{self.dataset_name} not allowed."
+            )
+
+        for fold_number, recorded in self.is_recorded.items():
+            if recorded:
+                continue
+            fold_key = self.folds_map[fold_number]
+            leftover_keys = [
+                k for k in self.results[fold_key] if k != self._DATA_KEY
+            ]
+            if leftover_keys:
+                raise ValueError(
+                    f"Fold '{fold_key}' for task {self.dataset_name} has no "
+                    f"recorded data but has results for keys {leftover_keys}."
+                )
 
     def load(self):
         """Load the dataset for this task into memory.
