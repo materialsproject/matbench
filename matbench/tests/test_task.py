@@ -498,6 +498,35 @@ class TestMatbenchTask(unittest.TestCase):
 
         MatbenchTask("matbench_steels", autoload=True)
 
+    def test_unload(self):
+        mbt = MatbenchTask("matbench_steels", autoload=False)
+
+        # unloading a task that was never loaded does nothing
+        mbt.unload()
+        self.assertIsNone(mbt.df)
+
+        mbt.load()
+        for fold in mbt.folds:
+            _, test_outputs = mbt.get_test_data(fold, include_target=True)
+            mbt.record(fold, test_outputs)
+        scores = copy.deepcopy(mbt.scores)
+
+        mbt.unload()
+        self.assertIsNone(mbt.df)
+        with self.assertRaises(ValueError):
+            mbt._check_is_loaded()
+        with self.assertRaises(ValueError):
+            mbt.get_test_data(0)
+
+        # recorded results and scores survive unloading
+        self.assertTrue(mbt.all_folds_recorded)
+        self.assertEqual(mbt.scores, scores)
+        mbt.validate()
+
+        mbt.load()
+        mbt._check_is_loaded()
+        mbt.get_train_and_val_data(0)
+
     def test_scores(self):
         mbt = MatbenchTask.from_file(
             os.path.join(TEST_DIR, "scores_matbench_dielectric_perfect.json")
