@@ -1,0 +1,22 @@
+{
+  "authors": "HYD (donkeey11)",
+  "algorithm": "TabPFN-HYD",
+  "algorithm_long": "Composition-only steel yield-strength regression using an unmodified TabPFN-v2 foundation checkpoint and a conventional baseline selected within each official training fold. A 42-configuration baseline search is followed by an independent per-outer-fold inner-CV comparison of three feature sets, two TabPFN ensemble sizes, mean/median prediction summaries and four mixture weights, with baseline-only as an additional option. All five final models, contexts and mixtures are frozen before final test inference and native Matbench scoring. Built with PriorLabs-TabPFN.",
+  "bibtex_refs": "@article{dunn2020matbench,\n title={Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm},\n author={Dunn, Alexander and Wang, Qi and Ganose, Alex and Dopp, Daniel and Jain, Anubhav},\n journal={npj Computational Materials}, volume={6}, pages={138}, year={2020}, doi={10.1038/s41524-020-00406-3}}\n@article{hollmann2025tabpfn,\n title={Accurate predictions on small data with a tabular foundation model},\n author={Hollmann, Noah and Muller, Samuel and Purucker, Lennart and Krishnakumar, Arjun and Korfer, Max and Hoo, Shi Bin and Schirrmeister, Robin Tibor and Hutter, Frank},\n journal={Nature}, volume={637}, pages={319--326}, year={2025}, doi={10.1038/s41586-024-08328-6}}\n@article{geurts2006extremely,\n title={Extremely randomized trees}, author={Geurts, Pierre and Ernst, Damien and Wehenkel, Louis},\n journal={Machine Learning}, volume={63}, pages={3--42}, year={2006}, doi={10.1007/s10994-006-6226-1}}\n@article{ward2018matminer,\n title={Matminer: An open source toolkit for materials data mining}, author={Ward, Logan and others},\n journal={Computational Materials Science}, volume={152}, pages={60--69}, year={2018}, doi={10.1016/j.commatsci.2018.05.018}}\n@article{pedregosa2011scikit,\n title={Scikit-learn: Machine Learning in Python}, author={Pedregosa, Fabian and others},\n journal={Journal of Machine Learning Research}, volume={12}, pages={2825--2830}, year={2011}}\n",
+  "notes": "Only matbench_steels is submitted. Native five-fold MAE=76.59472316987244 MPa, std=12.406993875998648 MPa, all312 predictions retained. Seed1701, threefold inner CV independently for each outer fold; no pooled outer-score selection. Development pilot used only fold0 training rows; final configurations are reselected independently within every outer training fold. No official test scores/labels or public prediction files are used to train, calibrate, tune or select. Foundation gradient updates=0. The original TabPFN-v2 checkpoint and mandatory license/attribution are identified in README and source-lock. Actual runtime: Python3.12.3, PyTorch2.13.0+cu126, one A100-SXM4-80GB; conventional stage executes on CPU, TabPFN on CUDA. Saved-model replay and source validation evidence are supplied separately; public acceptance is determined by maintainers.",
+  "requirements": {
+    "python": [
+      "numpy==2.5.4",
+      "scikit-learn==1.9.1",
+      "scipy==1.18.1",
+      "joblib==1.6.0",
+      "threadpoolctl==3.7.0",
+      "matminer==0.10.1",
+      "pymatgen==2026.10.24",
+      "catboost==1.2.10",
+      "tabpfn==9.2.0",
+      "torch==2.13.0",
+      "matbench @ git+https://github.com/materialsproject/matbench.git@35f88110a51adf817a53515780d99fc34f614bf8"
+    ]
+  }
+}

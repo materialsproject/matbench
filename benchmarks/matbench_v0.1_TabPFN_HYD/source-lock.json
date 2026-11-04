@@ -1,0 +1,25 @@
+{
+  "official_matbench_revision": "35f88110a51adf817a53515780d99fc34f614bf8",
+  "official_matbench_files": {
+    "task.py": "1e80efeeae1de89e882c5def73a2d5512e345f3aef3ef5f90f437f93f9b2a244",
+    "metadata.py": "e4c38a233b8826d6e5842ad0a8f7d78d0412d8cfbb19f9a837fe1b371325fa29",
+    "matbench_v0.1_validation.json": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+    "matbench_v0.1_dataset_metadata.json": "bd8d2962406a1829bda984c38c36b4f3ce6acc20e46d34a42d3ba5294a1df787",
+    "util.py": "391d87a8084d21e072e74342cd2c9cfa1faed6f68aaf058f6af94ae09935e971",
+    "constants.py": "3d03ca889ce2ed7d4d393aeb56d56fb5bb7409fd29e7b43719266f330273bf58",
+    "__init__.py": "909686a76841447490afeb69478f5ac00ad24b83e7c46d4d152444e7a1590490",
+    "bench.py": "dc38a5eef58375f525f59806852af588a276d91736894acafe0839a0b55c9ad8",
+    "data_ops.py": "f791263c675c45b6938c78d856676a6821ac6879526bc9aca7d82523303c3414"
+  },
+  "raw_dataset_sha256": "473bc4957b2ea5e6465aef84bc29bb48ac34db27d69ea4ec5f508745c6fae252",
+  "foundation_repository": "Prior-Labs/TabPFN-v2-reg",
+  "foundation_revision": "02a44705ff7790b50cded404bc59adb94da456a1",
+  "foundation_file": "tabpfn-v2-regressor-v2_default.ckpt",
+  "foundation_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+  "native_results_sha256": "a7d8b9631a395f0cb247fba5be92032003d6cca7439c22e9fac5e18e11ee125c",
+  "actual_training_source_sha256": {
+    "run_baselines.py": "45a01ef12a643d5bdfbb1ed20232b4efd41492ae1b4051684696576bb277d645",
+    "run_tabpfn.py": "f71c29865a87778a9728ce0449d705d97f64ec913feadd0c1b5cc5d07e8e0428"
+  },
+  "public_source_contains_personal_credentials": false
+}
