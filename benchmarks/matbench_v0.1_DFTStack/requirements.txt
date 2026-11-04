@@ -1,0 +1,14 @@
+matbench==0.6
+matminer==0.10.1
+pymatgen==2026.9.24
+monty==2026.7.16
+scikit-learn==1.9.1
+numpy==2.5.4
+scipy==1.18.1
+pandas==2.3.3
+lightgbm==4.7.0
+xgboost==3.4.1
+catboost==1.2.10
+optuna==5.0.0
+joblib==1.6.0
+CBFV==1.1.0
