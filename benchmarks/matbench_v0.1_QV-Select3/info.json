@@ -1,0 +1,20 @@
+{
+  "authors": "Arhan Canli (Quantavane)",
+  "algorithm": "QV-Select3",
+  "algorithm_long": "Composition-only regression for matbench_steels. Features: the 14 elemental atomic fractions and the matminer Magpie ElementProperty statistics. Seven fixed candidate models (random forest on Magpie, random forest on fractions, extra trees on fractions+Magpie, gradient boosting on fractions, an ARD Gaussian process on fractions, and the public TabPFN-v2 regression checkpoint used as an in-context learner on fractions and on fractions+Magpie, no fine-tuning). Inside each official outer training fold, 5-fold inner cross-validation on the training rows only ranks the candidates; the prediction is the mean of the three candidates with the lowest inner-CV MAE, refitted on the whole training fold. The outer test fold is predicted once. Built with PriorLabs-TabPFN.",
+  "bibtex_refs": "@article{Dunn2020, doi={10.1038/s41524-020-00406-3}, title={Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm}, journal={npj Computational Materials}, year={2020}}\n\n@article{Hollmann2025, doi={10.1038/s41586-024-08328-6}, title={Accurate predictions on small data with a tabular foundation model}, journal={Nature}, volume={637}, pages={319--326}, year={2025}}\n\n@article{Ward2016, doi={10.1038/npjcompumats.2016.28}, title={A general-purpose machine learning framework for predicting properties of inorganic materials}, journal={npj Computational Materials}, year={2016}}",
+  "notes": "Model choice was fixed before any outer-fold score was seen; every candidate's outer score is reported in summary.json of the run (no outer-test feedback used). CPU only (Apple silicon, 3 threads). Per-fold inner-CV ranks: {\"0\": [\"tabpfn_fracmag\", \"tabpfn_frac\", \"et_fracmag\"], \"1\": [\"tabpfn_fracmag\", \"tabpfn_frac\", \"et_fracmag\"], \"2\": [\"tabpfn_frac\", \"tabpfn_fracmag\", \"et_fracmag\"], \"3\": [\"tabpfn_frac\", \"tabpfn_fracmag\", \"et_fracmag\"], \"4\": [\"tabpfn_fracmag\", \"tabpfn_frac\", \"et_fracmag\"]} The pipeline code and this submission were prepared with an AI coding agent (Claude, Anthropic) for Quantavane; the author checked the protocol (inner-CV selection only, no outer-fold feedback) and takes responsibility for the submission.",
+  "requirements": {
+    "python": [
+      "matbench==0.6",
+      "matminer==0.10.1",
+      "pymatgen==2026.10.24",
+      "scikit-learn==1.6.1",
+      "numpy==2.4.6",
+      "pandas==2.3.3",
+      "scipy==1.17.1",
+      "torch==2.15.0",
+      "tabpfn==2.0.9"
+    ]
+  }
+}
