@@ -9,3 +9,8 @@ While, scaled errors for classifications are assessed as:
 $$
 \text{Scaled Error} = \frac{1 - \text{ROCAUC}}{0.5}
 $$
+Classification ROC-AUC is recomputed from saved floating-point probabilities for
+`target=True` on each official test fold, then averaged across folds. The plot
+uses only eligible probability submissions for classification; hard-label results
+are omitted from those points and retained in the historical balanced-accuracy
+tables on the task pages. Regression points are unchanged.

@@ -1,5 +1,6 @@
 import copy
 import glob
+import html
 import json
 import logging
 import os
@@ -17,6 +18,7 @@ from monty.serialization import loadfn
 from matbench.bench import MatbenchBenchmark
 from matbench.constants import CLF_KEY, MBV01_KEY, REG_KEY
 from matbench.metadata import mbv01_metadata
+from matbench.leaderboard import classification_score_report, prepare_classification_scores
 from matbench.task import MatbenchTask
 
 pd.set_option("display.max_rows", 500)
@@ -35,14 +37,17 @@ METADATA_DIR = os.path.join(DOCS_DIR, "Benchmark Info")
 METADATA_DIR_PREFIX = "Benchmark%20Info/"
 SNIPPETS_DIR = os.path.join(THIS_DIR, "doc_snippets")
 
-# Warning shown above classification leaderboards; see issues #137 and #181
-CLF_ROCAUC_NOTE = "!!! warning \"Classification ROC-AUC scores are outdated\"\n" \
-                  "    ROC-AUC scores on the matbench_v0.1 classification leaderboards were computed on " \
-                  "predictions thresholded at 0.5. They therefore equal balanced accuracy, not true ROC-AUC, " \
-                  "and understate submissions that provided probabilities. This is fixed for future scoring; " \
-                  "existing scores have not been recomputed. See " \
-                  "[#137](https://github.com/materialsproject/matbench/issues/137) and " \
-                  "[#181](https://github.com/materialsproject/matbench/issues/181).\n\n"
+# Shared policy for current classification rankings; historical artifacts are preserved.
+CLF_ROCAUC_NOTE = (
+    '!!! info "Probability-based ROC AUC"\n'
+    "    Classification rankings use ROC AUC recomputed from stored floating-point "
+    "probabilities and the official test labels, separately for each of the five folds. "
+    "The displayed mean and standard deviation are across folds. Submissions containing "
+    "boolean predictions are excluded from these rankings. Historical balanced accuracy "
+    "results remain available in the collapsed section on each classification task page. "
+    "See [#137](https://github.com/materialsproject/matbench/issues/137) and "
+    "[#181](https://github.com/materialsproject/matbench/issues/181).\n\n"
+)
 
 # Pointer to Matbench Discovery, which has its own leaderboard; see issue #388
 MATBENCH_DISCOVERY_NOTE = "!!! tip \"Benchmarking ML for materials discovery?\"\n" \
@@ -122,7 +127,8 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERR
                 return series
 
             def scale_classification_problem(series, mad):
-                mask = series > 0.0
+                # AUC=0 and AUC=1 are valid scores, not missing-data sentinels.
+                mask = np.isfinite(series) & series.ge(0.0) & series.le(1.0)
                 mask_iix = np.where(mask)
                 series.iloc[mask_iix] = 1 - (series.iloc[mask_iix] - 0.5) / 0.5
                 # series.iloc[mask_iix] = 1 - series.iloc[mask_iix]
@@ -145,10 +151,18 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERR
             scaled_df.index = scaled_df["Problem"]
             scaled_df = scaled_df.drop(columns=["n_samples", "Problem"])
 
-            best_values = scaled_df.min(axis=1)
-            best_algos = scaled_df.idxmin(axis=1)
+            available = scaled_df.dropna(axis=0, how="all").dropna(axis=1, how="all").sort_index(axis=1)
+            if available.empty:
+                return "<p>No eligible scores are available for this chart.</p>"
+            best_values = available.min(axis=1)
+            best_algos = available.idxmin(axis=1)
 
-            fig = px.scatter(scaled_df, log_y=True)
+            # Perfect classification has zero scaled error. Use a linear axis
+            # when needed so it remains visible without substituting an epsilon.
+            use_log_scale = not available.eq(0.0).any().any()
+            fig = px.scatter(available, log_y=use_log_scale)
+            if not use_log_scale:
+                fig.update_yaxes(type="linear", rangemode="tozero")
             fig.update_traces(
                 marker={'size': 10},
                 hovertemplate="<br>".join(
@@ -160,7 +174,8 @@ def generate_scaled_errors_graph(gp_graph_data_by_bmark, output_fname=SCALED_ERR
                 )
             )
 
-            fig.update_layout(title_text=f"{title_txt} Scaled Errors {title_subtext}",
+            scale_note = "<br><sup>Linear scale includes zero scaled error.</sup>" if not use_log_scale else ""
+            fig.update_layout(title_text=f"{title_txt} Scaled Errors {title_subtext}{scale_note}",
                               title_font_size=24,
                               legend_font_size=14,
                               legend_title_font_size=14,
@@ -264,6 +279,10 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
             task_name = f"{row['task']}"
             task_name_link = f"[{task_name}]({PER_TASK_DIR_PREFIX}matbench_v0.1_{task_name}.md)"
             samples = format_int(row["n_samples"])
+            if row["algorithm"] is None:
+                missing = "No eligible general-purpose probability submissions" if metadata[row["task"]].task_type == CLF_KEY else "No general-purpose submissions"
+                table += f"| {task_name_link} | {samples} | — | — | {missing} |\n"
+                continue
             algorithm = f"[{row['algorithm']}]({row['link']}.md)"
 
             task_metadata = metadata[row['task']]
@@ -282,7 +301,8 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
         table += "\n\n"
         # scaled_errors_plot_txt = f'\n<iframe src="static/{SCALED_ERRORS_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0" allowtransparency="true"> </iframe>\n\n'
         # scaled_errors_non_gp_plt_txt = f'\n<iframe src="static/{SCALED_ERRORS_NON_GP_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0"> </iframe>\n\n'
-        gp_leaderboard_txt += table_header + table_explanation + CLF_ROCAUC_NOTE + table
+        audit_link = "[Download classification score audit (JSON)](./static/classification_scores.json)\n\n"
+        gp_leaderboard_txt += table_header + table_explanation + CLF_ROCAUC_NOTE + audit_link + table
 
         for div_txt in leaderboard_divs:
             gp_leaderboard_txt += div_txt
@@ -326,6 +346,59 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
         json.dump(j, f)
 
 
+def historical_leaderboard(entries):
+    """Keep historical threshold-based results separate from probability ROC AUC."""
+    rows = []
+    for entry in sorted(entries, key=lambda e: e["stored_scores"].balanced_accuracy.mean, reverse=True):
+        scores = entry["stored_scores"]
+        link = html.escape("../../" + entry["link"][:-3] + "/", quote=True)
+        rows.append({
+            "algorithm": f'<a href="{link}">{html.escape(entry["algorithm"])}</a>',
+            "mean balanced accuracy": format_float(scores.balanced_accuracy.mean),
+            "std balanced accuracy": format_float(scores.balanced_accuracy.std),
+            "mean F1": format_float(scores.f1.mean),
+        })
+    table = pd.DataFrame(rows).to_html(index=False, escape=False) if rows else "<p>No historical submissions.</p>"
+    return (
+        '<details><summary>Historical balanced accuracy leaderboard</summary>\n'
+        '<p>Stored threshold-based scores, including boolean-only submissions. '
+        'These results are not probability ROC AUC and do not determine the current ranking. '
+        'Original submission files are unchanged.</p>\n' + table + "\n</details>\n\n"
+    )
+
+
+def score_tables(scores, folds):
+    """Render a consistent fold table and fold-statistics table."""
+    names = list(scores)
+    display = ["mape*" if name == "mape" else name for name in names]
+    fold_table = "| fold | " + " | ".join(display) + " |\n" + "|------" * (len(names) + 1) + "|\n"
+    for key, values in folds.items():
+        fold_table += "| " + key + " | " + " | ".join(format_float(values[name]) for name in names) + " |\n"
+    dist_table = "| metric | mean | max | min | std |\n|--------|------|-----|-----|-----|\n"
+    for name, values in scores.items():
+        label = "mape*" if name == "mape" else name
+        dist_table += "| " + label + " | " + " | ".join(format_float(values[stat]) for stat in ("mean", "max", "min", "std")) + " |\n"
+    return fold_table + "\n", dist_table + "\n"
+
+
+def historical_score_tables(task):
+    """Expose raw stored classification scores as an archive, not a current AUC claim."""
+    names = list(task.scores)
+    display = ["stored rocauc (historical)" if n == "rocauc" else n for n in names]
+    folds = [{"fold": key, **{label: format_float(result.scores[name]) for name, label in zip(names, display)}}
+             for key, result in task.results.items()]
+    stats = [{"metric": label, **{stat: format_float(task.scores[name][stat]) for stat in ("mean", "max", "min", "std")}}
+             for name, label in zip(names, display)]
+    return (
+        '<details><summary>Original stored classification scores (historical)</summary>\n'
+        '<p>These values reproduce the original submission artifact. Older stored '
+        '<code>rocauc</code> values were computed after thresholding and equal balanced accuracy; '
+        'they must not be interpreted as the recomputed probability ROC AUC above.</p>\n'
+        + pd.DataFrame(folds).to_html(index=False, escape=True)
+        + pd.DataFrame(stats).to_html(index=False, escape=True) + "\n</details>\n\n"
+    )
+
+
 def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
     """
     Generate all .md files for the per-task leaderboards.
@@ -340,7 +413,9 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
     for bmark_name, tasks_data in task_leaderboard_data_by_bmark.items():
         for task, entries in tasks_data.items():
 
-            task_type = entries[0]["type"]
+            mbt = MatbenchTask(task, autoload=False, benchmark=bmark_name)
+            task_type = mbt.metadata.task_type
+            current_entries = [e for e in entries if e.get("eligible", True)]
 
             if task_type == REG_KEY:
 
@@ -364,7 +439,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             else:
                 raise ValueError(f"Task type {task_type} not recognized!")
 
-            for entry in entries:
+            for entry in current_entries:
                 algo_name = entry["algorithm"]
                 # link must be relative, and since this is inside a dir, has to reference outside
                 link = "../" + entry["link"]
@@ -388,9 +463,9 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             df = df.set_index("algorithm")
             sorting_column = "mean rocauc" if task_type == CLF_KEY else "mean mae"
             sorting_order = True if task_type == REG_KEY else False
-            df = df.sort_values(by=sorting_column, ascending=sorting_order)
-
-            mbt = MatbenchTask(task, autoload=False, benchmark=bmark_name)
+            # Break equal scores by algorithm name, matching homepage selection.
+            df = df.sort_values(by=[sorting_column, "algorithm"],
+                                ascending=[sorting_order, True], kind="mergesort")
 
             # header of the page
             header = f"# {bmark_name} {task}\n\n"
@@ -401,6 +476,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
                           "are only valid for a subset of tasks in the benchmark._\n\n"
             if task_type == CLF_KEY:
                 explanation += CLF_ROCAUC_NOTE
+                explanation += "[Download classification score audit (JSON)](../static/classification_scores.json)\n\n"
 
 
 
@@ -416,7 +492,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             metadata_header = "### Metadata\n\n"
             metadata = f"```\n{pprint.pformat(mbt.metadata)}\n```\n\n"
 
-            table_header = "### Leaderboard\n\n"
+            table_header = "### Probability ROC AUC leaderboard\n\n" if task_type == CLF_KEY else "### Leaderboard\n\n"
             column_headers = df.columns
             table = "| " + " | ".join(column_headers) + " |\n" +  "|------" * len(column_headers) + "|\n"
             for ix, row in df.iterrows():
@@ -435,36 +511,43 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
             table = table.replace("algorithm w/ link", "algorithm")
 
 
-            droppables = ["mean f1", "mean balanced_accuracy"] if task_type == CLF_KEY else ["mean rmse", "max max_error"]
-            df = df.drop(columns=["algorithm w/ link"] + droppables)
-            error_metric = "std rocauc" if task_type == CLF_KEY else "std mae"
-            fig = px.scatter(df, error_y=error_metric, log_y=True)
+            if df.empty:
+                table = "No eligible probability submissions are available for this task.\n\n" if task_type == CLF_KEY else "No submissions are available for this task.\n\n"
+                fig_div = ""
+            else:
+                droppables = ["mean f1", "mean balanced_accuracy"] if task_type == CLF_KEY else ["mean rmse", "max max_error"]
+                df = df.drop(columns=["algorithm w/ link"] + droppables)
+                error_metric = "std rocauc" if task_type == CLF_KEY else "std mae"
+                fig = px.scatter(df, error_y=error_metric, log_y=task_type == REG_KEY)
 
-            metric = f"MAE {mbt.metadata.unit}" if task_type == REG_KEY else "ROCAUC"
+                metric = f"MAE {mbt.metadata.unit}" if task_type == REG_KEY else "ROCAUC"
 
-            target = mbt.metadata.target
-            lower_or_higher = "lower" if task_type == REG_KEY else "higher"
-            title_prefix = "Errors predicting" if task_type == REG_KEY else \
-                "Classification ROCAUC predicting"
-            title = f"{title_prefix} '{target}' ({lower_or_higher} is better)"
-            fig.update_layout(title_text=title,
-                              title_font_size=15,
-                              showlegend=False,
-                              yaxis_title=metric,
-                              xaxis_title="",
-                              paper_bgcolor="rgba(0,0,0,0)",
-                              plot_bgcolor="rgba(0,0,0,0)",
-                              font={"color": "white"})
-            fig.update_yaxes(linecolor="grey", gridcolor="grey")
-            fig.update_xaxes(linecolor="rgba(0,0,0,0)", gridcolor="rgba(0,0,0,0)")
+                target = mbt.metadata.target
+                lower_or_higher = "lower" if task_type == REG_KEY else "higher"
+                title_prefix = "Errors predicting" if task_type == REG_KEY else \
+                    "Classification ROCAUC predicting"
+                title = f"{title_prefix} '{target}' ({lower_or_higher} is better)"
+                fig.update_layout(title_text=title,
+                                  title_font_size=15,
+                                  showlegend=False,
+                                  yaxis_title=metric,
+                                  xaxis_title="",
+                                  paper_bgcolor="rgba(0,0,0,0)",
+                                  plot_bgcolor="rgba(0,0,0,0)",
+                                  font={"color": "white"})
+                fig.update_yaxes(linecolor="grey", gridcolor="grey")
+                fig.update_xaxes(linecolor="rgba(0,0,0,0)", gridcolor="rgba(0,0,0,0)")
 
-            fig_div = pio.to_html(fig, full_html=False, default_height="700px")
+                fig_div = pio.to_html(fig, full_html=False, default_height="700px")
+
+            history = historical_leaderboard(entries) if task_type == CLF_KEY else ""
             task_leaderboard_page = header + \
                                     subheader + \
                                     explanation + \
                                     table_header + \
                                     table + \
                                     fig_div + \
+                                    history + \
                                     info_header + \
                                     info_body + \
                                     metadata_header + \
@@ -526,7 +609,8 @@ def organize_task_data(all_data):
         gp_graph_data = {t: {} for t in metadata.keys()}
         non_gp_graph_data = copy.deepcopy(gp_graph_data)
 
-        for bmark_data in bmarks:
+        # A deterministic tie policy shared by the homepage and per-task tables.
+        for bmark_data in sorted(bmarks, key=lambda packet: packet["info"]["algorithm"]):
             n_algos += 1
             mb = bmark_data["results"]
             info = bmark_data["info"]
@@ -536,13 +620,18 @@ def organize_task_data(all_data):
                 n_tasks += 1
                 task_name = task.dataset_name
 
+                eligible = True
+                scores = task.scores
                 if task.metadata.task_type == REG_KEY:
-                    score = task.scores.mae.mean
+                    score = scores.mae.mean
 
                     # Better regression tasks have lower mean mae
                     op = lt
                 elif task.metadata.task_type == CLF_KEY:
-                    score = task.scores.rocauc.mean
+                    classification = bmark_data["classification_scores"][task_name]
+                    eligible = classification["eligible"]
+                    scores = classification["scores"]
+                    score = scores.rocauc.mean if eligible else None
 
                     # Better classification tasks have higher mean rocauc
                     op = gt
@@ -553,7 +642,7 @@ def organize_task_data(all_data):
                 # Include both GP, structure-required, and structure/comp regression algos on
                 # GP leaderboard, as there are 9 structure problems or 10 regression problems
                 # across multiple dataset sizes (composition only or clf only are not included)
-                if mb.is_complete or mb.is_structure_complete or mb.is_regression_complete:
+                if eligible and (mb.is_complete or mb.is_structure_complete or mb.is_regression_complete):
                     current_best_score = gp_leaderboard[task_name]["score"]
 
                     gp_graph_data[task_name][info["algorithm"]] = score
@@ -573,12 +662,15 @@ def organize_task_data(all_data):
                     else:
                         pass
 
-                non_gp_graph_data[task_name][info["algorithm"]] = score
+                if eligible:
+                    non_gp_graph_data[task_name][info["algorithm"]] = score
 
                 # Add it to the task-specific leaderboard, as all entries will be included
                 # there
                 task_leaderboards[task_name].append({
-                    "scores": task.scores,
+                    "scores": scores,
+                    "stored_scores": task.scores,
+                    "eligible": eligible,
                     "link": prefix + dir_name_short + ".md",
                     "algorithm": info["algorithm"],
                     "type": task.metadata.task_type
@@ -666,7 +758,7 @@ def generate_info_pages(all_data):
         mb = bmark_data["results"]
         dir_name_short = bmark_data["dir_name_short"]
 
-        doc_str = generate_info_page(mb, info, dir_name_short)
+        doc_str = generate_info_page(mb, info, dir_name_short, bmark_data["classification_scores"])
 
         doc_path = os.path.join(FULL_DATA_DIR, f"{dir_name_short}.md")
         with open(doc_path, "w", encoding="utf-8") as f:
@@ -674,7 +766,7 @@ def generate_info_pages(all_data):
             f.write(doc_str)
 
 
-def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
+def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str, classification_scores=None):
     """
     Generate a single full data benchmark page.
 
@@ -729,34 +821,36 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
     for task in mb.tasks:
         task_header = f"#### `{task.dataset_name}`\n\n"
 
-        fold_data_header = f"###### Fold scores\n\n"
+        score_note = ""
+        history = ""
+        task_scores = task.scores
+        fold_scores = {key: result.scores for key, result in task.results.items()}
+        if task.metadata.task_type == CLF_KEY:
+            if classification_scores is None:
+                raise ValueError("Classification scores must be prepared before generating detail pages")
+            classification = classification_scores[task.dataset_name]
+            if classification["eligible"]:
+                task_scores = classification["scores"]
+                fold_scores = classification["fold_scores"]
+                score_note = (
+                    "ROC AUC below is recomputed from stored floating-point probabilities "
+                    "against the official test labels. Fold statistics use the same five folds "
+                    "as the current leaderboard.\n\n"
+                )
+            else:
+                task_scores = {k: v for k, v in task.scores.items() if k != "rocauc"}
+                fold_scores = {key: {k: v for k, v in scores.items() if k != "rocauc"}
+                               for key, scores in fold_scores.items()}
+                score_note = (
+                    "**Probability ROC AUC: unavailable.** This submission is excluded from "
+                    "the current ROC AUC leaderboard. Exclusion reason: "
+                    + classification["reason"].rstrip(".") + ".\n\n"
+                )
+            history = historical_score_tables(task)
 
-        # needed score order as the score order is not same between fold scores and task scores
-        score_order = list(task.scores.keys())
-        score_order_display = ["mape*" if s == "mape" else s for s in score_order]
-        fold_table = "| fold | " + " | ".join(score_order_display) + " |\n" + \
-                     "|------ " * (len(score_order) + 1) + "|\n"
-        for fold_key, fold_data in task.results.items():
-            fold_line = f" | {fold_key} "
-
-            for metric_name in score_order:
-                metric_val = fold_data.scores[metric_name]
-                fold_line += f"| {format_float(metric_val)}"
-            fold_line += " |\n"
-            fold_table += fold_line
-        fold_table += "\n\n"
-
-
-
-        fold_dist_header = f"###### Fold score stats\n\n"
-        dist_table = "| metric | mean | max | min | std |\n" \
-                     "|--------|------|-----|-----|-----|\n"
-        for metric_name, stats in task.scores.items():
-            # add an asterisk next to mape since the metric is edited to not skew data on very small magnitude values
-            display_name = metric_name + "*" if metric_name == "mape" else metric_name
-            dist_table += f"| {display_name} | {format_float(stats.mean)} | {format_float(stats.max)} | {format_float(stats.min)} | {format_float(stats.std)} |\n"
-
-        dist_table += "\n\n"
+        fold_table, dist_table = score_tables(task_scores, fold_scores)
+        fold_data_header = "###### Fold scores\n\n"
+        fold_dist_header = "###### Fold score stats\n\n"
 
         params_header = "###### Fold parameters\n\n"
         params_table = "| fold | params dict|\n" \
@@ -769,7 +863,7 @@ def generate_info_page(mb: MatbenchBenchmark, info: dict, dir_name_short: str):
 
         params_table += "\n\n"
 
-        task_section = task_header + fold_data_header + fold_table + fold_dist_header + dist_table + params_header + params_table + "\n\n"
+        task_section = task_header + score_note + fold_data_header + fold_table + fold_dist_header + dist_table + history + params_header + params_table + "\n\n"
         data_txt += task_section
 
     final_txt = header + desc + refs + user_metadata + metadata_header + requirements_header + requirements_body + all_tasks_header + data_txt
@@ -850,9 +944,6 @@ if __name__ == "__main__":
 
     logging.root.setLevel(logging.DEBUG)
 
-    # nuke_docs(check=True)
-    nuke_docs(check=False)
-
     all_data = {}
 
     # Get all benchmark data loaded into memory
@@ -872,6 +963,13 @@ if __name__ == "__main__":
 
             name = info["algorithm"]
             all_data[name] = {"results": mb, "info": info, "dir_name_short": d}
+
+    prepare_classification_scores(all_data)
+    nuke_docs(check=False)
+    report_path = os.path.join(STATIC_DOCS_DIR, "classification_scores.json")
+    with open(report_path, "w", encoding="utf-8") as report_file:
+        json.dump(classification_score_report(all_data, BENCHMARKS_DIR), report_file,
+                  indent=2, allow_nan=False)
 
     (
         gp_leaderboard_data_by_bmark,

@@ -36,6 +36,16 @@ Example
 
 If you have other short/small files required for the notebook, please give a brief overview of what each one is used for and how to use it.
 
+### Classification result checks
+
+- [ ] Every classification fold records finite floating-point probabilities for `target=True` in `[0, 1]`, not thresholded labels or integers.
+- [ ] The probability column matches the positive class; predictions follow the official test sample IDs.
+- [ ] I recorded results using the current scoring code, and cached fold metrics agree with recomputation.
+- [ ] I ran `python -m unittest scripts.test_submission` and `python -m scripts.test_submission --submission <submission_directory_name>`.
+
+The current ROC-AUC leaderboard excludes hard-label submissions. Historical files
+remain available separately and are not automatically eligible under this policy.
+
 ### Label the pull request
 
 Label the pull request with the `new_benchmark` label.

@@ -28,9 +28,19 @@ jobs:
           pip install -e .
           pip install -r requirements-dev.txt
           pip install -r requirements-docs.txt
+          python -m unittest matbench.tests.test_leaderboard
+          python -m unittest discover -s scripts -p 'test_rebuild_docs.py'
           python scripts/rebuild_docs.py
           mkdocs build
           cp docs_src/CNAME docs/CNAME
+      - name: Upload documentation preview
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: matbench-docs-preview
+          path: docs
+          retention-days: 7
+          if-no-files-found: error
       - uses: EndBug/add-and-commit@v11 # You can change this to use a specific version
         if: github.event_name == 'push'
         with:

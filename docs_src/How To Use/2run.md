@@ -38,8 +38,13 @@ for task in mb.tasks:
         
         # Predict on the testing data
         # Your output should be a pandas series, numpy array, or python iterable
-        # where the array elements are floats or bools
-        predictions = my_model.predict(test_inputs)
+        # Classification predictions must be P(target=True), not hard labels.
+        # For scikit-learn-style models, select the True class explicitly.
+        if task.metadata.task_type == "classification":
+            positive_column = list(my_model.classes_).index(True)
+            predictions = my_model.predict_proba(test_inputs)[:, positive_column].astype(float)
+        else:
+            predictions = my_model.predict(test_inputs)
         
         # Record your data!
         task.record(fold, predictions)
@@ -49,7 +54,22 @@ mb.to_file("my_models_benchmark.json.gz")
 
 ```
 
-**And you're done! Your benchmark has been recorded and saved.**
+**Your benchmark has been recorded and saved.**
+
+For classification, every prediction in every test fold must be a finite floating-point
+probability in `[0, 1]` for the positive class (`True`). Ground-truth training labels
+remain booleans. Do not threshold predictions, call `.astype(bool)`, or use hard
+labels from a classifier's `predict` method. Adapt the probability API above to
+your model, and verify its class-column order. Values `0.0` and `1.0` are valid
+probabilities, but converting already thresholded labels to floats does not
+recover the model's probability ranking.
+
+ROC-AUC is calculated independently on each official test fold; the leaderboard
+reports the unweighted mean and population standard deviation of these fold
+scores, not the AUC of pooled predictions. Accuracy, balanced accuracy and F1
+still use the `> 0.5` threshold. Use the current Matbench scoring code when
+recording results: new submissions are checked against scores recomputed from
+their saved predictions and canonical test targets.
 
 The output file, in this case `my_models_benchmark.json.gz` contains everything predicted by your 
 benchmark. **Keep this file, as it is the core result that will be submitted to the leaderboard.**
@@ -82,8 +102,12 @@ for task in mb.tasks:
         train_inputs, train_outputs = task.get_train_and_val_data(fold)
         my_model.train_and_validate(train_inputs, train_outputs)
         test_inputs = task.get_test_data(fold, include_target=False)
-        predictions = my_model.predict(test_inputs)
-        
+        if task.metadata.task_type == "classification":
+            positive_column = list(my_model.classes_).index(True)
+            predictions = my_model.predict_proba(test_inputs)[:, positive_column].astype(float)
+        else:
+            predictions = my_model.predict(test_inputs)
+
         # Get your model's parameters 
         # Parameters must be a dictionary of python native types, e.g., lists of strings, dicts, etc.
         params = my_model.get_parameters_as_dictionary()
@@ -119,3 +143,6 @@ mb.add_metadata(my_metadata)
 
 
 
+
+For older result files and model-specific probability outputs, see the
+[classification probability migration guide](probability-migration.md).
