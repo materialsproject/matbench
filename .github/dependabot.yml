@@ -10,6 +10,9 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
+    groups:
+      pip:
+        patterns: ["*"]
     ignore:
       - dependency-name: "plotly"
       - dependency-name: "mkdocs"
@@ -17,3 +20,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]

@@ -1,0 +1,3 @@
+new_benchmark:
+  - changed-files:
+      - any-glob-to-any-file: ["benchmarks/**", "**/results.json.gz"]
