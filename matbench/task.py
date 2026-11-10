@@ -245,10 +245,11 @@ class MatbenchTask(MSONable, MSONable2File):
             )
 
     def unload(self):
-        """Remove the dataset for this task from memory.
+        """Release this task's reference to the loaded dataset.
 
         Recorded results and scores are kept. Run MatbenchTask.load() to load
         the dataset again, e.g. before getting data or recording more folds.
+        Other references to the dataset or returned data may keep it in memory.
 
         Returns:
             (NoneType): The dataset attribute is set to None.
@@ -335,6 +336,8 @@ class MatbenchTask(MSONable, MSONable2File):
                 f"Fold number {fold_number} already recorded! Aborting record..."
             )
         else:
+            self._check_is_loaded()
+
             # avoid problems with json serialization
             if isinstance(predictions, np.ndarray):
                 predictions = predictions.tolist()

@@ -508,8 +508,14 @@ class TestMatbenchTask(unittest.TestCase):
         mbt.load()
         for fold in mbt.folds:
             _, test_outputs = mbt.get_test_data(fold, include_target=True)
-            mbt.record(fold, test_outputs)
-        scores = copy.deepcopy(mbt.scores)
+            mbt.record(
+                fold,
+                test_outputs,
+                std=[1.0] * len(test_outputs),
+                params={"seed": 42},
+            )
+        scores = {metric: dict(values) for metric, values in mbt.scores.items()}
+        recorded = json.loads(json.dumps(mbt.as_dict()))
 
         mbt.unload()
         self.assertIsNone(mbt.df)
@@ -517,15 +523,41 @@ class TestMatbenchTask(unittest.TestCase):
             mbt._check_is_loaded()
         with self.assertRaises(ValueError):
             mbt.get_test_data(0)
+        with self.assertRaises(ValueError):
+            mbt.get_train_and_val_data(0)
 
-        # recorded results and scores survive unloading
+        # Repeated unloading preserves predictions, parameters and uncertainty.
+        mbt.unload()
         self.assertTrue(mbt.all_folds_recorded)
+        self.assertEqual(mbt.as_dict(), recorded)
         self.assertEqual(mbt.scores, scores)
-        mbt.validate()
 
         mbt.load()
         mbt._check_is_loaded()
         mbt.get_train_and_val_data(0)
+        self.assertEqual(mbt.as_dict(), recorded)
+        mbt.validate()
+
+    def test_record_after_unload(self):
+        mbt = MatbenchTask("matbench_steels", autoload=True)
+        _, first_targets = mbt.get_test_data(0, include_target=True)
+        _, next_targets = mbt.get_test_data(1, include_target=True)
+        mbt.record(0, first_targets)
+        recorded = json.loads(json.dumps(mbt.as_dict()))
+
+        mbt.unload()
+        with self.assertRaisesRegex(ValueError, "not loaded"):
+            mbt.record(1, next_targets)
+        self.assertEqual(mbt.as_dict(), recorded)
+        self.assertFalse(mbt.is_recorded[1])
+
+        # Loading again allows the next fold to be recorded normally.
+        mbt.load()
+        mbt.record(1, next_targets)
+        self.assertTrue(mbt.is_recorded[0])
+        self.assertTrue(mbt.is_recorded[1])
+        self.assertEqual(mbt.results.fold_0, recorded["results"]["fold_0"])
+        self.assertAlmostEqual(mbt.results.fold_1.scores.mae, 0.0)
 
     def test_scores(self):
         mbt = MatbenchTask.from_file(
