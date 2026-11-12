@@ -198,7 +198,7 @@
   
     
   
-  Home
+  Leaderboard
 
       </a>
     </li>
@@ -371,7 +371,7 @@
   <span class="md-ellipsis">
     
   
-    Home
+    Leaderboard
   
 
     
@@ -2078,6 +2078,34 @@
     
   
     Advanced usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/probability-migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrating classification submissions to probability ROC AUC
   
 
     
@@ -4023,15 +4051,17 @@
 </tbody>
 </table>
 <h4 id="matbench_mp_is_metal"><code>matbench_mp_is_metal</code></h4>
+<p>Probability ROC AUC below is recomputed from the original saved positive-class probabilities. Balanced accuracy, accuracy and F1 use p &gt; 0.5. Predictions are aligned by sample ID with official test labels. Statistics are unweighted five-fold means and population standard deviations (ddof=0).</p>
+<p><a href="../../static/classification_scores.json">Classification score audit and file provenance (JSON)</a></p>
 <h6 id="fold-scores_6">Fold scores</h6>
 <table>
 <thead>
 <tr>
 <th>fold</th>
 <th>accuracy</th>
-<th>balanced_accuracy</th>
+<th>balanced accuracy</th>
 <th>f1</th>
-<th>rocauc</th>
+<th>probability ROC AUC</th>
 </tr>
 </thead>
 <tbody>
@@ -4040,35 +4070,35 @@
 <td>0.9111</td>
 <td>0.9089</td>
 <td>0.8972</td>
-<td>0.9089</td>
+<td>0.9521</td>
 </tr>
 <tr>
 <td>fold_1</td>
 <td>0.9063</td>
 <td>0.9038</td>
 <td>0.8915</td>
-<td>0.9038</td>
+<td>0.9505</td>
 </tr>
 <tr>
 <td>fold_2</td>
 <td>0.9022</td>
 <td>0.8998</td>
 <td>0.8869</td>
-<td>0.8998</td>
+<td>0.9498</td>
 </tr>
 <tr>
 <td>fold_3</td>
 <td>0.9062</td>
 <td>0.9043</td>
 <td>0.8919</td>
-<td>0.9043</td>
+<td>0.9531</td>
 </tr>
 <tr>
 <td>fold_4</td>
 <td>0.9014</td>
 <td>0.8989</td>
 <td>0.8858</td>
-<td>0.8989</td>
+<td>0.9456</td>
 </tr>
 </tbody>
 </table>
@@ -4092,7 +4122,7 @@
 <td>0.0035</td>
 </tr>
 <tr>
-<td>balanced_accuracy</td>
+<td>balanced accuracy</td>
 <td>0.9032</td>
 <td>0.9089</td>
 <td>0.8989</td>
@@ -4106,14 +4136,106 @@
 <td>0.0041</td>
 </tr>
 <tr>
-<td>rocauc</td>
-<td>0.9032</td>
-<td>0.9089</td>
-<td>0.8989</td>
-<td>0.0036</td>
+<td>probability ROC AUC</td>
+<td>0.9502</td>
+<td>0.9531</td>
+<td>0.9456</td>
+<td>0.0026</td>
 </tr>
 </tbody>
 </table>
+<details><summary>Original stored classification scores (historical)</summary>
+<p>These values reproduce the original submission artifact. Older stored <code>rocauc</code> values may reflect thresholded decisions, whose AUC equals balanced accuracy; they must not be interpreted as the recomputed probability ROC AUC above.</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>fold</th>
+      <th>accuracy</th>
+      <th>balanced_accuracy</th>
+      <th>f1</th>
+      <th>stored rocauc (historical)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fold_0</td>
+      <td>0.9111</td>
+      <td>0.9089</td>
+      <td>0.8972</td>
+      <td>0.9089</td>
+    </tr>
+    <tr>
+      <td>fold_1</td>
+      <td>0.9063</td>
+      <td>0.9038</td>
+      <td>0.8915</td>
+      <td>0.9038</td>
+    </tr>
+    <tr>
+      <td>fold_2</td>
+      <td>0.9022</td>
+      <td>0.8998</td>
+      <td>0.8869</td>
+      <td>0.8998</td>
+    </tr>
+    <tr>
+      <td>fold_3</td>
+      <td>0.9062</td>
+      <td>0.9043</td>
+      <td>0.8919</td>
+      <td>0.9043</td>
+    </tr>
+    <tr>
+      <td>fold_4</td>
+      <td>0.9014</td>
+      <td>0.8989</td>
+      <td>0.8858</td>
+      <td>0.8989</td>
+    </tr>
+  </tbody>
+</table><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>metric</th>
+      <th>mean</th>
+      <th>max</th>
+      <th>min</th>
+      <th>std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>accuracy</td>
+      <td>0.9054</td>
+      <td>0.9111</td>
+      <td>0.9014</td>
+      <td>0.0035</td>
+    </tr>
+    <tr>
+      <td>balanced_accuracy</td>
+      <td>0.9032</td>
+      <td>0.9089</td>
+      <td>0.8989</td>
+      <td>0.0036</td>
+    </tr>
+    <tr>
+      <td>f1</td>
+      <td>0.8907</td>
+      <td>0.8972</td>
+      <td>0.8858</td>
+      <td>0.0041</td>
+    </tr>
+    <tr>
+      <td>stored rocauc (historical)</td>
+      <td>0.9032</td>
+      <td>0.9089</td>
+      <td>0.8989</td>
+      <td>0.0036</td>
+    </tr>
+  </tbody>
+</table>
+</details>
+
 <h6 id="fold-parameters_6">Fold parameters</h6>
 <table>
 <thead>
@@ -4452,6 +4574,8 @@
         <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../javascripts/responsive-plots.js"></script>
       
     
   </body>
