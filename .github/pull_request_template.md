@@ -43,8 +43,9 @@ If you have other short/small files required for the notebook, please give a bri
 - [ ] I recorded results using the current scoring code, and cached fold metrics agree with recomputation.
 - [ ] I ran `python -m unittest scripts.test_submission` and `python -m scripts.test_submission --submission <submission_directory_name>`.
 
-The current ROC-AUC leaderboard excludes hard-label submissions. Historical files
-remain available separately and are not automatically eligible under this policy.
+Valid historical hard-label results appear in the **Balanced accuracy only**
+section, with probability ROC AUC marked unavailable. New or updated classification
+submissions still require original probabilities and matching cached metrics.
 
 ### Label the pull request
 

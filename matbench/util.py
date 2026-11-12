@@ -3,12 +3,12 @@ Utils and quality-of-life enhancements.
 """
 
 import datetime
+import gzip
 import hashlib
 import json
 import logging
 import os
 import sys
-import gzip
 
 import numpy as np
 import pandas as pd
@@ -72,13 +72,25 @@ class MSONable2File:
 
     @classmethod
     def from_file(cls, filename):
+        def unique_object(pairs):
+            # Detect repeated sample IDs before JSON decoding can silently
+            # overwrite a prediction. This also rejects ambiguous fold keys.
+            result = {}
+            for key, value in pairs:
+                if key in result:
+                    raise ValueError(f"{filename}: duplicate JSON key {key!r}")
+                result[key] = value
+            return result
+
         if filename.endswith(".gz"):
             with gzip.open(filename, "rb") as f:
-                d = json.loads(f.read().decode("utf-8"))
+                d = json.loads(
+                    f.read().decode("utf-8"), object_pairs_hook=unique_object
+                )
         else:
             with open(filename) as f:
-                d = json.load(f)
- 
+                d = json.load(f, object_pairs_hook=unique_object)
+
         return cls.from_dict(d)
 
 

@@ -21,3 +21,218 @@ EDITED FOR SOME REASON.*/
 .md-header {
   background-color: black;
 }
+/* Titles, explanations and legends wrap independently of Plotly's canvas.
+   A local scroll region preserves labels without widening the whole page. */
+.md-content {
+  min-width: 0;
+}
+/* Long display equations must scroll locally just like wide result tables. */
+.md-typeset mjx-container[display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.matbench-chart {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 2rem 0;
+  box-sizing: border-box;
+}
+.matbench-chart h3,
+.matbench-chart-description {
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+.matbench-chart-description,
+.matbench-chart-scroll-hint {
+  font-size: .8rem;
+  line-height: 1.55;
+}
+.matbench-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem .6rem;
+  margin: .75rem 0;
+  max-width: 100%;
+}
+.matbench-chart-key {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: .4rem;
+  min-width: 0;
+  max-width: 100%;
+  border: 1px solid #80808055;
+  border-radius: .25rem;
+  padding: .35rem .55rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: .72rem;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.matbench-chart-key[aria-pressed="false"] {
+  opacity: .55;
+  border-style: dashed;
+}
+.matbench-chart-key:focus-visible,
+.matbench-chart-scroll:focus-visible {
+  outline: 2px solid #329cff;
+  outline-offset: 2px;
+}
+.matbench-chart-key:hover {
+  background: #80808022;
+}
+.matbench-chart-swatch {
+  display: inline-block;
+  flex: 0 0 .6rem;
+  width: .6rem;
+  height: .6rem;
+  margin-top: .18rem;
+  background: var(--trace-color);
+  border: 1px solid #80808077;
+  border-radius: 50%;
+}
+.matbench-chart-swatch.diamond {
+  border-radius: 0;
+  transform: rotate(45deg) scale(.8);
+}
+.matbench-chart-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-color: #7f8a99 transparent;
+  border: 1px solid #80808033;
+  border-radius: .2rem;
+}
+.matbench-chart-canvas {
+  width: 100%;
+}
+.matbench-chart-scroll-hint {
+  color: var(--md-default-fg-color--light, #58657a);
+  margin: .35rem 0;
+}
+.matbench-chart[data-overflow="false"] .matbench-chart-scroll-hint {
+  display: none;
+}
+
+/* The homepage groups best results by task; each classification metric gets
+   its own space so that model names and exact ties remain legible. */
+.mb-home-leaderboard-wrap {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+.mb-home-leaderboard {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: 1px solid #80808044;
+  font-size: .75rem;
+}
+.mb-home-leaderboard caption {
+  caption-side: top;
+  padding: .5rem 0 1rem;
+  text-align: left;
+  line-height: 1.5;
+}
+.mb-home-leaderboard th,
+.mb-home-leaderboard td {
+  padding: .85rem .7rem;
+  vertical-align: top;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid #80808044;
+}
+.mb-home-leaderboard thead th:nth-child(1) { width: 25%; }
+.mb-home-leaderboard thead th:nth-child(2) { width: 10%; }
+.mb-home-leaderboard thead th:nth-child(3) { width: 50%; }
+.mb-home-leaderboard thead th:nth-child(4) { width: 15%; }
+.mb-home-leaderboard .mb-task-name {
+  font-weight: 500;
+}
+.mb-metric-result + .mb-metric-result {
+  margin-top: .85rem;
+  padding-top: .85rem;
+  border-top: 1px solid #80808044;
+}
+.mb-metric-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: .3rem;
+}
+.mb-metric-models {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+.mb-metric-model {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.mb-metric-score {
+  display: block;
+  margin-top: .3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.mb-metric-tie,
+.mb-model-note {
+  font-size: .67rem;
+  font-weight: 400;
+  color: var(--md-default-fg-color--light, #58657a);
+}
+.mb-metric-tie {
+  display: block;
+  margin-top: .2rem;
+}
+@media (max-width: 600px) {
+  .mb-home-leaderboard,
+  .mb-home-leaderboard caption,
+  .mb-home-leaderboard tbody {
+    display: block;
+    border: 0;
+  }
+  .mb-home-leaderboard thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .mb-home-leaderboard .mb-task-row {
+    display: block;
+    margin: 0 0 1rem;
+    padding: .25rem 0;
+    border: 1px solid #80808044;
+    border-radius: .3rem;
+  }
+  .mb-home-leaderboard th,
+  .mb-home-leaderboard td {
+    display: block;
+    width: auto;
+    padding: .55rem .75rem;
+    border: 0;
+  }
+  .mb-home-leaderboard [data-label]::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: .3rem;
+    color: var(--md-default-fg-color--light, #58657a);
+    font-size: .65rem;
+    font-weight: 600;
+  }
+  .mb-home-leaderboard .mb-notes:empty {
+    display: none;
+  }
+  .matbench-chart-key {
+    font-size: .7rem;
+  }
+}

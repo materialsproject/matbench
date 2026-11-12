@@ -1,27 +1,66 @@
 # Migrating classification submissions to probability ROC AUC
 
-Current classification leaderboards rank the mean ROC AUC computed from the
-saved positive-class probabilities in the five official test folds. The same
-recomputed scores appear in task tables, homepage winners, scaled-error plots,
-and submission detail pages. Original submission files remain unchanged.
+The homepage best-model table displays separate **balanced accuracy (BA)** and
+**probability ROC AUC** champions for each classification task. Each champion is
+selected by its own metric within the existing general-purpose model scope.
+All exact top-score ties are shown in algorithm-name order.
+The two scaled-error plots continue to use BA for classification, with error
+scaled as `(1 - balanced_accuracy) / 0.5`; their best-model markers therefore
+identify BA winners.
+
+The task leaderboards show both BA and probability ROC AUC:
+[experimental metallicity](../Leaderboards%20Per-Task/matbench_v0.1_matbench_expt_is_metal.md),
+[glass formation](../Leaderboards%20Per-Task/matbench_v0.1_matbench_glass.md), and
+[MP metallicity](../Leaderboards%20Per-Task/matbench_v0.1_matbench_mp_is_metal.md).
+The **ROC AUC available** group is sorted by mean probability ROC AUC, followed
+by **Balanced accuracy only**, sorted by mean BA. Exact ties use algorithm-name
+ordering. These are groups with different available metrics, not a continuous
+ranking across metrics. BA and probability ROC AUC can select different
+champions, including on the homepage. The homepage and task pages may also have
+different model inclusion scopes.
+
+Task plots show gray BA circles for every valid result and additional blue
+probability ROC AUC diamonds where available. Each series uses its own fold
+standard deviation. The original result files and their cached scores remain
+unchanged; collapsed archives preserve the original scores and provenance.
+The [score audit](../static/classification_scores.json) records availability,
+exclusion reasons, fold results, summary statistics, and source-file hashes.
 
 ## Which historical submissions can be rescored?
 
-| Saved predictions | Current ranking | Required action for a new submission |
+| Saved predictions | Current display | Required action for a new submission |
 |---|---|---|
-| Floating-point probabilities in `[0, 1]`, finite in every fold | Eligible; the website recomputes scores from official test targets | Recompute cached classification metrics before submitting the result file |
-| Boolean or integer class labels | Excluded | Recover probabilities from the original fold models or rerun the benchmark |
-| Mixed label/probability types, missing predictions, or invalid probabilities | Excluded | Correct the predictions and validate every fold |
+| Floating-point probabilities in `[0, 1]`, finite in every official fold | Recomputed BA and probability ROC AUC | Recompute cached classification metrics before submitting the result file |
+| Historical Boolean class decisions conforming to the original result-file protocol, valid in every official fold | Recomputed BA in the main table; probability ROC AUC is unavailable (`—`) | Recover probabilities from the original fold models or rerun the benchmark |
+| Mixed label/probability types, missing or extra sample IDs, incomplete folds, non-finite or out-of-range values | Excluded from both formal metric displays, with a reason | Correct the predictions and validate every fold |
 
-The old threshold-based results are retained in the **Historical balanced
-accuracy leaderboard** section on each classification task page. A model can
-still appear on regression leaderboards when its classification result is
-ineligible.
+All displayed classification results are aligned by official test sample ID and
+checked against the official labels. BA from probabilities uses `p > 0.5`; BA
+from historical hard labels uses the saved decisions. The original decision
+threshold for those historical labels may not be recoverable, so this is not a
+claim that every historical model was reevaluated at a common threshold.
+
+A single probability ROC AUC score cannot be converted to BA: it does not
+contain the confusion matrix at a particular threshold. If the original
+probabilities and official labels are available, BA can instead be recomputed
+from decisions at `p > 0.5`. Do not select or tune that threshold on the test
+set. The benchmark uses the fixed rule for probability submissions.
+
+Standard binary AUC computed from hard labels equals BA. It cannot recover ROC
+AUC from the model's original continuous predictions. BA remains a useful metric,
+and probability ROC AUC is not necessarily larger than BA. When usable
+probabilities were not saved, the probability ROC AUC cell is missing, not zero;
+a genuine AUC of `0.0` is retained as a valid score.
 
 Converting `True`/`False` to `1.0`/`0.0` cannot recover probabilities or their
-ranking information. Do not use a type cast as a substitute for obtaining model
-probabilities. Genuine endpoint probabilities are allowed; the file validator
-cannot determine whether a floating-point number was previously a hard label.
+ranking information and does not satisfy the submission policy. Do not use a
+type cast as a substitute for obtaining model probabilities. Genuine endpoint
+probabilities are allowed; the numerical validator cannot determine whether a
+floating-point value was previously a hard label. Preserve the original
+probability-generation code and provenance. New and updated classification
+results still require probabilities and matching cached metrics; restoring
+historical BA visibility does not relax that requirement. Regression results
+and benchmark-completeness definitions are unchanged.
 
 ## Record the probability of the correct class
 
@@ -60,16 +99,20 @@ benchmark = MatbenchBenchmark.from_file("results.json.gz")
 packet = {"results": benchmark}
 prepare_classification_scores({"submission": packet})
 for task_name, result in packet["classification_scores"].items():
-    if result["eligible"]:
-        print(task_name, result["scores"]["rocauc"])
+    if result["ba_available"]:
+        print(task_name, "balanced accuracy:", result["scores"]["balanced_accuracy"])
     else:
-        print(task_name, "excluded:", result["reason"])
+        print(task_name, "BA excluded:", result["ba_reason"])
+    if result["auc_available"]:
+        print(task_name, "probability ROC AUC:", result["scores"]["rocauc"])
+    else:
+        print(task_name, "probability ROC AUC unavailable:", result["auc_reason"])
 ```
 
 This operation loads official targets, aligns saved predictions by sample ID,
 and evaluates each fold separately. It neither changes the saved predictions
 nor overwrites their stored scores. The reported mean is the unweighted mean
-of the five fold AUCs; the standard deviation uses `ddof=0`. It is not the AUC
+of the five official fold scores for each metric; the standard deviation uses `ddof=0`. It is not the AUC
 of all out-of-fold predictions pooled into one array.
 
 When preparing a replacement submission, generate a separate result file with

@@ -1,7 +1,6 @@
 """Submission-policy tests; archived results use separate structural checks."""
 
 import copy
-import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -27,12 +26,28 @@ class TestClassificationSubmission(unittest.TestCase):
             predictions = {"positive": 0.4, "negative": 0.2}
         expected = score_array(target, [0.2, 0.4], CLF_KEY)
         task = SimpleNamespace(
-            dataset_name="synthetic", benchmark_name="matbench_v0.1",
+            dataset_name="synthetic",
+            benchmark_name="matbench_v0.1",
             metadata=SimpleNamespace(task_type=CLF_KEY),
-            folds_map={0: "fold_0"}, scores={},
-            results={"fold_0": {"data": predictions, "scores": expected}},
+            folds_map={i: f"fold_{i}" for i in range(5)},
+            scores={},
+            results={
+                f"fold_{i}": {
+                    "data": {
+                        f"fold_{i}_{key}": value
+                        for key, value in predictions.items()
+                    },
+                    "scores": expected.copy(),
+                }
+                for i in range(5)
+            },
         )
-        return task, {"fold_0": target}
+        return task, {
+            f"fold_{i}": pd.Series(
+                target.to_numpy(), index=[f"fold_{i}_negative", f"fold_{i}_positive"]
+            )
+            for i in range(5)
+        }
 
     def validate(self, task, targets):
         with patch("matbench.leaderboard._load_fold_targets", return_value=targets):
@@ -58,10 +73,18 @@ class TestClassificationSubmission(unittest.TestCase):
             self.validate(task, targets)
 
     def test_hard_labels_and_invalid_probabilities_rejected(self):
-        for values in [(False, True), (0, 1), (0.2, True),
-                       (float("nan"), 0.4), (-0.1, 0.4), (0.2, 1.1)]:
+        for values in [
+            (False, True),
+            (0, 1),
+            (0.2, True),
+            (float("nan"), 0.4),
+            (-0.1, 0.4),
+            (0.2, 1.1),
+        ]:
             with self.subTest(values=values):
-                task, targets = self.make_task(dict(zip(["negative", "positive"], values)))
+                task, targets = self.make_task(
+                    dict(zip(["negative", "positive"], values))
+                )
                 with self.assertRaises(ValueError):
                     self.validate(task, targets)
 
@@ -79,9 +102,13 @@ class TestClassificationSubmission(unittest.TestCase):
             self.validate(task, targets)
 
     def test_regression_only_submission_does_not_load_classification_data(self):
-        task = SimpleNamespace(dataset_name="regression", metadata=SimpleNamespace(task_type=REG_KEY))
+        task = SimpleNamespace(
+            dataset_name="regression", metadata=SimpleNamespace(task_type=REG_KEY)
+        )
         with patch("matbench.leaderboard._load_fold_targets") as load:
-            self.assertEqual(validate_classification_submission(SimpleNamespace(tasks=[task])), {})
+            self.assertEqual(
+                validate_classification_submission(SimpleNamespace(tasks=[task])), {}
+            )
             load.assert_not_called()
 
 
@@ -104,56 +131,86 @@ class TestChangedSubmissionSelection(unittest.TestCase):
             root = Path(temporary)
             artifact = root / "benchmarks" / "changed" / "results.json.gz"
             artifact.parent.mkdir(parents=True)
-            artifact.write_text("original artifact")
-
-            def git(*args):
-                return subprocess.check_output(
-                    ["git", "-c", "user.name=Test", "-c", "user.email=test@example.com", *args],
-                    cwd=root, stderr=subprocess.DEVNULL, text=True,
-                ).strip()
-
-            git("init")
-            git("add", ".")
-            git("commit", "-m", "base")
-            base = git("rev-parse", "HEAD")
-            artifact.unlink()
             artifact.symlink_to("missing.json.gz")
-            git("add", ".")
-            git("commit", "-m", "replace artifact with symlink")
-            self.assertEqual(changed_result_files(base, root), [artifact])
+            base_sha = "a" * 40
+            with patch(
+                "scripts.test_submission.subprocess.check_output",
+                side_effect=[
+                    base_sha + "\n",
+                    b"benchmarks/changed/results.json.gz\0",
+                ],
+            ) as git:
+                self.assertEqual(
+                    changed_result_files("origin/main", root), [artifact]
+                )
+            self.assertEqual(
+                git.call_args_list[0].args[0],
+                [
+                    "git",
+                    "rev-parse",
+                    "--verify",
+                    "--end-of-options",
+                    "origin/main^{commit}",
+                ],
+            )
+            self.assertEqual(
+                git.call_args_list[1].args[0],
+                [
+                    "git",
+                    "diff",
+                    "--name-only",
+                    "--diff-filter=AMRT",
+                    "-z",
+                    base_sha,
+                    "HEAD",
+                    "--",
+                    "benchmarks",
+                ],
+            )
 
     def test_only_new_and_replaced_result_files_are_checked(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-
-            def git(*args):
-                return subprocess.check_output(
-                    ["git", "-c", "user.name=Test", "-c", "user.email=test@example.com", *args],
-                    cwd=root, stderr=subprocess.DEVNULL, text=True,
-                ).strip()
-
-            def write(relative, text):
+            for relative in [
+                "benchmarks/untouched/results.json.gz",
+                "benchmarks/changed/results.json.gz",
+                "benchmarks/new model/results.json.gz",
+                "benchmarks/metadata_only/info.json",
+                "benchmarks/nested/extra/results.json.gz",
+                "unrelated/results.json.gz",
+            ]:
                 path = root / relative
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text(text)
-
-            git("init")
-            for name in ["untouched", "changed", "metadata_only", "deleted"]:
-                write(f"benchmarks/{name}/results.json.gz", "old artifact")
-                write(f"benchmarks/{name}/info.json", "old metadata")
-            git("add", ".")
-            git("commit", "-m", "base")
-            base = git("rev-parse", "HEAD")
-            write("benchmarks/changed/results.json.gz", "new predictions")
-            write("benchmarks/new model/results.json.gz", "new submission")
-            write("benchmarks/metadata_only/info.json", "updated citation")
-            (root / "benchmarks/deleted/results.json.gz").unlink()
-            git("add", ".")
-            git("commit", "-m", "update")
-            selected = {path.relative_to(root).as_posix() for path in changed_result_files(base, root)}
-            self.assertEqual(selected, {
-                "benchmarks/changed/results.json.gz", "benchmarks/new model/results.json.gz"
-            })
+                path.write_text("fixture artifact")
+            # This is the NUL-separated output of diff --diff-filter=AMRT:
+            # untouched and deleted files must not be selected; spaces are literal.
+            changed = [
+                "benchmarks/changed/results.json.gz",
+                "benchmarks/new model/results.json.gz",
+                "benchmarks/metadata_only/info.json",
+                "benchmarks/nested/extra/results.json.gz",
+                "benchmarks/missing/results.json.gz",
+                "unrelated/results.json.gz",
+            ]
+            with patch(
+                "scripts.test_submission.subprocess.check_output",
+                side_effect=["a" * 40 + "\n", ("\0".join(changed) + "\0").encode()],
+            ) as git:
+                selected = {
+                    path.relative_to(root).as_posix()
+                    for path in changed_result_files("origin/main", root)
+                }
+            self.assertEqual(
+                selected,
+                {
+                    "benchmarks/changed/results.json.gz",
+                    "benchmarks/new model/results.json.gz",
+                },
+            )
+            self.assertEqual(git.call_count, 2)
+            self.assertTrue(
+                all(call.kwargs["cwd"] == root for call in git.call_args_list)
+            )
 
 
 if __name__ == "__main__":

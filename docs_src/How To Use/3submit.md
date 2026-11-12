@@ -51,10 +51,15 @@ classification metrics must agree with recomputation from the saved predictions;
 re-record results with the current scoring code if a mismatch is reported.
 
 CI applies this stricter check to new or replaced `results.json.gz` files. Existing
-legacy files remain readable for provenance, but their hard-label classification
-results do not compete in the current leaderboard. Historical balanced-accuracy
-results are available separately on each classification task page. An algorithm's
-regression submissions are unaffected by its classification eligibility.
+legacy files remain readable for provenance. Valid historical hard-label results
+are rechecked against official test IDs and labels and appear directly in the
+**Balanced accuracy only** section of each classification task page. Their
+probability ROC AUC remains unavailable. This historical display policy does not
+relax the probability requirement for new or updated submissions. The homepage
+best-model table shows separate verified BA and probability ROC AUC champions,
+while its two scaled-error plots continue to use BA for classification. Task
+pages place the **ROC AUC available** group first. An algorithm's regression submissions are unaffected by its
+classification eligibility.
 
 ## Step 3: Create a PR to the [Matbench repository](https://github.com/hackingmaterials/matbench)
 

@@ -67,7 +67,13 @@ recover the model's probability ranking.
 ROC-AUC is calculated independently on each official test fold; the leaderboard
 reports the unweighted mean and population standard deviation of these fold
 scores, not the AUC of pooled predictions. Accuracy, balanced accuracy and F1
-still use the `> 0.5` threshold. Use the current Matbench scoring code when
+use the `> 0.5` threshold for saved probabilities. The homepage best-model table
+shows separate BA and probability ROC AUC champions; both scaled-error plots
+use BA for classification, and task pages show both metrics. A single AUC score
+cannot be converted to BA. With saved probabilities and official labels, BA can
+be recomputed at `p > 0.5`; do not tune that threshold on the test set. Historical hard-label
+submissions use their saved decisions for verified balanced accuracy, since
+the original decision threshold may be unknown. Use the current Matbench scoring code when
 recording results: new submissions are checked against scores recomputed from
 their saved predictions and canonical test targets.
 
