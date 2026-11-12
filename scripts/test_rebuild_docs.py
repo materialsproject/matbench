@@ -379,8 +379,6 @@ class TestClassificationLeaderboardDocs(unittest.TestCase):
         self.assertIn("(../static/classification_scores.json)", current)
         self.assertNotIn("Original cached scores and provenance", text)
         self.assertNotIn("<details>", text)
-        self.assertIn("original cached scores, source paths and file hashes", text)
-        self.assertIn("historical score tables", text)
         self.assertEqual(text.count("| [Boolean model]"), 1)
         self.assertEqual(text.count("| [Probability model]"), 1)
 

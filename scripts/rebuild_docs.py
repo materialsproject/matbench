@@ -659,12 +659,7 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
                           "are only valid for a subset of tasks in the benchmark._\n\n"
             if task_type == CLF_KEY:
                 explanation += CLF_ROCAUC_NOTE
-                explanation += (
-                    "[Download classification score audit (JSON)](../static/classification_scores.json). "
-                    "The audit preserves original cached scores, source paths and file hashes; "
-                    "each algorithm's detail page also retains its historical score tables. "
-                    "Original submission files are unchanged.\n\n"
-                )
+                explanation += "[Download classification score audit (JSON)](../static/classification_scores.json)\n\n"
 
 
 
