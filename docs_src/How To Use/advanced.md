@@ -98,6 +98,22 @@ recorded_folds = mb.matbench_dielectric.is_recorded
 
 All folds must be recorded to see score stats.
 
+`task.scores` summarizes the scores stored in the result file. Loading an old file
+does not recompute those values. Historical classification fields called
+`rocauc` may contain thresholded-label AUC (balanced accuracy); they are not the
+current probability ROC-AUC ranking. The documentation build recomputes metrics
+from saved probabilities and also verifies balanced accuracy from valid historical
+hard-label decisions, aligned with canonical test IDs and labels. The homepage
+best-model table shows separate BA and probability ROC AUC champions; both
+scaled-error plots continue to use BA for classification. Task pages show both
+metrics in separate columns and group submissions by probability ROC-AUC
+availability. AUC alone does not determine BA: BA can be recomputed from the
+saved probabilities and official labels at `p > 0.5`, without tuning the
+threshold on the test set. Original historical
+decision thresholds may be unknown. Use the
+[submission check](3submit.md#check-your-result-file) before
+submitting new or updated results.
+
 ```python
 
 scores = mb.matbench_dielectric.scores
@@ -215,6 +231,10 @@ A `MatbenchBenchmark` is a collection of tasks. Once your benchmark is recorded,
 
 ### Get information about the state of a benchmark
 
+The output examples below are from a historical package 0.1.0 submission and
+illustrate the inspection API only. Their classification scores are stored legacy
+values, not verified current probability ROC-AUC scores.
+
 ```python
 
 >>> mb.get_info()
@@ -265,7 +285,10 @@ You can validate an entire benchmark with the `validate` method of `MatbenchBenc
 True
 ```
 
-If your results are valid, it ensures the automated leaderboard can understand your data and that all folds for all tasks are recorded.
+`is_valid` checks the saved data structure and recorded folds so that historical
+submissions remain readable. It does not establish eligibility for the current
+probability ROC-AUC leaderboard or verify the cached score values. New and updated
+submissions must also pass the stricter [submission check](3submit.md#check-your-result-file).
 
 
 ### See if a benchmark is complete

@@ -1,3 +1,7 @@
+# Historical reproduction/illustrative script; retained for provenance.
+# Its classification label path is not a current ROC-AUC submission template.
+# New submissions must save finite P(target=True) floats in every test fold.
+# See docs_src/How To Use/probability-migration.md before adapting this script.
 """Train ALIGNN model on MatBench dataset."""
 # Ref: https://www.nature.com/articles/s41524-021-00650-1
 
