@@ -25,9 +25,11 @@ The original result is retained byte for byte in `historical/results.json.gz`.
 - [provenance.json](provenance.json): original and current artifact identities,
   plus archived source and external input hashes.
 
-The branch includes upstream main `2f7512ef40935b5d642127887fc4daf42236a2b7`.
-All submission changes are confined to this benchmark directory. Core scoring,
-dependencies, workflows and website generation use upstream unchanged.
+The scoring migration was validated against upstream main
+`2f7512ef40935b5d642127887fc4daf42236a2b7`. Core scoring and website generation
+remain unchanged. A subsequent archive-preservation repair adds explicit source
+verification and benchmark-local tests to CI without changing the predictions,
+scores or active runtime dependency pins.
 
 ## Model and input representation
 
@@ -63,11 +65,19 @@ classification, MAE for regression). These are paper/source observations;
 The original property-task source is
 [liuxiaotong15/alchemBERT on Gitee](https://gitee.com/liuxiaotong15/alchemBERT),
 pinned for inspection to commit `3ff872f6510cc88e96061844a2ca41d0c6041c8f`
-(2025-01-26). `upstream/` contains ten byte-identical source files, including
-training, prediction, recording, templates and its original GPL-3.0 license.
+(2025-01-26). `upstream/` contains ten source files with their original bytes,
+including training, prediction, recording, templates and the GPL-3.0 license.
 This snapshot postdates the original submission and is not established as the
 exact historical run revision. Matbench-Discovery assets are a separate
 benchmark and are not used here.
+
+The original Gitee `requirements.txt` is stored locally as
+[`upstream/requirements.txt.archive`](upstream/requirements.txt.archive).
+`provenance.json` retains its original filename and SHA256 and records the
+local archive-path mapping. The rename distinguishes this preserved evidence
+from an installation requirements file; its bytes must remain unchanged.
+Do not install from it. New experiments use `requirements-rerun-cpu.txt`, where
+dependency compatibility and security updates are maintained separately.
 
 ```bash
 python benchmarks/matbench_v0.1_AlchemBERT/verify_source.py
@@ -128,5 +138,13 @@ python -m scripts.test_submission --submission matbench_v0.1_AlchemBERT
 The last command is upstream's current probability-submission gate. It checks
 canonical classification fold IDs, probability form and all cached metrics
 against official targets. Structural validation additionally requires the
-full artifact to be valid, complete and recorded. Remote checks are listed on
-[PR #358](https://github.com/materialsproject/matbench/pull/358/checks).
+full artifact to be valid, complete and recorded.
+
+The `benchmark-submission` CI job explicitly runs `verify_source.py`, its
+regression tests and the benchmark-local test suite. Default repository-wide
+test discovery alone does not include this directory. CI does not install the
+training stack, so optional tiny-model training tests skip there; follow
+[RUNNING.md](RUNNING.md) to run them in the separate CPU environment. The source
+check verifies the archived source files; it does not install archived dependencies
+or validate historical training. The original submission's remote checks are
+listed on [PR #358](https://github.com/materialsproject/matbench/pull/358/checks).

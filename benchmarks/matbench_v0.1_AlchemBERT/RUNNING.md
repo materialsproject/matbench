@@ -8,6 +8,13 @@ are not supplied by these tools.
 
 ## Environment
 
+`upstream/requirements.txt.archive` preserves the original Gitee dependency
+list for source verification. It is not an installation entry point and must
+retain its original bytes. Compatibility and security updates for new
+experiments belong in `requirements-rerun-cpu.txt`, independently of the archive.
+The archive-preservation repair does not change that active environment or any
+saved predictions.
+
 From the Matbench repository root, use a separate Python 3.12 environment:
 
 ```bash
@@ -154,14 +161,22 @@ result untouched. A full submission requires all 13 tasks, each with five folds.
 ## Tests and their limits
 
 ```bash
+python benchmarks/matbench_v0.1_AlchemBERT/verify_source.py
 python -m unittest discover -s benchmarks/matbench_v0.1_AlchemBERT -p 'test_*.py'
 ```
+
+The `benchmark-submission` CI job explicitly verifies the source archive and
+runs its regression tests, then discovers this benchmark-local suite after
+installing the non-training test dependencies. The source manifest retains
+Gitee's original `requirements.txt` filename and hash while mapping that file
+to the local `requirements.txt.archive` path. Verification also checks the
+original filename when an external Gitee checkout is supplied with `--source`.
 
 The optional CPU integration tests use a tiny randomly initialized BERT and
 synthetic data. They execute training, verify actual weight changes, reload the
 checkpoint and compare prediction files. They also test recovery after an
 inference failure. They require no network or pretrained weights and skip when
-PyTorch/Transformers are absent. Passing them verifies software behavior, not
-historical scores or full-size training performance. The upstream CI workflows
-are unchanged and do not automatically discover these benchmark-local tests;
-their results are reported separately.
+PyTorch/Transformers are absent. CI does not install this training stack, so
+these integration tests skip there. Run the commands above in the CPU
+environment to exercise them. Passing them verifies software behavior, not
+historical scores or full-size training performance.

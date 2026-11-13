@@ -68,6 +68,10 @@ jobs:
       uses: actions/setup-python@v7
       with:
         python-version: "3.12"
+    - name: Verify archived AlchemBERT source
+      run: |
+        python benchmarks/matbench_v0.1_AlchemBERT/verify_source.py
+        python -m unittest discover -s benchmarks/matbench_v0.1_AlchemBERT -p 'test_verify_source.py'
     - name: Run submission check
       run: |
         pip install --upgrade pip
@@ -75,6 +79,10 @@ jobs:
         pip install -e .
         pip install -r requirements-dev.txt
         python -m unittest scripts/test_submission.py
+    - name: Test AlchemBERT submission tools
+      run: |
+        pip install -r benchmarks/matbench_v0.1_AlchemBERT/rescore_requirements.txt inflect==7.5.0
+        python -m unittest discover -s benchmarks/matbench_v0.1_AlchemBERT -p 'test_*.py'
     - name: Check new or updated classification results
       env:
         SUBMISSION_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}

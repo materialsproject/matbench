@@ -3,6 +3,9 @@
   "source_commit": "3ff872f6510cc88e96061844a2ca41d0c6041c8f",
   "source_commit_date": "2025-01-26T22:39:13+08:00",
   "note": "Audited source snapshot; not established as the source used to generate the historical submitted results. Upstream files are byte-for-byte copies. Data files remain in the pinned external source repository.",
+  "local_archive_paths": {
+    "requirements.txt": "requirements.txt.archive"
+  },
   "upstream_sha256": {
     "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
     "README.md": "5e92dd970693d88339595731a23389888aaddb2d9946ce7b8d9858f8e9d61e60",
