@@ -176,7 +176,7 @@ The optional CPU integration tests use a tiny randomly initialized BERT and
 synthetic data. They execute training, verify actual weight changes, reload the
 checkpoint and compare prediction files. They also test recovery after an
 inference failure. They require no network or pretrained weights and skip when
-PyTorch/Transformers are absent. CI does not install this training stack, so
-these integration tests skip there. Run the commands above in the CPU
-environment to exercise them. Passing them verifies software behavior, not
+PyTorch/Transformers are absent. The `benchmark-submission` job does not
+install this training stack, so these integration tests skip in that job.
+Run the commands above in the CPU environment to exercise them. Passing them verifies software behavior, not
 historical scores or full-size training performance.
