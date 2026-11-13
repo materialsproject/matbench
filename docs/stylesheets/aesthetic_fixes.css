@@ -122,8 +122,8 @@ EDITED FOR SOME REASON.*/
   display: none;
 }
 
-/* The homepage groups best results by task; each classification metric gets
-   its own space so that model names and exact ties remain legible. */
+/* One compact line per metric on wide screens. Long names and exact ties
+   can wrap within that line, and narrow screens retain the task cards. */
 .mb-home-leaderboard-wrap {
   width: 100%;
   max-width: 100%;
@@ -144,7 +144,7 @@ EDITED FOR SOME REASON.*/
 }
 .mb-home-leaderboard th,
 .mb-home-leaderboard td {
-  padding: .85rem .7rem;
+  padding: .65rem .7rem;
   vertical-align: top;
   text-align: left;
   white-space: normal;
@@ -153,35 +153,35 @@ EDITED FOR SOME REASON.*/
 }
 .mb-home-leaderboard thead th:nth-child(1) { width: 25%; }
 .mb-home-leaderboard thead th:nth-child(2) { width: 10%; }
-.mb-home-leaderboard thead th:nth-child(3) { width: 50%; }
-.mb-home-leaderboard thead th:nth-child(4) { width: 15%; }
+.mb-home-leaderboard thead th:nth-child(3) { width: 65%; }
 .mb-home-leaderboard .mb-task-name {
   font-weight: 500;
 }
+.mb-metric-result {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr) fit-content(35%);
+  align-items: baseline;
+  gap: .25rem .6rem;
+  line-height: 1.5;
+}
 .mb-metric-result + .mb-metric-result {
-  margin-top: .85rem;
-  padding-top: .85rem;
-  border-top: 1px solid #80808044;
+  margin-top: .45rem;
 }
 .mb-metric-label {
-  display: block;
   font-weight: 700;
-  margin-bottom: .3rem;
 }
 .mb-metric-models {
-  display: flex;
-  flex-direction: column;
-  gap: .3rem;
+  min-width: 0;
 }
 .mb-metric-model {
-  display: block;
   overflow-wrap: anywhere;
 }
 .mb-metric-score {
-  display: block;
-  margin-top: .3rem;
+  min-width: 0;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+  text-align: right;
+  overflow-wrap: anywhere;
 }
 .mb-metric-tie,
 .mb-model-note {
@@ -190,8 +190,18 @@ EDITED FOR SOME REASON.*/
   color: var(--md-default-fg-color--light, #58657a);
 }
 .mb-metric-tie {
-  display: block;
-  margin-top: .2rem;
+  white-space: nowrap;
+}
+@media (max-width: 1000px) {
+  /* Keep room for model names while the table still has Task/Samples columns.
+     Unit-bearing scores may wrap instead of pushing the grid out of its cell. */
+  .mb-metric-result {
+    grid-template-columns: minmax(0, 1fr) fit-content(40%);
+    column-gap: .4rem;
+  }
+  .mb-metric-label {
+    grid-column: 1 / -1;
+  }
 }
 @media (max-width: 600px) {
   .mb-home-leaderboard,
@@ -229,8 +239,8 @@ EDITED FOR SOME REASON.*/
     font-size: .65rem;
     font-weight: 600;
   }
-  .mb-home-leaderboard .mb-notes:empty {
-    display: none;
+  .mb-metric-result + .mb-metric-result {
+    margin-top: .65rem;
   }
   .matbench-chart-key {
     font-size: .7rem;
