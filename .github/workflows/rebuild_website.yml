@@ -1,19 +1,26 @@
-name: Rebuild docs
+name: rebuild-docs
 
-# only rebuild docs when there is an update to main
+# build docs on PRs; rebuild and commit them on updates to main
 on:
   push:
     branches: [ main ]
+  # Build review previews for pull requests targeting any branch.
+  pull_request:
+
+# only the newest run should rebuild and push docs; older ones would be rejected as non-fast-forward
+concurrency:
+  group: rebuild-docs-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  rebuild_docs:
+  rebuild-docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up python 3.9
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v7
+      - name: Set up python 3.12
+        uses: actions/setup-python@v7
         with:
-          python-version: 3.9
+          python-version: "3.12"
       - name: Build docs
         run: |
           pip install --upgrade pip
@@ -21,10 +28,21 @@ jobs:
           pip install -e .
           pip install -r requirements-dev.txt
           pip install -r requirements-docs.txt
+          python -m unittest matbench.tests.test_leaderboard
+          python -m unittest discover -s scripts -p 'test_rebuild_docs.py'
           python scripts/rebuild_docs.py
           mkdocs build
           cp docs_src/CNAME docs/CNAME
-      - uses: EndBug/add-and-commit@v7 # You can change this to use a specific version
+      - name: Upload documentation preview
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: matbench-docs-preview
+          path: docs
+          retention-days: 7
+          if-no-files-found: error
+      - uses: EndBug/add-and-commit@v11 # You can change this to use a specific version
+        if: github.event_name == 'push'
         with:
           # The arguments for the `git add` command (see the paragraph below for more info)
           # Default: '.'

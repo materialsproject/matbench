@@ -63,6 +63,9 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             that the user wants to keep as part of the benchmark file.
         tasks_map ({str: MatbenchTask}): A mapping of task name to the
             corresponding MatbenchTask object.
+        datestamp (str or None): The UTC datestamp (format
+            "%Y.%m.%d %H:%M.%S") of the serialized benchmark this object was
+            loaded from, or None if it was not loaded from a dict or file.
 
         <<task_names>> (MatbenchTask): Access any task obj via
             MatbenchTask.<<task_name>>. For example:
@@ -123,6 +126,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             available_tasks = self.metadata.keys()
 
         self.user_metadata = {}
+        self.datestamp = None
         self.tasks_map = RecursiveDotDict()
 
         for ds in available_tasks:
@@ -316,16 +320,18 @@ class MatbenchBenchmark(MSONable, MSONable2File):
             benchmark_name=d[cls._BENCHMARK_KEY],
             tasks_dict=d[cls._TASKS_KEY],
             user_metadata=d[cls._USER_METADATA_KEY],
+            datestamp=d[cls._DATESTAMP_KEY],
         )
 
     @classmethod
-    def _from_args(cls, benchmark_name, tasks_dict, user_metadata):
+    def _from_args(cls, benchmark_name, tasks_dict, user_metadata, datestamp=None):
         """Create a MatbenchBenchmark object from arguments
 
         Args:
             benchmark_name (str): name of the benchmark
             tasks_dict (dict): formatted dict of task data
             user_metadata (dict): freeform user metadata
+            datestamp (str or None): datestamp of the serialized benchmark
 
         Returns:
             (MatbenchBenchmark)
@@ -347,6 +353,7 @@ class MatbenchBenchmark(MSONable, MSONable2File):
 
         # MatbenchTask automatically validates files during its from_dict
         obj.user_metadata = user_metadata
+        obj.datestamp = datestamp
 
         logger.debug(f"Successfully converted dict/args to '{cls.__name__}'.")
 
