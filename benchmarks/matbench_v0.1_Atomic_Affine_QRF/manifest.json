@@ -1,0 +1,20 @@
+{
+  "README.md": "87391a5d195e4be511e8cc445078c198f51f5926b4edd4b285bc8b769fde03b0",
+  "all_seed_scores.csv": "1c6792775b8d2e1c7dbf1ad707a15c6a36123790fe124d4e97c25f1c36294cff",
+  "environment_lock.json": "c964a1f185fc61a135cfb9ce4622cffa429d3530733bf030a89adba8c6aad535",
+  "export.py": "83225575b713a0f8dd16dcf77b535c313ffdeb0009aab5d63f8eeebdc8a0f5da",
+  "fresh.py": "198b7c6e22d6855e636dbf3bf505249bcbaf1cc08293545051e034cdfa5ffff5",
+  "info.json": "020f93fdf0c214c882d02543bdd615ddc85a58e2e36adc05d5870534bb2a1916",
+  "inputs/base_qrf.py": "594d1deb7b3f9d9ac2e82ec2f83988e2897bec4f27d0c2a420b628bf341507c4",
+  "inputs/matbench_steels.json.gz": "473bc4957b2ea5e6465aef84bc29bb48ac34db27d69ea4ec5f508745c6fae252",
+  "inputs/protocol.json": "f5bfbeea754bbadbf265b66f8f94d2432fb43e58adb0ec6cf19dfd72d0067393",
+  "inputs/steels_splits.json": "ef3bc6cf09ec08a23a8d0a6f1e04c0e2108296644d5e522abd8900f55e2b1a4f",
+  "notebook.ipynb": "cd523339232a234cbe98ff5339eb9faeaf1a83b980d7888305d0571b944e6d51",
+  "preflight.py": "3b759b89d2c4f606778057b06ee6b3125b31c78ed9a9a0b5777f26a7ce7fabdd",
+  "protocol.json": "3ffa505b92b8a8414041f3a29f9aeb1539e28dcf71f9a4579be6ce8f8a61652b",
+  "reproduce_entry.py": "bdb0112843ccfec1f1c8c74d0ce060938b77db757c5c1a46b19df8adb1bb57c9",
+  "requirements.txt": "a440e361663e50cbeec3eed125655d2b54cb7785c03613f892c8921bf81a7fad",
+  "results.json.gz": "6985e52ec954c28608a45127aceaa6a3bab7215e970a5c2cefc2cb8c96e6c8d5",
+  "run.py": "73a17615dfda06aa6b41db6f230b28fdd565908e8ea4b78d801ba21bd5fd5c71",
+  "upstream_source_hashes.json": "b0010f3d9300feb5841bb3f246d319ce160f5226915f998b94b64be86b80e120"
+}

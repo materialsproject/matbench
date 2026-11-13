@@ -1,0 +1,73 @@
+{
+  "frozen_utc": "2026-10-04T22:04:04.663135+00:00",
+  "task": "matbench_steels",
+  "objective": "Improve official mean-five-fold MAE with a training-only quantile-forest selector, retaining the original Atomic-ET900 submission.",
+  "development_scope": "Retrospective development on public folds. Prior atomic seed417 and 30-seed outcomes are already known. No new outer-test scores or candidate outer predictions are used by this policy.",
+  "elements": [
+    "Fe",
+    "C",
+    "Mn",
+    "Si",
+    "Cr",
+    "Ni",
+    "Mo",
+    "V",
+    "N",
+    "Nb",
+    "Co",
+    "W",
+    "Al",
+    "Ti"
+  ],
+  "representations": [
+    "atomic",
+    "sqrt_atomic",
+    "square_atomic",
+    "log1p_100atomic"
+  ],
+  "leaves": [
+    1,
+    2
+  ],
+  "max_features": [
+    1.0,
+    0.7
+  ],
+  "median_weights": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "inner_cv": {
+    "folds": 5,
+    "shuffle": true,
+    "random_state": 7331
+  },
+  "inner_trees": 600,
+  "final_trees": 900,
+  "reference_seed": 417,
+  "selection": "Minimize pooled inner OOF MAE over 16 forest configurations times five mean/weighted-median blending coefficients. Exact ties choose first configuration in declared order. No outer-training calibration on in-sample residuals.",
+  "prediction": "A forest induces training-observation weights averaged across trees, inverse terminal-leaf membership count per tree. Use weighted target mean and lower weighted target median; blend with selected coefficient.",
+  "repeats": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "repeats_rule": "Repeat the full unchanged inner selection at each seed. Run every listed repeat; never replace seed417 with best seed. Baseline is original seed417 and TPOT released predictions.",
+  "scope": "Composition only; no processing or auxiliary property inputs; exact official five folds; full outcomes retained. No physical discovery or prospective qualification claim.",
+  "compute": "CPU only, one thread per fit, up to three folds in parallel, each invocation under 30 minutes. Predictions and inner evidence saved; models reconstructed rather than committed.",
+  "timestamp_note": "Recorded from initial protocol-file mtime; corrects placeholder future timestamp. Policy unchanged.",
+  "numerical_median_rule": "CDF >= 0.5 - 1e-12 selects the lower weighted median, resolving floating-point equality at exactly half mass.",
+  "implementation_correction": "Before any outer outcomes completed or viewed, first run was stopped to make lower-median boundary deterministic. All fits restarted with explicit tolerance.",
+  "compute_schedule_update": {
+    "utc": "2026-10-04T22:42:24.839023+00:00",
+    "reason": "Repeated shared-box pauses; preserve all completed folds and finish the identical frozen seeds/grid in one shared four-worker pool within the one-hour session.",
+    "changes_model_or_selection": false,
+    "max_cpu_threads": 4,
+    "original_scheduler_max_folds": 3
+  }
+}
