@@ -1,0 +1,15 @@
+{
+  "authors": "Yuhang Wang, Xiaotong Liu, Haotian Chen, Tao Yang, Xingchen Liu and Xiaodong Wen",
+  "algorithm": "AlchemBERT",
+  "algorithm_long": "AlchemBERT fine-tunes BERT-base-cased with a scalar prediction head on natural-language descriptions of materials. Composition tasks use chemical formulas or alloy fractions; structure tasks additionally describe lattice, symmetry, atomic sites and local environments. This submission contains the natural-language-input results for all 13 Matbench v0.1 tasks and five official folds, from the work published in Cell Reports Physical Science (2025).",
+  "bibtex_refs": "@article{wang2025alchembert, title={Exploring lightweight language models for materials informatics with {AlchemBERT}}, author={Wang, Yuhang and Liu, Xiaotong and Chen, Haotian and Yang, Tao and Liu, Xingchen and Wen, Xiaodong}, journal={Cell Reports Physical Science}, volume={6}, number={8}, pages={102724}, year={2025}, doi={10.1016/j.xcrp.2025.102724}, url={https://doi.org/10.1016/j.xcrp.2025.102724}}",
+  "notes": "Metrics for all 13 tasks and 65 folds are recomputed from the unchanged archived predictions using current Matbench scoring, including probability-based classification ROC-AUC. This is a scoring correction, not model retraining. See README.md, RESULTS.md, RESCORING.md, INPUT_AUDIT.md, PAPER_EVIDENCE.md and RUNNING.md for the score comparison, source and input audits, training/recording tools and remaining historical provenance limits. Official source: https://gitee.com/liuxiaotong15/alchemBERT (audited snapshot 3ff872f6510cc88e96061844a2ca41d0c6041c8f; not established as the historical run commit). Historical requirements below are retained; tested new CPU tools use requirements-rerun-cpu.txt.",
+  "requirements": {
+    "python": [
+      "fire==0.6.0",
+      "lightning==2.2.3",
+      "torch==2.2.1+cu118",
+      "transformers==4.40.1"
+    ]
+  }
+}
