@@ -31,7 +31,7 @@ exclusion reasons, fold results, summary statistics, and source-file hashes.
 | Saved predictions | Current display | Required action for a new submission |
 |---|---|---|
 | Floating-point probabilities in `[0, 1]`, finite in every official fold | Recomputed BA and probability ROC AUC | Recompute cached classification metrics before submitting the result file |
-| Historical Boolean class decisions conforming to the original result-file protocol, valid in every official fold | Recomputed BA in the main table; probability ROC AUC is unavailable (`—`) | Recover probabilities from the original fold models or rerun the benchmark |
+| Historical Boolean class decisions conforming to the original result-file protocol, valid in every official fold | Recomputed BA in the main table; probability ROC AUC is unavailable (`—`) | Recover probabilities for new or replacement results; see the narrowly reviewed transition below for unchanged pre-policy artifacts |
 | Mixed label/probability types, missing or extra sample IDs, incomplete folds, non-finite or out-of-range values | Excluded from both formal metric displays, with a reason | Correct the predictions and validate every fold |
 
 All displayed classification results are aligned by official test sample ID and
@@ -58,9 +58,20 @@ type cast as a substitute for obtaining model probabilities. Genuine endpoint
 probabilities are allowed; the numerical validator cannot determine whether a
 floating-point value was previously a hard label. Preserve the original
 probability-generation code and provenance. New and updated classification
-results still require probabilities and matching cached metrics; restoring
-historical BA visibility does not relax that requirement. Regression results
-and benchmark-completeness definitions are unchanged.
+results require probabilities and matching cached metrics, apart from the
+individually reviewed, unchanged historical artifacts described below.
+Regression results and benchmark-completeness definitions are unchanged.
+
+## Reviewed transition for submissions already awaiting review
+
+Independently reviewed original artifacts submitted before 2026-11-10 may be
+listed in `scripts/historical_classification_submissions.json` for BA-only
+acceptance. Eligibility requires the exact listed path, SHA256 and task; age
+alone is insufficient. Canonical-fold and cached-metric checks still apply,
+with historical hard-label `rocauc` checked against BA and probability ROC AUC
+unavailable. New or replacement artifacts remain subject to the probability
+requirement. PR #370 is the first reviewed entry; its original predictions are
+preserved unchanged.
 
 ## Record the probability of the correct class
 
@@ -124,8 +135,11 @@ python -m scripts.test_submission --submission matbench_v0.1_your_algorithm
 ```
 
 The check requires all classification folds to contain eligible probabilities
-and verifies that their stored metrics match recomputation. A legacy file may
-pass the structural/deserialization checks while failing this stricter
+and verifies that their stored metrics match recomputation. For an exact
+manifest-listed historical artifact, it instead reports
+`Historical hard-label/BA check passed` after the same canonical-fold checks and
+the historical cached-metric comparison above. Unlisted or modified legacy
+files may pass structural/deserialization checks while failing this stricter
 submission check.
 
 ## Archived reproduction scripts
