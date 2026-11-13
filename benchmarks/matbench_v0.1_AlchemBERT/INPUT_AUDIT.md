@@ -1,5 +1,21 @@
 # Independent composition-input identity audit
 
+## Current reference availability (2026-11-13)
+
+The current official `matbench_expt_is_metal.json.gz` is now accessible from
+[Materials Project](https://ml.materialsproject.org/projects/matbench_expt_is_metal.json.gz).
+Its SHA256 is
+`8f2a4f9bacdcbc5c2c73615629ee7986f09d39bed40ba7db52b61b2889730887`.
+At `mb-expt-is-metal-1501` it contains `Ga1As0.1P0.9` and `false`, agreeing
+with the archived input and label recorded below. The current official labels
+are used for the complete results migration in [RESCORING.md](RESCORING.md).
+
+The historical audit below and `input_audit.json` retain their original
+reference identities. They have not been relabeled as a new audit of all
+input archives against the current datasets.
+
+## Archived input audit
+
 `verify_inputs.py` compares all 40 v1 input archives for `expt_gap`,
 `expt_is_metal`, `glass`, and `steels` with independent official datasets and
 the official ordered train/test fold IDs. Every archive and reference dataset

@@ -148,9 +148,23 @@
     "data_nl_v1/Train_4_matbench_steels_nl_250.json.gz": "2e18b091b67adc0bd671dcbf4b9c0f6cb93169a2f2ce4f48108a2ae5018fdb59"
   },
   "submitted_results": {
-    "path": "results.json.gz",
+    "path": "historical/results.json.gz",
     "sha256": "a0bb054a3a32b09041940aa90a7adc4e63a538811af430194057736ea5bd3daf",
     "git_blob": "ecc70fbbbd7776c443d769a29ec6b02692136385",
     "pr_head_before_review": "b44dca2f98b1b7112bdb1900183475876fb01551"
+  },
+  "current_artifact": {
+    "path": "results.json.gz",
+    "sha256": "c96b467e07f521e3e3d9f8f9f2c32f881dd58e2a523f87a630e2b3b67c9ed13a",
+    "content_hash": "4ebe087991763d087dc645368e3206eb531af692fcf4389a38746d89509dc97f",
+    "upstream_commit": "2f7512ef40935b5d642127887fc4daf42236a2b7",
+    "source_artifact_sha256": "a0bb054a3a32b09041940aa90a7adc4e63a538811af430194057736ea5bd3daf",
+    "rescoring_report": "rescoring.json",
+    "rescoring_report_sha256": "f7672cf5e2f1f44f4912369324bbb9171f64a6b63b2d2b60896c514bac90f437",
+    "predictions_parameters_and_uncertainties_unchanged": true,
+    "task_count": 13,
+    "fold_count": 65,
+    "retrained": false,
+    "note": "All metrics recomputed with current Matbench from checksum-verified official datasets. Original experiment provenance is unchanged."
   }
 }

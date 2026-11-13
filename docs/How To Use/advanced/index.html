@@ -14,14 +14,14 @@
         <link rel="prev" href="../3submit/">
       
       
-        <link rel="next" href="../../Leaderboards%20Per-Task/matbench_v0.1_matbench_dielectric/">
+        <link rel="next" href="../probability-migration/">
       
       
         
       
       
       <link rel="icon" href="../../static/matbench_logo_favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -198,7 +198,7 @@
   
     
   
-  Home
+  Leaderboard
 
       </a>
     </li>
@@ -371,7 +371,7 @@
   <span class="md-ellipsis">
     
   
-    Home
+    Leaderboard
   
 
     
@@ -982,6 +982,34 @@
     
   
     matbench_v0.1: ALIGNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_alignn_v2.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    matbench_v0.1: ALIGNN 2.0
   
 
     
@@ -1719,6 +1747,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../probability-migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrating classification submissions to probability ROC AUC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2550,6 +2606,21 @@
 </code></pre></div>
 <h3 id="see-task-score-stats-among-folds">See task score stats among folds</h3>
 <p>All folds must be recorded to see score stats.</p>
+<p><code>task.scores</code> summarizes the scores stored in the result file. Loading an old file
+does not recompute those values. Historical classification fields called
+<code>rocauc</code> may contain thresholded-label AUC (balanced accuracy); they are not the
+current probability ROC-AUC ranking. The documentation build recomputes metrics
+from saved probabilities and also verifies balanced accuracy from valid historical
+hard-label decisions, aligned with canonical test IDs and labels. The homepage
+best-model table shows separate BA and probability ROC AUC champions; both
+scaled-error plots continue to use BA for classification. Task pages show both
+metrics in separate columns and group submissions by probability ROC-AUC
+availability. AUC alone does not determine BA: BA can be recomputed from the
+saved probabilities and official labels at <code>p &gt; 0.5</code>, without tuning the
+threshold on the test set. Original historical
+decision thresholds may be unknown. Use the
+<a href="../3submit/#check-your-result-file">submission check</a> before
+submitting new or updated results.</p>
 <div class="highlight"><pre><span></span><code><span class="n">scores</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">matbench_dielectric</span><span class="o">.</span><span class="n">scores</span>
 
 
@@ -2645,6 +2716,9 @@
 <h2 id="benchmark-data">Benchmark data</h2>
 <p>A <code>MatbenchBenchmark</code> is a collection of tasks. Once your benchmark is recorded, you can inspect it.</p>
 <h3 id="get-information-about-the-state-of-a-benchmark">Get information about the state of a benchmark</h3>
+<p>The output examples below are from a historical package 0.1.0 submission and
+illustrate the inspection API only. Their classification scores are stored legacy
+values, not verified current probability ROC-AUC scores.</p>
 <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">mb</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span>
 
 <span class="sd">"""</span>
@@ -2682,7 +2756,10 @@
 
 <span class="kc">True</span>
 </code></pre></div>
-<p>If your results are valid, it ensures the automated leaderboard can understand your data and that all folds for all tasks are recorded.</p>
+<p><code>is_valid</code> checks the saved data structure and recorded folds so that historical
+submissions remain readable. It does not establish eligibility for the current
+probability ROC-AUC leaderboard or verify the cached score values. New and updated
+submissions must also pass the stricter <a href="../3submit/#check-your-result-file">submission check</a>.</p>
 <h3 id="see-if-a-benchmark-is-complete">See if a benchmark is complete</h3>
 <p>A benchmark is complete if it contains all the tasks specified in the benchmark specification. In the case of the benchmark Matbench v0.1, this means all 13 tasks are present in your benchmark (though they may not be recorded yet!).</p>
 <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">mb</span><span class="o">.</span><span class="n">is_complete</span>
@@ -2745,11 +2822,13 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../javascripts/responsive-plots.js"></script>
       
     
   </body>

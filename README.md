@@ -2,7 +2,7 @@
 
 matbench is an ImageNet for materials science; a set of 13 (with more to come!) curated machine learning tasks for benchmarking and performance testing.
 
-> **⚠️ Note on classification scores:** ROC-AUC scores on the `matbench_v0.1` classification leaderboards were computed on predictions thresholded at 0.5. They therefore equal balanced accuracy, not true ROC-AUC, and understate submissions that provided probabilities. This is fixed for future scoring; existing leaderboard scores have not been recomputed. See [#137](https://github.com/materialsproject/matbench/issues/137) and [#181](https://github.com/materialsproject/matbench/issues/181).
+> **Classification metrics:** The homepage best-model table shows separate champions for verified balanced accuracy (BA) and probability ROC AUC; both scaled-error plots continue to use BA for classification. Task leaderboards show both BA and probability ROC AUC, with probability submissions ordered by ROC AUC first and valid historical hard-label submissions ordered by BA afterwards. Missing probability ROC AUC is shown as unavailable, not zero. Both metrics are recomputed against official test labels in each of the five folds; original submission artifacts remain unchanged. New and updated classification submissions must still save probabilities. See the [migration guide](docs_src/How%20To%20Use/probability-migration.md), [#137](https://github.com/materialsproject/matbench/issues/137), and [#181](https://github.com/materialsproject/matbench/issues/181).
 
 
 | Tests  |   Release |

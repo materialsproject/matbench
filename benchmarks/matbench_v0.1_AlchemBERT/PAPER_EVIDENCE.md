@@ -1,8 +1,31 @@
 # Publication evidence and remaining provenance gaps
 
-The original citation in `info.json` is retained. Published descriptions supplement
-the recovered code; they do not identify the exact run that produced
-`results.json.gz`.
+`info.json` cites the peer-reviewed journal article and lists all six authors in
+publication order. Published descriptions supplement the recovered code; they
+do not identify the exact run that produced the archived predictions.
+
+## Published article
+
+Yuhang Wang, Xiaotong Liu, Haotian Chen, Tao Yang, Xingchen Liu and Xiaodong Wen.
+**Exploring lightweight language models for materials informatics with
+AlchemBERT.** *Cell Reports Physical Science* **6**(8), 102724 (2025).
+[DOI: 10.1016/j.xcrp.2025.102724](https://doi.org/10.1016/j.xcrp.2025.102724).
+The article was published online on July 23, 2025; its issue is dated August 20,
+2025. The [publisher's article page](https://www.sciencedirect.com/science/article/pii/S2666386425003236)
+is the version of record, replacing the preprint as the primary citation.
+
+The published Methods describe BERT-base-cased with a first-token scalar head,
+RTX 4090 hardware, a 9:1 train/validation split, learning rate 1e-5, batch size
+32 and early-stopping patience 200. These agree with the corresponding
+preprint-reported settings below. The paper evaluates natural-language and raw
+inputs; this submission is the natural-language-input variant.
+
+The updated benchmark metrics are calculated from the existing predictions,
+using current Matbench scoring for all 13 tasks and 65 folds. In particular,
+classification ROC-AUC uses the stored probabilities. This updates the metric
+calculation rather than the models or their predictions; it is not a claim that
+the published training experiments were rerun. See [RESCORING.md](RESCORING.md)
+for the before/after values and reference-data verification.
 
 ## Original preprint
 
@@ -24,7 +47,7 @@ hyperparameter-selection history still require original evidence. The paper's
 template examples cannot recover the missing v1 generator or establish that
 particular input archives were used.
 
-## Later publication and public model assets
+## Public model assets and benchmark scope
 
 The [2025 journal article](https://doi.org/10.1016/j.xcrp.2025.102724) links the
 Gitee repository for Matbench property tasks, and separate resources for

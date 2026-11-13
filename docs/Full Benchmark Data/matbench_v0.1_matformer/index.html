@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../static/matbench_logo_favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -198,7 +198,7 @@
   
     
   
-  Home
+  Leaderboard
 
       </a>
     </li>
@@ -371,7 +371,7 @@
   <span class="md-ellipsis">
     
   
-    Home
+    Leaderboard
   
 
     
@@ -987,6 +987,34 @@
     
   
     matbench_v0.1: ALIGNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matbench_v0.1_alignn_v2.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    matbench_v0.1: ALIGNN 2.0
   
 
     
@@ -1678,6 +1706,34 @@
     
   
     Advanced usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How%20To%20Use/probability-migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrating classification submissions to probability ROC AUC
   
 
     
@@ -2485,15 +2541,16 @@
 </code></pre></div>
 <h3 id="task-data">Task data:</h3>
 <h4 id="matbench_mp_is_metal"><code>matbench_mp_is_metal</code></h4>
+<p><strong>Probability ROC AUC: unavailable.</strong> No usable probabilities were saved, so probability ROC AUC cannot be recovered. Balanced accuracy, accuracy and F1 below are recomputed from saved hard-label decisions aligned by sample ID with official test labels. The original decision threshold may be unknown; these historical decisions have not been reevaluated at a common threshold. Statistics use unweighted five-fold means and population standard deviations (ddof=0).</p>
+<p><a href="../../static/classification_scores.json">Classification score audit and file provenance (JSON)</a></p>
 <h6 id="fold-scores">Fold scores</h6>
 <table>
 <thead>
 <tr>
 <th>fold</th>
 <th>accuracy</th>
-<th>balanced_accuracy</th>
+<th>balanced accuracy</th>
 <th>f1</th>
-<th>rocauc</th>
 </tr>
 </thead>
 <tbody>
@@ -2502,35 +2559,30 @@
 <td>0.8670</td>
 <td>0.8503</td>
 <td>0.8252</td>
-<td>0.8503</td>
 </tr>
 <tr>
 <td>fold_1</td>
 <td>0.8584</td>
 <td>0.8403</td>
 <td>0.8116</td>
-<td>0.8403</td>
 </tr>
 <tr>
 <td>fold_2</td>
 <td>0.8710</td>
 <td>0.8553</td>
 <td>0.8321</td>
-<td>0.8553</td>
 </tr>
 <tr>
 <td>fold_3</td>
 <td>0.7829</td>
 <td>0.7518</td>
 <td>0.6728</td>
-<td>0.7518</td>
 </tr>
 <tr>
 <td>fold_4</td>
 <td>0.7908</td>
 <td>0.7609</td>
 <td>0.6883</td>
-<td>0.7609</td>
 </tr>
 </tbody>
 </table>
@@ -2554,7 +2606,7 @@
 <td>0.0388</td>
 </tr>
 <tr>
-<td>balanced_accuracy</td>
+<td>balanced accuracy</td>
 <td>0.8117</td>
 <td>0.8553</td>
 <td>0.7518</td>
@@ -2567,15 +2619,100 @@
 <td>0.6728</td>
 <td>0.0702</td>
 </tr>
-<tr>
-<td>rocauc</td>
-<td>0.8117</td>
-<td>0.8553</td>
-<td>0.7518</td>
-<td>0.0455</td>
-</tr>
 </tbody>
 </table>
+<details><summary>Original stored classification scores (historical)</summary>
+<p>These values reproduce the original submission artifact. Older stored <code>rocauc</code> values may reflect thresholded decisions, whose AUC equals balanced accuracy; they must not be interpreted as the recomputed probability ROC AUC above.</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>fold</th>
+      <th>accuracy</th>
+      <th>balanced_accuracy</th>
+      <th>f1</th>
+      <th>stored rocauc (historical)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fold_0</td>
+      <td>0.8670</td>
+      <td>0.8503</td>
+      <td>0.8252</td>
+      <td>0.8503</td>
+    </tr>
+    <tr>
+      <td>fold_1</td>
+      <td>0.8584</td>
+      <td>0.8403</td>
+      <td>0.8116</td>
+      <td>0.8403</td>
+    </tr>
+    <tr>
+      <td>fold_2</td>
+      <td>0.8710</td>
+      <td>0.8553</td>
+      <td>0.8321</td>
+      <td>0.8553</td>
+    </tr>
+    <tr>
+      <td>fold_3</td>
+      <td>0.7829</td>
+      <td>0.7518</td>
+      <td>0.6728</td>
+      <td>0.7518</td>
+    </tr>
+    <tr>
+      <td>fold_4</td>
+      <td>0.7908</td>
+      <td>0.7609</td>
+      <td>0.6883</td>
+      <td>0.7609</td>
+    </tr>
+  </tbody>
+</table><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>metric</th>
+      <th>mean</th>
+      <th>max</th>
+      <th>min</th>
+      <th>std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>accuracy</td>
+      <td>0.8340</td>
+      <td>0.8710</td>
+      <td>0.7829</td>
+      <td>0.0388</td>
+    </tr>
+    <tr>
+      <td>balanced_accuracy</td>
+      <td>0.8117</td>
+      <td>0.8553</td>
+      <td>0.7518</td>
+      <td>0.0455</td>
+    </tr>
+    <tr>
+      <td>f1</td>
+      <td>0.7660</td>
+      <td>0.8321</td>
+      <td>0.6728</td>
+      <td>0.0702</td>
+    </tr>
+    <tr>
+      <td>stored rocauc (historical)</td>
+      <td>0.8117</td>
+      <td>0.8553</td>
+      <td>0.7518</td>
+      <td>0.0455</td>
+    </tr>
+  </tbody>
+</table>
+</details>
+
 <h6 id="fold-parameters">Fold parameters</h6>
 <table>
 <thead>
@@ -2663,11 +2800,13 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../javascripts/responsive-plots.js"></script>
       
     
   </body>

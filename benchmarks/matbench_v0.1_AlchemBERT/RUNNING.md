@@ -1,7 +1,8 @@
 # Running a new corrected experiment
 
-These commands implement a **new experiment**. They do not reproduce or replace
-the historical `results.json.gz`. The original source is preserved in
+These commands implement a **new experiment**. They do not reproduce the
+historical predictions in `historical/results.json.gz` or their rescored
+counterpart in `results.json.gz`. The original source is preserved in
 `upstream/`; the historical checkpoints, original run settings and v1 generator
 are not supplied by these tools.
 
@@ -28,6 +29,7 @@ CUDA execution was not tested in this review.
 For each task and outer fold, generate a new directory:
 
 ```bash
+mkdir -p new-inputs
 python benchmarks/matbench_v0.1_AlchemBERT/prepare_inputs.py \
   --task matbench_steels --fold 0 --output-dir new-inputs/steels-0
 ```

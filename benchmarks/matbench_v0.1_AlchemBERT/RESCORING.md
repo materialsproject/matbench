@@ -1,133 +1,93 @@
-# Independent check of the archived predictions
+# Migration to current Matbench scoring
 
-The submitted `results.json.gz` contains predictions keyed by official Matbench
-sample IDs. Consequently, their metrics can be recomputed without obtaining the
-original model checkpoints or CSV exports. Those materials are still needed to
-establish how the predictions were generated.
+All **13 tasks / 65 folds** are independently rescored using the exact current
+official Matminer datasets and upstream main
+`2f7512ef40935b5d642127887fc4daf42236a2b7`. All downloaded files match the
+SHA256 identities in `rescore_results.py`. The formerly inaccessible experimental
+metallicity and gap datasets are now available and verified; no historical
+Figshare or derivative-table fallback is used in this migration.
 
-`rescore_results.py` has now independently checked **12 tasks / 60 folds** using
-verified, public reference labels. It keeps the original artifact unchanged.
-The detailed report is [rescoring.json](rescoring.json), including every fold's
-original score, recomputed score, difference, reference-data hashes and software
-versions. This is a scoring check, not a new experiment or a claim that model
-training has been reproduced.
+The [per-fold report](rescoring.json) contains every stored metric, recomputed
+metric, difference, label source, official split/metadata hash and software
+version. [RESULTS.md](RESULTS.md) shows the primary score means and standard
+deviations. All three classification ROC-AUC values now use probabilities.
 
-## Results
+## What changes
 
-The table shows the unweighted mean of the five official fold scores. MAE is
-reported in each task's original target units.
+`migrate_results.py` starts from the hash-locked
+`historical/results.json.gz`. It aligns targets and predictions by official
+sample ID, rejects incomplete tasks/folds, and replaces each fold's metric
+cache with the current `matbench.data_ops.score_array` output. Classification
+uses unrounded probabilities for ROC-AUC and the fixed `p > 0.5` rule for the
+other metrics. The 13 tasks, 65 folds, prediction values and types, parameters
+and uncertainties are checked to remain identical through serialization.
 
-| Task | Metric | Stored mean | Recomputed mean |
-| --- | --- | ---: | ---: |
-| matbench_dielectric | MAE | 0.334517302 | 0.334517302 |
-| matbench_expt_gap | MAE | 0.374580207 | 0.374580207 |
-| matbench_glass | ROC-AUC | 0.770211636 | **0.883284181** |
-| matbench_jdft2d | MAE | 45.491824712 | 45.491824712 |
-| matbench_log_gvrh | MAE | 0.099820535 | 0.099820535 |
-| matbench_log_kvrh | MAE | 0.076519978 | 0.076519978 |
-| matbench_mp_e_form | MAE | 0.061889702 | 0.061889702 |
-| matbench_mp_gap | MAE | 0.254341043 | 0.254341043 |
-| matbench_mp_is_metal | ROC-AUC | 0.886022805 | **0.955124203** |
-| matbench_perovskites | MAE | 0.043188111 | 0.043188111 |
-| matbench_phonons | MAE | 44.987414162 | 44.987414162 |
-| matbench_steels | MAE | 132.912130507 | 132.912130507 |
+Matbench regenerates its internal content hash, version and serialization
+datestamp; `user_metadata.score_migration` records the source and migration.
+The original result remains byte-identical. The top-level `results.json.gz` is
+the migrated submission consumed by the website and submission checks.
+This is not a new model experiment or evidence of historical training replay.
 
-For `glass` and `mp_is_metal`, ROC-AUC is recomputed from the **unrounded stored
-probabilities**. The remaining classification metrics and all checked regression
-metrics agree with the stored values to floating-point precision. The original
-classification ROC-AUC values are not the appropriate probability-based scores.
-The canonical benchmark artifact has not been replaced while the remaining task
-and the presentation of historical corrections are unresolved.
+## Reproduce the migration
 
-## Reference-label provenance
-
-Eleven original public Figshare downloads have SHA256 hashes exactly matching
-the current Matminer dataset metadata. The report records both the standard
-Materials Project download URL and the verified public Figshare mirror.
-
-For `expt_gap`, the old Figshare benchmark archive predates a composition typo
-correction and does not have the current benchmark hash. Instead, this check
-uses `expt_gap_kingsbury.json.gz`, SHA256
-`b36bf5bfe3782c2a2372422c64b8a86fd1d30709559a6dc0c30e4c8ac5ab3e96`.
-The [pinned official Matminer metadata](https://github.com/hackingmaterials/matminer/blob/be0f096b6b4f59374a9ae00b8fd84321fc3dccbc/src/matminer/datasets/dataset_metadata.json)
-describes it as the identical dataset with likely Materials Project IDs added
-and columns renamed. We use its `expt_gap` column and unchanged integer indices.
-This is reported explicitly as a verified official derivative, **not** as a
-byte-identical copy of the benchmark archive. Independent comparison finds the
-same 4,604 index/target pairs as the older official archive; the only formula
-change is the documented `G1128Ga1As0.1P0.9` correction at zero-based index 1393.
-
-The following downloads reproduce the reference files used here. Save them under
-the filenames in the first column; their SHA256 hashes are checked by the script.
-
-| Filename | Public download |
-| --- | --- |
-| matbench_dielectric.json.gz | [Figshare 17476067](https://ndownloader.figshare.com/files/17476067) |
-| expt_gap_kingsbury.json.gz | [Figshare 28232598](https://ndownloader.figshare.com/files/28232598) |
-| matbench_glass.json.gz | [Figshare 17494637](https://ndownloader.figshare.com/files/17494637) |
-| matbench_jdft2d.json.gz | [Figshare 17476046](https://ndownloader.figshare.com/files/17476046) |
-| matbench_log_gvrh.json.gz | [Figshare 17476064](https://ndownloader.figshare.com/files/17476064) |
-| matbench_log_kvrh.json.gz | [Figshare 17476061](https://ndownloader.figshare.com/files/17476061) |
-| matbench_mp_e_form.json.gz | [Figshare 17476028](https://ndownloader.figshare.com/files/17476028) |
-| matbench_mp_gap.json.gz | [Figshare 17084741](https://ndownloader.figshare.com/files/17084741) |
-| matbench_mp_is_metal.json.gz | [Figshare 17476034](https://ndownloader.figshare.com/files/17476034) |
-| matbench_perovskites.json.gz | [Figshare 17494805](https://ndownloader.figshare.com/files/17494805) |
-| matbench_phonons.json.gz | [Figshare 17476037](https://ndownloader.figshare.com/files/17476037) |
-| matbench_steels.json.gz | [Figshare 17476040](https://ndownloader.figshare.com/files/17476040) |
-
-## Reproduce the check
-
-Install this Matbench checkout and the additional streaming parser dependency
-separately from a training environment. Run from the repository root:
+Install this checkout in a Python 3.12+ environment:
 
 ```bash
 python -m pip install -e .
 python -m pip install -r benchmarks/matbench_v0.1_AlchemBERT/rescore_requirements.txt
-python benchmarks/matbench_v0.1_AlchemBERT/rescore_results.py \
-  --dataset-dir /path/to/verified-downloads \
-  --tasks matbench_dielectric matbench_expt_gap matbench_glass \
-    matbench_jdft2d matbench_log_gvrh matbench_log_kvrh matbench_mp_e_form \
-    matbench_mp_gap matbench_mp_is_metal matbench_perovskites \
-    matbench_phonons matbench_steels \
-  --output fresh_rescoring.json
-python -m unittest discover -s benchmarks/matbench_v0.1_AlchemBERT \
-  -p 'test_rescore_results.py'
 ```
 
-The script locks the original result hash, the official fold/metadata hashes,
-and the corrected scoring implementation from upstream commit
-`4b7d0714849a917814115be380a64e7ace94be55`. It checks exact fold ID sets and
-looks up predictions and targets by ID. It rejects incorrect dataset hashes,
-invalid labels/probabilities and existing output files. Large structure datasets
-are streamed one row at a time. Seven focused tests cover probability scoring,
-ID alignment, untrusted data, scorer identity and overwrite protection.
+Download each `TASK.json.gz` from
+`https://ml.materialsproject.org/projects/TASK.json.gz` into a dataset directory,
+where `TASK` is each of the 13 names in [RESULTS.md](RESULTS.md). Use these same
+files as the Matminer cache when running the strict submission gate:
 
-Without `--dataset-dir`, the script offers an entirely offline cross-check of
-`glass`, `dielectric` and `steels` using hash-locked ground-truth fixtures already
-in `matbench/tests/`. The upstream `test_msonability` code constructs these
-fixtures by recording `test_outputs` as predictions. Their results agree with
-the corresponding raw-dataset checks above. This mode requires no dataset
-downloads and no `ijson` dependency.
+```bash
+export MATMINER_DATA=/absolute/path/to/verified-datasets
+python benchmarks/matbench_v0.1_AlchemBERT/migrate_results.py \
+  --dataset-dir "$MATMINER_DATA" \
+  --output fresh_results.json.gz --report-output fresh_rescoring.json
+python benchmarks/matbench_v0.1_AlchemBERT/validate_results.py \
+  fresh_results.json.gz --expected-sha256 "$(sha256sum fresh_results.json.gz | cut -d' ' -f1)"
+```
 
-## The remaining task
+Both output paths must be new. The migration requires all tasks and performs
+structural round-trip and prediction-preservation checks before publishing its
+output. Review the output before promoting it to `results.json.gz` and update
+`provenance.json.current_artifact` with its identity. Independent reruns can have
+different compressed bytes and serialization timestamps while retaining the
+same predictions and scores; the committed output's identity is locked in
+`provenance.json`.
 
-`matbench_expt_is_metal` has **not** been independently rescored against the
-current reference dataset. The standard download returned HTTP 403 in this
-environment. The original public Figshare file matches the old official hash,
-but predates the same composition typo correction described in
-[Matminer commit edfcff3](https://github.com/hackingmaterials/matminer/commit/edfcff311fea550c1d361300d40d5c5bdefba2e1).
-The old file is not silently accepted as the current reference.
+For a read-only score report, without generating a migrated result:
 
-The specific remaining public-data input is:
+```bash
+python benchmarks/matbench_v0.1_AlchemBERT/rescore_results.py \
+  --dataset-dir "$MATMINER_DATA" --output independent_rescoring.json
+```
 
-- Filename: `matbench_expt_is_metal.json.gz`
-- [Standard download](https://ml.materialsproject.org/projects/matbench_expt_is_metal.json.gz)
-- Required SHA256: `8f2a4f9bacdcbc5c2c73615629ee7986f09d39bed40ba7db52b61b2889730887`
+Without `--dataset-dir`, that report command instead checks only `glass`,
+`dielectric` and `steels` against hash-locked ground-truth fixtures in Matbench's
+tests. This three-task offline mode is distinct from the full migration above.
+The script retains an explicitly identified `expt_gap_kingsbury` fallback for
+older environments, but it was not needed for this 13-task report.
 
-Once that file is accessible, omitting `--tasks` in dataset mode checks all
-13 tasks. A genuine existing Matminer cache with this exact hash is sufficient;
-no original AlchemBERT model checkpoint is needed for the scoring calculation.
+## Validation and provenance
 
-For model reproducibility, the original checkpoints, run records, and evidence
-linking each input and prediction to the actual historical experiment remain
-necessary. These score checks alone neither prove nor disprove data leakage.
+```bash
+python -m unittest discover -s benchmarks/matbench_v0.1_AlchemBERT \
+  -p 'test_rescore_results.py'
+python -m unittest discover -s benchmarks/matbench_v0.1_AlchemBERT \
+  -p 'test_migrate_results.py'
+python -m scripts.test_submission --submission matbench_v0.1_AlchemBERT
+```
+
+The focused tests cover probability scoring, ID alignment, dataset/scorer
+identity, incomplete reports, unchanged predictions and protection of existing
+outputs. Upstream's strict gate independently recomputes all classification
+metrics from canonical official targets.
+
+The reference files and stored predictions are sufficient to validate scoring.
+They do not identify the training run that produced those predictions. Original
+checkpoint, input-generation and training-protocol limitations remain documented
+in [README.md](README.md) and [REVIEW_STATUS.md](REVIEW_STATUS.md).

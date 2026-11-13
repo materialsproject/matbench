@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../static/matbench_logo_favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -198,7 +198,7 @@
   
     
   
-  Home
+  Leaderboard
 
       </a>
     </li>
@@ -371,7 +371,7 @@
   <span class="md-ellipsis">
     
   
-    Home
+    Leaderboard
   
 
     
@@ -1002,6 +1002,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_alignn_v2.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    matbench_v0.1: ALIGNN 2.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020/" class="md-nav__link">
         
   
@@ -1606,6 +1634,34 @@
     
   
     Advanced usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../probability-migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrating classification submissions to probability ROC AUC
   
 
     
@@ -2305,8 +2361,13 @@ record new predictions. Recording and saving your data with matbench should take
 
         <span class="c1"># Predict on the testing data</span>
         <span class="c1"># Your output should be a pandas series, numpy array, or python iterable</span>
-        <span class="c1"># where the array elements are floats or bools</span>
-        <span class="n">predictions</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_inputs</span><span class="p">)</span>
+        <span class="c1"># Classification predictions must be P(target=True), not hard labels.</span>
+        <span class="c1"># For scikit-learn-style models, select the True class explicitly.</span>
+        <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="s2">"classification"</span><span class="p">:</span>
+            <span class="n">positive_column</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">my_model</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">predictions</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">test_inputs</span><span class="p">)[:,</span> <span class="n">positive_column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">predictions</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_inputs</span><span class="p">)</span>
 
         <span class="c1"># Record your data!</span>
         <span class="n">task</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">fold</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
@@ -2314,7 +2375,26 @@ record new predictions. Recording and saving your data with matbench should take
 <span class="c1"># Save your results</span>
 <span class="n">mb</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s2">"my_models_benchmark.json.gz"</span><span class="p">)</span>
 </code></pre></div>
-<p><strong>And you're done! Your benchmark has been recorded and saved.</strong></p>
+<p><strong>Your benchmark has been recorded and saved.</strong></p>
+<p>For classification, every prediction in every test fold must be a finite floating-point
+probability in <code>[0, 1]</code> for the positive class (<code>True</code>). Ground-truth training labels
+remain booleans. Do not threshold predictions, call <code>.astype(bool)</code>, or use hard
+labels from a classifier's <code>predict</code> method. Adapt the probability API above to
+your model, and verify its class-column order. Values <code>0.0</code> and <code>1.0</code> are valid
+probabilities, but converting already thresholded labels to floats does not
+recover the model's probability ranking.</p>
+<p>ROC-AUC is calculated independently on each official test fold; the leaderboard
+reports the unweighted mean and population standard deviation of these fold
+scores, not the AUC of pooled predictions. Accuracy, balanced accuracy and F1
+use the <code>&gt; 0.5</code> threshold for saved probabilities. The homepage best-model table
+shows separate BA and probability ROC AUC champions; both scaled-error plots
+use BA for classification, and task pages show both metrics. A single AUC score
+cannot be converted to BA. With saved probabilities and official labels, BA can
+be recomputed at <code>p &gt; 0.5</code>; do not tune that threshold on the test set. Historical hard-label
+submissions use their saved decisions for verified balanced accuracy, since
+the original decision threshold may be unknown. Use the current Matbench scoring code when
+recording results: new submissions are checked against scores recomputed from
+their saved predictions and canonical test targets.</p>
 <p>The output file, in this case <code>my_models_benchmark.json.gz</code> contains everything predicted by your 
 benchmark. <strong>Keep this file, as it is the core result that will be submitted to the leaderboard.</strong></p>
 <p>Please see the docs for <a href="../3submit/">Submitting to leaderboard</a> to learn how to upload your data to the automated leaderboard.</p>
@@ -2335,7 +2415,11 @@ and use the same code as above. The repo accepts subsets of matbench tasks as we
         <span class="n">train_inputs</span><span class="p">,</span> <span class="n">train_outputs</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">get_train_and_val_data</span><span class="p">(</span><span class="n">fold</span><span class="p">)</span>
         <span class="n">my_model</span><span class="o">.</span><span class="n">train_and_validate</span><span class="p">(</span><span class="n">train_inputs</span><span class="p">,</span> <span class="n">train_outputs</span><span class="p">)</span>
         <span class="n">test_inputs</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">get_test_data</span><span class="p">(</span><span class="n">fold</span><span class="p">,</span> <span class="n">include_target</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">predictions</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_inputs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="s2">"classification"</span><span class="p">:</span>
+            <span class="n">positive_column</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">my_model</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">predictions</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">test_inputs</span><span class="p">)[:,</span> <span class="n">positive_column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">predictions</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_inputs</span><span class="p">)</span>
 
         <span class="c1"># Get your model's parameters </span>
         <span class="c1"># Parameters must be a dictionary of python native types, e.g., lists of strings, dicts, etc.</span>
@@ -2358,6 +2442,8 @@ not large arrays or weight matrices.</p>
 
 <span class="n">mb</span><span class="o">.</span><span class="n">add_metadata</span><span class="p">(</span><span class="n">my_metadata</span><span class="p">)</span>
 </code></pre></div>
+<p>For older result files and model-specific probability outputs, see the
+<a href="../probability-migration/">classification probability migration guide</a>.</p>
 
 
 
@@ -2414,11 +2500,13 @@ not large arrays or weight matrices.</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../javascripts/responsive-plots.js"></script>
       
     
   </body>

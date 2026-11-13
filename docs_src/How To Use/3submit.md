@@ -33,6 +33,34 @@ The files should look like:
 
 
 
+## Check your result file
+
+Run both checks from the repository root before submitting:
+
+```bash
+python -m unittest scripts.test_submission
+python -m scripts.test_submission --submission matbench_v0.1_my_algorithm_namev2
+```
+
+The first checks the structure and readability of all archived submissions. The
+second applies the current submission policy to your result file: classification
+predictions must be floating-point `P(target=True)` values in `[0, 1]`, finite and
+present for every sample in every official test fold. Boolean, integer and mixed
+prediction arrays are not eligible for the current ROC-AUC leaderboard. Cached
+classification metrics must agree with recomputation from the saved predictions;
+re-record results with the current scoring code if a mismatch is reported.
+
+CI applies this stricter check to new or replaced `results.json.gz` files. Existing
+legacy files remain readable for provenance. Valid historical hard-label results
+are rechecked against official test IDs and labels and appear directly in the
+**Balanced accuracy only** section of each classification task page. Their
+probability ROC AUC remains unavailable. This historical display policy does not
+relax the probability requirement for new or updated submissions. The homepage
+best-model table shows separate verified BA and probability ROC AUC champions,
+while its two scaled-error plots continue to use BA for classification. Task
+pages place the **ROC AUC available** group first. An algorithm's regression submissions are unaffected by its
+classification eligibility.
+
 ## Step 3: Create a PR to the [Matbench repository](https://github.com/hackingmaterials/matbench)
 
 1. Commit your new changes to the repo with, and create a pull request (PR) to the Matbench repository.
@@ -44,7 +72,7 @@ The files should look like:
 
 ![pr example](../static/pr_example.png)
 
-**And you're done! If the tests pass, your submission will be added to the leaderboard!**
+**And you're done! After the checks pass and your PR is reviewed and merged, eligible results can appear on the leaderboard!**
 
 ---
 
@@ -101,14 +129,17 @@ The preferred format for source files is a **jupyter notebook** with some code f
 
 ![example_notebook](../static/notebook_example.png)
 
-The notebook should generally follow the format of the example notebook `/benchmarks/matbench_v0.1_dummy/notebook.ipynb`. Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and **most importantly, a link to a publication for your algorithm**.
+The historical notebook `/benchmarks/matbench_v0.1_dummy/notebook.ipynb` illustrates the file layout, but its hard-label classification predictions are not a valid template for the current ROC-AUC leaderboard. Use the probability-recording example on the [Running a benchmark page](2run.md). Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and **most importantly, a link to a publication for your algorithm**.
 
 Aside from that, what goes in your notebook is pretty freeform; **put whatever is needed to
 allow someone else to train and run your algorithm on the benchmark**.
 
-You can find an example template for a notebook in the matbench repo under `/benchmarks/matbench_v0.1_dummy/notebook.ipynb`
+Preserve the positive-class probabilities when recording classification predictions, even if a historical example uses labels.
 
 
 ### `.py` files
 
 If you use `.py` files as source in the submission, please comment your code as much as you can to help others run it!
+
+For older result files and model-specific probability outputs, see the
+[classification probability migration guide](probability-migration.md).

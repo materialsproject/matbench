@@ -23,9 +23,11 @@ import sys
 from pathlib import Path
 
 from record_predictions import align_predictions
-from validate_results import ARCHIVED_SHA256, DEFAULT_RESULTS
+from validate_results import ARCHIVED_SHA256, HISTORICAL_RESULTS
 
-UPSTREAM_COMMIT = "4b7d0714849a917814115be380a64e7ace94be55"
+DEFAULT_RESULTS = HISTORICAL_RESULTS
+
+UPSTREAM_COMMIT = "2f7512ef40935b5d642127887fc4daf42236a2b7"
 SCORER_SHA256 = "f791263c675c45b6938c78d856676a6821ac6879526bc9aca7d82523303c3414"
 REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = {

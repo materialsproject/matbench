@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../static/matbench_logo_favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -198,7 +198,7 @@
   
     
   
-  Home
+  Leaderboard
 
       </a>
     </li>
@@ -371,7 +371,7 @@
   <span class="md-ellipsis">
     
   
-    Home
+    Leaderboard
   
 
     
@@ -1002,6 +1002,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_alignn_v2.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    matbench_v0.1: ALIGNN 2.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020/" class="md-nav__link">
         
   
@@ -1538,6 +1566,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#check-your-result-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check your result file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#step-3-create-a-pr-to-the-matbench-repository" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1644,6 +1683,34 @@
     
   
     Advanced usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../probability-migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrating classification submissions to probability ROC AUC
   
 
     
@@ -2247,6 +2314,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#check-your-result-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check your result file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#step-3-create-a-pr-to-the-matbench-repository" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2372,6 +2450,28 @@
 │       └── results.json.gz
 </code></pre></div>
 <p><strong>Warning: the <code>info.json</code> and <code>results.json.gz</code> must have these names exactly for your PR to go through without problems, automatically.</strong> You can include any other small files (no naming scheme required) for running your code in this directory.</p>
+<h2 id="check-your-result-file">Check your result file</h2>
+<p>Run both checks from the repository root before submitting:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>unittest<span class="w"> </span>scripts.test_submission
+python<span class="w"> </span>-m<span class="w"> </span>scripts.test_submission<span class="w"> </span>--submission<span class="w"> </span>matbench_v0.1_my_algorithm_namev2
+</code></pre></div>
+<p>The first checks the structure and readability of all archived submissions. The
+second applies the current submission policy to your result file: classification
+predictions must be floating-point <code>P(target=True)</code> values in <code>[0, 1]</code>, finite and
+present for every sample in every official test fold. Boolean, integer and mixed
+prediction arrays are not eligible for the current ROC-AUC leaderboard. Cached
+classification metrics must agree with recomputation from the saved predictions;
+re-record results with the current scoring code if a mismatch is reported.</p>
+<p>CI applies this stricter check to new or replaced <code>results.json.gz</code> files. Existing
+legacy files remain readable for provenance. Valid historical hard-label results
+are rechecked against official test IDs and labels and appear directly in the
+<strong>Balanced accuracy only</strong> section of each classification task page. Their
+probability ROC AUC remains unavailable. This historical display policy does not
+relax the probability requirement for new or updated submissions. The homepage
+best-model table shows separate verified BA and probability ROC AUC champions,
+while its two scaled-error plots continue to use BA for classification. Task
+pages place the <strong>ROC AUC available</strong> group first. An algorithm's regression submissions are unaffected by its
+classification eligibility.</p>
 <h2 id="step-3-create-a-pr-to-the-matbench-repository">Step 3: Create a PR to the <a href="https://github.com/hackingmaterials/matbench">Matbench repository</a></h2>
 <ol>
 <li>
@@ -2385,7 +2485,7 @@
 </li>
 </ol>
 <p><img alt="pr example" src="../../static/pr_example.png" /></p>
-<p><strong>And you're done! If the tests pass, your submission will be added to the leaderboard!</strong></p>
+<p><strong>And you're done! After the checks pass and your PR is reviewed and merged, eligible results can appear on the leaderboard!</strong></p>
 <hr />
 <h2 id="resultsjsongz"><code>results.json.gz</code></h2>
 <p>This file is the <code>MatbenchBenchmark</code> you saved during your benchmark. You can find docs about how to record and save a benchmark on the <a href="../2run/">Running a benchmark page</a>. <strong>This file is required for a submission.</strong></p>
@@ -2419,12 +2519,14 @@
 <h3 id="jupyter-notebooks">Jupyter notebooks</h3>
 <p>The preferred format for source files is a <strong>jupyter notebook</strong> with some code for running your algorithm on Matbench. You can find an example</p>
 <p><img alt="example_notebook" src="../../static/notebook_example.png" /></p>
-<p>The notebook should generally follow the format of the example notebook <code>/benchmarks/matbench_v0.1_dummy/notebook.ipynb</code>. Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and <strong>most importantly, a link to a publication for your algorithm</strong>.</p>
+<p>The historical notebook <code>/benchmarks/matbench_v0.1_dummy/notebook.ipynb</code> illustrates the file layout, but its hard-label classification predictions are not a valid template for the current ROC-AUC leaderboard. Use the probability-recording example on the <a href="../2run/">Running a benchmark page</a>. Try to include a long form, human readable description of how your algorithm works, any package versions needed to have it run correctly, and <strong>most importantly, a link to a publication for your algorithm</strong>.</p>
 <p>Aside from that, what goes in your notebook is pretty freeform; <strong>put whatever is needed to
 allow someone else to train and run your algorithm on the benchmark</strong>.</p>
-<p>You can find an example template for a notebook in the matbench repo under <code>/benchmarks/matbench_v0.1_dummy/notebook.ipynb</code></p>
+<p>Preserve the positive-class probabilities when recording classification predictions, even if a historical example uses labels.</p>
 <h3 id="py-files"><code>.py</code> files</h3>
 <p>If you use <code>.py</code> files as source in the submission, please comment your code as much as you can to help others run it!</p>
+<p>For older result files and model-specific probability outputs, see the
+<a href="../probability-migration/">classification probability migration guide</a>.</p>
 
 
 
@@ -2481,11 +2583,13 @@ allow someone else to train and run your algorithm on the benchmark</strong>.</p
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../javascripts/responsive-plots.js"></script>
       
     
   </body>

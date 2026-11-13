@@ -62,6 +62,8 @@ jobs:
     steps:
 
     - uses: actions/checkout@v7
+      with:
+        fetch-depth: 0
     - name: Set up python 3.12
       uses: actions/setup-python@v7
       with:
@@ -73,3 +75,12 @@ jobs:
         pip install -e .
         pip install -r requirements-dev.txt
         python -m unittest scripts/test_submission.py
+    - name: Check new or updated classification results
+      env:
+        SUBMISSION_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+      run: |
+        # Initial pushes have no before commit; compare against an empty tree is
+        # inappropriate because it would treat all archived results as new.
+        if [ -n "$SUBMISSION_BASE" ] && [ "$SUBMISSION_BASE" != "0000000000000000000000000000000000000000" ]; then
+          python -m scripts.test_submission --base-ref "$SUBMISSION_BASE"
+        fi

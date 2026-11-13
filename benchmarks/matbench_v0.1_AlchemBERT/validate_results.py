@@ -1,4 +1,4 @@
-"""Validate and summarize the archived submission without changing its bytes.
+"""Validate and summarize the current submission without changing its bytes.
 
 Run from the Matbench repository root after installing that checkout::
 
@@ -20,6 +20,25 @@ from pathlib import Path
 
 ARCHIVED_SHA256 = "a0bb054a3a32b09041940aa90a7adc4e63a538811af430194057736ea5bd3daf"
 DEFAULT_RESULTS = Path(__file__).resolve().with_name("results.json.gz")
+HISTORICAL_RESULTS = DEFAULT_RESULTS.parent / "historical" / "results.json.gz"
+
+
+def expected_artifact_sha256(path):
+    """Resolve a known artifact's expected digest without trusting its bytes."""
+    path = Path(path).resolve()
+    if path == HISTORICAL_RESULTS.resolve():
+        return ARCHIVED_SHA256
+    if path != DEFAULT_RESULTS.resolve():
+        raise ValueError("Supply --expected-sha256 for an external results artifact")
+    provenance = json.loads(DEFAULT_RESULTS.with_name("provenance.json").read_text())
+    digest = provenance.get("current_artifact", {}).get("sha256")
+    if (
+        not isinstance(digest, str)
+        or len(digest) != 64
+        or any(character not in "0123456789abcdef" for character in digest)
+    ):
+        raise ValueError("provenance.json must identify current_artifact.sha256")
+    return digest
 
 
 def summarize_stored_results(raw):
@@ -89,8 +108,11 @@ def summarize_stored_results(raw):
     return tasks
 
 
-def validate_results(path, expected_sha256=ARCHIVED_SHA256):
+def validate_results(path, expected_sha256=None):
     """Check archive identity and Matbench validity, completeness and recording."""
+    path = Path(path)
+    if expected_sha256 is None:
+        expected_sha256 = expected_artifact_sha256(path)
     blob = path.read_bytes()
     digest = hashlib.sha256(blob).hexdigest()
     if digest != expected_sha256:
@@ -135,7 +157,9 @@ def validate_results(path, expected_sha256=ARCHIVED_SHA256):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("results", nargs="?", type=Path, default=DEFAULT_RESULTS)
-    parser.add_argument("--expected-sha256", default=ARCHIVED_SHA256)
+    parser.add_argument(
+        "--expected-sha256", help="Required for an external artifact"
+    )
     args = parser.parse_args()
     # Matbench initializes a stdout logger on import. Keep stdout as one JSON
     # document so that callers can parse or redirect the report reliably.

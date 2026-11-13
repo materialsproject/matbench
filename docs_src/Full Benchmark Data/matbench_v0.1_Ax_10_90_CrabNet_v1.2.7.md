@@ -66,13 +66,12 @@ Raw data download and example notebook available [on the matbench repo](https://
 ###### Fold scores
 
 | fold | mae | rmse | mape* | max_error |
-|------ |------ |------ |------ |------ |
- | fold_0 | 0.3457| 0.7883| 0.3564| 6.7229 |
- | fold_1 | 0.3668| 0.8431| 0.3281| 6.4005 |
- | fold_2 | 0.3931| 1.0137| 0.4027| 11.1003 |
- | fold_3 | 0.3721| 0.8858| 0.4132| 9.3770 |
- | fold_4 | 0.3381| 0.8085| 0.4338| 7.2568 |
-
+|------|------|------|------|------|
+| fold_0 | 0.3457 | 0.7883 | 0.3564 | 6.7229 |
+| fold_1 | 0.3668 | 0.8431 | 0.3281 | 6.4005 |
+| fold_2 | 0.3931 | 1.0137 | 0.4027 | 11.1003 |
+| fold_3 | 0.3721 | 0.8858 | 0.4132 | 9.3770 |
+| fold_4 | 0.3381 | 0.8085 | 0.4338 | 7.2568 |
 
 ###### Fold score stats
 
@@ -82,7 +81,6 @@ Raw data download and example notebook available [on the matbench repo](https://
 | rmse | 0.8679 | 1.0137 | 0.7883 | 0.0801 |
 | mape* | 0.3868 | 0.4338 | 0.3281 | 0.0388 |
 | max_error | 8.1715 | 11.1003 | 6.4005 | 1.7946 |
-
 
 ###### Fold parameters
 
