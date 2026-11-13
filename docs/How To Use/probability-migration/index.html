@@ -1002,6 +1002,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../Full%20Benchmark%20Data/matbench_v0.1_alignn_v2.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    matbench_v0.1: ALIGNN 2.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../Full%20Benchmark%20Data/matbench_v0.1_automatminer_expressv2020/" class="md-nav__link">
         
   
@@ -1576,6 +1604,17 @@
     <span class="md-ellipsis">
       
         Which historical submissions can be rescored?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reviewed-transition-for-submissions-already-awaiting-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reviewed transition for submissions already awaiting review
       
     </span>
   </a>
@@ -2203,6 +2242,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#reviewed-transition-for-submissions-already-awaiting-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reviewed transition for submissions already awaiting review
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#record-the-probability-of-the-correct-class" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2297,7 +2347,7 @@ exclusion reasons, fold results, summary statistics, and source-file hashes.</p>
 <tr>
 <td>Historical Boolean class decisions conforming to the original result-file protocol, valid in every official fold</td>
 <td>Recomputed BA in the main table; probability ROC AUC is unavailable (<code>—</code>)</td>
-<td>Recover probabilities from the original fold models or rerun the benchmark</td>
+<td>Recover probabilities for new or replacement results; see the narrowly reviewed transition below for unchanged pre-policy artifacts</td>
 </tr>
 <tr>
 <td>Mixed label/probability types, missing or extra sample IDs, incomplete folds, non-finite or out-of-range values</td>
@@ -2327,9 +2377,18 @@ type cast as a substitute for obtaining model probabilities. Genuine endpoint
 probabilities are allowed; the numerical validator cannot determine whether a
 floating-point value was previously a hard label. Preserve the original
 probability-generation code and provenance. New and updated classification
-results still require probabilities and matching cached metrics; restoring
-historical BA visibility does not relax that requirement. Regression results
-and benchmark-completeness definitions are unchanged.</p>
+results require probabilities and matching cached metrics, apart from the
+individually reviewed, unchanged historical artifacts described below.
+Regression results and benchmark-completeness definitions are unchanged.</p>
+<h2 id="reviewed-transition-for-submissions-already-awaiting-review">Reviewed transition for submissions already awaiting review</h2>
+<p>Independently reviewed original artifacts submitted before 2026-11-10 may be
+listed in <code>scripts/historical_classification_submissions.json</code> for BA-only
+acceptance. Eligibility requires the exact listed path, SHA256 and task; age
+alone is insufficient. Canonical-fold and cached-metric checks still apply,
+with historical hard-label <code>rocauc</code> checked against BA and probability ROC AUC
+unavailable. New or replacement artifacts remain subject to the probability
+requirement. PR #370 is the first reviewed entry; its original predictions are
+preserved unchanged.</p>
 <h2 id="record-the-probability-of-the-correct-class">Record the probability of the correct class</h2>
 <p>Use the probability of the target being <code>True</code>: <code>is_metal=True</code> for metallicity
 and <code>gfa=True</code> for glass-forming ability. Establish class polarity from the
@@ -2380,8 +2439,11 @@ for provenance, and run:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>scripts.test_submission<span class="w"> </span>--submission<span class="w"> </span>matbench_v0.1_your_algorithm
 </code></pre></div>
 <p>The check requires all classification folds to contain eligible probabilities
-and verifies that their stored metrics match recomputation. A legacy file may
-pass the structural/deserialization checks while failing this stricter
+and verifies that their stored metrics match recomputation. For an exact
+manifest-listed historical artifact, it instead reports
+<code>Historical hard-label/BA check passed</code> after the same canonical-fold checks and
+the historical cached-metric comparison above. Unlisted or modified legacy
+files may pass structural/deserialization checks while failing this stricter
 submission check.</p>
 <h2 id="archived-reproduction-scripts">Archived reproduction scripts</h2>
 <p>Scripts and notebooks within <code>benchmarks/</code> describe historical submissions and

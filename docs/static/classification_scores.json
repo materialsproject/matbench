@@ -1742,6 +1742,100 @@
       }
     },
     {
+      "submission": "matbench_v0.1_alignn_v2.0",
+      "algorithm": "ALIGNN 2.0",
+      "task": "matbench_mp_is_metal",
+      "results_file": "matbench_v0.1_alignn_v2.0/results.json.gz",
+      "results_sha256": "dcd7f541803b2a9bb00ab4e98294212c6d55065130d5dba9aafa11df026c4fce",
+      "dataset_expected_sha256": "9a028ed5750a4c76ca36e9f3c8d48fe0bf3fb21b76ec2289e58ae7048d527919",
+      "eligible": false,
+      "ba_available": true,
+      "auc_available": false,
+      "reason": "No usable probabilities were saved; probability ROC AUC cannot be recovered from hard labels.",
+      "ba_reason": null,
+      "auc_reason": "No usable probabilities were saved; probability ROC AUC cannot be recovered from hard labels.",
+      "prediction_type": "hard_labels",
+      "scores": {
+        "accuracy": {
+          "mean": 0.9075984785658109,
+          "max": 0.9111341469160816,
+          "min": 0.9045375300381662,
+          "std": 0.0024876299502717292
+        },
+        "balanced_accuracy": {
+          "mean": 0.9042256605707453,
+          "max": 0.9072353032596244,
+          "min": 0.9014439219194224,
+          "std": 0.00251320097595144
+        },
+        "f1": {
+          "mean": 0.8920997605367429,
+          "max": 0.8955008865248227,
+          "min": 0.8888523151195962,
+          "std": 0.002846035809555666
+        },
+        "rocauc": null
+      },
+      "fold_scores": {
+        "fold_0": {
+          "accuracy": 0.9111341469160816,
+          "balanced_accuracy": 0.9070310561261856,
+          "f1": 0.8955008865248227,
+          "rocauc": null
+        },
+        "fold_1": {
+          "accuracy": 0.9045375300381662,
+          "balanced_accuracy": 0.9014439219194224,
+          "f1": 0.8888523151195962,
+          "rocauc": null
+        },
+        "fold_2": {
+          "accuracy": 0.9097677048485134,
+          "balanced_accuracy": 0.9072353032596244,
+          "f1": 0.8953837749248839,
+          "rocauc": null
+        },
+        "fold_3": {
+          "accuracy": 0.9069361982847988,
+          "balanced_accuracy": 0.9016333297676964,
+          "f1": 0.8894610175183298,
+          "rocauc": null
+        },
+        "fold_4": {
+          "accuracy": 0.9056168127414946,
+          "balanced_accuracy": 0.9037846917807972,
+          "f1": 0.8913008085960819,
+          "rocauc": null
+        }
+      },
+      "stored_scores": {
+        "accuracy": {
+          "mean": 0.9075984785658109,
+          "max": 0.9111341469160816,
+          "min": 0.9045375300381662,
+          "std": 0.0024876299502717292
+        },
+        "balanced_accuracy": {
+          "mean": 0.9042256605707453,
+          "max": 0.9072353032596244,
+          "min": 0.9014439219194224,
+          "std": 0.00251320097595144
+        },
+        "f1": {
+          "mean": 0.8920997605367429,
+          "max": 0.8955008865248227,
+          "min": 0.8888523151195962,
+          "std": 0.002846035809555666
+        },
+        "rocauc": {
+          "mean": 0.9042256605707453,
+          "max": 0.9072353032596244,
+          "min": 0.9014439219194224,
+          "std": 0.002513200975951463
+        }
+      }
+    },
+    {
       "submission": "matbench_v0.1_automatminer_expressv2020",
       "algorithm": "AMMExpress v2020",
       "task": "matbench_mp_is_metal",
