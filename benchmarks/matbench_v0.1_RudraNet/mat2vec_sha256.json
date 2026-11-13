@@ -1,0 +1,31 @@
+{
+  "files": {
+    "pretrained_embeddings": {
+      "etag": "\"89917ac76e2f6a664b34858fd9971de2\"",
+      "gcs_generation": "1561232944342544",
+      "gcs_metageneration": "1",
+      "last_modified": "Sat, 22 Jun 2019 19:49:04 GMT",
+      "sha256": "1b0257d3295e571cbe87690c0bc0cbebdbe5b7a3ecf2299dc50eb4c7183e73c8",
+      "size_bytes": 36633231
+    },
+    "pretrained_embeddings.trainables.syn1neg.npy": {
+      "etag": "\"0e08b446a7f095524017a83c8f93e2dc\"",
+      "gcs_generation": "1561232759926822",
+      "gcs_metageneration": "1",
+      "last_modified": "Sat, 22 Jun 2019 19:45:59 GMT",
+      "sha256": "1dadad42f34b98c1ecead523bc555ceffce41055170543535e90623ceab0c086",
+      "size_bytes": 423748928
+    },
+    "pretrained_embeddings.wv.vectors.npy": {
+      "etag": "\"eed000952846002fd3d0fc63b8d35118\"",
+      "gcs_generation": "1561232774626119",
+      "gcs_metageneration": "1",
+      "last_modified": "Sat, 22 Jun 2019 19:46:14 GMT",
+      "sha256": "11c21e77f046446a000e37b236e6e97ae2a44dc86cca8e042732794e14dc6dfd",
+      "size_bytes": 423748928
+    }
+  },
+  "observed_utc": "2026-10-24T09:00:19.177361+00:00",
+  "source": "https://storage.googleapis.com/mat2vec/",
+  "status": "captured-from-current-upstream-not-historically-verified"
+}
