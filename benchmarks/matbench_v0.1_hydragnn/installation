@@ -1,0 +1,12 @@
+conda create -n matbench_hydragnn python=3.11 -y
+conda activate matbench_hydragnn
+git clone https://github.com/ORNL/HydraGNN.git
+cd HydraGNN
+git checkout 704d03afd11513b3467831feabf404c04992e4ae
+sed -i '140,142s/^/#/' hydragnn/utils/datasets/pickledataset.py
+python -m pip install .
+cd ..
+git clone https://github.com/irlyngaas/HydraGNN_GFM_FineTuning4Materials.git
+cd HydraGNN_GFM_FineTuning4Materials
+git checkout matbench
+bash install.sh
