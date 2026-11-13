@@ -320,7 +320,7 @@ def homepage_metric_result(metric, winner, unit=None):
             note = (' <span class="mb-model-note">(structure required)</span>'
                     if model["completeness"] == "structure" else "")
             models.append(f'<span class="mb-metric-model"><a href="{href}">{name}</a>{note}</span>')
-        models_html = "".join(models)
+        models_html = "; ".join(models)
         score = format_float(winner["score"])
         if metric == "mae" and unit:
             score += f" ({html.escape(unit)})"
@@ -333,9 +333,9 @@ def homepage_metric_result(metric, winner, unit=None):
         score, tie = "—", ""
     return (
         f'<div class="mb-metric-result" data-metric="{metric}">'
-        f'<span class="mb-metric-label">{label}</span>'
-        f'<div class="mb-metric-models">{models_html}</div>'
-        f'<strong class="mb-metric-score">{score}</strong>{tie}</div>'
+        f'<span class="mb-metric-label">{label}</span> '
+        f'<div class="mb-metric-models">{models_html} {tie}</div> '
+        f'<strong class="mb-metric-score">{score}</strong></div>'
     )
 
 
@@ -376,9 +376,10 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
         table = (
             '<div class="mb-home-leaderboard-wrap">\n'
             '<table class="mb-home-leaderboard">\n'
-            '<caption>Best results among general-purpose algorithms. Classification metrics are ranked separately.</caption>\n'
+            '<caption>Best results among general-purpose algorithms. Classification metrics are ranked separately: '
+            'higher BA and probability ROC AUC are better; lower MAE is better.</caption>\n'
             '<thead><tr><th scope="col">Task</th><th scope="col">Samples</th>'
-            '<th scope="col">Best results</th><th scope="col">Notes</th></tr></thead>\n<tbody>\n'
+            '<th scope="col">Best results</th></tr></thead>\n<tbody>\n'
         )
         for task_name in sorted(gp_data, key=lambda name: metadata[name].n_samples):
             row = gp_data[task_name]
@@ -390,18 +391,15 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
             if is_classification:
                 results = "".join(homepage_metric_result(metric, row["metric_winners"][metric])
                                   for metric in ("balanced_accuracy", "rocauc"))
-                notes = "Higher is better for both metrics."
             else:
                 models = ([{key: row[key] for key in ("algorithm", "link", "completeness")}]
                           if row["algorithm"] is not None else [])
                 results = homepage_metric_result("mae", {"score": row["score"], "models": models}, task_metadata.unit)
-                notes = "Lower is better."
             table += (
                 f'<tr class="mb-task-row {row_class}" data-task="{task_name}">'
                 f'<th class="mb-task-name" scope="row" data-label="Task"><a href="{task_link}">{html.escape(task_name)}</a></th>'
                 f'<td class="mb-samples" data-label="Samples">{samples}</td>'
-                f'<td class="mb-best-results" data-label="Best results">{results}</td>'
-                f'<td class="mb-notes" data-label="Notes">{notes}</td></tr>\n'
+                f'<td class="mb-best-results" data-label="Best results">{results}</td></tr>\n'
             )
         table += "</tbody>\n</table>\n</div>\n\n"
         # scaled_errors_plot_txt = f'\n<iframe src="static/{SCALED_ERRORS_FILENAME.format(bmark_name=bmark)}" class="is-fullwidth" height="1200px" width="1000px" frameBorder="0" allowtransparency="true"> </iframe>\n\n'
@@ -456,27 +454,6 @@ def generate_general_purpose_leaderboard_and_plot(gp_leaderboard_data_by_bmark, 
              "classification_winner_scope": "General-purpose: complete, structure-complete, or regression-complete benchmarks; each metric requires its own verified score.",
              "general_purpose_winners": gp_leaderboard_data_by_bmark}
         json.dump(j, f)
-
-
-def historical_leaderboard(entries):
-    """Preserve the original cached scores separately from verified results."""
-    rows = []
-    for entry in sorted(entries, key=lambda e: (-e["stored_scores"].balanced_accuracy.mean, e["algorithm"])):
-        scores = entry["stored_scores"]
-        link = html.escape("../../" + entry["link"][:-3] + "/", quote=True)
-        rows.append({
-            "algorithm": f'<a href="{link}">{html.escape(entry["algorithm"])}</a>',
-            "mean balanced accuracy": format_float(scores.balanced_accuracy.mean),
-            "std balanced accuracy": format_float(scores.balanced_accuracy.std),
-            "mean F1": format_float(scores.f1.mean),
-        })
-    table = pd.DataFrame(rows).to_html(index=False, escape=False) if rows else "<p>No historical submissions.</p>"
-    return (
-        '<details><summary>Original cached scores and provenance</summary>\n'
-        '<p>These cached values reproduce the original submissions and are not used '
-        'for the verified BA or probability ROC AUC results above. '
-        'Original submission files are unchanged.</p>\n' + table + "\n</details>\n\n"
-    )
 
 
 def score_tables(scores, folds):
@@ -731,14 +708,12 @@ def generate_per_task_leaderboards(task_leaderboard_data_by_bmark):
                     fig.update_xaxes(linecolor="rgba(0,0,0,0)", gridcolor="rgba(0,0,0,0)")
                     fig_div = pio.to_html(fig, full_html=False, default_height="700px")
 
-            history = historical_leaderboard(entries) if task_type == CLF_KEY else ""
             task_leaderboard_page = header + \
                                     subheader + \
                                     explanation + \
                                     table_header + \
                                     table + \
                                     fig_div + \
-                                    history + \
                                     info_header + \
                                     info_body + \
                                     metadata_header + \

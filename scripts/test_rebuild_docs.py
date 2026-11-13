@@ -361,7 +361,7 @@ class TestClassificationLeaderboardDocs(unittest.TestCase):
 
     def test_main_table_shows_both_groups_and_missing_auc_explicitly(self):
         text, _ = self.task_page(self.organized[1][MBV01_KEY][self.task])
-        current, history = text.split("<details>", 1)
+        current = text
         auc_group, ba_group = current.split("### Balanced accuracy only", 1)
         self.assertIn("### ROC AUC available", auc_group)
         self.assertIn("Probability model", auc_group)
@@ -377,8 +377,10 @@ class TestClassificationLeaderboardDocs(unittest.TestCase):
         self.assertIn("—", bool_row)
         self.assertNotIn("0.9500", bool_row)
         self.assertIn("(../static/classification_scores.json)", current)
-        self.assertIn("Boolean model", history)
-        self.assertIn("Original cached scores and provenance", history)
+        self.assertNotIn("Original cached scores and provenance", text)
+        self.assertNotIn("<details>", text)
+        self.assertEqual(text.count("| [Boolean model]"), 1)
+        self.assertEqual(text.count("| [Probability model]"), 1)
 
     def test_details_use_recomputed_folds_and_preserve_original_results(self):
         for p in (self.float_packet, self.bool_packet):
