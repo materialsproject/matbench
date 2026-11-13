@@ -1,10 +1,10 @@
 # Tested prospective tools on Python 3.12; not the historical training lockfile.
 # Install Matbench from this checkout separately with `pip install -e .`.
 --extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.9.1+cpu
-transformers==4.57.6
+torch==2.13.0+cpu
+transformers==5.10.1
 tokenizers==0.22.2
-huggingface-hub==0.36.2
+huggingface-hub==1.5.0
 safetensors==0.8.0
 numpy==2.3.5
 pandas==2.2.3

@@ -96,7 +96,20 @@ class TrainingIntegrationTests(unittest.TestCase):
             + "\n",
             encoding="utf-8",
         )
-        tokenizer = BertTokenizerFast(vocab_file=str(vocab), do_lower_case=True)
+        tokenizer = BertTokenizerFast(
+            vocab={
+                token: index
+                for index, token in enumerate(vocab.read_text().splitlines())
+            },
+            do_lower_case=True,
+        )
+        # Transformers 5 uses `vocab`; a legacy `vocab_file` argument can leave
+        # only special tokens and silently turn every test word into [UNK].
+        self.assertEqual(tokenizer.tokenize("Fe O"), ["fe", "o"])
+        self.assertNotIn(
+            tokenizer.unk_token_id,
+            tokenizer.encode("Fe O", add_special_tokens=False),
+        )
         for partition, sample_ids in (
             ("train", task.train_ids),
             ("test", task.test_ids),
