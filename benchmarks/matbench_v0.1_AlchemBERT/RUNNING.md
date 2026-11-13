@@ -24,9 +24,12 @@ pip install -e . -r benchmarks/matbench_v0.1_AlchemBERT/requirements-rerun-cpu.t
 pip check
 ```
 
-The listed versions were tested together with upstream Matbench commit
-`4b7d0714849a917814115be380a64e7ace94be55`, Python 3.12.14 and CPU PyTorch.
-They are prospective tool dependencies, not a recovered historical lockfile.
+The CPU environment was verified with upstream Matbench commit
+`ded3a3f261e880705ebcdcb66dc3385202a39b9a`, Python 3.12.7,
+PyTorch 2.13.0+cpu and Transformers 5.10.1. `pip check` and all three tiny BERT
+training/replay tests passed without skips. See [RUNTIME_SECURITY.md](RUNTIME_SECURITY.md)
+for the dependency update rationale, CPU CI and validation limits.
+These are prospective tool dependencies, not a recovered historical lockfile.
 The runtime manifest records the installed versions. For CUDA, select an
 appropriate official PyTorch build and record that different environment;
 CUDA execution was not tested in this review.
