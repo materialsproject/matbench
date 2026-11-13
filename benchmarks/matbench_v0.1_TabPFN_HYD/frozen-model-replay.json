@@ -1,0 +1,13 @@
+{
+  "experiment_succeeded": true,
+  "n_predictions": 312,
+  "bitwise_equal": false,
+  "max_absolute_difference": 4.547473508864641e-13,
+  "tolerance": {
+    "atol": 0.001,
+    "rtol": 1e-06
+  },
+  "targets_used": false,
+  "candidate_predictions_sha256": "611aa719f81efd90f6b78e06a7e9bda9beacab405078c254bada2cac6f4d97ca",
+  "seconds": 5.270177993923426
+}
