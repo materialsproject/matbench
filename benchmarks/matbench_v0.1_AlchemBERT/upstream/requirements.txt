@@ -7,5 +7,5 @@ pandas==1.5.3
 pymatgen==2024.10.22
 scikit_learn==1.2.1
 tensorflow==2.16.1
-torch==2.2.1+cu118
+torch==2.13.0
 transformers==5.10.1
