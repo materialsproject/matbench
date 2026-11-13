@@ -1,0 +1,8 @@
+{
+  "authors": "Oleksii Kudin, Anastasiiya Krivokhata, Yuriy Belokon, Dmytro Kruglyak, Sergii Ilin",
+  "algorithm": "StackNet-mat v02",
+  "algorithm_long": "A method based on basic machine learning algorithms: RandomFores, HistGradientBoosting, AdaBoost, GradientBoosting, and the use of Stacknet as a metamodel",
+  "bibtex_refs": " ",
+  "notes": " ",
+  "requirements": {"python":  ["scikit-learn==1.5.0", "numpy==1.25.2", "matbench==0.6", "matminer==0.9.2", "pystacknet==0.0.1", "tensorflow==2.15.0"]}
+}
