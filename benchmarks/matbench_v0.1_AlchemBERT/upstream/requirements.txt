@@ -8,4 +8,4 @@ pymatgen==2024.10.22
 scikit_learn==1.2.1
 tensorflow==2.16.1
 torch==2.2.1+cu118
-transformers==4.40.1
+transformers==5.10.1
