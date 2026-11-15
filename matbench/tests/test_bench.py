@@ -151,6 +151,59 @@ class TestMatbenchBenchmark(unittest.TestCase):
         with self.assertRaises(ValueError):
             MatbenchBenchmark.from_dict(d_test)
 
+    def test_partial_MSONability(self):
+        ds = "matbench_steels"
+        mb = MatbenchBenchmark(subset=[ds], autoload=False)
+
+        # An untouched benchmark can be saved and resumed, but is not valid.
+        mb.to_file(self.msonability_tmp_path)
+        mb = MatbenchBenchmark.from_file(self.msonability_tmp_path)
+        self.assertEqual(mb.tasks_map[ds].results, {})
+        self.assertFalse(mb.is_recorded)
+        self.assertFalse(mb.is_valid)
+        self.assertEqual(set(mb.validate()), {ds})
+
+        task = mb.tasks_map[ds]
+        task.load()
+        recorded_folds = [1, 3]
+        for fold in recorded_folds:
+            _, outputs = task.get_test_data(fold, include_target=True)
+            task.record(fold, outputs, params={"seed": 42})
+        recorded_results = json.loads(json.dumps(task.as_dict()))["results"]
+
+        mb.to_file(self.msonability_tmp_path)
+        resumed = MatbenchBenchmark.from_file(self.msonability_tmp_path)
+        resumed_task = resumed.tasks_map[ds]
+        self.assertEqual(resumed_task.results, recorded_results)
+        self.assertFalse(resumed.is_recorded)
+        self.assertFalse(resumed.is_valid)
+        self.assertEqual(set(resumed.validate()), {ds})
+        self.assertEqual(resumed_task.results, recorded_results)
+
+        # Serialize corruption with a fresh valid hash so the task check runs.
+        corrupt = MatbenchBenchmark.from_file(self.msonability_tmp_path)
+        fold_data = corrupt.tasks_map[ds].results["fold_1"]["data"]
+        fold_data[next(iter(fold_data))] = "invalid prediction"
+        corrupt.to_file(self.msonability_tmp_path)
+        with self.assertRaises(TypeError):
+            MatbenchBenchmark.from_file(self.msonability_tmp_path)
+
+        resumed.load()
+        for fold in resumed_task.folds:
+            if fold not in recorded_folds:
+                _, outputs = resumed_task.get_test_data(fold, include_target=True)
+                resumed_task.record(fold, outputs)
+        for fold in recorded_folds:
+            key = resumed_task.folds_map[fold]
+            self.assertEqual(resumed_task.results[key], recorded_results[key])
+        self.assertEqual(resumed.validate(), {})
+        self.assertTrue(resumed.is_recorded)
+        self.assertTrue(resumed.is_valid)
+        resumed.to_file(self.msonability_tmp_path)
+        self.assertTrue(
+            MatbenchBenchmark.from_file(self.msonability_tmp_path).is_valid
+        )
+
     def test_completeness(self):
         mb = MatbenchBenchmark(benchmark=MBV01_KEY, subset=["matbench_steels"])
 
