@@ -10,7 +10,7 @@ contourpy==1.4.0
 cycler==0.12.1
 cython==3.3.0
 deprecated==3.0.0
-dnspython==2.9.0
+dnspython==2.9.2
 fonttools==4.67.0
 hopcroftkarp==1.2.5
 idna==3.20
