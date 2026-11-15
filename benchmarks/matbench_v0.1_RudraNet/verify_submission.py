@@ -2,8 +2,9 @@
 """Read-only checks for the RudraNet matbench_steels submission.
 
 These checks establish fold membership and consistency with the archived V13A
-summary. They do NOT establish checkpoint-level prediction provenance, exclude
-historical test-based model selection, or retrain the model.
+summary. With --official, all stored regression scores are also recomputed from
+the official held-out targets. They do NOT establish checkpoint-level prediction
+provenance, exclude historical test-based model selection, or retrain the model.
 
 Usage (from benchmark submission directory):
   python verify_submission.py
@@ -39,6 +40,8 @@ def verify(results_path: Path, official: bool = False) -> None:
     official_task = None
     if official:
         from matbench.bench import MatbenchBenchmark
+        from matbench.data_ops import score_array
+
         benchmark = MatbenchBenchmark.from_file(str(results_path))
         assert benchmark.is_valid, "MatbenchBenchmark.is_valid is false"
         official_task = benchmark.tasks_map[TASK]
@@ -66,9 +69,24 @@ def verify(results_path: Path, official: bool = False) -> None:
         maes.append(mae)
         if official_task is not None:
             train_df = official_task.get_train_and_val_data(fold_index, as_type="df")
-            test_df = official_task.get_test_data(fold_index, as_type="df")
+            test_df = official_task.get_test_data(
+                fold_index, as_type="df", include_target=True
+            )
             assert not set(train_df.index).intersection(test_df.index), "Train/test overlap"
             assert set(test_df.index) == expected, f"Official fold {fold_index} differs"
+            recomputed = score_array(
+                test_df[official_task.metadata.target],
+                [float(preds[sample_id]) for sample_id in test_df.index],
+                official_task.metadata.task_type,
+            )
+            for metric, score in recomputed.items():
+                stored_score = float(fold_data["scores"][metric])
+                assert math.isclose(
+                    stored_score, float(score), rel_tol=1e-9, abs_tol=1e-9
+                ), (
+                    f"Fold {fold_index} {metric} differs from recomputed official score: "
+                    f"stored={stored_score}, recomputed={score}"
+                )
 
         print(f"Fold {fold_index}: {len(submitted)} IDs; MAE {mae:.4f} MPa; OK")
 
@@ -77,9 +95,9 @@ def verify(results_path: Path, official: bool = False) -> None:
     assert abs(mean_mae - EXPECTED_MEAN_MAE) < TOLERANCE, "Mean MAE mismatch"
     print(f"PASS: {len(all_ids)} distinct IDs; mean MAE {mean_mae:.4f} MPa")
     if official:
-        print("PASS: MatbenchBenchmark validator and official fold IDs match")
+        print("PASS: MatbenchBenchmark validator, official fold IDs and recomputed scores match")
     else:
-        print("Use --official to additionally check Matbench's packaged split definitions")
+        print("Use --official to additionally check official splits and recompute scores")
 
 
 def main() -> None:
@@ -91,7 +109,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--official", action="store_true",
-        help="Also load the official Matbench data and check its split membership",
+        help="Also check official Matbench splits and recompute all regression scores",
     )
     args = parser.parse_args()
     verify(args.results, args.official)
