@@ -975,6 +975,105 @@
       }
     },
     {
+      "submission": "matbench_v0.1_composition_gbm",
+      "algorithm": "CompGBM",
+      "task": "matbench_glass",
+      "results_file": "matbench_v0.1_composition_gbm/results.json.gz",
+      "results_sha256": "7d004e6cf3f52cb779ae8aab7eb0f403a7a88e5c34a6f4337fdf58b18c4fdda3",
+      "dataset_expected_sha256": "36beb654e2a463ee2a6572105bea0ca2961eee7c7b26a25377bff2c3b338e53a",
+      "eligible": true,
+      "ba_available": true,
+      "auc_available": true,
+      "reason": null,
+      "ba_reason": null,
+      "auc_reason": null,
+      "prediction_type": "probabilities",
+      "scores": {
+        "accuracy": {
+          "mean": 0.8987676056338028,
+          "max": 0.9154929577464789,
+          "min": 0.8873239436619719,
+          "std": 0.010005825519987896
+        },
+        "balanced_accuracy": {
+          "mean": 0.8632154815576472,
+          "max": 0.883809222494661,
+          "min": 0.8441787851738022,
+          "std": 0.014335346752528
+        },
+        "f1": {
+          "mean": 0.9300905986582746,
+          "max": 0.9416058394160584,
+          "min": 0.9227053140096618,
+          "std": 0.0067235013076806195
+        },
+        "rocauc": {
+          "mean": 0.9530099471569059,
+          "max": 0.9661924724014418,
+          "min": 0.9425505549843127,
+          "std": 0.0075751906343077295
+        }
+      },
+      "fold_scores": {
+        "fold_0": {
+          "accuracy": 0.9154929577464789,
+          "balanced_accuracy": 0.883809222494661,
+          "f1": 0.9416058394160584,
+          "rocauc": 0.9661924724014418
+        },
+        "fold_1": {
+          "accuracy": 0.8899647887323944,
+          "balanced_accuracy": 0.8505384119953447,
+          "f1": 0.9241964827167981,
+          "rocauc": 0.9522076963348813
+        },
+        "fold_2": {
+          "accuracy": 0.8873239436619719,
+          "balanced_accuracy": 0.8441787851738022,
+          "f1": 0.9227053140096618,
+          "rocauc": 0.9425505549843127
+        },
+        "fold_3": {
+          "accuracy": 0.8987676056338029,
+          "balanced_accuracy": 0.8657359803844025,
+          "f1": 0.9298352654057352,
+          "rocauc": 0.9512585545172748
+        },
+        "fold_4": {
+          "accuracy": 0.9022887323943662,
+          "balanced_accuracy": 0.8718150077400255,
+          "f1": 0.9321100917431193,
+          "rocauc": 0.952840457546619
+        }
+      },
+      "stored_scores": {
+        "accuracy": {
+          "mean": 0.8987676056338028,
+          "max": 0.9154929577464789,
+          "min": 0.8873239436619719,
+          "std": 0.010005825519987896
+        },
+        "balanced_accuracy": {
+          "mean": 0.8632154815576472,
+          "max": 0.883809222494661,
+          "min": 0.8441787851738022,
+          "std": 0.014335346752528
+        },
+        "f1": {
+          "mean": 0.9300905986582746,
+          "max": 0.9416058394160584,
+          "min": 0.9227053140096618,
+          "std": 0.0067235013076806195
+        },
+        "rocauc": {
+          "mean": 0.9530099471569059,
+          "max": 0.9661924724014418,
+          "min": 0.9425505549843127,
+          "std": 0.0075751906343077295
+        }
+      }
+    },
+    {
       "submission": "matbench_v0.1_darwin",
       "algorithm": "Darwin",
       "task": "matbench_glass",
