@@ -42,7 +42,7 @@ pylatexenc==2.11
 pymatgen==2025.10.7
 pymongo==4.19.0
 pyparsing==3.3.3
-pytest==8.4.2
+pytest==9.0.3
 python-dateutil==3.0.0
 pytz==2026.5
 requests==2.34.2
