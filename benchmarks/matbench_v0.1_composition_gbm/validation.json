@@ -1,0 +1,117 @@
+{
+  "code_and_lock_sha256": {
+    "reproduce.py": "cf6f8d1b35f0b39aa88d72eb959c6ea75205459dabd8d960f11f1c7a9ac36864",
+    "requirements.txt": "d964888ceec7be1c33de4c02183681d95fba851ab3dc43b933fa1e58a5e09934",
+    "src/composition_features.py": "eac3fbdee730e669d405ac4fe9701e5c8832c6efd2ff11b7b797bcf74c8c5e08",
+    "src/composition_features_v2.py": "4ead01a7665d62371c633d44a5f90d5e8a047a1b49e7e0d9b2c4f80b165aa59b",
+    "src/element_table_generated.py": "dec52d5cd2b5f14960e1cff52516ff3596232f536aeca1ce7e6bba9d97d531f5",
+    "src/protocol.py": "7c41b05234d45623d2022554d9adc3ca5447486b254d730cdedcf5238a8780fb",
+    "src/run_matbench_glass.py": "2cf87bec10f6a85925641b835ca3a282ba5c059f66e0f730e916cc4c7d06e15a",
+    "test_composition_reproduction.py": "492e6ba2fc79791ad4f0b222d49e80aa2fbcefa329562dab18a4f91b4e1e9567"
+  },
+  "dependency_consistency": "uv pip check passed (61 packages)",
+  "notes": [
+    "Full refit completed with one model thread and cached deterministic features. The earlier two-thread attempt was interrupted to reduce local resource contention; model/feature/hyperparameter settings were not chosen using its outer scores.",
+    "All stored scores were independently recomputed by reproduce.py --verify-only logic against the official data.",
+    "Upstream UTC datetime and pymatgen/SymPy deprecation warnings may be emitted; they are not suppressed."
+  ],
+  "official_api": {
+    "is_complete": false,
+    "is_recorded": true,
+    "is_valid": true,
+    "tasks": [
+      "matbench_glass"
+    ]
+  },
+  "physical_memory_bytes": 17179869184,
+  "result_sha256": "7d004e6cf3f52cb779ae8aab7eb0f403a7a88e5c34a6f4337fdf58b18c4fdda3",
+  "task_runs": {
+    "matbench_glass": {
+      "elapsed_seconds": 353.27336191700306,
+      "features": {
+        "cache_hit": true,
+        "cache_key": "42943df581f05018860cc57992f8afa116a6ec86870c10cccba062341c37f311",
+        "cache_sha256": "ebac79c2969fe43dc058e7a269b90bb7f1b299332955056de217d51e4bcb6012",
+        "expansion_fallback_count": 0,
+        "feature_track": "B2_composition_HistGB",
+        "features": 156,
+        "featurization_seconds": 1.5084051250014454,
+        "hard_cap_count": 0,
+        "input_sha256": "0536bf8c1d34df45fa3ec5e1bc2b6b6b2ed35dd7b6adc696fbf28c606ea5080b",
+        "rows": 5680
+      },
+      "fold_seconds": {
+        "0": 49.75724445800006,
+        "1": 78.09864358299819,
+        "2": 61.55949187499937,
+        "3": 94.82612441699894,
+        "4": 68.28309616700426
+      },
+      "hardware": {
+        "cpu": "Apple M1",
+        "feature_workers": 1,
+        "logical_cpus": 8,
+        "machine": "arm64",
+        "model_threads": 1,
+        "packages": {
+          "matbench": "0.6",
+          "matminer": "0.10.1",
+          "numpy": "2.2.6",
+          "pandas": "2.3.3",
+          "persim": "0.3.8",
+          "pyarrow": "19.0.1",
+          "pymatgen": "2025.10.7",
+          "ripser": "0.6.15",
+          "scikit-learn": "1.7.2",
+          "scipy": "1.18.1",
+          "threadpoolctl": "3.6.0"
+        },
+        "platform": "macOS-26.2-arm64-arm-64bit",
+        "python": "3.12.10"
+      },
+      "historical_test_exposure": "The earlier submission inspected outer-fold scores for alternative feature/model tracks. This revision freezes the declared feature track before refitting; it does not turn previously observed benchmark folds into an unseen holdout. No historical preregistration evidence is available.",
+      "official_from_file_is_valid": true,
+      "results_sha256": "7d004e6cf3f52cb779ae8aab7eb0f403a7a88e5c34a6f4337fdf58b18c4fdda3",
+      "scores": {
+        "accuracy": {
+          "max": 0.9154929577464789,
+          "mean": 0.8987676056338028,
+          "min": 0.8873239436619719,
+          "std": 0.010005825519987896
+        },
+        "balanced_accuracy": {
+          "max": 0.883809222494661,
+          "mean": 0.8632154815576472,
+          "min": 0.8441787851738022,
+          "std": 0.014335346752528
+        },
+        "f1": {
+          "max": 0.9416058394160584,
+          "mean": 0.9300905986582746,
+          "min": 0.9227053140096618,
+          "std": 0.0067235013076806195
+        },
+        "rocauc": {
+          "max": 0.9661924724014418,
+          "mean": 0.9530099471569059,
+          "min": 0.9425505549843127,
+          "std": 0.0075751906343077295
+        }
+      },
+      "sdk": {
+        "git_revision": "4b7d0714849a917814115be380a64e7ace94be55",
+        "scorer_sha256": "f791263c675c45b6938c78d856676a6821ac6879526bc9aca7d82523303c3414",
+        "validation_sha256": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+        "version": "0.6"
+      },
+      "source_sha256": {
+        "composition_features.py": "eac3fbdee730e669d405ac4fe9701e5c8832c6efd2ff11b7b797bcf74c8c5e08",
+        "composition_features_v2.py": "4ead01a7665d62371c633d44a5f90d5e8a047a1b49e7e0d9b2c4f80b165aa59b",
+        "element_table_generated.py": "dec52d5cd2b5f14960e1cff52516ff3596232f536aeca1ce7e6bba9d97d531f5",
+        "protocol.py": "7c41b05234d45623d2022554d9adc3ca5447486b254d730cdedcf5238a8780fb",
+        "run_matbench_glass.py": "2cf87bec10f6a85925641b835ca3a282ba5c059f66e0f730e916cc4c7d06e15a"
+      },
+      "task": "matbench_glass"
+    }
+  }
+}
