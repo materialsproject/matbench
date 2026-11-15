@@ -36,7 +36,7 @@ pillow==13.0.0
 platformdirs==4.13.5
 plotly==7.1.0
 pluggy==1.7.0
-pyarrow==19.0.1
+pyarrow==23.0.1
 pygments==2.21.0
 pylatexenc==2.11
 pymatgen==2025.10.7
