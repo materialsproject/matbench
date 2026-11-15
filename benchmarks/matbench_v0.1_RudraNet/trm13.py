@@ -5,7 +5,7 @@
 ║                                                                      ║
 ║  V13A  2-Layer Self-Attention + Standard Deep Supervision            ║
 ║        d_attn=64, nhead=4, d_hidden=96, ff_dim=150, 20 steps       ║
-║        Expanded features (Magpie + Mat2Vec + Extra descriptors)      ║
+║        Magpie + Mat2Vec (extra descriptors fall back to zeros)       ║
 ║        2nd SA layer for higher-order property interactions           ║
 ║        5-seed ensemble (avg predictions across seeds)                ║
 ║                                                                      ║
@@ -51,11 +51,14 @@ N_SEEDS = len(SEEDS)
 # ══════════════════════════════════════════════════════════════════════
 
 class ExpandedFeaturizer:
-    """Magpie (22 props × 6 stats) + Extra matminer descriptors + Mat2Vec (200d).
+    """Magpie (22 props × 6 stats) + extra-descriptor block + Mat2Vec (200d).
 
-    Extra descriptors: ElementFraction, Stoichiometry, ValenceOrbital,
-    IonProperty, BandCenter — all concatenated as a flat vector between
-    the Magpie block and Mat2Vec.
+    The extra block attempts ElementFraction, Stoichiometry, ValenceOrbital,
+    IonProperty and BandCenter. In the pinned steels environment all 312
+    compositions raise during this calculation and use the original 200d
+    zero fallback. Magpie and Mat2Vec are therefore the informative inputs;
+    the zero block is preserved to retain the historical model input shape.
+    See REPRODUCIBILITY.md for the verified environment and audit scope.
     """
     GCS = "https://storage.googleapis.com/mat2vec/"
     FILES = ["pretrained_embeddings",
