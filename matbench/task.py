@@ -225,8 +225,40 @@ class MatbenchTask(MSONable, MSONable2File):
         """
         obj = cls(dataset_name, autoload=False, benchmark=benchmark_name)
         obj.results = RecursiveDotDict(results_dict)
-        obj.validate()
+        # Partially recorded tasks (e.g. folds run as separate jobs) can be
+        # loaded; full validation only applies once all folds are recorded.
+        if obj.all_folds_recorded:
+            obj.validate()
+        else:
+            obj._check_partial_results()
         return obj
+
+    def _check_partial_results(self):
+        """Check the results of a partially recorded task.
+
+        Recorded folds use the same checks as validate(). Unrecorded folds
+        may be absent or empty, but must not hold other results. Full task
+        validation still requires all folds, including consistent uncertainty
+        across folds.
+
+        Returns:
+            (NoneType): Errors are thrown if the results are not valid.
+        """
+        recorded_fold_keys = []
+        for fold_number, recorded in self.is_recorded.items():
+            fold_key = self.folds_map[fold_number]
+            if recorded:
+                recorded_fold_keys.append(fold_key)
+                continue
+            leftover_keys = [
+                k for k in self.results.get(fold_key, {}) if k != self._DATA_KEY
+            ]
+            if leftover_keys:
+                raise ValueError(
+                    f"Fold '{fold_key}' for task {self.dataset_name} has no "
+                    f"recorded data but has results for keys {leftover_keys}."
+                )
+        self._validate_folds(recorded_fold_keys)
 
     def load(self):
         """Load the dataset for this task into memory.
@@ -483,6 +515,33 @@ class MatbenchTask(MSONable, MSONable2File):
             f"Cannot validate task {self.dataset_name} "
             f"unless all folds recorded!"
         )
+        self._validate_folds(self.folds_keys)
+
+        # Uncertainty must be recorded for either all folds or none of them
+        folds_with_uncertainty = [
+            fold_key
+            for fold_key in self.folds_keys
+            if self.results[fold_key].get(self._UNCERTAINTY_KEY) is not None
+        ]
+        if folds_with_uncertainty and len(folds_with_uncertainty) != len(
+            self.folds_keys
+        ):
+            folds_without_uncertainty = [
+                fold_key
+                for fold_key in self.folds_keys
+                if fold_key not in folds_with_uncertainty
+            ]
+            raise ValueError(
+                f"Uncertainty must be recorded for all folds or none for task "
+                f"{self.dataset_name}. Found uncertainty for folds "
+                f"{folds_with_uncertainty} but not for folds "
+                f"{folds_without_uncertainty}."
+            )
+
+        logger.debug(f"Data for {self.dataset_name} successfully validated.")
+
+    def _validate_folds(self, fold_keys):
+        """Validate recorded folds without requiring a complete task."""
         task_type = self.metadata.task_type
 
         # Check for extra fold keys
@@ -493,7 +552,7 @@ class MatbenchTask(MSONable, MSONable2File):
                 f"{self.dataset_name} not allowed."
             )
 
-        for fold_key in self.folds_keys:
+        for fold_key in fold_keys:
             if fold_key not in self.results:
                 raise KeyError(
                     f"Required fold data for fold '{fold_key}' "
@@ -613,8 +672,9 @@ class MatbenchTask(MSONable, MSONable2File):
                     else:
                         uncertainties = None
                     if uncertainties is not None:
-                        std = uncertainties["std"]
-                        ci = uncertainties["ci"]
+                        # Do not insert absent keys into RecursiveDotDict.
+                        std = uncertainties.get("std", {})
+                        ci = uncertainties.get("ci", {})
 
                         if all(isinstance(s, float) for s in std):
                             if any(isinstance(c, float) for c in ci):
@@ -644,29 +704,6 @@ class MatbenchTask(MSONable, MSONable2File):
 
                 # Params key has no required form;
                 # it is up to the model to determine it.
-
-        # Uncertainty must be recorded for either all folds or none of them
-        folds_with_uncertainty = [
-            fold_key
-            for fold_key in self.folds_keys
-            if self.results[fold_key].get(self._UNCERTAINTY_KEY)
-        ]
-        if folds_with_uncertainty and len(folds_with_uncertainty) != len(
-            self.folds_keys
-        ):
-            folds_without_uncertainty = [
-                fold_key
-                for fold_key in self.folds_keys
-                if fold_key not in folds_with_uncertainty
-            ]
-            raise ValueError(
-                f"Uncertainty must be recorded for all folds or none for task "
-                f"{self.dataset_name}. Found uncertainty for folds "
-                f"{folds_with_uncertainty} but not for folds "
-                f"{folds_without_uncertainty}."
-            )
-
-        logger.debug(f"Data for {self.dataset_name} successfully validated.")
 
     @property
     def scores(self):
@@ -709,7 +746,7 @@ class MatbenchTask(MSONable, MSONable2File):
         """
         is_recorded = {}
         for fnum, fkey in self.folds_map.items():
-            if self.results[fkey][self._DATA_KEY]:
+            if self.results.get(fkey, {}).get(self._DATA_KEY):
                 is_recorded[fnum] = True
             else:
                 is_recorded[fnum] = False

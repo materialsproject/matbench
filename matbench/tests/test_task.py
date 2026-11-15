@@ -280,6 +280,14 @@ class TestMatbenchTask(unittest.TestCase):
         with self.assertRaises(ValueError):
             MatbenchTask.from_dict(mbt.as_dict())
 
+        # Empty uncertainty mappings still count as supplied uncertainty;
+        # validation must not rely on inserting std/ci keys to detect them.
+        mbt = record_folds(folds_with_std=())
+        mbt.results.fold_1.uncertainty = {}
+        with self.assertRaises(ValueError):
+            mbt.validate()
+        self.assertEqual(mbt.results.fold_1.uncertainty, {})
+
     def _test_record(self, uq_type=None):
         for ds in self.test_datasets:
             if ds == "matbench_glass":
@@ -479,6 +487,137 @@ class TestMatbenchTask(unittest.TestCase):
 
             with self.assertRaises(TypeError):
                 MatbenchTask.from_dict(wrong_dtype)
+
+    def test_partial_MSONability(self):
+        # A partially recorded task can be written and read back (#134)
+        ds = "matbench_steels"
+        mbt = MatbenchTask(ds, autoload=True)
+        recorded_folds = [1, 3]
+        for fold in recorded_folds:
+            _, test_outputs = mbt.get_test_data(
+                fold, as_type="tuple", include_target=True
+            )
+            mbt.record(
+                fold,
+                predictions=test_outputs,
+                params={"seed": 42},
+                std=[1.0] * len(test_outputs),
+            )
+
+        partial_fname = os.path.join(TEST_DIR, f"partial_{ds}_output.json")
+        mbt.to_file(partial_fname)
+        with open(partial_fname) as f:
+            partial_dict = json.load(f)
+        mbt_partial = MatbenchTask.from_file(partial_fname)
+
+        # Loading and status queries must preserve all saved fields without
+        # inserting missing folds or keys into RecursiveDotDict.
+        self.assertFalse(mbt_partial.all_folds_recorded)
+        self.assertEqual(
+            [f for f, rec in mbt_partial.is_recorded.items() if rec],
+            recorded_folds,
+        )
+        self.assertEqual(mbt_partial.as_dict(), partial_dict)
+
+        # Full validation still requires all folds to be recorded
+        with self.assertRaises(ValueError):
+            mbt_partial.validate()
+        self.assertEqual(mbt_partial.as_dict(), partial_dict)
+
+        # Remaining folds can be recorded after loading
+        mbt_partial.load()
+        for fold in mbt_partial.folds:
+            if fold not in recorded_folds:
+                _, test_outputs = mbt_partial.get_test_data(
+                    fold, as_type="tuple", include_target=True
+                )
+                mbt_partial.record(
+                    fold, predictions=test_outputs, std=[1.0] * len(test_outputs)
+                )
+        self.assertTrue(mbt_partial.all_folds_recorded)
+        mbt_partial.validate()
+        for fold in recorded_folds:
+            fold_key = mbt.folds_map[fold]
+            self.assertEqual(
+                mbt_partial.results[fold_key], partial_dict["results"][fold_key]
+            )
+
+        # Copy from the serialized json: as_dict() holds RecursiveDotDicts,
+        # which cannot be deep-copied
+        # Folds which were never touched are allowed to be missing
+        partial = copy.deepcopy(partial_dict)
+        partial["results"].pop("fold_0", None)
+        self.assertNotIn("fold_0", MatbenchTask.from_dict(partial).results)
+
+        # Unrecorded folds must not hold other results
+        leftover_results = copy.deepcopy(partial_dict)
+        leftover_results["results"]["fold_3"].pop(MatbenchTask._DATA_KEY)
+        with self.assertRaises(ValueError):
+            MatbenchTask.from_dict(leftover_results)
+
+        # Extra fold keys are not allowed
+        extra_fold = copy.deepcopy(partial_dict)
+        extra_fold["results"]["fold_99"] = {MatbenchTask._DATA_KEY: {}}
+        with self.assertRaises(KeyError):
+            MatbenchTask.from_dict(extra_fold)
+
+    def test_empty_partial_MSONability(self):
+        mbt = MatbenchTask("matbench_steels", autoload=False)
+        for results in ({}, {"fold_1": {}}, {"fold_1": {"data": {}}}):
+            with self.subTest(results=results):
+                d = mbt.as_dict()
+                d["results"] = results
+                partial = MatbenchTask.from_dict(d)
+                self.assertFalse(any(partial.is_recorded.values()))
+                self.assertFalse(partial.all_folds_recorded)
+                with self.assertRaises(ValueError):
+                    partial.validate()
+                self.assertEqual(partial.as_dict(), d)
+
+                filename = os.path.join(TEST_DIR, "empty_partial_output.json")
+                partial.to_file(filename)
+                self.assertEqual(MatbenchTask.from_file(filename).as_dict(), d)
+
+    def test_partial_recorded_fold_validation(self):
+        # Use ordinary JSON dictionaries, not deepcopy of RecursiveDotDict.
+        with open(os.path.join(TEST_DIR, "msonability_matbench_steels.json")) as f:
+            partial = json.load(f)
+        partial["results"] = {"fold_1": partial["results"]["fold_1"]}
+        data = partial["results"]["fold_1"]["data"]
+        sample_id = next(iter(data))
+
+        missing_id = copy.deepcopy(data)
+        missing_id.pop(sample_id)
+        extra_id = {**data, "unexpected-id": 1.0}
+        wrong_type = {**data, sample_id: "invalid prediction"}
+        corruptions = [
+            ("data", missing_id, ValueError),
+            ("data", extra_id, ValueError),
+            ("data", wrong_type, TypeError),
+            ("scores", {}, KeyError),
+            ("scores", {"mae": "invalid score"}, TypeError),
+            ("unexpected-key", {}, KeyError),
+            ("uncertainty", {"std": [1.0, None], "ci": [None, None]}, ValueError),
+        ]
+        for key, value, error in corruptions:
+            with self.subTest(key=key, value=value):
+                bad = copy.deepcopy(partial)
+                bad["results"]["fold_1"][key] = value
+                with self.assertRaises(error):
+                    MatbenchTask.from_dict(bad)
+
+        for key in ("scores", "parameters"):
+            with self.subTest(missing_key=key):
+                bad = copy.deepcopy(partial)
+                bad["results"]["fold_1"].pop(key)
+                with self.assertRaises(KeyError):
+                    MatbenchTask.from_dict(bad)
+
+        # An empty data map cannot disguise leftover results as an empty fold.
+        bad = copy.deepcopy(partial)
+        bad["results"]["fold_1"]["data"] = {}
+        with self.assertRaises(ValueError):
+            MatbenchTask.from_dict(bad)
 
     def test_autoload(self):
         mbt = MatbenchTask("matbench_steels", autoload=False)
