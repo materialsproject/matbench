@@ -3427,7 +3427,44 @@ task, including the training and testing splits for each fold.</p>
 <span class="normal">751</span>
 <span class="normal">752</span>
 <span class="normal">753</span>
-<span class="normal">754</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MatbenchTask</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">MSONable2File</span><span class="p">):</span>
+<span class="normal">754</span>
+<span class="normal">755</span>
+<span class="normal">756</span>
+<span class="normal">757</span>
+<span class="normal">758</span>
+<span class="normal">759</span>
+<span class="normal">760</span>
+<span class="normal">761</span>
+<span class="normal">762</span>
+<span class="normal">763</span>
+<span class="normal">764</span>
+<span class="normal">765</span>
+<span class="normal">766</span>
+<span class="normal">767</span>
+<span class="normal">768</span>
+<span class="normal">769</span>
+<span class="normal">770</span>
+<span class="normal">771</span>
+<span class="normal">772</span>
+<span class="normal">773</span>
+<span class="normal">774</span>
+<span class="normal">775</span>
+<span class="normal">776</span>
+<span class="normal">777</span>
+<span class="normal">778</span>
+<span class="normal">779</span>
+<span class="normal">780</span>
+<span class="normal">781</span>
+<span class="normal">782</span>
+<span class="normal">783</span>
+<span class="normal">784</span>
+<span class="normal">785</span>
+<span class="normal">786</span>
+<span class="normal">787</span>
+<span class="normal">788</span>
+<span class="normal">789</span>
+<span class="normal">790</span>
+<span class="normal">791</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MatbenchTask</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">MSONable2File</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""The core interface for running a Matbench task and recording its results.</span>
 
 <span class="sd">    MatbenchTask handles creating training/validation and testing sets, as</span>
@@ -3626,8 +3663,40 @@ task, including the training and testing splits for each fold.</p>
 <span class="sd">        """</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">benchmark</span><span class="o">=</span><span class="n">benchmark_name</span><span class="p">)</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="n">RecursiveDotDict</span><span class="p">(</span><span class="n">results_dict</span><span class="p">)</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+        <span class="c1"># Partially recorded tasks (e.g. folds run as separate jobs) can be</span>
+        <span class="c1"># loaded; full validation only applies once all folds are recorded.</span>
+        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">all_folds_recorded</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">_check_partial_results</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_partial_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Check the results of a partially recorded task.</span>
+
+<span class="sd">        Recorded folds use the same checks as validate(). Unrecorded folds</span>
+<span class="sd">        may be absent or empty, but must not hold other results. Full task</span>
+<span class="sd">        validation still requires all folds, including consistent uncertainty</span>
+<span class="sd">        across folds.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (NoneType): Errors are thrown if the results are not valid.</span>
+<span class="sd">        """</span>
+        <span class="n">recorded_fold_keys</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">recorded</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_recorded</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">fold_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="p">[</span><span class="n">fold_number</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">recorded</span><span class="p">:</span>
+                <span class="n">recorded_fold_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fold_key</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">leftover_keys</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fold_key</span><span class="p">,</span> <span class="p">{})</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DATA_KEY</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">leftover_keys</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Fold '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">' for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> has no "</span>
+                    <span class="sa">f</span><span class="s2">"recorded data but has results for keys </span><span class="si">{</span><span class="n">leftover_keys</span><span class="si">}</span><span class="s2">."</span>
+                <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_folds</span><span class="p">(</span><span class="n">recorded_fold_keys</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Load the dataset for this task into memory.</span>
@@ -3884,6 +3953,33 @@ task, including the training and testing splits for each fold.</p>
             <span class="sa">f</span><span class="s2">"Cannot validate task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
             <span class="sa">f</span><span class="s2">"unless all folds recorded!"</span>
         <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_folds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span><span class="p">)</span>
+
+        <span class="c1"># Uncertainty must be recorded for either all folds or none of them</span>
+        <span class="n">folds_with_uncertainty</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">fold_key</span>
+            <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">folds_with_uncertainty</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">folds_with_uncertainty</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
+        <span class="p">):</span>
+            <span class="n">folds_without_uncertainty</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">fold_key</span>
+                <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
+                <span class="k">if</span> <span class="n">fold_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">folds_with_uncertainty</span>
+            <span class="p">]</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"Uncertainty must be recorded for all folds or none for task "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">. Found uncertainty for folds "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folds_with_uncertainty</span><span class="si">}</span><span class="s2"> but not for folds "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folds_without_uncertainty</span><span class="si">}</span><span class="s2">."</span>
+            <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Data for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> successfully validated."</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_folds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_keys</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Validate recorded folds without requiring a complete task."""</span>
         <span class="n">task_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span>
 
         <span class="c1"># Check for extra fold keys</span>
@@ -3894,7 +3990,7 @@ task, including the training and testing splits for each fold.</p>
                 <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not allowed."</span>
             <span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="n">fold_keys</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">fold_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">"Required fold data for fold '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">' "</span>
@@ -4014,8 +4110,9 @@ task, including the training and testing splits for each fold.</p>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">uncertainties</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="k">if</span> <span class="n">uncertainties</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">std</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">"std"</span><span class="p">]</span>
-                        <span class="n">ci</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">"ci"</span><span class="p">]</span>
+                        <span class="c1"># Do not insert absent keys into RecursiveDotDict.</span>
+                        <span class="n">std</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"std"</span><span class="p">,</span> <span class="p">{})</span>
+                        <span class="n">ci</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"ci"</span><span class="p">,</span> <span class="p">{})</span>
 
                         <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
                             <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
@@ -4045,29 +4142,6 @@ task, including the training and testing splits for each fold.</p>
 
                 <span class="c1"># Params key has no required form;</span>
                 <span class="c1"># it is up to the model to determine it.</span>
-
-        <span class="c1"># Uncertainty must be recorded for either all folds or none of them</span>
-        <span class="n">folds_with_uncertainty</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">fold_key</span>
-            <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
-        <span class="p">]</span>
-        <span class="k">if</span> <span class="n">folds_with_uncertainty</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">folds_with_uncertainty</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
-        <span class="p">):</span>
-            <span class="n">folds_without_uncertainty</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">fold_key</span>
-                <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
-                <span class="k">if</span> <span class="n">fold_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">folds_with_uncertainty</span>
-            <span class="p">]</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">"Uncertainty must be recorded for all folds or none for task "</span>
-                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">. Found uncertainty for folds "</span>
-                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folds_with_uncertainty</span><span class="si">}</span><span class="s2"> but not for folds "</span>
-                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folds_without_uncertainty</span><span class="si">}</span><span class="s2">."</span>
-            <span class="p">)</span>
-
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Data for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> successfully validated."</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -4110,7 +4184,7 @@ task, including the training and testing splits for each fold.</p>
 <span class="sd">        """</span>
         <span class="n">is_recorded</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">fnum</span><span class="p">,</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fkey</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_DATA_KEY</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fkey</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_DATA_KEY</span><span class="p">):</span>
                 <span class="n">is_recorded</span><span class="p">[</span><span class="n">fnum</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">is_recorded</span><span class="p">[</span><span class="n">fnum</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
@@ -4551,21 +4625,21 @@ run .load() before running .get_*_data() methods.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>matbench/task.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">444</span>
-<span class="normal">445</span>
-<span class="normal">446</span>
-<span class="normal">447</span>
-<span class="normal">448</span>
-<span class="normal">449</span>
-<span class="normal">450</span>
-<span class="normal">451</span>
-<span class="normal">452</span>
-<span class="normal">453</span>
-<span class="normal">454</span>
-<span class="normal">455</span>
-<span class="normal">456</span>
-<span class="normal">457</span>
-<span class="normal">458</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">476</span>
+<span class="normal">477</span>
+<span class="normal">478</span>
+<span class="normal">479</span>
+<span class="normal">480</span>
+<span class="normal">481</span>
+<span class="normal">482</span>
+<span class="normal">483</span>
+<span class="normal">484</span>
+<span class="normal">485</span>
+<span class="normal">486</span>
+<span class="normal">487</span>
+<span class="normal">488</span>
+<span class="normal">489</span>
+<span class="normal">490</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Return a MatbenchTask object as a dictionary.</span>
 
 <span class="sd">    Required method from MSONAble.</span>
@@ -4800,30 +4874,30 @@ be a single column if a df or a 1-tuple if a tuple.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>matbench/task.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">285</span>
-<span class="normal">286</span>
-<span class="normal">287</span>
-<span class="normal">288</span>
-<span class="normal">289</span>
-<span class="normal">290</span>
-<span class="normal">291</span>
-<span class="normal">292</span>
-<span class="normal">293</span>
-<span class="normal">294</span>
-<span class="normal">295</span>
-<span class="normal">296</span>
-<span class="normal">297</span>
-<span class="normal">298</span>
-<span class="normal">299</span>
-<span class="normal">300</span>
-<span class="normal">301</span>
-<span class="normal">302</span>
-<span class="normal">303</span>
-<span class="normal">304</span>
-<span class="normal">305</span>
-<span class="normal">306</span>
-<span class="normal">307</span>
-<span class="normal">308</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_test_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">"tuple"</span><span class="p">,</span> <span class="n">include_target</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_test_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">"tuple"</span><span class="p">,</span> <span class="n">include_target</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The test data used for recording benchmarks.</span>
 
@@ -4925,23 +4999,23 @@ training data or a 2-tuple of training data.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>matbench/task.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">267</span>
-<span class="normal">268</span>
-<span class="normal">269</span>
-<span class="normal">270</span>
-<span class="normal">271</span>
-<span class="normal">272</span>
-<span class="normal">273</span>
-<span class="normal">274</span>
-<span class="normal">275</span>
-<span class="normal">276</span>
-<span class="normal">277</span>
-<span class="normal">278</span>
-<span class="normal">279</span>
-<span class="normal">280</span>
-<span class="normal">281</span>
-<span class="normal">282</span>
-<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_train_and_val_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">"tuple"</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_train_and_val_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="s2">"tuple"</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The training + validation data. All model tuning and</span>
 <span class="sd">    hyperparameter selection must be done on this data, NOT test data.</span>
@@ -5003,21 +5077,21 @@ training data or a 2-tuple of training data.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>matbench/task.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">231</span>
-<span class="normal">232</span>
-<span class="normal">233</span>
-<span class="normal">234</span>
-<span class="normal">235</span>
-<span class="normal">236</span>
-<span class="normal">237</span>
-<span class="normal">238</span>
-<span class="normal">239</span>
-<span class="normal">240</span>
-<span class="normal">241</span>
-<span class="normal">242</span>
-<span class="normal">243</span>
-<span class="normal">244</span>
-<span class="normal">245</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Load the dataset for this task into memory.</span>
 
 <span class="sd">    Returns:</span>
@@ -5198,39 +5272,7 @@ docstring.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>matbench/task.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">310</span>
-<span class="normal">311</span>
-<span class="normal">312</span>
-<span class="normal">313</span>
-<span class="normal">314</span>
-<span class="normal">315</span>
-<span class="normal">316</span>
-<span class="normal">317</span>
-<span class="normal">318</span>
-<span class="normal">319</span>
-<span class="normal">320</span>
-<span class="normal">321</span>
-<span class="normal">322</span>
-<span class="normal">323</span>
-<span class="normal">324</span>
-<span class="normal">325</span>
-<span class="normal">326</span>
-<span class="normal">327</span>
-<span class="normal">328</span>
-<span class="normal">329</span>
-<span class="normal">330</span>
-<span class="normal">331</span>
-<span class="normal">332</span>
-<span class="normal">333</span>
-<span class="normal">334</span>
-<span class="normal">335</span>
-<span class="normal">336</span>
-<span class="normal">337</span>
-<span class="normal">338</span>
-<span class="normal">339</span>
-<span class="normal">340</span>
-<span class="normal">341</span>
-<span class="normal">342</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">342</span>
 <span class="normal">343</span>
 <span class="normal">344</span>
 <span class="normal">345</span>
@@ -5330,7 +5372,39 @@ docstring.</p>
 <span class="normal">439</span>
 <span class="normal">440</span>
 <span class="normal">441</span>
-<span class="normal">442</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span>
+<span class="normal">454</span>
+<span class="normal">455</span>
+<span class="normal">456</span>
+<span class="normal">457</span>
+<span class="normal">458</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span>
+<span class="normal">472</span>
+<span class="normal">473</span>
+<span class="normal">474</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_number</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Record the test data as well as parameters about the model</span>
 <span class="sd">    trained on this fold.</span>
 
@@ -5511,22 +5585,22 @@ Other references to the dataset or returned data may keep it in memory.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>matbench/task.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">247</span>
-<span class="normal">248</span>
-<span class="normal">249</span>
-<span class="normal">250</span>
-<span class="normal">251</span>
-<span class="normal">252</span>
-<span class="normal">253</span>
-<span class="normal">254</span>
-<span class="normal">255</span>
-<span class="normal">256</span>
-<span class="normal">257</span>
-<span class="normal">258</span>
-<span class="normal">259</span>
-<span class="normal">260</span>
-<span class="normal">261</span>
-<span class="normal">262</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">unload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">unload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Release this task's reference to the loaded dataset.</span>
 
 <span class="sd">    Recorded results and scores are kept. Run MatbenchTask.load() to load</span>
@@ -5581,39 +5655,7 @@ Returns:
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>matbench/task.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">460</span>
-<span class="normal">461</span>
-<span class="normal">462</span>
-<span class="normal">463</span>
-<span class="normal">464</span>
-<span class="normal">465</span>
-<span class="normal">466</span>
-<span class="normal">467</span>
-<span class="normal">468</span>
-<span class="normal">469</span>
-<span class="normal">470</span>
-<span class="normal">471</span>
-<span class="normal">472</span>
-<span class="normal">473</span>
-<span class="normal">474</span>
-<span class="normal">475</span>
-<span class="normal">476</span>
-<span class="normal">477</span>
-<span class="normal">478</span>
-<span class="normal">479</span>
-<span class="normal">480</span>
-<span class="normal">481</span>
-<span class="normal">482</span>
-<span class="normal">483</span>
-<span class="normal">484</span>
-<span class="normal">485</span>
-<span class="normal">486</span>
-<span class="normal">487</span>
-<span class="normal">488</span>
-<span class="normal">489</span>
-<span class="normal">490</span>
-<span class="normal">491</span>
-<span class="normal">492</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">492</span>
 <span class="normal">493</span>
 <span class="normal">494</span>
 <span class="normal">495</span>
@@ -5662,135 +5704,7 @@ Returns:
 <span class="normal">538</span>
 <span class="normal">539</span>
 <span class="normal">540</span>
-<span class="normal">541</span>
-<span class="normal">542</span>
-<span class="normal">543</span>
-<span class="normal">544</span>
-<span class="normal">545</span>
-<span class="normal">546</span>
-<span class="normal">547</span>
-<span class="normal">548</span>
-<span class="normal">549</span>
-<span class="normal">550</span>
-<span class="normal">551</span>
-<span class="normal">552</span>
-<span class="normal">553</span>
-<span class="normal">554</span>
-<span class="normal">555</span>
-<span class="normal">556</span>
-<span class="normal">557</span>
-<span class="normal">558</span>
-<span class="normal">559</span>
-<span class="normal">560</span>
-<span class="normal">561</span>
-<span class="normal">562</span>
-<span class="normal">563</span>
-<span class="normal">564</span>
-<span class="normal">565</span>
-<span class="normal">566</span>
-<span class="normal">567</span>
-<span class="normal">568</span>
-<span class="normal">569</span>
-<span class="normal">570</span>
-<span class="normal">571</span>
-<span class="normal">572</span>
-<span class="normal">573</span>
-<span class="normal">574</span>
-<span class="normal">575</span>
-<span class="normal">576</span>
-<span class="normal">577</span>
-<span class="normal">578</span>
-<span class="normal">579</span>
-<span class="normal">580</span>
-<span class="normal">581</span>
-<span class="normal">582</span>
-<span class="normal">583</span>
-<span class="normal">584</span>
-<span class="normal">585</span>
-<span class="normal">586</span>
-<span class="normal">587</span>
-<span class="normal">588</span>
-<span class="normal">589</span>
-<span class="normal">590</span>
-<span class="normal">591</span>
-<span class="normal">592</span>
-<span class="normal">593</span>
-<span class="normal">594</span>
-<span class="normal">595</span>
-<span class="normal">596</span>
-<span class="normal">597</span>
-<span class="normal">598</span>
-<span class="normal">599</span>
-<span class="normal">600</span>
-<span class="normal">601</span>
-<span class="normal">602</span>
-<span class="normal">603</span>
-<span class="normal">604</span>
-<span class="normal">605</span>
-<span class="normal">606</span>
-<span class="normal">607</span>
-<span class="normal">608</span>
-<span class="normal">609</span>
-<span class="normal">610</span>
-<span class="normal">611</span>
-<span class="normal">612</span>
-<span class="normal">613</span>
-<span class="normal">614</span>
-<span class="normal">615</span>
-<span class="normal">616</span>
-<span class="normal">617</span>
-<span class="normal">618</span>
-<span class="normal">619</span>
-<span class="normal">620</span>
-<span class="normal">621</span>
-<span class="normal">622</span>
-<span class="normal">623</span>
-<span class="normal">624</span>
-<span class="normal">625</span>
-<span class="normal">626</span>
-<span class="normal">627</span>
-<span class="normal">628</span>
-<span class="normal">629</span>
-<span class="normal">630</span>
-<span class="normal">631</span>
-<span class="normal">632</span>
-<span class="normal">633</span>
-<span class="normal">634</span>
-<span class="normal">635</span>
-<span class="normal">636</span>
-<span class="normal">637</span>
-<span class="normal">638</span>
-<span class="normal">639</span>
-<span class="normal">640</span>
-<span class="normal">641</span>
-<span class="normal">642</span>
-<span class="normal">643</span>
-<span class="normal">644</span>
-<span class="normal">645</span>
-<span class="normal">646</span>
-<span class="normal">647</span>
-<span class="normal">648</span>
-<span class="normal">649</span>
-<span class="normal">650</span>
-<span class="normal">651</span>
-<span class="normal">652</span>
-<span class="normal">653</span>
-<span class="normal">654</span>
-<span class="normal">655</span>
-<span class="normal">656</span>
-<span class="normal">657</span>
-<span class="normal">658</span>
-<span class="normal">659</span>
-<span class="normal">660</span>
-<span class="normal">661</span>
-<span class="normal">662</span>
-<span class="normal">663</span>
-<span class="normal">664</span>
-<span class="normal">665</span>
-<span class="normal">666</span>
-<span class="normal">667</span>
-<span class="normal">668</span>
-<span class="normal">669</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">541</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Validate a task after all folds have been recorded.</span>
 
 <span class="sd">    There are a few requirements for a task to be validated:</span>
@@ -5816,173 +5730,13 @@ Returns:
         <span class="sa">f</span><span class="s2">"Cannot validate task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
         <span class="sa">f</span><span class="s2">"unless all folds recorded!"</span>
     <span class="p">)</span>
-    <span class="n">task_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span>
-
-    <span class="c1"># Check for extra fold keys</span>
-    <span class="n">extra_fold_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">extra_fold_keys</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">"Extra fold keys </span><span class="si">{</span><span class="n">extra_fold_keys</span><span class="si">}</span><span class="s2"> for task "</span>
-            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not allowed."</span>
-        <span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">fold_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">"Required fold data for fold '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">' "</span>
-                <span class="sa">f</span><span class="s2">"for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not found."</span>
-            <span class="p">)</span>
-
-        <span class="c1"># Check for extra or missing keys inside each fold:</span>
-        <span class="c1"># need params, scores, and data.</span>
-        <span class="n">req_subfold_keys</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_SCORES_KEY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DATA_KEY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PARAMS_KEY</span><span class="p">]</span>
-        <span class="n">extra_subfold_keys</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">req_subfold_keys</span>
-        <span class="p">]</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span> <span class="ow">in</span> <span class="n">extra_subfold_keys</span><span class="p">:</span>
-            <span class="n">extra_subfold_keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">extra_subfold_keys</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">"Extra keys </span><span class="si">{</span><span class="n">extra_subfold_keys</span><span class="si">}</span><span class="s2"> for fold results of "</span>
-                <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">' for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">  not allowed."</span>
-            <span class="p">)</span>
-        <span class="n">req_subfold_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">subkey</span> <span class="ow">in</span> <span class="n">req_subfold_keys</span><span class="p">:</span>
-            <span class="n">fold_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span>
-            <span class="k">if</span> <span class="p">(</span>
-                <span class="n">subkey</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span>
-                <span class="ow">and</span> <span class="n">subkey</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fold_results</span>
-            <span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">"Required key '</span><span class="si">{</span><span class="n">subkey</span><span class="si">}</span><span class="s2">' for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
-                    <span class="sa">f</span><span class="s2">"not found for fold '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">'."</span>
-                <span class="p">)</span>
-            <span class="k">if</span> <span class="n">subkey</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SCORES_KEY</span><span class="p">:</span>
-                <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="n">subkey</span><span class="p">]</span>
-                <span class="n">metrics</span> <span class="o">=</span> <span class="n">REG_METRICS</span> <span class="k">if</span> <span class="n">task_type</span> <span class="o">==</span> <span class="n">REG_KEY</span> <span class="k">else</span> <span class="n">CLF_METRICS</span>
-                <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">m</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">scores</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">"Required score '</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">' for task "</span>
-                            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
-                            <span class="sa">f</span><span class="s2">"not found for '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">'."</span>
-                        <span class="p">)</span>
-                    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="nb">float</span><span class="p">):</span>
-                        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">"Required score '</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">' for task "</span>
-                            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
-                            <span class="sa">f</span><span class="s2">"is not float-type for '</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">'!"</span>
-                        <span class="p">)</span>
-                <span class="n">extra_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">scores</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">extra_metrics</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">"Extra keys </span><span class="si">{</span><span class="n">extra_metrics</span><span class="si">}</span><span class="s2"> for fold scores of "</span>
-                        <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">' for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> "</span>
-                        <span class="sa">f</span><span class="s2">"not allowed."</span>
-                    <span class="p">)</span>
-
-            <span class="c1"># results data indices are cast by json to be strings,</span>
-            <span class="c1"># so must be converted to int</span>
-            <span class="k">elif</span> <span class="n">subkey</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DATA_KEY</span><span class="p">:</span>
-                <span class="n">fold_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
-
-                <span class="c1"># Ensure all the indices are present with no</span>
-                <span class="c1"># extras for each fold</span>
-                <span class="n">req_indices</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">validation</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
-                <span class="n">remaining_indices</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">req_indices</span><span class="p">)</span>
-                <span class="n">extra_indices</span> <span class="o">=</span> <span class="p">{}</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="n">REG_KEY</span><span class="p">:</span>
-                    <span class="n">allowed_types</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">,)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">allowed_types</span> <span class="o">=</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
-
-                <span class="k">for</span> <span class="n">ix</span><span class="p">,</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">fold_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="k">if</span> <span class="n">ix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">req_indices</span><span class="p">:</span>
-                        <span class="n">extra_indices</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">datum</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">datum</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
-                            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                                <span class="sa">f</span><span class="s2">"Data point '</span><span class="si">{</span><span class="n">ix</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">datum</span><span class="si">}</span><span class="s2">' has data type "</span>
-                                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">datum</span><span class="p">)</span><span class="si">}</span><span class="s2"> while required type is "</span>
-                                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">allowed_types</span><span class="si">}</span><span class="s2"> for task "</span>
-                                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> !"</span>
-                            <span class="p">)</span>
-                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="n">CLF_KEY</span><span class="p">:</span>
-                            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">datum</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
-                                <span class="k">if</span> <span class="n">datum</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">datum</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                        <span class="sa">f</span><span class="s2">"Probability estimate '</span><span class="si">{</span><span class="n">ix</span><span class="si">}</span><span class="s2">': </span><span class="si">{</span><span class="n">datum</span><span class="si">}</span><span class="s2">"</span>
-                                        <span class="sa">f</span><span class="s2">"for task </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> outside "</span>
-                                        <span class="sa">f</span><span class="s2">"of range [0, 1]."</span>
-                                    <span class="p">)</span>
-
-                        <span class="n">remaining_indices</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ix</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="n">extra_indices</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">remaining_indices</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> extra indices for problem "</span>
-                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> are not allowed (found in "</span>
-                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_indices</span><span class="si">}</span><span class="s2">"</span>
-                    <span class="p">)</span>
-                <span class="k">elif</span> <span class="ow">not</span> <span class="n">extra_indices</span> <span class="ow">and</span> <span class="n">remaining_indices</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> required indices "</span>
-                        <span class="sa">f</span><span class="s2">"for problem </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not "</span>
-                        <span class="sa">f</span><span class="s2">"found for </span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_indices</span><span class="si">}</span><span class="s2">"</span>
-                    <span class="p">)</span>
-                <span class="k">elif</span> <span class="n">extra_indices</span> <span class="ow">and</span> <span class="n">remaining_indices</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> required indices "</span>
-                        <span class="sa">f</span><span class="s2">"for problem </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> not "</span>
-                        <span class="sa">f</span><span class="s2">"found and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_indices</span><span class="p">)</span><span class="si">}</span><span class="s2"> not "</span>
-                        <span class="sa">f</span><span class="s2">"allowed indices found for </span><span class="si">{</span><span class="n">fold_key</span><span class="si">}</span><span class="s2">!"</span>
-                    <span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">pass</span>
-
-            <span class="k">elif</span> <span class="n">subkey</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">:</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                    <span class="n">uncertainties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">][</span><span class="n">subkey</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">uncertainties</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="k">if</span> <span class="n">uncertainties</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">std</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">"std"</span><span class="p">]</span>
-                    <span class="n">ci</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="p">[</span><span class="s2">"ci"</span><span class="p">]</span>
-
-                    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
-                        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
-                            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
-                                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                    <span class="s2">"std specified for all samples "</span>
-                                    <span class="s2">"but ci not specified for some."</span>
-                                <span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
-                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                <span class="s2">"std is specified for some, but not for all."</span>
-                            <span class="p">)</span>
-
-                    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
-                        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
-                            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">std</span><span class="p">):</span>
-                                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                    <span class="s2">"ci specified for all samples "</span>
-                                    <span class="s2">"but ci not specified for some."</span>
-                                <span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">):</span>
-                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                                <span class="s2">"ci is specified for some, but not for all."</span>
-                            <span class="p">)</span>
-
-            <span class="c1"># Params key has no required form;</span>
-            <span class="c1"># it is up to the model to determine it.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_validate_folds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span><span class="p">)</span>
 
     <span class="c1"># Uncertainty must be recorded for either all folds or none of them</span>
     <span class="n">folds_with_uncertainty</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">fold_key</span>
         <span class="k">for</span> <span class="n">fold_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">fold_key</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_UNCERTAINTY_KEY</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
     <span class="p">]</span>
     <span class="k">if</span> <span class="n">folds_with_uncertainty</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">folds_with_uncertainty</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">folds_keys</span>
