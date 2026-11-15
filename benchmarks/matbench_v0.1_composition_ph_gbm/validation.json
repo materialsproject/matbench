@@ -1,0 +1,250 @@
+{
+  "code_and_lock_sha256": {
+    "reproduce.py": "ea4b762ff7082205efbb4436d7dd782cc8b86e640a647e300a92285445fb4ae8",
+    "requirements.txt": "d964888ceec7be1c33de4c02183681d95fba851ab3dc43b933fa1e58a5e09934",
+    "src/composition_features.py": "eac3fbdee730e669d405ac4fe9701e5c8832c6efd2ff11b7b797bcf74c8c5e08",
+    "src/composition_features_v2.py": "4ead01a7665d62371c633d44a5f90d5e8a047a1b49e7e0d9b2c4f80b165aa59b",
+    "src/element_table_generated.py": "dec52d5cd2b5f14960e1cff52516ff3596232f536aeca1ce7e6bba9d97d531f5",
+    "src/ph_features.py": "ddcb2edb8b520d1ded2145466f0cedb84653ff35bf7c5fa6ec0c091ae494d47e",
+    "src/protocol.py": "888f9b932443936ac4847f18a520f2da92357a372de417b611333d6671a57520",
+    "test_ph_reproduction.py": "b8ea975a4b5b20715cc21c1365aecb466d8090edc7c0554fd2ef7fc637eeaa46"
+  },
+  "dependency_consistency": "uv pip check passed (61 packages)",
+  "feature_recomputation": [
+    {
+      "cache_keys": [
+        "1e3fdf6b24785d20b7d8b6a1ef430710dcbc1153a9de85010d07d26f8e8d2d28",
+        "12caef5759f08c1933938cab2d5affda22b9a8892e8fd1456d50eb41055dcaf0"
+      ],
+      "independent_feature_recomputation_identical": true,
+      "input_sha256": "74c5bebc531f9dd85c7b7dd4fe1307881d47896c0f42df4324e6aa4a463b57f3",
+      "shape": [
+        10987,
+        207
+      ]
+    }
+  ],
+  "gvrh_retraining_reproduction": {
+    "per_fold": {
+      "fold_0": {
+        "predictions_identical": true,
+        "scores_identical": true,
+        "selected_parameters_identical": true
+      },
+      "fold_1": {
+        "predictions_identical": true,
+        "scores_identical": true,
+        "selected_parameters_identical": true
+      },
+      "fold_2": {
+        "predictions_identical": true,
+        "scores_identical": true,
+        "selected_parameters_identical": true
+      },
+      "fold_3": {
+        "predictions_identical": true,
+        "scores_identical": true,
+        "selected_parameters_identical": true
+      },
+      "fold_4": {
+        "predictions_identical": true,
+        "scores_identical": true,
+        "selected_parameters_identical": true
+      }
+    }
+  },
+  "notes": [
+    "The final full run completed both tasks and official task-object merge without manual result construction.",
+    "All scores were independently recomputed by the final driver against official data.",
+    "The dataset-specific ID-prefix cache issue was reproduced and fixed before this final full run. Both task source-hash manifests match the submitted source.",
+    "Source/scorer/fold/data hashes and every selected inner setting are retained. Historical test exposure is disclosed; this is not a newly unseen holdout.",
+    "Upstream UTC datetime and pymatgen/SymPy deprecation warnings can occur; they are not suppressed."
+  ],
+  "official_api": {
+    "is_complete": false,
+    "is_recorded": true,
+    "is_valid": true,
+    "tasks": [
+      "matbench_log_gvrh",
+      "matbench_log_kvrh"
+    ]
+  },
+  "physical_memory_bytes": 17179869184,
+  "result_sha256": "3fd3f375ce434365d55afdefd11281db457cfe0d28ff3dcf87f7619cc460c34f",
+  "task_runs": {
+    "matbench_log_gvrh": {
+      "elapsed_seconds": 468.25168733300234,
+      "features": {
+        "cache_hit": false,
+        "cache_key": "1e3fdf6b24785d20b7d8b6a1ef430710dcbc1153a9de85010d07d26f8e8d2d28",
+        "cache_sha256": "42fc8ce42047f54c0b07c34236d5b389ecf8c21d41a39c6857e5cbb007e98bc3",
+        "expansion_fallback_count": 0,
+        "feature_track": "B_comp+ph",
+        "features": 207,
+        "featurization_seconds": 57.74562904200138,
+        "hard_cap_count": 0,
+        "input_sha256": "74c5bebc531f9dd85c7b7dd4fe1307881d47896c0f42df4324e6aa4a463b57f3",
+        "rows": 10987
+      },
+      "fold_seconds": {
+        "0": 71.96364537500631,
+        "1": 96.47118333400431,
+        "2": 77.77432599999884,
+        "3": 79.57765737499722,
+        "4": 81.47593279200373
+      },
+      "hardware": {
+        "cpu": "Apple M1",
+        "feature_workers": 4,
+        "logical_cpus": 8,
+        "machine": "arm64",
+        "model_threads": 1,
+        "packages": {
+          "matbench": "0.6",
+          "matminer": "0.10.1",
+          "numpy": "2.2.6",
+          "pandas": "2.3.3",
+          "persim": "0.3.8",
+          "pyarrow": "19.0.1",
+          "pymatgen": "2025.10.7",
+          "ripser": "0.6.15",
+          "scikit-learn": "1.7.2",
+          "scipy": "1.18.1",
+          "threadpoolctl": "3.6.0"
+        },
+        "platform": "macOS-26.2-arm64-arm-64bit",
+        "python": "3.12.10"
+      },
+      "historical_test_exposure": "The earlier submission inspected outer-fold scores for alternative feature/model tracks. This revision freezes the declared feature track before refitting; it does not turn previously observed benchmark folds into an unseen holdout. No historical preregistration evidence is available.",
+      "official_from_file_is_valid": true,
+      "results_sha256": "7d017d79b572518b8f522b1080b1b259d6442f3d324b604b6c6ae48db0dd1160",
+      "scores": {
+        "mae": {
+          "max": 0.08271026231968316,
+          "mean": 0.08104859729475226,
+          "min": 0.07976971244923446,
+          "std": 0.0011460957999895772
+        },
+        "mape": {
+          "max": 0.0649591569399957,
+          "mean": 0.06299955773353338,
+          "min": 0.06114388406050308,
+          "std": 0.0014033688018324508
+        },
+        "max_error": {
+          "max": 1.1775314797253371,
+          "mean": 0.9493626551394243,
+          "min": 0.8343497089289511,
+          "std": 0.1200619870444155
+        },
+        "rmse": {
+          "max": 0.12279570734410009,
+          "mean": 0.11921930089639629,
+          "min": 0.11733579309458951,
+          "std": 0.0019441768033611458
+        }
+      },
+      "sdk": {
+        "git_revision": "4b7d0714849a917814115be380a64e7ace94be55",
+        "scorer_sha256": "f791263c675c45b6938c78d856676a6821ac6879526bc9aca7d82523303c3414",
+        "validation_sha256": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+        "version": "0.6"
+      },
+      "source_sha256": {
+        "composition_features.py": "eac3fbdee730e669d405ac4fe9701e5c8832c6efd2ff11b7b797bcf74c8c5e08",
+        "composition_features_v2.py": "4ead01a7665d62371c633d44a5f90d5e8a047a1b49e7e0d9b2c4f80b165aa59b",
+        "element_table_generated.py": "dec52d5cd2b5f14960e1cff52516ff3596232f536aeca1ce7e6bba9d97d531f5",
+        "ph_features.py": "ddcb2edb8b520d1ded2145466f0cedb84653ff35bf7c5fa6ec0c091ae494d47e",
+        "protocol.py": "888f9b932443936ac4847f18a520f2da92357a372de417b611333d6671a57520"
+      },
+      "task": "matbench_log_gvrh"
+    },
+    "matbench_log_kvrh": {
+      "elapsed_seconds": 343.3768127920048,
+      "features": {
+        "cache_hit": true,
+        "cache_key": "1e3fdf6b24785d20b7d8b6a1ef430710dcbc1153a9de85010d07d26f8e8d2d28",
+        "cache_sha256": "42fc8ce42047f54c0b07c34236d5b389ecf8c21d41a39c6857e5cbb007e98bc3",
+        "expansion_fallback_count": 0,
+        "feature_track": "B_comp+ph",
+        "features": 207,
+        "featurization_seconds": 57.74562904200138,
+        "hard_cap_count": 0,
+        "input_sha256": "74c5bebc531f9dd85c7b7dd4fe1307881d47896c0f42df4324e6aa4a463b57f3",
+        "rows": 10987
+      },
+      "fold_seconds": {
+        "0": 74.69461008300277,
+        "1": 57.22722266599885,
+        "2": 80.00732716699713,
+        "3": 59.979095167000196,
+        "4": 66.03963079100504
+      },
+      "hardware": {
+        "cpu": "Apple M1",
+        "feature_workers": 4,
+        "logical_cpus": 8,
+        "machine": "arm64",
+        "model_threads": 1,
+        "packages": {
+          "matbench": "0.6",
+          "matminer": "0.10.1",
+          "numpy": "2.2.6",
+          "pandas": "2.3.3",
+          "persim": "0.3.8",
+          "pyarrow": "19.0.1",
+          "pymatgen": "2025.10.7",
+          "ripser": "0.6.15",
+          "scikit-learn": "1.7.2",
+          "scipy": "1.18.1",
+          "threadpoolctl": "3.6.0"
+        },
+        "platform": "macOS-26.2-arm64-arm-64bit",
+        "python": "3.12.10"
+      },
+      "historical_test_exposure": "The earlier submission inspected outer-fold scores for alternative feature/model tracks. This revision freezes the declared feature track before refitting; it does not turn previously observed benchmark folds into an unseen holdout. No historical preregistration evidence is available.",
+      "official_from_file_is_valid": true,
+      "results_sha256": "2d9dbba54f320b7b9caac28f9d3785614d77133b233757f8b051cc23f51076f3",
+      "scores": {
+        "mae": {
+          "max": 0.06738666003683162,
+          "mean": 0.06396968303079482,
+          "min": 0.06166040900350381,
+          "std": 0.0018853600431431006
+        },
+        "mape": {
+          "max": 0.04838966850454018,
+          "mean": 0.04253975305223417,
+          "min": 0.04026408860059916,
+          "std": 0.0029551689920116826
+        },
+        "max_error": {
+          "max": 1.7833698804495466,
+          "mean": 1.3792454873512832,
+          "min": 1.1167693057189068,
+          "std": 0.22777710767666187
+        },
+        "rmse": {
+          "max": 0.11901987827084633,
+          "mean": 0.11254020980592941,
+          "min": 0.10700224643503664,
+          "std": 0.004065532033281638
+        }
+      },
+      "sdk": {
+        "git_revision": "4b7d0714849a917814115be380a64e7ace94be55",
+        "scorer_sha256": "f791263c675c45b6938c78d856676a6821ac6879526bc9aca7d82523303c3414",
+        "validation_sha256": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+        "version": "0.6"
+      },
+      "source_sha256": {
+        "composition_features.py": "eac3fbdee730e669d405ac4fe9701e5c8832c6efd2ff11b7b797bcf74c8c5e08",
+        "composition_features_v2.py": "4ead01a7665d62371c633d44a5f90d5e8a047a1b49e7e0d9b2c4f80b165aa59b",
+        "element_table_generated.py": "dec52d5cd2b5f14960e1cff52516ff3596232f536aeca1ce7e6bba9d97d531f5",
+        "ph_features.py": "ddcb2edb8b520d1ded2145466f0cedb84653ff35bf7c5fa6ec0c091ae494d47e",
+        "protocol.py": "888f9b932443936ac4847f18a520f2da92357a372de417b611333d6671a57520"
+      },
+      "task": "matbench_log_kvrh"
+    }
+  }
+}
