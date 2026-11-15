@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "policy": "Independently reviewed original artifacts submitted before the 2026-11-10 probability gate. Dates alone never grant eligibility. Additions require a separate review of provenance, canonical folds and IDs, prediction types, and recomputed cached metrics. Replacement artifacts must satisfy the ordinary probability policy.",
+  "artifacts": [
+    {
+      "path": "benchmarks/matbench_v0.1_alignn_v2.0/results.json.gz",
+      "sha256": "dcd7f541803b2a9bb00ab4e98294212c6d55065130d5dba9aafa11df026c4fce",
+      "pull_request": "https://github.com/materialsproject/matbench/pull/370",
+      "submitted_at": "2026-09-21T14:29:03Z",
+      "original_commit": "0899e1a2341bd59d18b70701d8806903cdf8fd7d",
+      "original_commit_date": "2026-09-21T14:17:29Z",
+      "hard_label_tasks": ["matbench_mp_is_metal"],
+      "metric_policy": "Recompute BA, accuracy and F1 from the original decisions. Verify legacy cached rocauc against BA; probability ROC AUC remains unavailable."
+    }
+  ]
+}

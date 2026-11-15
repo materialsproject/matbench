@@ -1,0 +1,4 @@
+# Additional dependency for memory-bounded parsing of official raw datasets.
+# Install the current Matbench checkout separately. This is not a historical
+# AlchemBERT training environment or a complete environment lockfile.
+ijson==3.6.0

@@ -59,13 +59,12 @@ Raw data download and example notebook available [on the matbench repo](https://
 ###### Fold scores
 
 | fold | mae | rmse | mape* | max_error |
-|------ |------ |------ |------ |------ |
- | fold_0 | 0.7026| 1.0677| 0.3201| 14.9501 |
- | fold_1 | 0.7811| 1.4374| 0.3142| 20.3552 |
- | fold_2 | 0.9218| 3.1055| 0.3155| 59.6653 |
- | fold_3 | 0.8382| 2.4438| 0.3266| 53.4563 |
- | fold_4 | 0.8004| 1.8094| 0.3222| 28.5706 |
-
+|------|------|------|------|------|
+| fold_0 | 0.7026 | 1.0677 | 0.3201 | 14.9501 |
+| fold_1 | 0.7811 | 1.4374 | 0.3142 | 20.3552 |
+| fold_2 | 0.9218 | 3.1055 | 0.3155 | 59.6653 |
+| fold_3 | 0.8382 | 2.4438 | 0.3266 | 53.4563 |
+| fold_4 | 0.8004 | 1.8094 | 0.3222 | 28.5706 |
 
 ###### Fold score stats
 
@@ -75,7 +74,6 @@ Raw data download and example notebook available [on the matbench repo](https://
 | rmse | 1.9728 | 3.1055 | 1.0677 | 0.7263 |
 | mape* | 0.3197 | 0.3266 | 0.3142 | 0.0045 |
 | max_error | 35.3995 | 59.6653 | 14.9501 | 17.9221 |
-
 
 ###### Fold parameters
 
@@ -95,13 +93,12 @@ Raw data download and example notebook available [on the matbench repo](https://
 ###### Fold scores
 
 | fold | mae | rmse | mape* | max_error |
-|------ |------ |------ |------ |------ |
- | fold_0 | 1.0965| 1.3397| 0.8589| 7.0119 |
- | fold_1 | 1.1922| 1.5156| 0.7802| 8.3754 |
- | fold_2 | 1.1527| 1.5268| 1.0398| 10.7354 |
- | fold_3 | 1.1445| 1.4389| 0.8373| 9.5190 |
- | fold_4 | 1.1317| 1.3979| 1.2418| 9.0085 |
-
+|------|------|------|------|------|
+| fold_0 | 1.0965 | 1.3397 | 0.8589 | 7.0119 |
+| fold_1 | 1.1922 | 1.5156 | 0.7802 | 8.3754 |
+| fold_2 | 1.1527 | 1.5268 | 1.0398 | 10.7354 |
+| fold_3 | 1.1445 | 1.4389 | 0.8373 | 9.5190 |
+| fold_4 | 1.1317 | 1.3979 | 1.2418 | 9.0085 |
 
 ###### Fold score stats
 
@@ -111,7 +108,6 @@ Raw data download and example notebook available [on the matbench repo](https://
 | rmse | 1.4438 | 1.5268 | 1.3397 | 0.0707 |
 | mape* | 0.9516 | 1.2418 | 0.7802 | 0.1692 |
 | max_error | 8.9300 | 10.7354 | 7.0119 | 1.2328 |
-
 
 ###### Fold parameters
 
@@ -128,26 +124,119 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 #### `matbench_expt_is_metal`
 
+**Probability ROC AUC: unavailable.** No usable probabilities were saved, so probability ROC AUC cannot be recovered. Balanced accuracy, accuracy and F1 below are recomputed from saved hard-label decisions aligned by sample ID with official test labels. The original decision threshold may be unknown; these historical decisions have not been reevaluated at a common threshold. Statistics use unweighted five-fold means and population standard deviations (ddof=0).
+
+[Classification score audit and file provenance (JSON)](../static/classification_scores.json)
+
 ###### Fold scores
 
-| fold | accuracy | balanced_accuracy | f1 | rocauc |
-|------ |------ |------ |------ |------ |
- | fold_0 | 0.4701| 0.4700| 0.4540| 0.4700 |
- | fold_1 | 0.5000| 0.5001| 0.5080| 0.5001 |
- | fold_2 | 0.4878| 0.4878| 0.4878| 0.4878 |
- | fold_3 | 0.5071| 0.5072| 0.5126| 0.5072 |
- | fold_4 | 0.4970| 0.4969| 0.4944| 0.4969 |
-
+| fold | accuracy | balanced accuracy | f1 |
+|------|------|------|------|
+| fold_0 | 0.4701 | 0.4700 | 0.4540 |
+| fold_1 | 0.5000 | 0.5001 | 0.5080 |
+| fold_2 | 0.4878 | 0.4878 | 0.4878 |
+| fold_3 | 0.5071 | 0.5072 | 0.5126 |
+| fold_4 | 0.4970 | 0.4969 | 0.4944 |
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
 | accuracy | 0.4924 | 0.5071 | 0.4701 | 0.0128 |
-| balanced_accuracy | 0.4924 | 0.5072 | 0.4700 | 0.0128 |
+| balanced accuracy | 0.4924 | 0.5072 | 0.4700 | 0.0128 |
 | f1 | 0.4913 | 0.5126 | 0.4540 | 0.0207 |
-| rocauc | 0.4924 | 0.5072 | 0.4700 | 0.0128 |
 
+<details><summary>Original stored classification scores (historical)</summary>
+<p>These values reproduce the original submission artifact. Older stored <code>rocauc</code> values may reflect thresholded decisions, whose AUC equals balanced accuracy; they must not be interpreted as the recomputed probability ROC AUC above.</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>fold</th>
+      <th>accuracy</th>
+      <th>balanced_accuracy</th>
+      <th>f1</th>
+      <th>stored rocauc (historical)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fold_0</td>
+      <td>0.4701</td>
+      <td>0.4700</td>
+      <td>0.4540</td>
+      <td>0.4700</td>
+    </tr>
+    <tr>
+      <td>fold_1</td>
+      <td>0.5000</td>
+      <td>0.5001</td>
+      <td>0.5080</td>
+      <td>0.5001</td>
+    </tr>
+    <tr>
+      <td>fold_2</td>
+      <td>0.4878</td>
+      <td>0.4878</td>
+      <td>0.4878</td>
+      <td>0.4878</td>
+    </tr>
+    <tr>
+      <td>fold_3</td>
+      <td>0.5071</td>
+      <td>0.5072</td>
+      <td>0.5126</td>
+      <td>0.5072</td>
+    </tr>
+    <tr>
+      <td>fold_4</td>
+      <td>0.4970</td>
+      <td>0.4969</td>
+      <td>0.4944</td>
+      <td>0.4969</td>
+    </tr>
+  </tbody>
+</table><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>metric</th>
+      <th>mean</th>
+      <th>max</th>
+      <th>min</th>
+      <th>std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>accuracy</td>
+      <td>0.4924</td>
+      <td>0.5071</td>
+      <td>0.4701</td>
+      <td>0.0128</td>
+    </tr>
+    <tr>
+      <td>balanced_accuracy</td>
+      <td>0.4924</td>
+      <td>0.5072</td>
+      <td>0.4700</td>
+      <td>0.0128</td>
+    </tr>
+    <tr>
+      <td>f1</td>
+      <td>0.4913</td>
+      <td>0.5126</td>
+      <td>0.4540</td>
+      <td>0.0207</td>
+    </tr>
+    <tr>
+      <td>stored rocauc (historical)</td>
+      <td>0.4924</td>
+      <td>0.5072</td>
+      <td>0.4700</td>
+      <td>0.0128</td>
+    </tr>
+  </tbody>
+</table>
+</details>
 
 ###### Fold parameters
 
@@ -164,26 +253,119 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 #### `matbench_glass`
 
+**Probability ROC AUC: unavailable.** No usable probabilities were saved, so probability ROC AUC cannot be recovered. Balanced accuracy, accuracy and F1 below are recomputed from saved hard-label decisions aligned by sample ID with official test labels. The original decision threshold may be unknown; these historical decisions have not been reevaluated at a common threshold. Statistics use unweighted five-fold means and population standard deviations (ddof=0).
+
+[Classification score audit and file provenance (JSON)](../static/classification_scores.json)
+
 ###### Fold scores
 
-| fold | accuracy | balanced_accuracy | f1 | rocauc |
-|------ |------ |------ |------ |------ |
- | fold_0 | 0.6127| 0.5212| 0.7304| 0.5212 |
- | fold_1 | 0.6083| 0.5217| 0.7251| 0.5217 |
- | fold_2 | 0.5775| 0.4848| 0.7033| 0.4848 |
- | fold_3 | 0.5731| 0.4799| 0.7001| 0.4799 |
- | fold_4 | 0.5819| 0.4951| 0.7044| 0.4951 |
-
+| fold | accuracy | balanced accuracy | f1 |
+|------|------|------|------|
+| fold_0 | 0.6127 | 0.5212 | 0.7304 |
+| fold_1 | 0.6083 | 0.5217 | 0.7251 |
+| fold_2 | 0.5775 | 0.4848 | 0.7033 |
+| fold_3 | 0.5731 | 0.4799 | 0.7001 |
+| fold_4 | 0.5819 | 0.4951 | 0.7044 |
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
 | accuracy | 0.5907 | 0.6127 | 0.5731 | 0.0165 |
-| balanced_accuracy | 0.5005 | 0.5217 | 0.4799 | 0.0178 |
+| balanced accuracy | 0.5005 | 0.5217 | 0.4799 | 0.0178 |
 | f1 | 0.7127 | 0.7304 | 0.7001 | 0.0125 |
-| rocauc | 0.5005 | 0.5217 | 0.4799 | 0.0178 |
 
+<details><summary>Original stored classification scores (historical)</summary>
+<p>These values reproduce the original submission artifact. Older stored <code>rocauc</code> values may reflect thresholded decisions, whose AUC equals balanced accuracy; they must not be interpreted as the recomputed probability ROC AUC above.</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>fold</th>
+      <th>accuracy</th>
+      <th>balanced_accuracy</th>
+      <th>f1</th>
+      <th>stored rocauc (historical)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fold_0</td>
+      <td>0.6127</td>
+      <td>0.5212</td>
+      <td>0.7304</td>
+      <td>0.5212</td>
+    </tr>
+    <tr>
+      <td>fold_1</td>
+      <td>0.6083</td>
+      <td>0.5217</td>
+      <td>0.7251</td>
+      <td>0.5217</td>
+    </tr>
+    <tr>
+      <td>fold_2</td>
+      <td>0.5775</td>
+      <td>0.4848</td>
+      <td>0.7033</td>
+      <td>0.4848</td>
+    </tr>
+    <tr>
+      <td>fold_3</td>
+      <td>0.5731</td>
+      <td>0.4799</td>
+      <td>0.7001</td>
+      <td>0.4799</td>
+    </tr>
+    <tr>
+      <td>fold_4</td>
+      <td>0.5819</td>
+      <td>0.4951</td>
+      <td>0.7044</td>
+      <td>0.4951</td>
+    </tr>
+  </tbody>
+</table><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>metric</th>
+      <th>mean</th>
+      <th>max</th>
+      <th>min</th>
+      <th>std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>accuracy</td>
+      <td>0.5907</td>
+      <td>0.6127</td>
+      <td>0.5731</td>
+      <td>0.0165</td>
+    </tr>
+    <tr>
+      <td>balanced_accuracy</td>
+      <td>0.5005</td>
+      <td>0.5217</td>
+      <td>0.4799</td>
+      <td>0.0178</td>
+    </tr>
+    <tr>
+      <td>f1</td>
+      <td>0.7127</td>
+      <td>0.7304</td>
+      <td>0.7001</td>
+      <td>0.0125</td>
+    </tr>
+    <tr>
+      <td>stored rocauc (historical)</td>
+      <td>0.5005</td>
+      <td>0.5217</td>
+      <td>0.4799</td>
+      <td>0.0178</td>
+    </tr>
+  </tbody>
+</table>
+</details>
 
 ###### Fold parameters
 
@@ -203,13 +385,12 @@ Raw data download and example notebook available [on the matbench repo](https://
 ###### Fold scores
 
 | fold | mae | rmse | mape* | max_error |
-|------ |------ |------ |------ |------ |
- | fold_0 | 53.1447| 74.1060| 35.3098| 509.7791 |
- | fold_1 | 72.8118| 118.0523| 0.8129| 642.7424 |
- | fold_2 | 83.1220| 192.2365| 0.9798| 1025.0199 |
- | fold_3 | 61.3174| 85.6603| 0.7921| 468.0412 |
- | fold_4 | 66.0295| 164.1680| 1.1452| 1491.7993 |
-
+|------|------|------|------|------|
+| fold_0 | 53.1447 | 74.1060 | 35.3098 | 509.7791 |
+| fold_1 | 72.8118 | 118.0523 | 0.8129 | 642.7424 |
+| fold_2 | 83.1220 | 192.2365 | 0.9798 | 1025.0199 |
+| fold_3 | 61.3174 | 85.6603 | 0.7921 | 468.0412 |
+| fold_4 | 66.0295 | 164.1680 | 1.1452 | 1491.7993 |
 
 ###### Fold score stats
 
@@ -219,7 +400,6 @@ Raw data download and example notebook available [on the matbench repo](https://
 | rmse | 126.8446 | 192.2365 | 74.1060 | 45.2193 |
 | mape* | 7.8079 | 35.3098 | 0.7921 | 13.7515 |
 | max_error | 827.4764 | 1491.7993 | 468.0412 | 385.9016 |
-
 
 ###### Fold parameters
 
@@ -239,13 +419,12 @@ Raw data download and example notebook available [on the matbench repo](https://
 ###### Fold scores
 
 | fold | mae | rmse | mape* | max_error |
-|------ |------ |------ |------ |------ |
- | fold_0 | 0.2943| 0.3749| 0.2368| 1.5529 |
- | fold_1 | 0.2933| 0.3743| 0.2359| 1.5544 |
- | fold_2 | 0.2969| 0.3736| 0.2353| 1.5533 |
- | fold_3 | 0.2875| 0.3646| 0.2251| 1.5524 |
- | fold_4 | 0.2937| 0.3706| 0.2334| 1.5552 |
-
+|------|------|------|------|------|
+| fold_0 | 0.2943 | 0.3749 | 0.2368 | 1.5529 |
+| fold_1 | 0.2933 | 0.3743 | 0.2359 | 1.5544 |
+| fold_2 | 0.2969 | 0.3736 | 0.2353 | 1.5533 |
+| fold_3 | 0.2875 | 0.3646 | 0.2251 | 1.5524 |
+| fold_4 | 0.2937 | 0.3706 | 0.2334 | 1.5552 |
 
 ###### Fold score stats
 
@@ -255,7 +434,6 @@ Raw data download and example notebook available [on the matbench repo](https://
 | rmse | 0.3716 | 0.3749 | 0.3646 | 0.0038 |
 | mape* | 0.2333 | 0.2368 | 0.2251 | 0.0042 |
 | max_error | 1.5536 | 1.5552 | 1.5524 | 0.0010 |
-
 
 ###### Fold parameters
 
@@ -275,13 +453,12 @@ Raw data download and example notebook available [on the matbench repo](https://
 ###### Fold scores
 
 | fold | mae | rmse | mape* | max_error |
-|------ |------ |------ |------ |------ |
- | fold_0 | 0.2935| 0.3774| 0.1877| 1.8800 |
- | fold_1 | 0.2875| 0.3669| 0.1858| 1.8809 |
- | fold_2 | 0.2889| 0.3634| 0.1825| 1.8801 |
- | fold_3 | 0.2833| 0.3635| 0.1926| 1.8790 |
- | fold_4 | 0.2953| 0.3752| 0.1900| 1.8822 |
-
+|------|------|------|------|------|
+| fold_0 | 0.2935 | 0.3774 | 0.1877 | 1.8800 |
+| fold_1 | 0.2875 | 0.3669 | 0.1858 | 1.8809 |
+| fold_2 | 0.2889 | 0.3634 | 0.1825 | 1.8801 |
+| fold_3 | 0.2833 | 0.3635 | 0.1926 | 1.8790 |
+| fold_4 | 0.2953 | 0.3752 | 0.1900 | 1.8822 |
 
 ###### Fold score stats
 
@@ -291,7 +468,6 @@ Raw data download and example notebook available [on the matbench repo](https://
 | rmse | 0.3693 | 0.3774 | 0.3634 | 0.0059 |
 | mape* | 0.1877 | 0.1926 | 0.1825 | 0.0035 |
 | max_error | 1.8804 | 1.8822 | 1.8790 | 0.0011 |
-
 
 ###### Fold parameters
 
@@ -311,13 +487,12 @@ Raw data download and example notebook available [on the matbench repo](https://
 ###### Fold scores
 
 | fold | mae | rmse | mape* | max_error |
-|------ |------ |------ |------ |------ |
- | fold_0 | 1.0063| 1.1626| 11.6409| 3.8987 |
- | fold_1 | 1.0036| 1.1597| 7.2868| 3.8782 |
- | fold_2 | 1.0062| 1.1662| 8.5651| 3.9096 |
- | fold_3 | 1.0024| 1.1597| 10.9729| 3.8934 |
- | fold_4 | 1.0111| 1.1675| 11.2779| 3.9051 |
-
+|------|------|------|------|------|
+| fold_0 | 1.0063 | 1.1626 | 11.6409 | 3.8987 |
+| fold_1 | 1.0036 | 1.1597 | 7.2868 | 3.8782 |
+| fold_2 | 1.0062 | 1.1662 | 8.5651 | 3.9096 |
+| fold_3 | 1.0024 | 1.1597 | 10.9729 | 3.8934 |
+| fold_4 | 1.0111 | 1.1675 | 11.2779 | 3.9051 |
 
 ###### Fold score stats
 
@@ -327,7 +502,6 @@ Raw data download and example notebook available [on the matbench repo](https://
 | rmse | 1.1631 | 1.1675 | 1.1597 | 0.0032 |
 | mape* | 9.9487 | 11.6409 | 7.2868 | 1.7134 |
 | max_error | 3.8970 | 3.9096 | 3.8782 | 0.0109 |
-
 
 ###### Fold parameters
 
@@ -347,13 +521,12 @@ Raw data download and example notebook available [on the matbench repo](https://
 ###### Fold scores
 
 | fold | mae | rmse | mape* | max_error |
-|------ |------ |------ |------ |------ |
- | fold_0 | 1.3199| 1.5863| 13.8283| 7.1079 |
- | fold_1 | 1.3224| 1.5888| 12.1282| 8.1096 |
- | fold_2 | 1.3252| 1.5964| 14.5509| 7.6322 |
- | fold_3 | 1.3335| 1.6113| 19.3774| 7.4334 |
- | fold_4 | 1.3348| 1.6118| 18.0392| 8.5092 |
-
+|------|------|------|------|------|
+| fold_0 | 1.3199 | 1.5863 | 13.8283 | 7.1079 |
+| fold_1 | 1.3224 | 1.5888 | 12.1282 | 8.1096 |
+| fold_2 | 1.3252 | 1.5964 | 14.5509 | 7.6322 |
+| fold_3 | 1.3335 | 1.6113 | 19.3774 | 7.4334 |
+| fold_4 | 1.3348 | 1.6118 | 18.0392 | 8.5092 |
 
 ###### Fold score stats
 
@@ -363,7 +536,6 @@ Raw data download and example notebook available [on the matbench repo](https://
 | rmse | 1.5989 | 1.6118 | 1.5863 | 0.0108 |
 | mape* | 15.5848 | 19.3774 | 12.1282 | 2.7022 |
 | max_error | 7.7585 | 8.5092 | 7.1079 | 0.4963 |
-
 
 ###### Fold parameters
 
@@ -380,26 +552,119 @@ Raw data download and example notebook available [on the matbench repo](https://
 
 #### `matbench_mp_is_metal`
 
+**Probability ROC AUC: unavailable.** No usable probabilities were saved, so probability ROC AUC cannot be recovered. Balanced accuracy, accuracy and F1 below are recomputed from saved hard-label decisions aligned by sample ID with official test labels. The original decision threshold may be unknown; these historical decisions have not been reevaluated at a common threshold. Statistics use unweighted five-fold means and population standard deviations (ddof=0).
+
+[Classification score audit and file provenance (JSON)](../static/classification_scores.json)
+
 ###### Fold scores
 
-| fold | accuracy | balanced_accuracy | f1 | rocauc |
-|------ |------ |------ |------ |------ |
- | fold_0 | 0.5158| 0.5069| 0.4405| 0.5069 |
- | fold_1 | 0.5032| 0.4944| 0.4277| 0.4944 |
- | fold_2 | 0.5069| 0.4986| 0.4342| 0.4986 |
- | fold_3 | 0.5119| 0.5032| 0.4376| 0.5032 |
- | fold_4 | 0.5118| 0.5030| 0.4367| 0.5030 |
-
+| fold | accuracy | balanced accuracy | f1 |
+|------|------|------|------|
+| fold_0 | 0.5158 | 0.5069 | 0.4405 |
+| fold_1 | 0.5032 | 0.4944 | 0.4277 |
+| fold_2 | 0.5069 | 0.4986 | 0.4342 |
+| fold_3 | 0.5119 | 0.5032 | 0.4376 |
+| fold_4 | 0.5118 | 0.5030 | 0.4367 |
 
 ###### Fold score stats
 
 | metric | mean | max | min | std |
 |--------|------|-----|-----|-----|
 | accuracy | 0.5099 | 0.5158 | 0.5032 | 0.0044 |
-| balanced_accuracy | 0.5012 | 0.5069 | 0.4944 | 0.0043 |
+| balanced accuracy | 0.5012 | 0.5069 | 0.4944 | 0.0043 |
 | f1 | 0.4353 | 0.4405 | 0.4277 | 0.0043 |
-| rocauc | 0.5012 | 0.5069 | 0.4944 | 0.0043 |
 
+<details><summary>Original stored classification scores (historical)</summary>
+<p>These values reproduce the original submission artifact. Older stored <code>rocauc</code> values may reflect thresholded decisions, whose AUC equals balanced accuracy; they must not be interpreted as the recomputed probability ROC AUC above.</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>fold</th>
+      <th>accuracy</th>
+      <th>balanced_accuracy</th>
+      <th>f1</th>
+      <th>stored rocauc (historical)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fold_0</td>
+      <td>0.5158</td>
+      <td>0.5069</td>
+      <td>0.4405</td>
+      <td>0.5069</td>
+    </tr>
+    <tr>
+      <td>fold_1</td>
+      <td>0.5032</td>
+      <td>0.4944</td>
+      <td>0.4277</td>
+      <td>0.4944</td>
+    </tr>
+    <tr>
+      <td>fold_2</td>
+      <td>0.5069</td>
+      <td>0.4986</td>
+      <td>0.4342</td>
+      <td>0.4986</td>
+    </tr>
+    <tr>
+      <td>fold_3</td>
+      <td>0.5119</td>
+      <td>0.5032</td>
+      <td>0.4376</td>
+      <td>0.5032</td>
+    </tr>
+    <tr>
+      <td>fold_4</td>
+      <td>0.5118</td>
+      <td>0.5030</td>
+      <td>0.4367</td>
+      <td>0.5030</td>
+    </tr>
+  </tbody>
+</table><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>metric</th>
+      <th>mean</th>
+      <th>max</th>
+      <th>min</th>
+      <th>std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>accuracy</td>
+      <td>0.5099</td>
+      <td>0.5158</td>
+      <td>0.5032</td>
+      <td>0.0044</td>
+    </tr>
+    <tr>
+      <td>balanced_accuracy</td>
+      <td>0.5012</td>
+      <td>0.5069</td>
+      <td>0.4944</td>
+      <td>0.0043</td>
+    </tr>
+    <tr>
+      <td>f1</td>
+      <td>0.4353</td>
+      <td>0.4405</td>
+      <td>0.4277</td>
+      <td>0.0043</td>
+    </tr>
+    <tr>
+      <td>stored rocauc (historical)</td>
+      <td>0.5012</td>
+      <td>0.5069</td>
+      <td>0.4944</td>
+      <td>0.0043</td>
+    </tr>
+  </tbody>
+</table>
+</details>
 
 ###### Fold parameters
 
@@ -419,13 +684,12 @@ Raw data download and example notebook available [on the matbench repo](https://
 ###### Fold scores
 
 | fold | mae | rmse | mape* | max_error |
-|------ |------ |------ |------ |------ |
- | fold_0 | 0.5672| 0.7361| 0.7398| 3.4868 |
- | fold_1 | 0.5742| 0.7618| 0.8046| 3.3123 |
- | fold_2 | 0.5660| 0.7438| 0.7674| 3.6873 |
- | fold_3 | 0.5614| 0.7342| 0.7738| 3.3906 |
- | fold_4 | 0.5612| 0.7362| 0.7058| 3.5084 |
-
+|------|------|------|------|------|
+| fold_0 | 0.5672 | 0.7361 | 0.7398 | 3.4868 |
+| fold_1 | 0.5742 | 0.7618 | 0.8046 | 3.3123 |
+| fold_2 | 0.5660 | 0.7438 | 0.7674 | 3.6873 |
+| fold_3 | 0.5614 | 0.7342 | 0.7738 | 3.3906 |
+| fold_4 | 0.5612 | 0.7362 | 0.7058 | 3.5084 |
 
 ###### Fold score stats
 
@@ -435,7 +699,6 @@ Raw data download and example notebook available [on the matbench repo](https://
 | rmse | 0.7424 | 0.7618 | 0.7342 | 0.0102 |
 | mape* | 0.7583 | 0.8046 | 0.7058 | 0.0334 |
 | max_error | 3.4771 | 3.6873 | 3.3123 | 0.1264 |
-
 
 ###### Fold parameters
 
@@ -455,13 +718,12 @@ Raw data download and example notebook available [on the matbench repo](https://
 ###### Fold scores
 
 | fold | mae | rmse | mape* | max_error |
-|------ |------ |------ |------ |------ |
- | fold_0 | 337.1003| 542.7449| 0.8225| 3020.7169 |
- | fold_1 | 299.1209| 452.2982| 0.7977| 2702.0312 |
- | fold_2 | 348.2576| 545.4772| 0.9223| 3062.3450 |
- | fold_3 | 325.2402| 480.9296| 1.0268| 3048.7920 |
- | fold_4 | 310.1921| 439.3166| 0.8936| 1970.0884 |
-
+|------|------|------|------|------|
+| fold_0 | 337.1003 | 542.7449 | 0.8225 | 3020.7169 |
+| fold_1 | 299.1209 | 452.2982 | 0.7977 | 2702.0312 |
+| fold_2 | 348.2576 | 545.4772 | 0.9223 | 3062.3450 |
+| fold_3 | 325.2402 | 480.9296 | 1.0268 | 3048.7920 |
+| fold_4 | 310.1921 | 439.3166 | 0.8936 | 1970.0884 |
 
 ###### Fold score stats
 
@@ -471,7 +733,6 @@ Raw data download and example notebook available [on the matbench repo](https://
 | rmse | 492.1533 | 545.4772 | 439.3166 | 44.5176 |
 | mape* | 0.8926 | 1.0268 | 0.7977 | 0.0810 |
 | max_error | 2760.7947 | 3062.3450 | 1970.0884 | 417.1581 |
-
 
 ###### Fold parameters
 
@@ -491,13 +752,12 @@ Raw data download and example notebook available [on the matbench repo](https://
 ###### Fold scores
 
 | fold | mae | rmse | mape* | max_error |
-|------ |------ |------ |------ |------ |
- | fold_0 | 241.4591| 293.7245| 0.1647| 941.0643 |
- | fold_1 | 219.3770| 289.2253| 0.1550| 1064.2831 |
- | fold_2 | 225.7932| 291.5410| 0.1600| 1084.8760 |
- | fold_3 | 241.2035| 343.9346| 0.1567| 1088.0568 |
- | fold_4 | 220.8898| 287.6803| 0.1576| 983.3424 |
-
+|------|------|------|------|------|
+| fold_0 | 241.4591 | 293.7245 | 0.1647 | 941.0643 |
+| fold_1 | 219.3770 | 289.2253 | 0.1550 | 1064.2831 |
+| fold_2 | 225.7932 | 291.5410 | 0.1600 | 1084.8760 |
+| fold_3 | 241.2035 | 343.9346 | 0.1567 | 1088.0568 |
+| fold_4 | 220.8898 | 287.6803 | 0.1576 | 983.3424 |
 
 ###### Fold score stats
 
@@ -507,7 +767,6 @@ Raw data download and example notebook available [on the matbench repo](https://
 | rmse | 301.2211 | 343.9346 | 287.6803 | 21.4551 |
 | mape* | 0.1588 | 0.1647 | 0.1550 | 0.0034 |
 | max_error | 1032.3245 | 1088.0568 | 941.0643 | 59.3579 |
-
 
 ###### Fold parameters
 

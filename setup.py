@@ -27,6 +27,7 @@ setup(
     license="modified BSD",
     packages=find_packages(include=["matbench*"], exclude=["*tests"]),
     package_data={"matbench": ["*.json"]},
+    python_requires=">=3.12",
     install_requires=[
         "matminer>=0.7.4",
         "scipy>=1.9.0",

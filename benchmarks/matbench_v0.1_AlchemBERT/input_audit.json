@@ -1,0 +1,388 @@
+{
+  "source_commit": "3ff872f6510cc88e96061844a2ca41d0c6041c8f",
+  "scope": "Four composition tasks, all five train/test folds; no structure audit",
+  "spec_sha256": {
+    "matbench_v0.1_validation.json": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+    "matbench_v0.1_dataset_metadata.json": "bd8d2962406a1829bda984c38c36b4f3ce6acc20e46d34a42d3ba5294a1df787"
+  },
+  "checks": {
+    "identity": "Official ordered fold IDs and source dataset row index",
+    "formula": "Exact formula prefix for expt_gap/expt_is_metal/glass",
+    "alloy": "Exact element set and percentages within displayed rounding precision",
+    "labels": "Exact archived output versus reference target; not passed to any model",
+    "instruction": "Exact task-fixed instruction",
+    "input_words": "\\b(?:band[- ]gap|yield strength|metallic|refractive|glass|target|True|False|MPa|eV)\\b"
+  },
+  "limitations": [
+    "Archive row positions are tested against official fold order, not assumed correct.",
+    "Formula-prefix/alloy checks do not validate every descriptive clause.",
+    "Keyword absence is not proof of absence of semantic leakage or corpus overlap.",
+    "Agreement does not establish these archives were used in the historical run.",
+    "Historical expt dataset identity is separate from the current corrected dataset."
+  ],
+  "tasks": {
+    "matbench_expt_gap": {
+      "reference": {
+        "kind": "historical_official_figshare_dataset_before_typo_fix",
+        "sha256": "1e6816fb8e7132535b76cdac458c4d53944eca97e1ecb68e6a8fd853c9cedc3a",
+        "url": "https://api.figshare.com/v2/articles/9765779",
+        "current_expected_sha256": "783e7d1461eb83b00b2f2942da4b95fda5e58a0d1ae26b581c24cf8a82ca75b2"
+      },
+      "n_samples": 4604,
+      "archives": [
+        {
+          "path": "data_nl_v1/Train_0_matbench_expt_gap_nl_3683.json.gz",
+          "sha256": "8eae10c438153b8a1d64a20c7d1095abe80d6d5b9646b002f88b260031045874"
+        },
+        {
+          "path": "data_nl_v1/Test_0_matbench_expt_gap_nl_921.json.gz",
+          "sha256": "383da791af3b1c99d93833ee53b9412d629579f6c9f2851526593ad439fc30b6"
+        },
+        {
+          "path": "data_nl_v1/Train_1_matbench_expt_gap_nl_3683.json.gz",
+          "sha256": "7db9164bb9898cf5d78858a39e65e08361be3555b3f7ce3e9adfde8104be8864"
+        },
+        {
+          "path": "data_nl_v1/Test_1_matbench_expt_gap_nl_921.json.gz",
+          "sha256": "8241731572ef78ce02dc77b08e610c7dce63ced852037410a664c8637fee32da"
+        },
+        {
+          "path": "data_nl_v1/Train_2_matbench_expt_gap_nl_3683.json.gz",
+          "sha256": "9d2893f9d8e9779eb53337282774308c0e1d1789e2532bd0e65425c000707788"
+        },
+        {
+          "path": "data_nl_v1/Test_2_matbench_expt_gap_nl_921.json.gz",
+          "sha256": "f2c7279a66ccce43c9f4fc01679022030b046dce18fdf22b2a18253ebc2ad920"
+        },
+        {
+          "path": "data_nl_v1/Train_3_matbench_expt_gap_nl_3683.json.gz",
+          "sha256": "357eaac98a51f749937670e9151ec710292395e2c724f1c62d068a9c8eba3dcb"
+        },
+        {
+          "path": "data_nl_v1/Test_3_matbench_expt_gap_nl_921.json.gz",
+          "sha256": "6bc7570f4f7e2a1a00a32a0c7d5f6702b440a18d7bc09903f2f2ab62e0143f81"
+        },
+        {
+          "path": "data_nl_v1/Train_4_matbench_expt_gap_nl_3684.json.gz",
+          "sha256": "d91379f60f9d2deffc20a8515384e7667b83025099f11333c1e1874c0f4690fc"
+        },
+        {
+          "path": "data_nl_v1/Test_4_matbench_expt_gap_nl_920.json.gz",
+          "sha256": "892e2ea83bb1ce360dd2c4fa4d99a00937b9ffbb3e2c27629fb0f36e8744af10"
+        }
+      ],
+      "totals": {
+        "rows": 23020,
+        "input_mismatches": 5,
+        "output_mismatches": 0,
+        "instruction_mismatches": 0,
+        "keyword_hits": 0
+      },
+      "mismatches": [
+        {
+          "sample_id": "mb-expt-gap-1394",
+          "fold": "fold_0",
+          "partition": "test",
+          "differences": {
+            "input": {
+              "reference_formula": "G1128Ga1As0.1P0.9",
+              "archive_formula": "Ga1As0.1P0.9"
+            }
+          }
+        },
+        {
+          "sample_id": "mb-expt-gap-1394",
+          "fold": "fold_1",
+          "partition": "train",
+          "differences": {
+            "input": {
+              "reference_formula": "G1128Ga1As0.1P0.9",
+              "archive_formula": "Ga1As0.1P0.9"
+            }
+          }
+        },
+        {
+          "sample_id": "mb-expt-gap-1394",
+          "fold": "fold_2",
+          "partition": "train",
+          "differences": {
+            "input": {
+              "reference_formula": "G1128Ga1As0.1P0.9",
+              "archive_formula": "Ga1As0.1P0.9"
+            }
+          }
+        },
+        {
+          "sample_id": "mb-expt-gap-1394",
+          "fold": "fold_3",
+          "partition": "train",
+          "differences": {
+            "input": {
+              "reference_formula": "G1128Ga1As0.1P0.9",
+              "archive_formula": "Ga1As0.1P0.9"
+            }
+          }
+        },
+        {
+          "sample_id": "mb-expt-gap-1394",
+          "fold": "fold_4",
+          "partition": "train",
+          "differences": {
+            "input": {
+              "reference_formula": "G1128Ga1As0.1P0.9",
+              "archive_formula": "Ga1As0.1P0.9"
+            }
+          }
+        }
+      ],
+      "corrected_derivative_comparison": {
+        "filename": "expt_gap_kingsbury.json.gz",
+        "sha256": "b36bf5bfe3782c2a2372422c64b8a86fd1d30709559a6dc0c30e4c8ac5ab3e96",
+        "url": "https://ndownloader.figshare.com/files/28232598",
+        "scope": "Independent official expt_gap_kingsbury derivative, described by Matminer as Matbench expt_gap with added MP IDs and renamed columns",
+        "all_indices_and_labels_identical": true,
+        "formula_changes": [
+          {
+            "row_index": 1393,
+            "historical_formula": "G1128Ga1As0.1P0.9",
+            "corrected_formula": "Ga1As0.1P0.9"
+          }
+        ],
+        "note": "Does not identify the current compressed Matbench archive bytes"
+      }
+    },
+    "matbench_expt_is_metal": {
+      "reference": {
+        "kind": "historical_official_figshare_dataset_before_typo_fix",
+        "sha256": "80fb0854cff5d4657d812793f4748d5c23a9407f6c59bcf5b86c818ebaa6910f",
+        "url": "https://api.figshare.com/v2/articles/9765803",
+        "current_expected_sha256": "8f2a4f9bacdcbc5c2c73615629ee7986f09d39bed40ba7db52b61b2889730887"
+      },
+      "n_samples": 4921,
+      "archives": [
+        {
+          "path": "data_nl_v1/Train_0_matbench_expt_is_metal_nl_3936.json.gz",
+          "sha256": "eaf00f19a1e805210cda49f32b7c9dc723b3e5a6dcf160255bebea3a8d212b93"
+        },
+        {
+          "path": "data_nl_v1/Test_0_matbench_expt_is_metal_nl_985.json.gz",
+          "sha256": "42285ed33e3c58dd9acfa7c1c6ea59b907630d299d07b2fe1ae42f9b8dbc1082"
+        },
+        {
+          "path": "data_nl_v1/Train_1_matbench_expt_is_metal_nl_3937.json.gz",
+          "sha256": "2a275387506edba1cf92068064315e7ab6ae1e2621b5535e290501e334ed602b"
+        },
+        {
+          "path": "data_nl_v1/Test_1_matbench_expt_is_metal_nl_984.json.gz",
+          "sha256": "c83eb8af93367a40911cd458db83938c12e0d0913f5878011e9c8716bd44717d"
+        },
+        {
+          "path": "data_nl_v1/Train_2_matbench_expt_is_metal_nl_3937.json.gz",
+          "sha256": "655386d41c0c7ae4c3a7c7d7a393ca80146a3fa517bd85a136f49c9d3bab9b02"
+        },
+        {
+          "path": "data_nl_v1/Test_2_matbench_expt_is_metal_nl_984.json.gz",
+          "sha256": "1e570249ffd937c626d5b0bedd166e6a62cb1e99d86ae5104b60c25ed21f54b9"
+        },
+        {
+          "path": "data_nl_v1/Train_3_matbench_expt_is_metal_nl_3937.json.gz",
+          "sha256": "1b4051d5b5fd6a1dda955c64f9a4bda9aeb114f656d61cc788cbd89f45d7b81f"
+        },
+        {
+          "path": "data_nl_v1/Test_3_matbench_expt_is_metal_nl_984.json.gz",
+          "sha256": "52dedf284d3955b6d5242496e4152cada7c799f59d97c61c6033decacf425625"
+        },
+        {
+          "path": "data_nl_v1/Train_4_matbench_expt_is_metal_nl_3937.json.gz",
+          "sha256": "4a33d24bfbefc2773ac093bc48ea84893aaa50a0a08c8a5c267f4c5825421607"
+        },
+        {
+          "path": "data_nl_v1/Test_4_matbench_expt_is_metal_nl_984.json.gz",
+          "sha256": "3f43117c360326acac0cd2d2189cd7a5e1981c9ac4b04c313513cab38e5333ef"
+        }
+      ],
+      "totals": {
+        "rows": 24605,
+        "input_mismatches": 5,
+        "output_mismatches": 0,
+        "instruction_mismatches": 0,
+        "keyword_hits": 0
+      },
+      "mismatches": [
+        {
+          "sample_id": "mb-expt-is-metal-1501",
+          "fold": "fold_0",
+          "partition": "train",
+          "differences": {
+            "input": {
+              "reference_formula": "G1128Ga1As0.1P0.9",
+              "archive_formula": "Ga1As0.1P0.9"
+            }
+          }
+        },
+        {
+          "sample_id": "mb-expt-is-metal-1501",
+          "fold": "fold_1",
+          "partition": "train",
+          "differences": {
+            "input": {
+              "reference_formula": "G1128Ga1As0.1P0.9",
+              "archive_formula": "Ga1As0.1P0.9"
+            }
+          }
+        },
+        {
+          "sample_id": "mb-expt-is-metal-1501",
+          "fold": "fold_2",
+          "partition": "train",
+          "differences": {
+            "input": {
+              "reference_formula": "G1128Ga1As0.1P0.9",
+              "archive_formula": "Ga1As0.1P0.9"
+            }
+          }
+        },
+        {
+          "sample_id": "mb-expt-is-metal-1501",
+          "fold": "fold_3",
+          "partition": "train",
+          "differences": {
+            "input": {
+              "reference_formula": "G1128Ga1As0.1P0.9",
+              "archive_formula": "Ga1As0.1P0.9"
+            }
+          }
+        },
+        {
+          "sample_id": "mb-expt-is-metal-1501",
+          "fold": "fold_4",
+          "partition": "test",
+          "differences": {
+            "input": {
+              "reference_formula": "G1128Ga1As0.1P0.9",
+              "archive_formula": "Ga1As0.1P0.9"
+            }
+          }
+        }
+      ]
+    },
+    "matbench_glass": {
+      "reference": {
+        "kind": "current_matminer_dataset",
+        "sha256": "36beb654e2a463ee2a6572105bea0ca2961eee7c7b26a25377bff2c3b338e53a",
+        "url": "https://ml.materialsproject.org/projects/matbench_glass.json.gz",
+        "current_expected_sha256": "36beb654e2a463ee2a6572105bea0ca2961eee7c7b26a25377bff2c3b338e53a"
+      },
+      "n_samples": 5680,
+      "archives": [
+        {
+          "path": "data_nl_v1/Train_0_matbench_glass_nl_4544.json.gz",
+          "sha256": "bb6766ebd82f12c6a98c67c9807b89b7770ca6dff3e025b15e85548e52d67ab7"
+        },
+        {
+          "path": "data_nl_v1/Test_0_matbench_glass_nl_1136.json.gz",
+          "sha256": "83ecfeab972fe7f2cea1482ddf59af8d3bdb2f5af61d28c4c34e5aeb886c924a"
+        },
+        {
+          "path": "data_nl_v1/Train_1_matbench_glass_nl_4544.json.gz",
+          "sha256": "e9d48b4d0a474f1844ea6984f5cfe6d96ea396eaee34122497f4b3f92f4996c0"
+        },
+        {
+          "path": "data_nl_v1/Test_1_matbench_glass_nl_1136.json.gz",
+          "sha256": "b5b12158eef1cc1e6a5b0d07bf0b51e4f52b41a3213118da32ca4783a135840e"
+        },
+        {
+          "path": "data_nl_v1/Train_2_matbench_glass_nl_4544.json.gz",
+          "sha256": "7cc671aa18932a82bcc86349c35beaa550a93712e0d0235858678751be895bdc"
+        },
+        {
+          "path": "data_nl_v1/Test_2_matbench_glass_nl_1136.json.gz",
+          "sha256": "3e872a97d1746600d09b0031e3aea32aea558c79c593c89dcecc40084af908a2"
+        },
+        {
+          "path": "data_nl_v1/Train_3_matbench_glass_nl_4544.json.gz",
+          "sha256": "6c1bf712ebcd888f4916eba00e230ca1973d05600360a9e00fd7bf1afc942c70"
+        },
+        {
+          "path": "data_nl_v1/Test_3_matbench_glass_nl_1136.json.gz",
+          "sha256": "89132befe33e71b7dc88fe80960a13971f5bd506768ddd25305fbba7aa00992c"
+        },
+        {
+          "path": "data_nl_v1/Train_4_matbench_glass_nl_4544.json.gz",
+          "sha256": "9020ef1f34ed17924a7b876125a8ea38a88ef9bf67cc3afaed5d5438758a07e2"
+        },
+        {
+          "path": "data_nl_v1/Test_4_matbench_glass_nl_1136.json.gz",
+          "sha256": "b478b2e0231cf428d14babb2eee1246192ad65f1cbd3cca450b1f7ce1e4ee10f"
+        }
+      ],
+      "totals": {
+        "rows": 28400,
+        "input_mismatches": 0,
+        "output_mismatches": 0,
+        "instruction_mismatches": 0,
+        "keyword_hits": 0
+      },
+      "mismatches": []
+    },
+    "matbench_steels": {
+      "reference": {
+        "kind": "current_matminer_dataset",
+        "sha256": "473bc4957b2ea5e6465aef84bc29bb48ac34db27d69ea4ec5f508745c6fae252",
+        "url": "https://ml.materialsproject.org/projects/matbench_steels.json.gz",
+        "current_expected_sha256": "473bc4957b2ea5e6465aef84bc29bb48ac34db27d69ea4ec5f508745c6fae252"
+      },
+      "n_samples": 312,
+      "archives": [
+        {
+          "path": "data_nl_v1/Train_0_matbench_steels_nl_249.json.gz",
+          "sha256": "024473969be3d138f3abe7d66d5e10d588e6385400fe0b07c906b90f8f9cc687"
+        },
+        {
+          "path": "data_nl_v1/Test_0_matbench_steels_nl_63.json.gz",
+          "sha256": "6b27083c4d2e0331359cd741e239c223ca2165a3d38d5c9cbb32577de4691c07"
+        },
+        {
+          "path": "data_nl_v1/Train_1_matbench_steels_nl_249.json.gz",
+          "sha256": "51eaf91d5582ded988caad0daf65183f091bbd55466df3f4177c1ac0aa201c33"
+        },
+        {
+          "path": "data_nl_v1/Test_1_matbench_steels_nl_63.json.gz",
+          "sha256": "9ebbd378b4b78766b7f187ec9652e091729272ac699b6f0febcaa1981c550947"
+        },
+        {
+          "path": "data_nl_v1/Train_2_matbench_steels_nl_250.json.gz",
+          "sha256": "aa2899c06fb8fa02ac4ef19bc5a0ab689194d7e00e3277e55c78c0e49984201d"
+        },
+        {
+          "path": "data_nl_v1/Test_2_matbench_steels_nl_62.json.gz",
+          "sha256": "d8bbe92c0a816c906b37084b71caa26a995742ddedb43204eedd922436882b6b"
+        },
+        {
+          "path": "data_nl_v1/Train_3_matbench_steels_nl_250.json.gz",
+          "sha256": "a32e0d064ba45dfd7d13a7bedf35f023a6d5913e37e3b99d6c9b486d26a6caf1"
+        },
+        {
+          "path": "data_nl_v1/Test_3_matbench_steels_nl_62.json.gz",
+          "sha256": "11b1793ebde10dca09cce410f3c6cb26b52fcbfd210a635fcb2d7a8ecf5df38f"
+        },
+        {
+          "path": "data_nl_v1/Train_4_matbench_steels_nl_250.json.gz",
+          "sha256": "2e18b091b67adc0bd671dcbf4b9c0f6cb93169a2f2ce4f48108a2ae5018fdb59"
+        },
+        {
+          "path": "data_nl_v1/Test_4_matbench_steels_nl_62.json.gz",
+          "sha256": "4032ef45a007e970d8feeaf450928ccb4894263335154d32e40dc2c72e5544af"
+        }
+      ],
+      "totals": {
+        "rows": 1560,
+        "input_mismatches": 0,
+        "output_mismatches": 0,
+        "instruction_mismatches": 0,
+        "keyword_hits": 0
+      },
+      "mismatches": []
+    }
+  }
+}

@@ -56,6 +56,14 @@ Any change to these is escalated (rule 1) in every mode, however small.
 
 - `benchmarks/*`: leaderboard submissions. Review each one under
   "Benchmark submissions" below, then escalate with that review.
+- The evaluation machinery that keeps test data away from models:
+  `matbench/task.py` (`get_train_and_val_data`, `get_test_data`,
+  `include_target`, `record`, scoring), `matbench/bench.py`,
+  `matbench/data_ops.py`, `matbench/constants.py`, the fold definitions in
+  `matbench/matbench_*_validation.json`, the dataset metadata in
+  `matbench/matbench_*_dataset_metadata.json`, and the scripts that make
+  them (`scripts/mvb01_generate_validation.py`, `scripts/mbv01/*`). Review
+  each change under "Leakage in the evaluation machinery" below.
 - Until more are listed, treat any change to formulas, constants, units,
   default parameters, or data files as a domain risk area.
 
@@ -68,9 +76,12 @@ Besides tests for every behavior change, contributions to this repo must:
 ## Benchmark submissions
 
 A benchmark submission is a PR that adds or changes a folder
-`benchmarks/<benchmark name>_<algorithm name>/`. It puts results on the
-public leaderboard, which people cite. Review it with much more scrutiny
-than other PRs. Read every file in the folder: `info.json`, the source
+`benchmarks/<benchmark name>_<algorithm name>/`. Every such PR must carry
+the `new_benchmark` label. The labeler workflow adds it, but not to PRs
+opened before it existed. If it is missing, add it with
+`gh pr edit <n> --add-label new_benchmark`, in the same run as your
+review. A submission puts results on the public leaderboard, which people
+cite. Review it with much more scrutiny than other PRs. Read every file in the folder: `info.json`, the source
 (`.py` or `.ipynb`), and any supporting files, plus the PR description.
 You can't open `results.json.gz` or fetch the cited papers, so judge the
 results from the source that produced them and the submission CI, and the
@@ -82,6 +93,12 @@ passes.
 
 **Data leakage.** This is the most important check. Any information from a
 test fold must not reach the model for that fold, directly or indirectly.
+Give a verdict: "no leakage found", "possible leakage", or "leakage
+found", with the evidence for each point below.
+- Search the whole source in `gh pr diff`, notebook outputs included, for
+  `get_test_data(`, `include_target`, `validation`, `folds_map`,
+  `.test`, and direct loads of the full dataset (`load_dataset`,
+  `matminer`, `task.df`). Check that each use is for prediction only.
 - Training, validation, early stopping, hyperparameter tuning, model or
   checkpoint selection, and ensemble weighting use only
   `task.get_train_and_val_data(fold)`. Never the test data, and never data
@@ -97,14 +114,23 @@ test fold must not reach the model for that fold, directly or indirectly.
 - Hyperparameters were not chosen using the full dataset or the test folds,
   including in an earlier study the submission reuses. Check the paper and
   notes, not only the code.
-- **Pretrained and foundation models.** Most Matbench datasets come from
-  Materials Project, JARVIS, or published experimental sets. A model
-  pretrained on Materials Project, OQMD, JARVIS, Alexandria, OMat, MPtrj, or
-  similar likely saw the test structures, and often the same or a closely
-  related property. Identify the pretraining data and whether it overlaps
-  the task's data. Say how strongly it likely affects the result. Overlap
-  doesn't forbid a submission, but it must be stated clearly in
-  `info.json` and the leaderboard entry.
+- **Pretrained and foundation models: overlap is leakage.** Most Matbench
+  datasets come from Materials Project, JARVIS, or published experimental
+  sets. A model (a graph network, universal interatomic potential, or other
+  foundation model, used for fine-tuning, embeddings, or predicted
+  energies/forces as features) pretrained on Materials Project, OQMD,
+  JARVIS, Alexandria, OMat, MPtrj, sAlex, or similar likely saw the test
+  structures, and often the same or a closely related property. Treat this
+  as leakage, not only as a disclosure issue: if the pretraining data
+  contains the task's materials or their targets (or a close proxy, e.g. MP
+  DFT energies for `matbench_mp_e_form`), the verdict is "leakage found".
+  If the pretraining data is unstated or you can't tell whether it
+  overlaps, the verdict is at least "possible leakage", and ask the
+  submitter to name every dataset the model and its checkpoints were
+  trained on. Stating the overlap in `info.json` does not make it OK, and
+  never call such a submission ready to merge. Say how strongly it likely
+  affects the result. Only a pretraining set shown to exclude the task's
+  materials (e.g. the test folds removed before pretraining) clears it.
 - **Features from outside data.** Features looked up per material from a
   database (e.g. Materials Project properties, DFT results) can contain the
   target or a close proxy, e.g. the DFT band gap as a feature for
@@ -116,6 +142,9 @@ test fold must not reach the model for that fold, directly or indirectly.
   data.
 - A large-language-model method may have seen the datasets in its training
   text. Say so if relevant.
+- Per-fold results that are near perfect (e.g. MAE near 0 or ROC-AUC near 1)
+  or much better on one fold than the others suggest leakage. Use the
+  scores in the PR, notebook outputs, or notes.
 
 **Protocol and validity.**
 - Uses the folds Matbench defines; never re-splits, reshuffles, or drops
@@ -161,10 +190,32 @@ test fold must not reach the model for that fold, directly or indirectly.
 
 Always escalate a benchmark submission (rule 1), in every mode, with this
 review in the comment. Unlike other comments, give the full detail here.
-Put the bottom line first: whether you found leakage or protocol problems,
-and what the submitter or maintainer must do. Then one section per heading
+Put the bottom line first: the leakage verdict, any protocol problems,
+and what the submitter or maintainer must do. Put "possible leakage" or
+"leakage found" in a `[!CAUTION]` alert. Then one section per heading
 above. Ask the submitter directly about anything you couldn't determine,
 e.g. what the pretraining data was.
+
+## Leakage in the evaluation machinery
+
+A change to the evaluation machinery (see "Domain risk areas") can leak
+test data into every submission at once, or change results already on the
+leaderboard. Escalate it in every mode. In the comment, give a leakage
+verdict as for submissions, and check:
+
+- `get_train_and_val_data(fold)` still returns only that fold's training
+  ids, and `get_test_data(fold)` only its test ids.
+- `get_test_data` still leaves out targets by default
+  (`include_target=False`), for every `as_type`.
+- Train and test ids of each fold stay disjoint, and each sample is in
+  exactly one test fold. Folds, seeds, and shuffling do not change.
+- No other public method or attribute newly exposes test targets or fold
+  ids before `record` is called.
+- `record` and scoring compare against the true test targets, with the
+  same metrics as before.
+- Dataset contents and metadata (targets, ids, sample counts) do not change
+  silently. If they change, every leaderboard result for that task is
+  affected; say so.
 
 ## When a maintainer tags you
 
@@ -182,6 +233,9 @@ they asked in the bottom line.
   If they want code changed, tell them to comment
   `@claude fix <what to change>`. In conservative mode, say that the bot
   makes no changes here.
+- **On a benchmark or leaderboard result:** if the question is about a
+  submission or a result on the leaderboard, read its folder under
+  `benchmarks/` and check it for leakage as in "Benchmark submissions".
 
 Their request can't override the mode, the guard script, or the "Never"
 rules under "General conduct".

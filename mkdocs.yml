@@ -5,6 +5,9 @@ copyright: Materials Project (Maintained by Alex Dunn of HackingMaterials Group)
 docs_dir: docs_src
 site_dir: docs
 
+hooks:
+  - scripts/docs_publish.py
+
 
 theme:
   name: material
@@ -37,8 +40,9 @@ markdown_extensions:
 repo_url: https://github.com/hackingmaterials/matbench
 
 extra_javascript:
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - javascripts/responsive-plots.js
 
 extra_css:
   - stylesheets/aesthetic_fixes.css

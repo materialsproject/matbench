@@ -1,0 +1,49 @@
+name: AlchemBERT CPU runtime
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "benchmarks/matbench_v0.1_AlchemBERT/**"
+      - "matbench/**"
+      - "setup.py"
+      - ".github/workflows/alchembert-runtime.yml"
+  push:
+    branches: [main]
+    paths:
+      - "benchmarks/matbench_v0.1_AlchemBERT/**"
+      - "matbench/**"
+      - "setup.py"
+      - ".github/workflows/alchembert-runtime.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  train-and-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            setup.py
+            benchmarks/matbench_v0.1_AlchemBERT/requirements-rerun-cpu.txt
+      - name: Install the prospective CPU environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install wheel setuptools
+          python -m pip install -e . -r benchmarks/matbench_v0.1_AlchemBERT/requirements-rerun-cpu.txt
+          python -m pip check
+      - name: Train and replay tiny BERT without network access
+        env:
+          HF_HUB_OFFLINE: "1"
+          TRANSFORMERS_OFFLINE: "1"
+        run: |
+          # Missing or broken training dependencies must fail, not skip the tests.
+          python -c "import torch, transformers; from transformers import BertModel, BertTokenizerFast"
+          python -m unittest discover -s benchmarks/matbench_v0.1_AlchemBERT -p 'test_train_smoke.py' -v
