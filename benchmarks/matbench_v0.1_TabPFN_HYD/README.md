@@ -1,3 +1,4 @@
+
 # TabPFN-HYD — composition-only steel yield-strength regression
 
 **Built with PriorLabs-TabPFN.** The unmodified TabPFN-v2 regression checkpoint
@@ -57,13 +58,26 @@ uses CPU estimators; TabPFN inference uses CUDA. The complete TabPFN nested
 stage took about 107 seconds including environment installation, excluding
 queueing and platform export. This is not an end-to-end timing claim.
 
-Install the dependencies in `requirements.txt`, then install the pinned
-Matbench source into that environment:
+In a fresh Python environment, run the following commands from this benchmark
+directory to install the dependencies and the pinned Matbench source:
 
 ```bash
 python -m pip install -r requirements.txt
 python -m pip install --no-deps git+https://github.com/materialsproject/matbench.git@35f88110a51adf817a53515780d99fc34f614bf8
 python reproduce.py --workdir ./replay
+```
+
+The entry point imports the installed, pinned Matbench SDK and verifies its
+source hashes against `source-lock.json`. It does not add the surrounding
+repository checkout to `sys.path`, so a newer checkout does not override the
+pinned installation. Do not use an editable Matbench install or a `PYTHONPATH`
+that points to another Matbench checkout in this environment.
+
+To check the installation and prepare the official folds and features on CPU,
+without model weights, fitting or scoring, use a fresh work directory:
+
+```bash
+python reproduce.py --workdir ./prepare-check --prepare-only
 ```
 
 Alternatively pass the original checkpoint explicitly:
