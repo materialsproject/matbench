@@ -42,7 +42,7 @@ palettable==3.3.3
 pandas==2.3.3
 parso==0.8.7
 pexpect==4.9.0
-pillow==12.3.0
+pillow==13.0.0
 platformdirs==4.12.3
 plotly==7.1.0
 prompt-toolkit==3.0.53
