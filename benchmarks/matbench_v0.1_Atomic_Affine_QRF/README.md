@@ -53,3 +53,14 @@ directory and asserts that the complete official fold dictionaries equal
   official task) seed 417 scores 99.56 MPa versus 99.09 MPa for the released
   TPOT pipeline refit with the same seed, so no chemistry-transfer advantage
   is claimed.
+
+## Security updates (2026-11-16)
+
+The replay environment now uses PyMongo 4.18.3, Tornado 6.6.1, Pillow 13.0.0
+and dnspython 2.9.2 to include their security fixes. The package lock,
+`info.json` and file checksums have been updated together. The training code,
+data, model settings and submitted results are unchanged.
+
+A fresh run of all five folds with these versions reproduced every saved
+prediction, parameter and score exactly. The original environment remains
+available in [the submission commit](https://github.com/materialsproject/matbench/tree/6e74e9476f25322d096666e5a3e23fcc3b269075/benchmarks/matbench_v0.1_Atomic_Affine_QRF).
