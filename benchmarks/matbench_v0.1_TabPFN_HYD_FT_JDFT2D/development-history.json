@@ -1,0 +1,288 @@
+{
+  "audited_at_utc": "2026-11-16T16:28:24.511233+00:00",
+  "history": [
+    {
+      "run": "jdft2d-probe-v1",
+      "frozen_at_utc": "2026-11-16T05:28:58.861469+00:00",
+      "manifest_sha256": "b4dc75ef7efb23ab22052b545e0a81736f60c311c0c2c7ddd830c7226400e616",
+      "configs": [
+        {
+          "family": "extra_trees",
+          "features": "all",
+          "max_features": 0.5,
+          "leaf": 1
+        },
+        {
+          "family": "extra_trees",
+          "features": "all",
+          "max_features": 0.5,
+          "leaf": 2
+        },
+        {
+          "family": "extra_trees",
+          "features": "all",
+          "max_features": 1.0,
+          "leaf": 1
+        },
+        {
+          "family": "extra_trees",
+          "features": "all",
+          "max_features": 1.0,
+          "leaf": 2
+        },
+        {
+          "family": "tabpfn",
+          "features": "composition",
+          "estimators": 4,
+          "summary": "mean"
+        },
+        {
+          "family": "tabpfn",
+          "features": "composition",
+          "estimators": 4,
+          "summary": "median"
+        },
+        {
+          "family": "tabpfn",
+          "features": "composition",
+          "estimators": 8,
+          "summary": "mean"
+        },
+        {
+          "family": "tabpfn",
+          "features": "composition",
+          "estimators": 8,
+          "summary": "median"
+        },
+        {
+          "family": "tabpfn",
+          "features": "all",
+          "estimators": 4,
+          "summary": "mean"
+        },
+        {
+          "family": "tabpfn",
+          "features": "all",
+          "estimators": 4,
+          "summary": "median"
+        },
+        {
+          "family": "tabpfn",
+          "features": "all",
+          "estimators": 8,
+          "summary": "mean"
+        },
+        {
+          "family": "tabpfn",
+          "features": "all",
+          "estimators": 8,
+          "summary": "median"
+        },
+        {
+          "family": "mlp",
+          "features": "all",
+          "width": 64,
+          "decay": 0.001,
+          "steps": 600
+        },
+        {
+          "family": "mlp",
+          "features": "all",
+          "width": 128,
+          "decay": 0.001,
+          "steps": 600
+        },
+        {
+          "family": "mlp",
+          "features": "all",
+          "width": 128,
+          "decay": 0.01,
+          "steps": 600
+        },
+        {
+          "family": "mlp",
+          "features": "all",
+          "width": 64,
+          "decay": 0.01,
+          "steps": 600
+        },
+        {
+          "family": "mlp",
+          "features": "composition",
+          "width": 128,
+          "decay": 0.001,
+          "steps": 600
+        },
+        {
+          "family": "mlp",
+          "features": "composition",
+          "width": 128,
+          "decay": 0.01,
+          "steps": 600
+        }
+      ],
+      "seed": 3042,
+      "feature_dims": {
+        "composition": 260,
+        "all": 370
+      },
+      "development_inner_mean_MAE": [
+        43.766021555870346,
+        43.83240519086982,
+        43.256110938530206,
+        42.61078793847519,
+        47.75456342432931,
+        42.96302348772749,
+        47.09395950545439,
+        42.438889313930396,
+        37.36084606778062,
+        32.711029276968425,
+        37.74441829391137,
+        32.64116077920469,
+        51.7365269478128,
+        49.74207110001461,
+        49.794507157427155,
+        51.91420763092927,
+        71.34138699870299,
+        71.64056179819082
+      ],
+      "TRAIN_fold": 0,
+      "own_fold0_TEST_used_for_scoring": false,
+      "other_folds_TEST_labels_overlap_with_development": true
+    },
+    {
+      "run": "jdft2d-finetune-v2",
+      "frozen_at_utc": "2026-11-16T06:29:57.118246+00:00",
+      "manifest_sha256": "b9b6e9ecb2f3f23c19bc21b446abeaf291bf73e8edd7f7261ec33e3c6c407db5",
+      "configs": [
+        {
+          "family": "finetuned_tabpfn_v2",
+          "learning_rate": 5e-06,
+          "epochs": 20,
+          "features": "all370"
+        },
+        {
+          "family": "finetuned_tabpfn_v2",
+          "learning_rate": 2e-05,
+          "epochs": 20,
+          "features": "all370"
+        }
+      ],
+      "seed": 3042,
+      "feature_dims": {
+        "composition": 260,
+        "all": 370
+      },
+      "development_inner_mean_MAE": [
+        33.19119010240011,
+        34.31071383434452
+      ],
+      "TRAIN_fold": 0,
+      "own_fold0_TEST_used_for_scoring": false,
+      "other_folds_TEST_labels_overlap_with_development": true
+    },
+    {
+      "run": "jdft2d-finetune-v3",
+      "frozen_at_utc": "2026-11-16T07:09:16.673544+00:00",
+      "manifest_sha256": "df6cb7c61d4d18f2da9a4294a36ee58dbc046621bd3a099f25378d268b502146",
+      "configs": [
+        {
+          "family": "finetuned_tabpfn_v2",
+          "learning_rate": 1e-06,
+          "epochs": 5,
+          "features": "all370",
+          "trainable_scope": "full"
+        },
+        {
+          "family": "finetuned_tabpfn_v2",
+          "learning_rate": 1e-06,
+          "epochs": 10,
+          "features": "all370",
+          "trainable_scope": "full"
+        },
+        {
+          "family": "finetuned_tabpfn_v2",
+          "learning_rate": 5e-06,
+          "epochs": 5,
+          "features": "all370",
+          "trainable_scope": "full"
+        },
+        {
+          "family": "finetuned_tabpfn_v2",
+          "learning_rate": 5e-05,
+          "epochs": 10,
+          "features": "all370",
+          "trainable_scope": "readout"
+        }
+      ],
+      "seed": 3042,
+      "feature_dims": {
+        "composition": 260,
+        "all": 370
+      },
+      "development_inner_mean_MAE": [
+        32.54835143059143,
+        32.60329086581518,
+        32.39871529517519,
+        32.871892786516874
+      ],
+      "TRAIN_fold": 0,
+      "own_fold0_TEST_used_for_scoring": false,
+      "other_folds_TEST_labels_overlap_with_development": true
+    }
+  ],
+  "fold0_TRAIN_overlap_other_TEST": {
+    "0": 0,
+    "1": 127,
+    "2": 127,
+    "3": 127,
+    "4": 127
+  },
+  "first_complete_official_evaluation": {
+    "scored_at_utc": "2026-11-16T14:17:07.753744+00:00",
+    "official_task": "matbench_jdft2d",
+    "native_official_five_fold_MAE_mean": 28.733328891325755,
+    "scores": {
+      "mae": {
+        "mean": 28.733328891325755,
+        "max": 44.37500116634626,
+        "min": 18.664869563843638,
+        "std": 9.38087794130482
+      },
+      "rmse": {
+        "mean": 91.07906545997886,
+        "max": 154.8173259443858,
+        "min": 44.45871578238808,
+        "std": 47.296121119002095
+      },
+      "mape": {
+        "mean": 4.280673537093632,
+        "max": 20.151412020111852,
+        "min": 0.15348244413786152,
+        "std": 7.936658246667135
+      },
+      "max_error": {
+        "mean": 701.0858333918989,
+        "max": 1567.7606327837402,
+        "min": 319.56156578695595,
+        "std": 480.9146258767108
+      }
+    },
+    "n_predictions": 636,
+    "all_models_genuinely_trained_and_frozen_before_test": true,
+    "official_test_used_for_selection": false,
+    "native_results_sha256": "19f4d666716d4244f69e5dcbe037d42ac3bfdd4f4ae8d8ecd02b150e589d3a26",
+    "public_submission_created": false,
+    "public_first_confirmed": false
+  },
+  "prior_complete_official_jdft2d_evaluations_found": [],
+  "evidence_scope": "Local experiment indexes, frozen input manifests, completed output manifests and source entrypoints; not a claim about inaccessible external activity.",
+  "findings": {
+    "seed_and_370_descriptor_formula_fixed_before_first_pilot_score": true,
+    "composition_vs_structure_and_inference4or8_mean_or_median_chosen_on_fold0_development": true,
+    "v3_grid_adapted_after_v2_development_results": true,
+    "loss_MAE1_CRPS025_fixed_before_first_finetuning_result_and_never_swept": true,
+    "design_selection_bias_risk_cannot_be_denied": true
+  },
+  "recovery_rule": "Prospectively freeze all historical feature, schedule, inference and positive blend alternatives; select solely within each own outer TRAIN. Replace old result regardless of score direction; disclose old result and development/test exposure. Never claim the history has been erased."
+}

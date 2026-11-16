@@ -1,0 +1,8 @@
+{
+  "status": "running_not_complete",
+  "corrected_result_exists": false,
+  "historical_result_preserved": true,
+  "corrected_public_full_pipeline_passed": false,
+  "old_score_design_unbiased": false,
+  "replacement_independent_of_score_direction": true
+}

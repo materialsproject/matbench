@@ -1,0 +1,63 @@
+{
+  "frozen_at_utc": "2026-11-16T16:41:59.390884+00:00",
+  "purpose": "Reviewer-requested correction of fold0 design reuse; not a performance-driven experiment",
+  "scientific_source_sha256": {
+    "jdft2d_geometry_features.py": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
+    "matbench_jdft2d_training.py": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c",
+    "jdft2d_review_candidates.py": "2d932d0b7abde7c0682429b5e0dbcaf269771089a4c1ba73ae07f3fd8ee5478c",
+    "jdft2d_review_workflow.py": "612f855a2e9036dee6c02f374ad45f01645d176631bb67f89150daf2f596b3a6",
+    "jdft2d_review_stage.py": "669bba4aa55358fc3dbb0a61ef3821ef5e0e9d793daa0cfce4a5d3b7bc8a0213",
+    "jdft2d_review_reproduce.py": "f5c77cc860cd5611c97cf769d8a5ac6ceaa32b5b9e343c6fd80d81a7e1f22563"
+  },
+  "original_checkpoint_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+  "data_sha256": "26057dc4524e193e32abffb296ce819b58b6e11d1278cae329a2f97817a4eddf",
+  "official_splits_sha256": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+  "feature_options": [
+    "composition260",
+    "all370"
+  ],
+  "finetuning_schedule_origin": "all2 v2 schedules plus all4 v3 schedules, not v3 narrow grid only",
+  "finetuning_schedules_count": 6,
+  "inference_alternatives": {
+    "estimators": [
+      4,
+      8
+    ],
+    "output": [
+      "mean",
+      "median"
+    ]
+  },
+  "historical_positive_blend_weights": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "random_MLPs": "all6 genuinely trained v1 options retained; trees and pure untrained TabPFN are not eligible standalone because actual-gradient training was required before v1",
+  "outer_TRAIN_candidate_count": 1206,
+  "candidate_count_derivation": "48FT inference alternatives x(24positive baseline blends+1pureFT)+6MLP",
+  "selection": "For each own official outerTRAIN independently, reduced-composition GroupKFold3 mean validationMAE; lowest fixed index tie-break. No outer TEST information or prior scores are inputs.",
+  "seed": 3042,
+  "loss": "Same pre-v2 MAE1 CRPS.25 CE0 MSE0, no loss sweep",
+  "all_five_final_models_freeze_before_any_corrected_test_prediction": true,
+  "replacement_rule": "The corrected result replaces the original regardless of metric direction; never choose minimum across official scores.",
+  "prior_official_results": [
+    {
+      "at_utc": "2026-11-16T14:17:07.753744+00:00",
+      "MAE": 28.733328891325755,
+      "result_sha256": "19f4d666716d4244f69e5dcbe037d42ac3bfdd4f4ae8d8ecd02b150e589d3a26"
+    }
+  ],
+  "historical_design_exposure_disclosed": true,
+  "historical_exposure_cannot_be_erased_by_rerun": true,
+  "no_claim_of_pristine_never_seen_test_design": true,
+  "intermediate_weight_retention": "Retain learned weights and parameter hashes; hash every optimizer tensor before omitting candidate optimizer tensors for storage. Final models retain full optimizer state.",
+  "required_public_orchestration_run": "Exact public master and scientific stage scripts across explicit bounded executor; default single-machine transport not separately claimed.",
+  "single_owned_A100": true,
+  "per_job_container_timeout_seconds": 1200,
+  "backoff_limit": 0,
+  "no_failed_GPU_auto_retry": true,
+  "old_result_preserved": true,
+  "protocol_must_not_change_after_first_corrected_GPU_submission": true
+}

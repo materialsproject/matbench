@@ -24,5 +24,16 @@
   "public_source_contains_personal_credentials": false,
   "prediction_adapter": "Only the input mount root is replaced by a caller-supplied local model root; all calculations are unchanged.",
   "original_prediction_source_sha256": "f946f1183a2eec8456d7df35ab3fcbf4e35f7b8536e85456bdf2828f33c287ef",
-  "public_prediction_source_sha256": "824e89f5fa35f68c54badef1891e015720110246f5323d2a060f3311ed79ff39"
+  "public_prediction_source_sha256": "824e89f5fa35f68c54badef1891e015720110246f5323d2a060f3311ed79ff39",
+  "corrected_scientific_source_sha256": {
+    "jdft2d_geometry_features.py": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
+    "matbench_jdft2d_training.py": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c",
+    "jdft2d_review_candidates.py": "2d932d0b7abde7c0682429b5e0dbcaf269771089a4c1ba73ae07f3fd8ee5478c",
+    "jdft2d_review_workflow.py": "612f855a2e9036dee6c02f374ad45f01645d176631bb67f89150daf2f596b3a6",
+    "jdft2d_review_stage.py": "669bba4aa55358fc3dbb0a61ef3821ef5e0e9d793daa0cfce4a5d3b7bc8a0213",
+    "jdft2d_review_reproduce.py": "f5c77cc860cd5611c97cf769d8a5ac6ceaa32b5b9e343c6fd80d81a7e1f22563"
+  },
+  "corrected_protocol_sha256": "fe0c7bb3246799c7704ba439a3da77a55d8075e1179aaeccb452f17a706bb63b",
+  "original_native_result_preserved_pending_correction": true,
+  "complete_corrected_public_pipeline_passed": false
 }
