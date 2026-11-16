@@ -52,7 +52,7 @@ pure-eval==0.2.4
 pygments==2.21.0
 pymatgen==2026.9.24
 pymatgen-core==2026.10.2
-pymongo==4.18.2
+pymongo==4.18.3
 pyparsing==3.3.3
 python-dateutil==2.9.0.post0
 pytz==2026.5
