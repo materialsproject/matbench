@@ -1,4 +1,3 @@
-
 """Reproduce the two-stage, train-only nested TabPFN-HYD benchmark.
 
 Built with PriorLabs-TabPFN. Run in a fresh work directory on an A100 CUDA
