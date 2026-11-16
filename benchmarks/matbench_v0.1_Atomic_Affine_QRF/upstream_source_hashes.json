@@ -1,0 +1,47 @@
+[
+  {
+    "name": "__init__.py",
+    "sha256": "909686a76841447490afeb69478f5ac00ad24b83e7c46d4d152444e7a1590490",
+    "bytes": 107
+  },
+  {
+    "name": "bench.py",
+    "sha256": "24a55785a6889b2755c31770221f0646cd2b21b654b00b3fe48b52efd015dbe6",
+    "bytes": 22204
+  },
+  {
+    "name": "constants.py",
+    "sha256": "3d03ca889ce2ed7d4d393aeb56d56fb5bb7409fd29e7b43719266f330273bf58",
+    "bytes": 1037
+  },
+  {
+    "name": "data_ops.py",
+    "sha256": "d5fc51187599708adb74de70d7ec1f378759fa7d5f1e04434100891874553e5a",
+    "bytes": 6497
+  },
+  {
+    "name": "matbench_v0.1_dataset_metadata.json",
+    "sha256": "bd8d2962406a1829bda984c38c36b4f3ce6acc20e46d34a42d3ba5294a1df787",
+    "bytes": 2564
+  },
+  {
+    "name": "matbench_v0.1_validation.json",
+    "sha256": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+    "bytes": 46006187
+  },
+  {
+    "name": "metadata.py",
+    "sha256": "e4c38a233b8826d6e5842ad0a8f7d78d0412d8cfbb19f9a837fe1b371325fa29",
+    "bytes": 624
+  },
+  {
+    "name": "task.py",
+    "sha256": "e2d9a2dde82938467e20498dd1c47363cb3b64b1b25b50af32525fe22b2568f1",
+    "bytes": 29236
+  },
+  {
+    "name": "util.py",
+    "sha256": "391d87a8084d21e072e74342cd2c9cfa1faed6f68aaf058f6af94ae09935e971",
+    "bytes": 4990
+  }
+]
