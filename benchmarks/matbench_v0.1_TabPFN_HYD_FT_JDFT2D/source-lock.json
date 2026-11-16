@@ -1,0 +1,28 @@
+{
+  "official_matbench_revision": "35f88110a51adf817a53515780d99fc34f614bf8",
+  "official_matbench_files": {
+    "task.py": "1e80efeeae1de89e882c5def73a2d5512e345f3aef3ef5f90f437f93f9b2a244",
+    "metadata.py": "e4c38a233b8826d6e5842ad0a8f7d78d0412d8cfbb19f9a837fe1b371325fa29",
+    "matbench_v0.1_validation.json": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+    "matbench_v0.1_dataset_metadata.json": "bd8d2962406a1829bda984c38c36b4f3ce6acc20e46d34a42d3ba5294a1df787",
+    "util.py": "391d87a8084d21e072e74342cd2c9cfa1faed6f68aaf058f6af94ae09935e971",
+    "constants.py": "3d03ca889ce2ed7d4d393aeb56d56fb5bb7409fd29e7b43719266f330273bf58",
+    "__init__.py": "909686a76841447490afeb69478f5ac00ad24b83e7c46d4d152444e7a1590490",
+    "bench.py": "dc38a5eef58375f525f59806852af588a276d91736894acafe0839a0b55c9ad8",
+    "data_ops.py": "f791263c675c45b6938c78d856676a6821ac6879526bc9aca7d82523303c3414"
+  },
+  "raw_dataset_sha256": "26057dc4524e193e32abffb296ce819b58b6e11d1278cae329a2f97817a4eddf",
+  "foundation_repository": "Prior-Labs/TabPFN-v2-reg",
+  "foundation_revision": "02a44705ff7790b50cded404bc59adb94da456a1",
+  "foundation_file": "tabpfn-v2-regressor-v2_default.ckpt",
+  "foundation_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+  "native_results_sha256": "19f4d666716d4244f69e5dcbe037d42ac3bfdd4f4ae8d8ecd02b150e589d3a26",
+  "actual_training_source_sha256": {
+    "matbench_jdft2d_training.py": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c",
+    "matbench_jdft2d_nested_train.py": "73c69119be8326f2b7e33c411fe7716e5e376865b1fadcbabf8a48e87d8885c7"
+  },
+  "public_source_contains_personal_credentials": false,
+  "prediction_adapter": "Only the input mount root is replaced by a caller-supplied local model root; all calculations are unchanged.",
+  "original_prediction_source_sha256": "f946f1183a2eec8456d7df35ab3fcbf4e35f7b8536e85456bdf2828f33c287ef",
+  "public_prediction_source_sha256": "824e89f5fa35f68c54badef1891e015720110246f5323d2a060f3311ed79ff39"
+}

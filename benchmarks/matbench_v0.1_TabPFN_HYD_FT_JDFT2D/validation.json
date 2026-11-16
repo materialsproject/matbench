@@ -1,0 +1,132 @@
+{
+  "checked_at_utc": "2026-11-16T15:50:05.173138+00:00",
+  "official_submission_checks_passed": true,
+  "official_tests_run": 2,
+  "current_additional_submission_gate_passed": true,
+  "official_checker_revision": "4ff48ffcca0e35ba7e01421ad87271ab3c802e36",
+  "official_checker_sha256": "fdf70ffb66122c4fa47d2d0b6d3a0766fee84007417a3a2a2ee10882a4bc7b3e",
+  "scope": "Only this contribution, not all upstream tests or documentation rebuild",
+  "source_prepare": {
+    "checked_at_utc": "2026-11-16T15:48:38.119375+00:00",
+    "all_passed": true,
+    "all_636_features_and_groups_equal_including_NaNs": true,
+    "folds": [
+      {
+        "fold": 0,
+        "all_training_fields_equal": true,
+        "test_geometry_only": true,
+        "outer_fold": true,
+        "training_row_count": true,
+        "development_ids": true,
+        "excluded_official_test_ids": true,
+        "configurations": true,
+        "inner_folds": true
+      },
+      {
+        "fold": 1,
+        "all_training_fields_equal": true,
+        "test_geometry_only": true,
+        "outer_fold": true,
+        "training_row_count": true,
+        "development_ids": true,
+        "excluded_official_test_ids": true,
+        "configurations": true,
+        "inner_folds": true
+      },
+      {
+        "fold": 2,
+        "all_training_fields_equal": true,
+        "test_geometry_only": true,
+        "outer_fold": true,
+        "training_row_count": true,
+        "development_ids": true,
+        "excluded_official_test_ids": true,
+        "configurations": true,
+        "inner_folds": true
+      },
+      {
+        "fold": 3,
+        "all_training_fields_equal": true,
+        "test_geometry_only": true,
+        "outer_fold": true,
+        "training_row_count": true,
+        "development_ids": true,
+        "excluded_official_test_ids": true,
+        "configurations": true,
+        "inner_folds": true
+      },
+      {
+        "fold": 4,
+        "all_training_fields_equal": true,
+        "test_geometry_only": true,
+        "outer_fold": true,
+        "training_row_count": true,
+        "development_ids": true,
+        "excluded_official_test_ids": true,
+        "configurations": true,
+        "inner_folds": true
+      }
+    ],
+    "actual_training_workers_byte_identical": {
+      "matbench_jdft2d_training.py": true,
+      "matbench_jdft2d_nested_train.py": true
+    },
+    "predictor_only_input_root_changed": true,
+    "training_or_official_scoring_executed": false,
+    "full_public_end_to_end_retraining_executed": false
+  },
+  "fresh_process_replay": {
+    "experiment_succeeded": true,
+    "all636_official_heldout_predictions": true,
+    "n_predictions": 636,
+    "all5_final_models_frozen_before_this_job": true,
+    "model_freeze_sha256": "639d29925b4ac80dc72e1b7eee6a348b2e64bc885acc400f469bdb66fa3c847d",
+    "fresh_process_replays": [
+      {
+        "fold": 0,
+        "fresh_process": true,
+        "training_witness_rows": 16,
+        "max_abs_difference": 0.0,
+        "checkpoint_sha256": "fa9c8c3b8bfb986e7efbdd7a33a4b19a321bce0adbca6596bf056b021b11c94a",
+        "passed": true
+      },
+      {
+        "fold": 1,
+        "fresh_process": true,
+        "training_witness_rows": 16,
+        "max_abs_difference": 0.0,
+        "checkpoint_sha256": "1bd2802898e10799e619ee3d0ea925cda0e9819df2ffaebed00079289f35288b",
+        "passed": true
+      },
+      {
+        "fold": 2,
+        "fresh_process": true,
+        "training_witness_rows": 16,
+        "max_abs_difference": 0.0,
+        "checkpoint_sha256": "3dcbc3f76f790362366a3840f2bfad1744a6509594598f573d78c3f358544e0b",
+        "passed": true
+      },
+      {
+        "fold": 3,
+        "fresh_process": true,
+        "training_witness_rows": 16,
+        "max_abs_difference": 0.0,
+        "checkpoint_sha256": "72a8464b62dc7a0a8e25bd462cf8acae8572974e6958a071c3463c1f10bf5fae",
+        "passed": true
+      },
+      {
+        "fold": 4,
+        "fresh_process": true,
+        "training_witness_rows": 16,
+        "max_abs_difference": 0.0,
+        "checkpoint_sha256": "931f8d313491a1d662dbf226919f8ea6b0b82e809b35ef873f92d8f44139421d",
+        "passed": true
+      }
+    ],
+    "official_test_labels_loaded": false,
+    "gradient_updates_in_this_inference_job": 0,
+    "official_score_not_computed": true
+  },
+  "all_downloaded_output_sha_rechecked": true,
+  "full_public_command_separately_retrained": false
+}
