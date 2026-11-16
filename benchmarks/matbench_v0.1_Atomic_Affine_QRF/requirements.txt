@@ -8,7 +8,7 @@ comm==0.2.3
 contourpy==1.4.0
 cycler==0.12.1
 debugpy==1.8.22
-dnspython==2.8.0
+dnspython==2.9.2
 executing==2.2.1
 fastjsonschema==2.22.2
 fonttools==4.66.1
