@@ -64,3 +64,8 @@ data, model settings and submitted results are unchanged.
 A fresh run of all five folds with these versions reproduced every saved
 prediction, parameter and score exactly. The original environment remains
 available in [the submission commit](https://github.com/materialsproject/matbench/tree/6e74e9476f25322d096666e5a3e23fcc3b269075/benchmarks/matbench_v0.1_Atomic_Affine_QRF).
+
+A follow-up update uses certifi 2026.10.23 for
+[GHSA-6q48-6c7w-9gw2](https://github.com/advisories/GHSA-6q48-6c7w-9gw2),
+including upstream changes that retain the unaffected emSign G1 root.
+The exact five-fold replay was repeated successfully after this update.
