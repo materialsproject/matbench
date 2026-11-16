@@ -1,4 +1,3 @@
-
 # TabPFN-HYD — composition-only steel yield-strength regression
 
 **Built with PriorLabs-TabPFN.** The unmodified TabPFN-v2 regression checkpoint
