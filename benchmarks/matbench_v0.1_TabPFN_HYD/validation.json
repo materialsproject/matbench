@@ -1,0 +1,34 @@
+{
+  "official_submission_checks_passed": true,
+  "official_tests_run": 2,
+  "scope": "Only this contribution, not full upstream repository",
+  "frozen_replay": {
+    "experiment_succeeded": true,
+    "n_predictions": 312,
+    "bitwise_equal": false,
+    "max_absolute_difference": 4.547473508864641e-13,
+    "tolerance": {
+      "atol": 0.001,
+      "rtol": 1e-06
+    },
+    "targets_used": false,
+    "candidate_predictions_sha256": "611aa719f81efd90f6b78e06a7e9bda9beacab405078c254bada2cac6f4d97ca",
+    "seconds": 5.270177993923426
+  },
+  "source_prepare": {
+    "features_exactly_equal_including_nans": {
+      "ids": true,
+      "fractions": true,
+      "magpie": true
+    },
+    "training_files_byte_identical": {
+      "fold_0_training.json": true,
+      "fold_1_training.json": true,
+      "fold_2_training.json": true,
+      "fold_3_training.json": true,
+      "fold_4_training.json": true
+    },
+    "training_or_scoring_executed": false
+  },
+  "public_package_safety_scan_passed": true
+}
