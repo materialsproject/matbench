@@ -45,5 +45,20 @@
     "official_checker_revision": "4ff48ffcca0e35ba7e01421ad87271ab3c802e36",
     "official_checker_git_blob": "3e1c256672de474389b571afd1c0dd1a08432f6f",
     "official_checker_sha256": "9c589ffe091c85a0c7ecd216ce33e1cdf96300f24e1c7a4626dbb1d9c098ffbb"
+  },
+  "runtime_amendment": {
+    "reason": "Maintainer-requested HF snapshot symlink filename fix. No training, selection, prediction math or result changes.",
+    "executed_launcher_sha256": "f5c77cc860cd5611c97cf769d8a5ac6ceaa32b5b9e343c6fd80d81a7e1f22563",
+    "current_launcher_sha256": "699a154ece7d99a9a132fefffbc7a967778b8aa01d6996a553b34358b7c9b5f6",
+    "original_protocol_sha256": "fe0c7bb3246799c7704ba439a3da77a55d8075e1179aaeccb452f17a706bb63b",
+    "unchanged_scientific_source_sha256": {
+      "jdft2d_geometry_features.py": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
+      "matbench_jdft2d_training.py": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c",
+      "jdft2d_review_candidates.py": "2d932d0b7abde7c0682429b5e0dbcaf269771089a4c1ba73ae07f3fd8ee5478c",
+      "jdft2d_review_workflow.py": "612f855a2e9036dee6c02f374ad45f01645d176631bb67f89150daf2f596b3a6",
+      "jdft2d_review_stage.py": "669bba4aa55358fc3dbb0a61ef3821ef5e0e9d793daa0cfce4a5d3b7bc8a0213"
+    },
+    "original_C3": "e3dadf590464d680054682691ff2ff421155d48e",
+    "new_local_backend_full_retraining_performed": false
   }
 }

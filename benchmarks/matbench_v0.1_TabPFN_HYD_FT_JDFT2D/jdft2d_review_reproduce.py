@@ -24,6 +24,18 @@ SOURCE_FILES = ['jdft2d_geometry_features.py', 'matbench_jdft2d_training.py',
                 'jdft2d_review_stage.py']
 
 
+def checkpoint_directory(checkpoint, directory, expected_sha256):
+    """Preserve the expected filename even for HF snapshots -> blobs symlinks."""
+    checkpoint = Path(checkpoint)
+    assert checkpoint.is_file() and sha(checkpoint) == expected_sha256
+    directory = Path(directory)
+    directory.mkdir()
+    target = directory / 'tabpfn-v2-regressor-v2_default.ckpt'
+    shutil.copyfile(checkpoint, target)
+    assert sha(target) == expected_sha256
+    return directory.resolve()
+
+
 def make_bundle(directory, scientific, data_files, protocol):
     directory.mkdir()
     for name in SOURCE_FILES:
@@ -51,9 +63,10 @@ def run_stage(run, protocol, args, auxiliary_models=()):
             from huggingface_hub import hf_hub_download
             checkpoint = Path(hf_hub_download('Prior-Labs/TabPFN-v2-reg',
                 'tabpfn-v2-regressor-v2_default.ckpt', revision='02a44705ff7790b50cded404bc59adb94da456a1'))
-        assert sha(checkpoint) == request['original_checkpoint_sha256']
+        model_directory = checkpoint_directory(checkpoint, run / 'local-checkpoint',
+            request['original_checkpoint_sha256'])
         command = [sys.executable, str(run / 'inputs/jdft2d_review_stage.py'), '--bundle',
-            str(run / 'inputs'), '--model', str(checkpoint.resolve().parent), '--output', str(run / 'results/probe')]
+            str(run / 'inputs'), '--model', str(model_directory), '--output', str(run / 'results/probe')]
         (run / 'results').mkdir()
         env = dict(os.environ, OMP_NUM_THREADS='4', OPENBLAS_NUM_THREADS='4',
             DO_NOT_TRACK='1', TABPFN_DISABLE_TELEMETRY='1', CUBLAS_WORKSPACE_CONFIG=':4096:8')
@@ -118,6 +131,10 @@ def main(args):
     protocol = args.protocol.resolve()
     frozen_protocol = json.loads(protocol.read_text())
     for name, digest in frozen_protocol['scientific_source_sha256'].items():
+        if name == 'jdft2d_review_reproduce.py':
+            amendment = json.loads((HERE / 'runtime-amendment.json').read_text())
+            assert amendment['executed_launcher_sha256'] == digest
+            digest = amendment['current_launcher_sha256']
         assert sha(HERE / name) == digest, name
     prepared = root / 'prepared'
     prepare(args.data.resolve(), args.splits.resolve(), prepared, protocol)

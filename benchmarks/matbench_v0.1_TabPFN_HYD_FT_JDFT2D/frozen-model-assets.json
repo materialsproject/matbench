@@ -1,0 +1,164 @@
+{
+  "schema": 1,
+  "purpose": "Exact frozen-model replay, no training/selection/scoring",
+  "original_freeze_sha256": "2d2a44e6422f01ab131bb17e25c3bab4566bb3a8aee139903b1fef3d7bc553e3",
+  "foundation_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+  "files": {
+    "fold-0.pth": {
+      "bytes": 133183455,
+      "sha256": "fa9c8c3b8bfb986e7efbdd7a33a4b19a321bce0adbca6596bf056b021b11c94a"
+    },
+    "fold-1.pth": {
+      "bytes": 133183979,
+      "sha256": "35a983971caaeb48750295dccd64cb1f5cf6158f888f4050303bb676ebcaf8b3"
+    },
+    "fold-2.pth": {
+      "bytes": 133183979,
+      "sha256": "0602ab5dcc5c699800942df7e4601197f798043864fedd5ece391bfd41c20b04"
+    },
+    "fold-3.pth": {
+      "bytes": 133183455,
+      "sha256": "6a11c52b8dac61d4710f3f61fe64b2ce83b6c1abf0491eb49f975ead50af5b14"
+    },
+    "fold-4.pth": {
+      "bytes": 133183979,
+      "sha256": "d17b52e9d2dc1e06c2bc39c7ce67ec7cc8a5dff2889db9bf61aee2d92dca0a78"
+    },
+    "all-five-models-freeze.json": {
+      "bytes": 7517,
+      "sha256": "2d2a44e6422f01ab131bb17e25c3bab4566bb3a8aee139903b1fef3d7bc553e3"
+    },
+    "test-predictions.json": {
+      "bytes": 55416,
+      "sha256": "5d31ca1e61deccd910ab0489c8a13fe75b678e608b84a406c870f676d33142ab"
+    },
+    "train-0.npz": {
+      "bytes": 184952,
+      "sha256": "d015c965e66343d77f641734bdd73099b0c8f43e8802ac2491d9aae1aed5257d"
+    },
+    "test-0.npz": {
+      "bytes": 46372,
+      "sha256": "0851854413c658439bad0f5bd840615a5cdfbaf115c93a82f7fa205f532b0edb"
+    },
+    "selection-0.json": {
+      "bytes": 453434,
+      "sha256": "2cc19d8e8a02988b57136b32117d40d8f11853b3da73f688384154f305266248"
+    },
+    "train-1.npz": {
+      "bytes": 183828,
+      "sha256": "73779841e665a24c351af9ff534eecbebdd810fd0fa4bce848a4db347a287a74"
+    },
+    "test-1.npz": {
+      "bytes": 46992,
+      "sha256": "cae9f228756239a9836f722e7b9edf0c293a2f62214c5f5c16d0b5833c347503"
+    },
+    "selection-1.json": {
+      "bytes": 453302,
+      "sha256": "4795a8138b96c15590b49f3a28c1c37e735283708015c38508c078dd777d8437"
+    },
+    "train-2.npz": {
+      "bytes": 183500,
+      "sha256": "60afe6724f7a8defc86212c1997f713f72c4c69aa969927af400bc96aa35c992"
+    },
+    "test-2.npz": {
+      "bytes": 46092,
+      "sha256": "57ef617ab57ffa121a8f23cabcf8a480b7d49ab374b88b72f9125dc54972e9de"
+    },
+    "selection-2.json": {
+      "bytes": 453524,
+      "sha256": "2e7f54d37c56771d753c8d01757abfa646b4d89a87facc257f75eabfbaacd9da"
+    },
+    "train-3.npz": {
+      "bytes": 184511,
+      "sha256": "56649bf11970a7c0374dcacc8c14055392f6e0d20553e104a5313ec50bf7c406"
+    },
+    "test-3.npz": {
+      "bytes": 46676,
+      "sha256": "a9426bb3238acc7092fadc5bd3bf9ba05c878b2c6f0c04064e6b5298e249371a"
+    },
+    "selection-3.json": {
+      "bytes": 453393,
+      "sha256": "5542d26f434dd6fe63edbcdade1a0c089503b2b0b48bcd534f331738057c9eb9"
+    },
+    "train-4.npz": {
+      "bytes": 183846,
+      "sha256": "ada0379387f5a8e5471b3874f12f8bf97bbf8d99cc84af65f548aace2748f89f"
+    },
+    "test-4.npz": {
+      "bytes": 47015,
+      "sha256": "dbb45d1410cb493a7427b4c909e859b64b6432dce8052b576ef1bc0b910091fe"
+    },
+    "selection-4.json": {
+      "bytes": 453787,
+      "sha256": "843aeb7913f6f45a310b6a4d81d7c0d3b29eb9f0dabb7760ac079b6095ae4da7"
+    }
+  },
+  "downloads": {
+    "fold-0.pth": {
+      "url": "https://github.com/donkeey11/matbench/releases/download/jdft2d-corrected-models-v1/fold-0.pth",
+      "bytes": 133183455,
+      "sha256": "fa9c8c3b8bfb986e7efbdd7a33a4b19a321bce0adbca6596bf056b021b11c94a"
+    },
+    "fold-1.pth": {
+      "url": "https://github.com/donkeey11/matbench/releases/download/jdft2d-corrected-models-v1/fold-1.pth",
+      "bytes": 133183979,
+      "sha256": "35a983971caaeb48750295dccd64cb1f5cf6158f888f4050303bb676ebcaf8b3"
+    },
+    "fold-2.pth": {
+      "url": "https://github.com/donkeey11/matbench/releases/download/jdft2d-corrected-models-v1/fold-2.pth",
+      "bytes": 133183979,
+      "sha256": "0602ab5dcc5c699800942df7e4601197f798043864fedd5ece391bfd41c20b04"
+    },
+    "fold-3.pth": {
+      "url": "https://github.com/donkeey11/matbench/releases/download/jdft2d-corrected-models-v1/fold-3.pth",
+      "bytes": 133183455,
+      "sha256": "6a11c52b8dac61d4710f3f61fe64b2ce83b6c1abf0491eb49f975ead50af5b14"
+    },
+    "fold-4.pth": {
+      "url": "https://github.com/donkeey11/matbench/releases/download/jdft2d-corrected-models-v1/fold-4.pth",
+      "bytes": 133183979,
+      "sha256": "d17b52e9d2dc1e06c2bc39c7ce67ec7cc8a5dff2889db9bf61aee2d92dca0a78"
+    },
+    "replay-context.zip": {
+      "url": "https://github.com/donkeey11/matbench/releases/download/jdft2d-corrected-models-v1/replay-context.zip",
+      "bytes": 1480091,
+      "sha256": "ee96b8dc9e5d7c92a370ae63aab4575b01ea38566800042d2540b56976dc93d6"
+    },
+    "all-five-models-freeze.json": {
+      "url": "https://github.com/donkeey11/matbench/releases/download/jdft2d-corrected-models-v1/all-five-models-freeze.json",
+      "bytes": 7517,
+      "sha256": "2d2a44e6422f01ab131bb17e25c3bab4566bb3a8aee139903b1fef3d7bc553e3"
+    }
+  },
+  "context_files": [
+    "all-five-models-freeze.json",
+    "test-predictions.json",
+    "train-0.npz",
+    "test-0.npz",
+    "selection-0.json",
+    "train-1.npz",
+    "test-1.npz",
+    "selection-1.json",
+    "train-2.npz",
+    "test-2.npz",
+    "selection-2.json",
+    "train-3.npz",
+    "test-3.npz",
+    "selection-3.json",
+    "train-4.npz",
+    "test-4.npz",
+    "selection-4.json"
+  ],
+  "inference_source_sha256": {
+    "jdft2d_geometry_features.py": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
+    "matbench_jdft2d_training.py": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c",
+    "jdft2d_review_candidates.py": "2d932d0b7abde7c0682429b5e0dbcaf269771089a4c1ba73ae07f3fd8ee5478c",
+    "jdft2d_review_workflow.py": "612f855a2e9036dee6c02f374ad45f01645d176631bb67f89150daf2f596b3a6",
+    "jdft2d_review_stage.py": "669bba4aa55358fc3dbb0a61ef3821ef5e0e9d793daa0cfce4a5d3b7bc8a0213"
+  },
+  "replay_tolerance": {
+    "atol": 0.001,
+    "rtol": 0.0001
+  },
+  "urls_must_be_verified_after_publication": true
+}

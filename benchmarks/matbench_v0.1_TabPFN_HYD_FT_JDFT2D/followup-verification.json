@@ -1,0 +1,22 @@
+{
+  "scope": "Engineering follow-up to maintainer review on2026-11-17",
+  "cache_path_fix_regression_tests": {
+    "passed": true,
+    "tests": 2,
+    "cases": [
+      "ordinary HF snapshot->blob symlink",
+      "explicit checkpoint filename",
+      "wrong hash rejected"
+    ]
+  },
+  "actual_local_asset_hash_checks_passed": true,
+  "original_freeze_bytes_unchanged": true,
+  "all_five_exact_checkpoint_hashes_unchanged": true,
+  "native_result_bytes_unchanged": true,
+  "full636_public_replay_script_provided": true,
+  "extra_full636_GPU_replay_completed": false,
+  "extra_replay_limitation": "An additional verification attempt could not create an input-storage lease and ended before any GPU Pod was created. A diagnosed manual operational recovery was blocked by unverifiable storage-lease release. No further retry or GPU work is claimed. This does not replace the original completed636-prediction inference and80TRAIN-witness replay evidence.",
+  "training_selection_prediction_math_changed": false,
+  "new_model_or_recipe_selection_performed": false,
+  "test_feedback_used_for_parameter_changes": false
+}
