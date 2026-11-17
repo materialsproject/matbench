@@ -1,10 +1,14 @@
-# TabPFN-HYD-FT: JDFT2D review correction in progress
+# TabPFN-HYD-FT: corrected JDFT2D exfoliation-energy regression
 
 **Built with PriorLabs-TabPFN.** Only matbench_jdft2d is covered, not the 13-task general-purpose leaderboard.
 
-**Draft, not ready for acceptance.** The current results.json.gz is the preserved initial result (MAE28.733328891325755 meV/atom), which has a design-selection bias risk: initial development used fold0 TRAIN, overlapping test labels in other folds, and narrowed the candidate grid. It is not asserted to be a fully unbiased benchmark result or official first. See REVIEW_RESPONSE.md for all four answers, development-history.json for every trial, and the immutable original PR commit340be4d210abbc5367fea241f7e496818f98c171.
+The corrected native five-fold MAE is **29.99157698166102 meV/atom**, std **9.44184383860221**, using 636 real predictions. This result replaces the initial 28.733328891325755 regardless of metric direction. It is a measured result awaiting scientific review, not a claim of official first.
 
-The reviewer-requested correction is frozen before execution and reselects all historical alternatives independently inside each official TRAIN. Corrected results will replace the initial result regardless of score direction. Historical exposure cannot be erased by rerunning. Nothing from old/new outer-test scores or predictions is used for fitting, calibration, blending selection or checkpoint selection.
+The initial result had design-selection bias risk: exploratory fold0 TRAIN overlaps other folds' TEST labels and influenced a narrowed grid. The corrected run reselects the full historical candidate closure in each own TRAIN. Historical labels/results cannot be made unseen; no pristine blind-design claim is made. See development-history.json and REVIEW_RESPONSE.md. Original metadata are explicitly prefixed original- and the initial commit/results SHA remain disclosed.
+
+All 21 stages completed with exact SHA-pinned public scientific source. The initial public master was interrupted before one GPU submission by private course catalog resolution and subsequently host-resumed using the same public prepare/select/train/predict/scoring functions, data and protocol. Prior completed stages were SHA-adopted, not recomputed. No GPU failure was automatically retried. The recovery also corrected the monitor's expected response path while observing the already-created job. Those were transport/observation repairs, not scientific changes. The original master is not claimed to have completed uninterrupted; the default local-CUDA backend has not separately been fully retrained.
+
+validation.json records full output integrity, actual per-stage compute, genuine training and fresh-process replay. All five final models froze before held-out inference; all 636 IDs are present. Historical exposure and scientific acceptance remain explicit limitations.
 
 ## Reproduce the corrected protocol
 
@@ -18,8 +22,7 @@ python reproduce.py --data /path/to/matbench_jdft2d.json.gz --splits /path/to/ma
 
 Optional --checkpoint supplies the exact pinned checkpoint. Without it, the pinned public revision is downloaded. No course account or private API is needed for default local-CUDA execution. Existing outputs/intents are refused; failures stop without automatic GPU retries. Allow roughly12GiB free storage for retained checkpoints and evidence. An optional --executor/--executor-python accepts explicit bounded-job transport; it cannot change scientific inputs or recipe.
 
-The exact public master and six scientific files are currently being executed with bounded stage transport. CPU preparation/contracts have passed; completed end-to-end corrected execution and a separate full default-backend rerun are not claimed while this remains pending. Historical reproduce_original.py and old worker/selection/replay artifacts remain for provenance, not as the recommended corrected command. selection-protocol.json source hashes describe historical provenance, not missing current imports. The current source dependencies are all included and pinned in corrected-protocol-freeze.json.
 
-## Method
+## Method and actual execution
 
-Pure composition/periodic-geometry features; per-TRAIN composition-group three-fold selection over1206 alternatives; actual full/readout TabPFN gradient fine-tuning or random MLP training; positive blends selected only with inner predictions. All five final fits freeze before a new process replays TRAIN witnesses then predicts all636 held-out rows. The native Matbench scorer runs once afterward. The process does not import submitted predictions to reproduce them. Read the full schedules, checkpoint-retention limits and residual retrospective-exposure limitation in REVIEW_RESPONSE.md.
+The per-TRAIN 1206-candidate protocol, all schedules, true final-fit updates and complete inner selection metrics are included in corrected-protocol-freeze.json and selection-freezes.json. Every public scientific dependency is included. requirements.txt, LICENSE-TabPFN.txt and source-lock.json retain the pinned original non-gated checkpoint and attribution. The command reconstructs and trains, rather than loading submitted predictions. Failures stop. Default reproduction requires no course account; an optional explicit stage executor is only transport.

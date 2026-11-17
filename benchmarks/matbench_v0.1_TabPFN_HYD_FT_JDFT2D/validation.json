@@ -1,132 +1,344 @@
 {
-  "checked_at_utc": "2026-11-16T15:50:05.173138+00:00",
-  "official_submission_checks_passed": true,
-  "official_tests_run": 2,
-  "current_additional_submission_gate_passed": true,
-  "official_checker_revision": "4ff48ffcca0e35ba7e01421ad87271ab3c802e36",
-  "official_checker_sha256": "fdf70ffb66122c4fa47d2d0b6d3a0766fee84007417a3a2a2ee10882a4bc7b3e",
-  "scope": "Only this contribution, not all upstream tests or documentation rebuild",
-  "source_prepare": {
-    "checked_at_utc": "2026-11-16T15:48:38.119375+00:00",
-    "all_passed": true,
-    "all_636_features_and_groups_equal_including_NaNs": true,
-    "folds": [
-      {
-        "fold": 0,
-        "all_training_fields_equal": true,
-        "test_geometry_only": true,
-        "outer_fold": true,
-        "training_row_count": true,
-        "development_ids": true,
-        "excluded_official_test_ids": true,
-        "configurations": true,
-        "inner_folds": true
-      },
-      {
-        "fold": 1,
-        "all_training_fields_equal": true,
-        "test_geometry_only": true,
-        "outer_fold": true,
-        "training_row_count": true,
-        "development_ids": true,
-        "excluded_official_test_ids": true,
-        "configurations": true,
-        "inner_folds": true
-      },
-      {
-        "fold": 2,
-        "all_training_fields_equal": true,
-        "test_geometry_only": true,
-        "outer_fold": true,
-        "training_row_count": true,
-        "development_ids": true,
-        "excluded_official_test_ids": true,
-        "configurations": true,
-        "inner_folds": true
-      },
-      {
-        "fold": 3,
-        "all_training_fields_equal": true,
-        "test_geometry_only": true,
-        "outer_fold": true,
-        "training_row_count": true,
-        "development_ids": true,
-        "excluded_official_test_ids": true,
-        "configurations": true,
-        "inner_folds": true
-      },
-      {
-        "fold": 4,
-        "all_training_fields_equal": true,
-        "test_geometry_only": true,
-        "outer_fold": true,
-        "training_row_count": true,
-        "development_ids": true,
-        "excluded_official_test_ids": true,
-        "configurations": true,
-        "inner_folds": true
-      }
-    ],
-    "actual_training_workers_byte_identical": {
-      "matbench_jdft2d_training.py": true,
-      "matbench_jdft2d_nested_train.py": true
+  "checked_at_utc": "2026-11-17T09:30:13.312712+00:00",
+  "all_passed": true,
+  "complete_stages": 21,
+  "actual_inner_fits": 270,
+  "actual_inner_fits_by_kind": {
+    "finetune": 180,
+    "mlp": 90
+  },
+  "actual_inner_gradient_steps_by_kind": {
+    "finetune": 4200,
+    "mlp": 54000
+  },
+  "actual_final_gradient_steps": 210,
+  "all6_frozen_scientific_sources_unchanged": true,
+  "protocol_sha256": "fe0c7bb3246799c7704ba439a3da77a55d8075e1179aaeccb452f17a706bb63b",
+  "official_data_and_splits_SHA_verified": true,
+  "actual_native_scorer_9_source_files_SHA_verified": true,
+  "checker_capture_provenance": {
+    "checked_at_utc": "2026-11-17T08:15:06.113343+00:00",
+    "official_revision": "4ff48ffcca0e35ba7e01421ad87271ab3c802e36",
+    "official_git_blob": "3e1c256672de474389b571afd1c0dd1a08432f6f",
+    "official_exact_sha256": "9c589ffe091c85a0c7ecd216ce33e1cdf96300f24e1c7a4626dbb1d9c098ffbb",
+    "historical_captured_source_sha256": "fdf70ffb66122c4fa47d2d0b6d3a0766fee84007417a3a2a2ee10882a4bc7b3e",
+    "historical_capture_only_added_one_trailing_LF": true,
+    "all_AST_statements_identical": true,
+    "historical_hash_not_silently_rewritten": true
+  },
+  "actual_local_runtime": {
+    "at_utc": "2026-11-17T08:03:45.497845+00:00",
+    "actual_local_preparation_selection_and_native_scoring_versions": {
+      "matbench": "0.6",
+      "numpy": "2.5.4",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "matminer": "0.10.1",
+      "pymatgen": "2026.10.24",
+      "monty": "2026.10.21"
     },
-    "predictor_only_input_root_changed": true,
-    "training_or_official_scoring_executed": false,
-    "full_public_end_to_end_retraining_executed": false
+    "GPU_training_versions_recorded_in_per_job_installation_logs": true,
+    "native_matbench_source_fixed_verified_commit": "35f88110a51adf817a53515780d99fc34f614bf8"
   },
-  "fresh_process_replay": {
-    "experiment_succeeded": true,
-    "all636_official_heldout_predictions": true,
-    "n_predictions": 636,
-    "all5_final_models_frozen_before_this_job": true,
-    "model_freeze_sha256": "639d29925b4ac80dc72e1b7eee6a348b2e64bc885acc400f469bdb66fa3c847d",
-    "fresh_process_replays": [
-      {
-        "fold": 0,
-        "fresh_process": true,
-        "training_witness_rows": 16,
-        "max_abs_difference": 0.0,
-        "checkpoint_sha256": "fa9c8c3b8bfb986e7efbdd7a33a4b19a321bce0adbca6596bf056b021b11c94a",
-        "passed": true
-      },
-      {
-        "fold": 1,
-        "fresh_process": true,
-        "training_witness_rows": 16,
-        "max_abs_difference": 0.0,
-        "checkpoint_sha256": "1bd2802898e10799e619ee3d0ea925cda0e9819df2ffaebed00079289f35288b",
-        "passed": true
-      },
-      {
-        "fold": 2,
-        "fresh_process": true,
-        "training_witness_rows": 16,
-        "max_abs_difference": 0.0,
-        "checkpoint_sha256": "3dcbc3f76f790362366a3840f2bfad1744a6509594598f573d78c3f358544e0b",
-        "passed": true
-      },
-      {
-        "fold": 3,
-        "fresh_process": true,
-        "training_witness_rows": 16,
-        "max_abs_difference": 0.0,
-        "checkpoint_sha256": "72a8464b62dc7a0a8e25bd462cf8acae8572974e6958a071c3463c1f10bf5fae",
-        "passed": true
-      },
-      {
-        "fold": 4,
-        "fresh_process": true,
-        "training_witness_rows": 16,
-        "max_abs_difference": 0.0,
-        "checkpoint_sha256": "931f8d313491a1d662dbf226919f8ea6b0b82e809b35ef873f92d8f44139421d",
-        "passed": true
-      }
-    ],
-    "official_test_labels_loaded": false,
-    "gradient_updates_in_this_inference_job": 0,
-    "official_score_not_computed": true
+  "all636_predictions_complete": true,
+  "five_final_models_frozen_before_inference": true,
+  "fresh_process_replay_passed": true,
+  "all_owned_GPUs_released": true,
+  "native_result_reload_validated": true,
+  "no_scoring_or_selection_rerun": true,
+  "task_scope": "matbench_jdft2d only; not all13 tasks",
+  "original_result_not_compared_for_selection": true,
+  "final_fit_kind_counts": {
+    "mlp": 0,
+    "finetune_blend": 5
   },
-  "all_downloaded_output_sha_rechecked": true,
-  "full_public_command_separately_retrained": false
+  "positively_weighted_frozen_baseline_blends": 4,
+  "historical_exposure_not_erased": true,
+  "host_interruption_and_manual_recovery_disclosed": true,
+  "original_master_uninterrupted_completion_claimed": false,
+  "all_scientific_stages_completed_with_exact_public_source": true,
+  "default_local_CUDA_backend_separately_full_retrained": false,
+  "accounting": {
+    "known_occupation_card_hours_sum": 1.6652777777777779,
+    "stages_with_unknown_card_hours": 0,
+    "total_card_hours": 1.6652777777777779,
+    "measured_container_seconds_sum": 4810.590304390993,
+    "container_seconds_include_installation": true,
+    "unknown_accounting_never_filled_with_zero": true
+  },
+  "execution": [
+    {
+      "stage": "fold-0-all370",
+      "compute": {
+        "training_card_hours": 0.1297222222222222,
+        "wall_seconds": 463.2935762135312,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-0-baselines-mlp",
+      "compute": {
+        "training_card_hours": 0.02388888888888889,
+        "wall_seconds": 82.90421635191888,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-0-composition260",
+      "compute": {
+        "training_card_hours": 0.10166666666666667,
+        "wall_seconds": 362.7438741642982,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-0-final",
+      "compute": {
+        "training_card_hours": 0.07055555555555555,
+        "wall_seconds": 62.478604938834906,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-1-all370",
+      "compute": {
+        "training_card_hours": 0.11972222222222222,
+        "wall_seconds": 427.62319738045335,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-1-baselines-mlp",
+      "compute": {
+        "training_card_hours": 0.07194444444444445,
+        "wall_seconds": 80.40850206185132,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-1-composition260",
+      "compute": {
+        "training_card_hours": 0.09833333333333333,
+        "wall_seconds": 349.07957719638944,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-1-final",
+      "compute": {
+        "training_card_hours": 0.020555555555555556,
+        "wall_seconds": 71.68171981163323,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-2-all370",
+      "compute": {
+        "training_card_hours": 0.11888888888888889,
+        "wall_seconds": 424.7811199631542,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-2-baselines-mlp",
+      "compute": {
+        "training_card_hours": 0.07472222222222222,
+        "wall_seconds": 88.53723666886799,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-2-composition260",
+      "compute": {
+        "training_card_hours": 0.14972222222222223,
+        "wall_seconds": 358.11316744214855,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-2-final",
+      "compute": {
+        "training_card_hours": 0.022222222222222223,
+        "wall_seconds": 77.32155099511147,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-3-all370",
+      "compute": {
+        "training_card_hours": 0.16833333333333333,
+        "wall_seconds": 419.7949086036533,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "occupation_ledger_available": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-3-baselines-mlp",
+      "compute": {
+        "training_card_hours": 0.023333333333333334,
+        "wall_seconds": 80.4010215504095,
+        "occupation_ledger_rows": 1,
+        "occupation_ledger_available": true,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-3-composition260",
+      "compute": {
+        "training_card_hours": 0.09861111111111111,
+        "wall_seconds": 351.2123337034136,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "occupation_ledger_available": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-3-final",
+      "compute": {
+        "training_card_hours": 0.016666666666666666,
+        "wall_seconds": 55.959760749712586,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "occupation_ledger_available": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-4-all370",
+      "compute": {
+        "training_card_hours": 0.17722222222222223,
+        "wall_seconds": 456.88098706211895,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "occupation_ledger_available": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-4-baselines-mlp",
+      "compute": {
+        "training_card_hours": 0.024444444444444446,
+        "wall_seconds": 85.88446451351047,
+        "occupation_ledger_rows": 1,
+        "occupation_ledger_available": true,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-4-composition260",
+      "compute": {
+        "training_card_hours": 0.09805555555555556,
+        "wall_seconds": 348.3653838969767,
+        "occupation_ledger_rows": 1,
+        "occupation_ledger_available": true,
+        "container_seconds_includes_installation": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fold-4-final",
+      "compute": {
+        "training_card_hours": 0.021944444444444444,
+        "wall_seconds": 75.57510117534548,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "occupation_ledger_available": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    },
+    {
+      "stage": "fresh-inference",
+      "compute": {
+        "training_card_hours": 0.034722222222222224,
+        "wall_seconds": 87.54999994765967,
+        "occupation_ledger_rows": 1,
+        "container_seconds_includes_installation": true,
+        "occupation_ledger_available": true,
+        "queue_and_archiving_excluded_from_container_seconds": true
+      },
+      "exact_output_SHA_verified": true,
+      "owned_GPU_released": true
+    }
+  ],
+  "current_official_contribution_checks": {
+    "checked_at_utc": "2026-11-17T09:30:53.605824+00:00",
+    "all_passed": true,
+    "official_tests_run": 2,
+    "additional_current_submission_gate_passed": true,
+    "scope": "This contribution only; not all upstream submissions or a documentation rebuild",
+    "official_checker_revision": "4ff48ffcca0e35ba7e01421ad87271ab3c802e36",
+    "official_checker_git_blob": "3e1c256672de474389b571afd1c0dd1a08432f6f",
+    "official_checker_sha256": "9c589ffe091c85a0c7ecd216ce33e1cdf96300f24e1c7a4626dbb1d9c098ffbb",
+    "native_result_sha256": "dae42e0af5c98cdd1c8502579beffb09cc7088e0f084981e73c78765a78060e4",
+    "no_training_selection_or_score_recording": true
+  }
 }

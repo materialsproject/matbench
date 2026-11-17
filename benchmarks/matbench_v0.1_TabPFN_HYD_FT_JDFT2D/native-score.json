@@ -1,37 +1,36 @@
 {
-  "scored_at_utc": "2026-11-16T14:17:07.753744+00:00",
-  "official_task": "matbench_jdft2d",
-  "native_official_five_fold_MAE_mean": 28.733328891325755,
-  "scores": {
+  "scored_at_utc": "2026-11-17T09:29:20.829869+00:00",
+  "native_five_fold_scores": {
     "mae": {
-      "mean": 28.733328891325755,
-      "max": 44.37500116634626,
-      "min": 18.664869563843638,
-      "std": 9.38087794130482
+      "mean": 29.99157698166102,
+      "max": 46.030133927932155,
+      "min": 19.07849905417363,
+      "std": 9.44184383860221
     },
     "rmse": {
-      "mean": 91.07906545997886,
-      "max": 154.8173259443858,
-      "min": 44.45871578238808,
-      "std": 47.296121119002095
+      "mean": 92.51469371486618,
+      "max": 154.54837783334872,
+      "min": 44.449434923450475,
+      "std": 47.69384975798849
     },
     "mape": {
-      "mean": 4.280673537093632,
-      "max": 20.151412020111852,
-      "min": 0.15348244413786152,
-      "std": 7.936658246667135
+      "mean": 4.384281452907265,
+      "max": 20.629437629555483,
+      "min": 0.15721901381204426,
+      "std": 8.123693569639379
     },
     "max_error": {
-      "mean": 701.0858333918989,
-      "max": 1567.7606327837402,
-      "min": 319.56156578695595,
-      "std": 480.9146258767108
+      "mean": 697.0121543632147,
+      "max": 1568.0981562330908,
+      "min": 319.5027798057221,
+      "std": 484.36099090707614
     }
   },
   "n_predictions": 636,
-  "all_models_genuinely_trained_and_frozen_before_test": true,
-  "official_test_used_for_selection": false,
-  "native_results_sha256": "19f4d666716d4244f69e5dcbe037d42ac3bfdd4f4ae8d8ecd02b150e589d3a26",
-  "public_submission_created": false,
+  "result_sha256": "dae42e0af5c98cdd1c8502579beffb09cc7088e0f084981e73c78765a78060e4",
+  "protocol_sha256": "fe0c7bb3246799c7704ba439a3da77a55d8075e1179aaeccb452f17a706bb63b",
+  "old_score_used_for_model_selection": false,
+  "replacement_independent_of_score_direction": true,
+  "historical_exposure_disclosed": true,
   "public_first_confirmed": false
 }

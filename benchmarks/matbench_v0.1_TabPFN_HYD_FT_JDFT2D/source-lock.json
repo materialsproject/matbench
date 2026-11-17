@@ -16,15 +16,16 @@
   "foundation_revision": "02a44705ff7790b50cded404bc59adb94da456a1",
   "foundation_file": "tabpfn-v2-regressor-v2_default.ckpt",
   "foundation_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
-  "native_results_sha256": "19f4d666716d4244f69e5dcbe037d42ac3bfdd4f4ae8d8ecd02b150e589d3a26",
+  "native_results_sha256": "dae42e0af5c98cdd1c8502579beffb09cc7088e0f084981e73c78765a78060e4",
   "actual_training_source_sha256": {
+    "jdft2d_geometry_features.py": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
     "matbench_jdft2d_training.py": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c",
-    "matbench_jdft2d_nested_train.py": "73c69119be8326f2b7e33c411fe7716e5e376865b1fadcbabf8a48e87d8885c7"
+    "jdft2d_review_candidates.py": "2d932d0b7abde7c0682429b5e0dbcaf269771089a4c1ba73ae07f3fd8ee5478c",
+    "jdft2d_review_workflow.py": "612f855a2e9036dee6c02f374ad45f01645d176631bb67f89150daf2f596b3a6",
+    "jdft2d_review_stage.py": "669bba4aa55358fc3dbb0a61ef3821ef5e0e9d793daa0cfce4a5d3b7bc8a0213",
+    "jdft2d_review_reproduce.py": "f5c77cc860cd5611c97cf769d8a5ac6ceaa32b5b9e343c6fd80d81a7e1f22563"
   },
   "public_source_contains_personal_credentials": false,
-  "prediction_adapter": "Only the input mount root is replaced by a caller-supplied local model root; all calculations are unchanged.",
-  "original_prediction_source_sha256": "f946f1183a2eec8456d7df35ab3fcbf4e35f7b8536e85456bdf2828f33c287ef",
-  "public_prediction_source_sha256": "824e89f5fa35f68c54badef1891e015720110246f5323d2a060f3311ed79ff39",
   "corrected_scientific_source_sha256": {
     "jdft2d_geometry_features.py": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
     "matbench_jdft2d_training.py": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c",
@@ -34,6 +35,15 @@
     "jdft2d_review_reproduce.py": "f5c77cc860cd5611c97cf769d8a5ac6ceaa32b5b9e343c6fd80d81a7e1f22563"
   },
   "corrected_protocol_sha256": "fe0c7bb3246799c7704ba439a3da77a55d8075e1179aaeccb452f17a706bb63b",
-  "original_native_result_preserved_pending_correction": true,
-  "complete_corrected_public_pipeline_passed": false
+  "original_native_result_preserved_pending_correction": false,
+  "all_corrected_scientific_stages_passed": true,
+  "original_master_interrupted_host_resume_disclosed": true,
+  "historical_prediction_adapter": "Only the input mount root is replaced by a caller-supplied local model root; all calculations are unchanged.",
+  "historical_original_prediction_source_sha256": "f946f1183a2eec8456d7df35ab3fcbf4e35f7b8536e85456bdf2828f33c287ef",
+  "historical_public_prediction_source_sha256": "824e89f5fa35f68c54badef1891e015720110246f5323d2a060f3311ed79ff39",
+  "current_submission_checker": {
+    "official_checker_revision": "4ff48ffcca0e35ba7e01421ad87271ab3c802e36",
+    "official_checker_git_blob": "3e1c256672de474389b571afd1c0dd1a08432f6f",
+    "official_checker_sha256": "9c589ffe091c85a0c7ecd216ce33e1cdf96300f24e1c7a4626dbb1d9c098ffbb"
+  }
 }

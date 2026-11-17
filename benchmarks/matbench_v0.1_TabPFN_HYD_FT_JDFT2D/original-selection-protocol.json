@@ -1,0 +1,67 @@
+{
+  "frozen_at_utc": "2026-11-16T10:38:11.273828+00:00",
+  "task": "matbench_jdft2d",
+  "native_official_outer_folds": 5,
+  "metric": "official mean five-fold MAE, meV/atom",
+  "configurations": [
+    {
+      "family": "finetuned_tabpfn_v2",
+      "learning_rate": 1e-06,
+      "epochs": 5,
+      "features": "all370",
+      "trainable_scope": "full"
+    },
+    {
+      "family": "finetuned_tabpfn_v2",
+      "learning_rate": 1e-06,
+      "epochs": 10,
+      "features": "all370",
+      "trainable_scope": "full"
+    },
+    {
+      "family": "finetuned_tabpfn_v2",
+      "learning_rate": 5e-06,
+      "epochs": 5,
+      "features": "all370",
+      "trainable_scope": "full"
+    },
+    {
+      "family": "finetuned_tabpfn_v2",
+      "learning_rate": 5e-05,
+      "epochs": 10,
+      "features": "all370",
+      "trainable_scope": "readout"
+    }
+  ],
+  "selection": "Each outer TRAIN separately: reduced-composition GroupKFold3 mean MAE, lowest index tie break; only genuinely trained candidates eligible",
+  "features": "same370 pure composition/cell/periodic-neighbor features as validated v3; all fit-time preprocessing TRAIN-only",
+  "raw_dataset_sha256": "26057dc4524e193e32abffb296ce819b58b6e11d1278cae329a2f97817a4eddf",
+  "official_splits_sha256": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+  "feature_cache_sha256": "efd1273698171dd6d2bfab249a0074093838a7159eb2e5625efd25dcb66818c9",
+  "original_checkpoint_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+  "predict_output": "median, estimators8, random_state3042; no clipping or test calibration",
+  "all5_final_models_freeze_before_any_outer_test_prediction_or_score": true,
+  "outer_fold0_inner_fits_reused_only_after_exact_same_training_data_splits_and_config_verification": true,
+  "same_process_replay_tolerance": {
+    "atol": 0.001,
+    "rtol": 0.0001
+  },
+  "fresh_process_replay_required_before_final_scoring": true,
+  "container_hard_limit_seconds": 1200,
+  "backoff_limit": 0,
+  "no_failed_GPU_auto_retry": true,
+  "official_score_not_yet_computed": true,
+  "source_sha256": {
+    "matbench_jdft2d_training.py": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c",
+    "matbench_jdft2d_nested_train.py": "73c69119be8326f2b7e33c411fe7716e5e376865b1fadcbabf8a48e87d8885c7",
+    "matbench_jdft2d_probe.py": "e68b977a5c8f91f9703d8982b40d18bab77d0373b8d7c551ba5da3f5ab8c72b1",
+    "prepare_jdft2d_nested.py": "7a14d0cdb614ad4dc536e0329d2187dcd035261e651567f3438fc23f82cd237d",
+    "matbench_jdft2d_predict_frozen.py": "f946f1183a2eec8456d7df35ab3fcbf4e35f7b8536e85456bdf2828f33c287ef",
+    "score_frozen_jdft2d.py": "1b3fdff332271dbfca5665eebae967855ef4a3f00c8b63a674d017c3bed97697",
+    "run_jdft2d_nested_queue.py": "2c1f2b478628fc9dcb28c344717d463db5403b22ec0a2ce0d9be5948ad8bd8cd"
+  },
+  "per_outer_worker_only_its_own_official_TRAIN_labels": true,
+  "legitimate_training_label_overlap_across_different_official_folds_expected": true,
+  "each_final_inference_context_reads_only_corresponding_fold_training_labels": true,
+  "wording_clarified_before_any_GPU_job": true
+}
