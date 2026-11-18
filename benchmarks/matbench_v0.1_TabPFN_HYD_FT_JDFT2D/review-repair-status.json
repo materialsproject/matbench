@@ -1,0 +1,9 @@
+{
+  "status": "complete_verified_awaiting_scientific_review",
+  "corrected_result_exists": true,
+  "all_scientific_stages_completed": true,
+  "historical_result_and_exposure_disclosed": true,
+  "old_score_design_unbiased": false,
+  "public_first_confirmed": false,
+  "original_master_interrupted_host_resume_disclosed": true
+}

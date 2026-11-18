@@ -1,0 +1,45 @@
+{
+  "experiment_succeeded": true,
+  "stage": "predict",
+  "n_predictions": 636,
+  "model_freeze_sha256": "2d2a44e6422f01ab131bb17e25c3bab4566bb3a8aee139903b1fef3d7bc553e3",
+  "fresh_process_replays": [
+    {
+      "fold": 0,
+      "passed": true,
+      "fresh_process": true,
+      "witness_rows": 16,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "fold": 1,
+      "passed": true,
+      "fresh_process": true,
+      "witness_rows": 16,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "fold": 2,
+      "passed": true,
+      "fresh_process": true,
+      "witness_rows": 16,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "fold": 3,
+      "passed": true,
+      "fresh_process": true,
+      "witness_rows": 16,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "fold": 4,
+      "passed": true,
+      "fresh_process": true,
+      "witness_rows": 16,
+      "maximum_absolute_difference": 0.0
+    }
+  ],
+  "official_test_targets_loaded": false,
+  "gradient_updates": 0
+}

@@ -1,0 +1,57 @@
+# Response to the four protocol/reproducibility questions
+
+The frozen correction is now complete and replaces the initial result regardless of score direction; scientific acceptance remains pending. A correction cannot make previously observed labels or scores unseen; no pristine blind-design claim is made.
+
+The corrected native five-fold MAE is **29.99157698166102 meV/atom**, std **9.44184383860221**, scored at 2026-11-17T09:29:20.829869+00:00. The current results SHA256 is `dae42e0af5c98cdd1c8502579beffb09cc7088e0f084981e73c78765a78060e4`. The initial complete result remains disclosed below.
+
+## 1. Development trials and fixed/adapted choices
+
+V1 had 18 configurations: four ExtraTrees diagnostics, eight frozen TabPFN feature/inference alternatives, and six random-initialized MLPs genuinely trained for 600 steps each in each of three composition-group folds. The seed 3042, analytic 370 descriptors, 260-composition subset and these alternatives were frozen before the first pilot result. V2 introduced two full-network fine-tuning schedules (lr5e-6/2e-5,20 epochs). MAE1+CRPS.25 loss and context128/query.25 were fixed before the first fine-tuning result, not swept. Positive baseline blends .25/.5/.75/1 were inspected on development OOF predictions. V3 introduced four shorter/full/readout schedules after V2 worsened development error. The narrowed V3 grid and particular feature/inference choice were consequently influenced by fold0 development. All configurations, freeze times and development metrics are in development-history.json.
+
+Fold0 TRAIN508 is disjoint from fold0 TEST128 but contains 127 TEST rows of each of folds1–4. Separate own-fold fitting does not eliminate this design-level selection risk. We accept the concern.
+
+## 2. Previous official results
+
+The first complete five-fold native score found in the local indexes, frozen input/output manifests and source entrypoints was 28.733328891325755 meV/atom at 2026-11-16T14:17:07.753744Z, the submitted initial result. No earlier complete official JDFT2D evaluation was found in that evidence scope. V1/V2/V3 scores were development group-CV scores, not complete official scores. This is a scoped audit, not a claim about inaccessible external activity. The initial result SHA and original public commit are retained.
+
+## 3. Corrected per-TRAIN selection and residual limitation
+
+Before any corrected GPU stage, corrected-protocol-freeze.json fixed the deterministic closure of the historical alternatives: both feature sets; all six V2+V3 schedules; four/eight estimators and mean/median; all eight original frozen baselines for positive .25/.5/.75 blends; pure trained models; and all six original trained MLPs. This gives 1206 alternatives per outer TRAIN. Reduced-composition GroupKFold(3) selects minimum mean validation MAE, with a fixed-index tie break. Pure untrained baselines and tree diagnostics are not eligible standalone because genuine gradient training was a user requirement before V1. Every outer fit sees only its own TRAIN labels, with fitted preprocessing restricted to that context. No old or new official score, test prediction or test label is supplied to candidate workers or selection.
+
+All five selected final models were frozen before corrected outer-test inference. A different process replayed TRAIN witnesses and generated 636 actual predictions for one native scoring pass. This corrected result replaces the old result regardless of metric direction. Historical exposure and retrospective protocol construction remain disclosed; rerunning does not erase them. Scientific acceptance is the maintainers' decision.
+
+## 4. Missing historical scripts and actual public reproduction
+
+The historical original-selection-protocol.json lists original source hashes for provenance, not a list of portable execution dependencies. matbench_jdft2d_probe.py was exploratory development; prepare_jdft2d_nested.py was course packaging; score_frozen_jdft2d.py wrapped native scoring; run_jdft2d_nested_queue.py was private course transport. The original public prepare/fit/predict equivalence checks did not constitute an end-to-end public rerun.
+
+The new complete public implementation includes jdft2d_geometry_features.py, matbench_jdft2d_training.py, jdft2d_review_candidates.py, jdft2d_review_workflow.py, jdft2d_review_stage.py and jdft2d_review_reproduce.py. It reconstructs features, executes all inner fits, selects/refits/freezes all models, launches fresh inference and records native results. These exact SHA-pinned public scientific files executed across explicit bounded single-A100 transport. The public master began the run; after a private catalog interruption, disclosed host continuation resumed the same frozen public scientific functions and stage contracts. The default local-CUDA transport is also included; no separate complete run of that backend is claimed. Private transport contains no scientific alternative and is not required for local reproduction. Failures stop, without automatic GPU retry or hidden model fallback.
+
+Candidate checkpoints retain learned weights and every parameter hash. To bound storage, optimizer tensors are omitted only after full-checkpoint replay, with every optimizer tensor hash and both original/retained checkpoint SHA preserved; this is explicitly not a resumable optimizer checkpoint. Final refits retain their full optimizer state. A further prediction check follows stripping.
+
+## Compute accounting
+
+The original nine development/final/inference jobs total 0.5805555556 A100 card-hours in the platform occupation ledger (queue/archive excluded by the ledger), including installation and other container work. This is not pure gradient time. Actual corrected stage compute and training proof are in validation.json: 270 inner gradient fits and five final fits, followed by separate-process replay/inference. Occupation-ledger gaps are explicitly unknown, never zero. The known subtotal, unknown-stage count and measured container durations are reported separately; container time includes installation and is not pure gradient time.
+
+
+## Completed execution scope
+
+All 21 corrected stages completed and all downloaded SHA/size, actual updates, complete IDs, fresh-process TRAIN witness replay and native result reload passed. The original public master was interrupted before a GPU submission by private catalog lookup; a disclosed manual host continuation adopted successful stage receipts and ran the identical frozen public scientific functions. A guardian response-path interface repair observed the same existing job. A later read-only resource-query timeout before dataset/job creation was diagnosed and manually resumed; bounded transient-read retries were extended without retrying mutating operations. No completed GPU fits were repeated for these operations, no failed GPU job was automatically retried, no science or candidate selection rule changed, and no old/new official result was used to choose between submissions. The default standalone CUDA backend was not separately fully rerun. Exact actual per-stage compute is in validation.json.
+
+An output download also timed out after its GPU job succeeded. The exact registered version was downloaded again without rerunning training. Bounded transient READ-only download retries were added, while all output-manifest SHA gates and no-automatic-GPU-retry rules remained unchanged.
+
+Auxiliary occupation-ledger reads sometimes timed out after mandatory output and release checks had passed. Such accounting is explicitly null/unknown, never zero; measured container durations remain available and include installation. validation.json reports known totals and unknown-stage counts separately. Auxiliary accounting availability does not replace or weaken scientific or GPU-release gates.
+
+One private input upload finalization had a TLS connection interruption before any GPU submission. Its original upload session was resumed with zero new bytes; the resulting immutable version1 was verified against all 8 local file SHA256/size entries before the first submission. TLS verification was not bypassed and no scientific data or settings changed.
+
+A later local session-expiry guard stopped a stage before input creation or GPU submission. The official CLI refreshed its existing session, and the original user/team membership was verified again. The version probe now supplies the explicit numeric team ID; exit-status validation and all actual admission checks remain enforced. No token value was read, permission changed, or scientific setting altered. Bulk output transfer uses bounded concurrency based only on the number of outstanding files; all exact-version SHA256 and size checks remain mandatory.
+
+Another upload finalization response failed even though its original nine-file version was ready; all nine remote SHA256/size entries were verified without reuploading. A storage-prewarm response also failed or timed out. Its real Ready state was reconciled with the official read-only status command for the exact dataset/version before the first GPU submission. That status must actually be Ready; a warming state, different version or different dataset fails the gate. No TLS verification, resource admission or scientific validation was bypassed. Diagnosed manual recoveries and a later read-only response-reconciliation path accept only the exact ready input with full file SHA/size checks. An upload or warm mutation is not replayed; an existing GPU submission is never retried. A non-ready, mismatched or unverifiable state stops the pipeline.
+
+A later input needed the original upload session to finish finalization (all eight files skipped, zero new bytes), followed by full remote SHA/size verification. A control-plane catalog-resolution timeout then prevented GPU creation. The absence of the exact owned job was reconciled before a manual submission with the original arguments and original idempotency key. An existing matching job is adopted instead; a second missing-job replay after a recorded recovery attempt is refused. These operations did not rerun any completed GPU fit or change any scientific source.
+
+
+## Follow-up review 2026-11-17
+
+The local model path now preserves the expected filename across Hugging Face snapshot symlinks and explicit filenames, with CPU regression coverage. README now explicitly requires A100. The five exact final models, their SHA256 values, original freeze and all-636 replay script/context are supplied through frozen-model-assets.json and the linked release. The original score, scientific workers, parameters, selection and results are unchanged. Historical fold-0 exposure and the earlier result remain disclosed. The runtime amendment is engineering-only; default local-CUDA training was not separately repeated.
+
+The new standalone full636 checker passed local asset/ID/hash checks, but its additional GPU execution is not claimed complete because the platform input lease failed before Pod creation. All five exact frozen checkpoints and contexts are provided so reviewers can run the checker independently. No settings or submitted outputs were changed to respond to that infrastructure failure.
