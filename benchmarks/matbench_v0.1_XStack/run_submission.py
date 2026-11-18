@@ -1,49 +1,40 @@
-"""Reproduce the DFT-Stack Matbench v0.1 submission (results.json.gz) for the four composition tasks.
+"""Reproduce the XStack Matbench v0.1 submission (results.json.gz) for the four composition tasks.
 
-For each task and official fold, only the official training rows (inputs and targets) are used to fit:
-feature blocks are label-free functions of the formula plus the disclosed DFT transfer block (Materials
-Project PBE data from matminer's matbench_mp_gap / matbench_mp_e_form, matched by reduced formula);
-for every candidate configuration (feature-block set; for matbench_expt_gap also the expert subset,
-dftstack/frozen_config3.py) the experts are tuned and cross-fitted with 5 inner folds of the training fold,
-the candidate with the best inner-CV score of the simplex stack on the training rows is chosen, and for it the
-stack, the optional (nested-CV-gated) local correction and the classification threshold are all chosen inside the
-training fold (dftstack/run_final3.py, dftstack/pipeline2.py). Test inputs are taken with include_target=False
-and predictions go through task.record.
+Composition-only: the only inputs are label-free descriptors computed from each row's own formula (matminer /
+CBFV). No external property data of any kind is used (no DFT block, no pretrained model).
 
-The modules in ./dftstack are verbatim copies of the frozen research code (see README.md).
-Data (Matbench tasks, matminer DFT datasets) is downloaded on first use into ./data/cache/.
+For each task and official fold, only the official training rows (inputs and targets) are used to fit. For both
+candidate feature-block sets (and, for matbench_expt_gap, the expert subsets; xstack/frozen_config4.py) the experts
+are tuned and cross-fitted with 5 inner folds of the training fold; the candidate with the best inner-CV score of
+the simplex stack on the training rows is chosen; and for it the stack, the optional (nested-CV-gated) local
+correction and the classification threshold are all chosen inside the training fold (xstack/run_final4.py,
+xstack/pipeline4.py). Missing descriptor cells are filled with column medians computed inside every fit from that
+fit's training rows only, inner-CV fits included (xstack/experts4.py). Test inputs are taken with
+include_target=False and predictions go through task.record.
+
+The modules in ./xstack are verbatim copies of the frozen research code (see README.md).
+The Matbench tasks are downloaded on first use into ./data/cache/.
 
 Usage:  python run_submission.py [matbench_steels ...] [--out results_rerun.json.gz]
-CPU-only; compute time of the original run is given in info.json ("notes") and per fold in the recorded
-parameters of results.json.gz (wall_time_s, fit_hosts, expert_fit_seconds, threads, CPU model). A rerun records the
-same fields for its own hardware. results_rerun.json.gz is only this script's output name; it is not shipped.
+CPU-only. The compute of the original run is recorded per fold in the parameters of results.json.gz; a rerun
+records the same fields for its own hardware. results_rerun.json.gz is only this script's output name.
 """
 from __future__ import annotations
 import gzip
 import json
 import os
 import pathlib
-import platform
 import sys
 
 import numpy as np
 from matbench.bench import MatbenchBenchmark
 
-from dftstack.data import TASKS, load_task_frames
-from dftstack.run_final3 import select_and_predict, EXPERT_THREADS
+from xstack.data import TASKS, load_task_frames
+from xstack.run_final3 import cpu_model, EXPERT_THREADS          # host description helpers only
+from xstack.run_final4 import select_and_predict
 
 HERE = pathlib.Path(__file__).resolve().parent
-PIPELINE = "DFT-Stack (Amendment-3: fold-internal candidate selection, frozen Amendment-2 pipeline)"
-
-
-def cpu_model():
-    try:
-        for line in open("/proc/cpuinfo"):
-            if line.lower().startswith("model name"):
-                return line.split(":", 1)[1].strip()
-    except OSError:
-        pass
-    return platform.processor() or platform.machine()
+PIPELINE = "XStack (Amendment 4: composition-only, train-only imputation, fold-internal candidate selection)"
 
 
 def main(tasks, out_file):
@@ -71,19 +62,18 @@ def main(tasks, out_file):
                 p = [bool(v) for v in (p >= meta["thresholds"]["stack_local"])]
             else:
                 p = [float(v) for v in p]
-            c = meta["compute"]["selection_job"]
-            wall = float(c["wall_s"]) + sum(float(r["wall_s"]) for info in meta["compute"]["expert_fits"].values()
-                                            for r in info["fit_info"]["runs"][:-1])
-            params = {"pipeline": PIPELINE, "seed": 0, "wall_time_s": round(wall, 1), "n_workers": 1,
+            params = {"pipeline": PIPELINE, "seed": 0,
+                      "wall_time_s": round(float(meta["compute"]["selection_job"]["wall_s"]), 1), "n_workers": 1,
                       "threads_per_worker": EXPERT_THREADS, "cpu_threads_used": EXPERT_THREADS, "cpu_count": os.cpu_count(),
                       "cpu_model": cpu, "gpu": "none",
                       "expert_fit_seconds": {e: round(float(s), 1) for e, s in meta["expert_seconds"].items()},
                       "selected_candidate": meta["design_selection"]["selected"],
                       "candidate_inner_cv_scores": {r["candidate"]: round(float(r["stack_oof_score"]), 6)
-                                                    for r in meta["design_selection"]["candidates"]}}
+                                                    for r in meta["design_selection"]["candidates"]},
+                      "imputation": meta["imputation"]}
             task.record(fold, p, params=params)
-            print(f"{name} fold {k}: recorded ({meta['design_selection']['selected']}, {wall:.0f} s)", flush=True)
-    mb.add_metadata({"algorithm": "DFT-Stack"})
+            print(f"{name} fold {k}: recorded ({meta['design_selection']['selected']})", flush=True)
+    mb.add_metadata({"algorithm": "XStack"})
     mb.to_file(str(out_file))
     raw = pathlib.Path(out_file).read_bytes()
     if raw[:2] != bytes([0x1F, 0x8B]):     # matbench 0.6 writes plain JSON; upstream from_file expects gzip
