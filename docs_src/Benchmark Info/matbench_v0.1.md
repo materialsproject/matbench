@@ -5,7 +5,7 @@ The `matbench_v0.1` benchmark contains 13 tasks:
 | Task name | Task type/input | Target column (unit) | Samples | MAD (regression) or Fraction True (classification) | Links | Submissions|
 |-------|-------|-------|-------|-------|-------|-------|
 | `matbench_steels` | regression/composition | `yield strength` (MPa) | 312 | 229.3743 | [download](https://ml.materialsproject.org/projects/matbench_steels.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_steels) | 15 |
-| `matbench_jdft2d` | regression/structure | `exfoliation_en` (meV/atom) | 636 | 67.2020 | [download](https://ml.materialsproject.org/projects/matbench_jdft2d.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_jdft2d) | 18 |
+| `matbench_jdft2d` | regression/structure | `exfoliation_en` (meV/atom) | 636 | 67.2020 | [download](https://ml.materialsproject.org/projects/matbench_jdft2d.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_jdft2d) | 19 |
 | `matbench_phonons` | regression/structure | `last phdos peak` (cm^-1) | 1,265 | 323.7870 | [download](https://ml.materialsproject.org/projects/matbench_phonons.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_phonons) | 18 |
 | `matbench_expt_gap` | regression/composition | `gap expt` (eV) | 4,604 | 1.1432 | [download](https://ml.materialsproject.org/projects/matbench_expt_gap.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_expt_gap) | 13 |
 | `matbench_dielectric` | regression/structure | `n` (unitless) | 4,764 | 0.8085 | [download](https://ml.materialsproject.org/projects/matbench_dielectric.json.gz), [interactive](https://ml.materialsproject.org/projects/matbench_dielectric) | 18 |
