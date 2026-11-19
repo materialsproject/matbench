@@ -114,6 +114,105 @@
       }
     },
     {
+      "submission": "matbench_v0.1_XStack",
+      "algorithm": "XStack",
+      "task": "matbench_expt_is_metal",
+      "results_file": "matbench_v0.1_XStack/results.json.gz",
+      "results_sha256": "5588068ab0fc4195367c37a02829ba9d118ee7c7b13ca32f125cc69fcba7617a",
+      "dataset_expected_sha256": "8f2a4f9bacdcbc5c2c73615629ee7986f09d39bed40ba7db52b61b2889730887",
+      "eligible": true,
+      "ba_available": true,
+      "auc_available": true,
+      "reason": null,
+      "ba_reason": null,
+      "auc_reason": null,
+      "prediction_type": "probabilities",
+      "scores": {
+        "accuracy": {
+          "mean": 0.9433036193306096,
+          "max": 0.9471544715447154,
+          "min": 0.9400406504065041,
+          "std": 0.002842028769806509
+        },
+        "balanced_accuracy": {
+          "mean": 0.9432736644547741,
+          "max": 0.9471535982814179,
+          "min": 0.9400272659671156,
+          "std": 0.0028389677271821504
+        },
+        "f1": {
+          "mean": 0.9426057149764284,
+          "max": 0.9469387755102041,
+          "min": 0.9396110542476971,
+          "std": 0.002798935230833677
+        },
+        "rocauc": {
+          "mean": 0.985001702124652,
+          "max": 0.986796661984632,
+          "min": 0.9824093200033049,
+          "std": 0.0017679606927393707
+        }
+      },
+      "fold_scores": {
+        "fold_0": {
+          "accuracy": 0.9461928934010152,
+          "balanced_accuracy": 0.9461212760869744,
+          "f1": 0.9447340980187695,
+          "rocauc": 0.9867204828615483
+        },
+        "fold_1": {
+          "accuracy": 0.9420731707317073,
+          "balanced_accuracy": 0.9420515574650913,
+          "f1": 0.9415384615384615,
+          "rocauc": 0.9834669090308188
+        },
+        "fold_2": {
+          "accuracy": 0.9410569105691057,
+          "balanced_accuracy": 0.9410146244732711,
+          "f1": 0.9402061855670103,
+          "rocauc": 0.9856151367429562
+        },
+        "fold_3": {
+          "accuracy": 0.9471544715447154,
+          "balanced_accuracy": 0.9471535982814179,
+          "f1": 0.9469387755102041,
+          "rocauc": 0.986796661984632
+        },
+        "fold_4": {
+          "accuracy": 0.9400406504065041,
+          "balanced_accuracy": 0.9400272659671156,
+          "f1": 0.9396110542476971,
+          "rocauc": 0.9824093200033049
+        }
+      },
+      "stored_scores": {
+        "accuracy": {
+          "mean": 0.9433036193306096,
+          "max": 0.9471544715447154,
+          "min": 0.9400406504065041,
+          "std": 0.002842028769806509
+        },
+        "balanced_accuracy": {
+          "mean": 0.9432736644547741,
+          "max": 0.9471535982814179,
+          "min": 0.9400272659671156,
+          "std": 0.0028389677271821504
+        },
+        "f1": {
+          "mean": 0.9426057149764284,
+          "max": 0.9469387755102041,
+          "min": 0.9396110542476971,
+          "std": 0.002798935230833677
+        },
+        "rocauc": {
+          "mean": 0.985001702124652,
+          "max": 0.986796661984632,
+          "min": 0.9824093200033049,
+          "std": 0.0017679606927393707
+        }
+      }
+    },
+    {
       "submission": "matbench_v0.1_automatminer_expressv2020",
       "algorithm": "AMMExpress v2020",
       "task": "matbench_expt_is_metal",
@@ -877,6 +976,105 @@
           "max": 0.9011197613586288,
           "min": 0.8659864483640486,
           "std": 0.014559717577147314
+        }
+      }
+    },
+    {
+      "submission": "matbench_v0.1_XStack",
+      "algorithm": "XStack",
+      "task": "matbench_glass",
+      "results_file": "matbench_v0.1_XStack/results.json.gz",
+      "results_sha256": "5588068ab0fc4195367c37a02829ba9d118ee7c7b13ca32f125cc69fcba7617a",
+      "dataset_expected_sha256": "36beb654e2a463ee2a6572105bea0ca2961eee7c7b26a25377bff2c3b338e53a",
+      "eligible": true,
+      "ba_available": true,
+      "auc_available": true,
+      "reason": null,
+      "ba_reason": null,
+      "auc_reason": null,
+      "prediction_type": "probabilities",
+      "scores": {
+        "accuracy": {
+          "mean": 0.9056338028169014,
+          "max": 0.9278169014084507,
+          "min": 0.8899647887323944,
+          "std": 0.013238219152892585
+        },
+        "balanced_accuracy": {
+          "mean": 0.8730891929658047,
+          "max": 0.8987845711724538,
+          "min": 0.8532389464525825,
+          "std": 0.016703933301164917
+        },
+        "f1": {
+          "mean": 0.9346869759382799,
+          "max": 0.9501216545012166,
+          "min": 0.923919659160073,
+          "std": 0.00910820006190292
+        },
+        "rocauc": {
+          "mean": 0.9607838706153979,
+          "max": 0.9723468284727478,
+          "min": 0.9515523365084386,
+          "std": 0.007117612194687192
+        }
+      },
+      "fold_scores": {
+        "fold_0": {
+          "accuracy": 0.9278169014084507,
+          "balanced_accuracy": 0.8987845711724538,
+          "f1": 0.9501216545012166,
+          "rocauc": 0.9723468284727478
+        },
+        "fold_1": {
+          "accuracy": 0.8899647887323944,
+          "balanced_accuracy": 0.8532389464525825,
+          "f1": 0.923919659160073,
+          "rocauc": 0.9556991823067913
+        },
+        "fold_2": {
+          "accuracy": 0.8943661971830986,
+          "balanced_accuracy": 0.8563368398850484,
+          "f1": 0.9271844660194175,
+          "rocauc": 0.9515523365084386
+        },
+        "fold_3": {
+          "accuracy": 0.9075704225352113,
+          "balanced_accuracy": 0.879133192468635,
+          "f1": 0.9357011635027557,
+          "rocauc": 0.9636990919123324
+        },
+        "fold_4": {
+          "accuracy": 0.9084507042253521,
+          "balanced_accuracy": 0.8779524148503031,
+          "f1": 0.9365079365079365,
+          "rocauc": 0.9606219138766794
+        }
+      },
+      "stored_scores": {
+        "accuracy": {
+          "mean": 0.9056338028169014,
+          "max": 0.9278169014084507,
+          "min": 0.8899647887323944,
+          "std": 0.013238219152892585
+        },
+        "balanced_accuracy": {
+          "mean": 0.8730891929658047,
+          "max": 0.8987845711724538,
+          "min": 0.8532389464525825,
+          "std": 0.016703933301164917
+        },
+        "f1": {
+          "mean": 0.9346869759382799,
+          "max": 0.9501216545012166,
+          "min": 0.923919659160073,
+          "std": 0.00910820006190292
+        },
+        "rocauc": {
+          "mean": 0.9607838706153979,
+          "max": 0.9723468284727478,
+          "min": 0.9515523365084386,
+          "std": 0.007117612194687192
         }
       }
     },
