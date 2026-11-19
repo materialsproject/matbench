@@ -10,7 +10,9 @@ the simplex stack on the training rows is chosen; and for it the stack, the opti
 correction and the classification threshold are all chosen inside the training fold (xstack/run_final4.py,
 xstack/pipeline4.py). Missing descriptor cells are filled with column medians computed inside every fit from that
 fit's training rows only, inner-CV fits included (xstack/experts4.py). Test inputs are taken with
-include_target=False and predictions go through task.record.
+include_target=False and predictions go through task.record. Classification predictions are recorded as raw
+probabilities: ROC-AUC uses those probabilities and the current Matbench label metrics use p > 0.5. The threshold
+chosen inside each training fold is retained as metadata, not applied to the recorded probabilities.
 
 The modules in ./xstack are verbatim copies of the frozen research code (see README.md).
 The Matbench tasks are downloaded on first use into ./data/cache/.
@@ -28,6 +30,7 @@ import sys
 
 import numpy as np
 from matbench.bench import MatbenchBenchmark
+from matbench.data_ops import score_array
 
 from xstack.data import TASKS, load_task_frames
 from xstack.run_final3 import cpu_model, EXPERT_THREADS          # host description helpers only
@@ -37,7 +40,20 @@ HERE = pathlib.Path(__file__).resolve().parent
 PIPELINE = "XStack (Amendment 4: composition-only, train-only imputation, fold-internal candidate selection)"
 
 
+def require_probability_scoring():
+    """Fail before training if Matbench uses the old thresholded-AUC scorer."""
+    scores = score_array([False, False, True, True], [0.1, 0.4, 0.5, 0.6], "classification")
+    if not (np.isclose(scores.get("rocauc", np.nan), 1.0)
+            and np.isclose(scores.get("balanced_accuracy", np.nan), 0.75)):
+        raise RuntimeError(
+            "Install the Matbench source revision pinned in requirements.txt before running XStack. "
+            "Scoring must use raw probabilities for ROC-AUC and p > 0.5 for balanced accuracy; "
+            "the PyPI matbench 0.6 scorer is not supported."
+        )
+
+
 def main(tasks, out_file):
+    require_probability_scoring()
     cpu = cpu_model()
     mb = MatbenchBenchmark(autoload=False, subset=tasks)
     for task in mb.tasks:
@@ -57,11 +73,13 @@ def main(tasks, out_file):
             z = np.load(out_root / f"fold{k}_predictions.npz")
             meta = json.load(open(out_root / f"fold{k}_meta.json"))
             assert [str(i) for i in z["ids"]] == te
-            p = z["stack_local"]
-            if task.metadata.task_type == "classification":    # hard labels at the inner-CV balanced-accuracy threshold
-                p = [bool(v) for v in (p >= meta["thresholds"]["stack_local"])]
-            else:
-                p = [float(v) for v in p]
+            p = np.asarray(z["stack_local"])
+            if p.shape != (len(te),) or not np.isfinite(p).all():
+                raise ValueError(f"{name} fold {k}: expected one finite prediction per test sample")
+            if task.metadata.task_type == "classification":
+                if p.dtype.kind != "f" or np.any((p < 0.0) | (p > 1.0)):
+                    raise ValueError(f"{name} fold {k}: expected raw floating-point probabilities in [0, 1]")
+            p = [float(v) for v in p]
             params = {"pipeline": PIPELINE, "seed": 0,
                       "wall_time_s": round(float(meta["compute"]["selection_job"]["wall_s"]), 1), "n_workers": 1,
                       "threads_per_worker": EXPERT_THREADS, "cpu_threads_used": EXPERT_THREADS, "cpu_count": os.cpu_count(),
@@ -71,6 +89,9 @@ def main(tasks, out_file):
                       "candidate_inner_cv_scores": {r["candidate"]: round(float(r["stack_oof_score"]), 6)
                                                     for r in meta["design_selection"]["candidates"]},
                       "imputation": meta["imputation"]}
+            if task.metadata.task_type == "classification":
+                params["classification_threshold"] = float(meta["thresholds"]["stack_local"])
+                params["classification_threshold_operator"] = ">="
             task.record(fold, p, params=params)
             print(f"{name} fold {k}: recorded ({meta['design_selection']['selected']})", flush=True)
     mb.add_metadata({"algorithm": "XStack"})

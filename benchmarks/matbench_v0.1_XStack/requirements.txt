@@ -1,4 +1,5 @@
-matbench==0.6
+# Use corrected probability scoring from this exact official source revision, not the PyPI 0.6 wheel.
+matbench @ git+https://github.com/materialsproject/matbench.git@2b17f3b87c81537709cd416de90cb36a65a55706
 matminer==0.10.1
 pymatgen==2026.9.24
 monty==2026.7.16
