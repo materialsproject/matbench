@@ -1,0 +1,10 @@
+{
+  "authors": "Hongwei Du, Hong Wang (original code by Hongwei Du)",
+  "algorithm": "DenseGNN (kgcnn v3.0.2)",
+  "algorithm_long": "DenseGNN: universal and scalable deeper graph neural networks for high performance property prediction in crystals and molecules. Adapted implementation of `kgcnn`. Original code from https://github.com/dhw059/DenseGNN. Initially, features for nodes, edges, and global data are extracted. In each layer of the GNN, the GraphMLP layers transform the node and edge features, while the DenseGNN layer aggregates information from neighbors and global features. The outputs are concatenated and used to update the node features. Finally, the output block processes the updated edge and node features along with global features and edge indices to produce the final output.We used a larger input embedding vector [64] of atom species and added the charge as input graph attributes. The training configuration specifies a batch size of 64, 300 epochs, and validation every 20 batches. It uses the Adam optimizer with an exponential decay learning rate starting at 0.001, decaying every 5800 steps by a rate of 0.5. The loss function is mean absolute error. K-fold cross-validation with 5 splits is applied, and data is standardized using StandardScaler.Training was carried out on Nvidia-RTX4090 with 24 GB of memory.Hyperparameter were not optimized.",
+  "bibtex_refs": [
+    "@article{UnderReview, author = {Hongwei Du, Hong Wang}, title = {DenseGNN: universal and scalable deeper graph neural networks for high-performance property prediction in crystals and molecules}, journal = {npj Computational Materials}, volume = {}, number = {}, pages = {}, year = {2024}, doi = {Under Review}, URL = {}, eprint = {}}"
+  ],
+  "notes": "",
+  "requirements": "See GitHub page https://github.com/dhw059/DenseGNN."
+}
