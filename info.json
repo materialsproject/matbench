@@ -1,0 +1,172 @@
+{
+"author": "Xinping Song"
+"algorithm": "RF-SCM/Magpie v1.0"
+"algorithm_long": 
+"bibtex_refs": ['@article{Dunn2020,\n'
+ '  doi = {10.1038/s41524-020-00406-3},\n'
+ '  url = {https://doi.org/10.1038/s41524-020-00406-3},\n'
+ '  year = {2020},\n'
+ '  month = sep,\n'
+ '  publisher = {Springer Science and Business Media {LLC}},\n'
+ '  volume = {6},\n'
+ '  number = {1},\n'
+ '  author = {Alexander Dunn and Qi Wang and Alex Ganose and Daniel Dopp and '
+ 'Anubhav Jain},\n'
+ '  title = {Benchmarking materials property prediction methods: the Matbench '
+ 'test set and Automatminer reference algorithm},\n'
+ '  journal = {npj Computational Materials}\n'
+ '}',
+ '@article{Breiman2001,\n'
+ '  doi = {10.1023/a:1010933404324},\n'
+ '  url = {https://doi.org/10.1023/a:1010933404324},\n'
+ '  year = {2001},\n'
+ '  publisher = {Springer Science and Business Media {LLC}},\n'
+ '  volume = {45},\n'
+ '  number = {1},\n'
+ '  pages = {5--32},\n'
+ '  author = {Leo Breiman},\n'
+ '  journal = {Machine Learning}\n'
+ '}',
+ '@article{Ward2016,\n'
+ '  doi = {10.1038/npjcompumats.2016.28},\n'
+ '  url = {https://doi.org/10.1038/npjcompumats.2016.28},\n'
+ '  year = {2016},\n'
+ '  month = aug,\n'
+ '  publisher = {Springer Science and Business Media {LLC}},\n'
+ '  volume = {2},\n'
+ '  number = {1},\n'
+ '  author = {Logan Ward and Ankit Agrawal and Alok Choudhary and Christopher '
+ 'Wolverton},\n'
+ '  title = {A general-purpose machine learning framework for predicting '
+ 'properties of inorganic materials},\n'
+ '  journal = {npj Computational Materials}\n'
+ '}',
+ '@article {QUA:QUA24917,author = {Faber, Felix and Lindmaa, Alexander and von '
+ 'Lilienfeld, O. Anatole and Armiento, Rickard},title = {Crystal structure '
+ 'representations for machine learning models of formation energies},journal = '
+ '{International Journal of Quantum Chemistry},volume = {115},number = '
+ '{16},issn = {1097-461X},url = {http://dx.doi.org/10.1002/qua.24917},doi = '
+ '{10.1002/qua.24917},pages = {1094--1101},keywords = {machine learning, '
+ 'formation energies, representations, crystal structure, periodic '
+ 'systems},year = {2015},}']
+"notes":
+"python_version": ">=3.8,<3.9"
+"requirements":{"python":[asttokens==2.0.5
+attrs==21.4.0
+automatminer @ git+https://github.com/noidvan/automatminer.git@ceb81f8537dd66fcaa3fef43396b2e102366cfd2
+backcall==0.2.0
+beniget==0.4.1
+black==21.12b0
+certifi==2021.10.8
+cffi==1.15.0
+charset-normalizer==2.0.10
+click==8.0.3
+cloudpickle==2.0.0
+cycler==0.11.0
+Cython==0.29.26
+daal==2021.5.1
+dask==2022.1.0
+deap==1.4.1
+decorator==5.1.1
+distlib==0.3.4
+dnspython==2.6.1
+emmet-core==0.68.0
+executing==0.8.2
+filelock==3.4.2
+fonttools==4.28.5
+fsspec==2022.1.0
+future==1.0.0
+gast==0.5.3
+hypothesis==6.35.1
+idna==3.3
+importlib_resources==6.4.0
+iniconfig==1.1.1
+intel-openmp==2022.0.1
+ipp==2021.5.1
+ipython==8.0.0
+jedi==0.18.1
+joblib==1.1.0
+kiwisolver==1.3.2
+latexcodec==3.0.0
+line-profiler==3.4.0
+llvmlite==0.38.0
+locket==0.2.1
+matbench @ git+https://github.com/noidvan/matbench@abdb4679b2ee92d0659527d10e7d75e14a87d7a4
+matminer==0.8.0
+matplotlib==3.5.1
+matplotlib-inline==0.1.3
+memory-profiler==0.60.0
+mkl==2022.0.1
+monty==2024.5.24
+mp-api==0.36.1
+mpmath==1.3.0
+msgpack==1.0.8
+mypy-extensions==0.4.3
+networkx==3.2.1
+numba==0.55.0
+numexpr==2.8.1
+numpy==1.22.4
+packaging==21.3
+palettable==3.3.3
+pandas==1.3.5
+parso==0.8.3
+partd==1.2.0
+pathspec==0.9.0
+pexpect==4.8.0
+pickleshare==0.7.5
+Pillow==9.0.0
+platformdirs==2.4.1
+plotly==5.22.0
+pluggy==1.0.0
+ply==3.11
+prompt-toolkit==3.0.24
+psutil==5.9.0
+ptyprocess==0.7.0
+pure-eval==0.2.1
+py==1.11.0
+pybind11==2.9.0
+pybtex==0.24.0
+pycparser==2.21
+pydantic==1.10.16
+Pygments==2.11.2
+pymatgen==2023.8.10
+pymongo==4.7.3
+pyparsing==3.0.6
+pytest==6.2.5
+python-dateutil==2.8.2
+pythran==0.11.0
+pytz==2021.3
+PyYAML==5.3.1
+requests==2.27.1
+ruamel.yaml==0.17.4
+ruamel.yaml.clib==0.2.8
+scikit-learn==0.23.2
+scipy==1.7.3
+six==1.16.0
+skrebate==0.62
+sortedcontainers==2.4.0
+spglib==2.4.0
+stack-data==0.1.4
+stopit==1.1.2
+sympy==1.12.1
+tabulate==0.9.0
+tbb==2021.4.0
+tenacity==8.3.0
+threadpoolctl==3.0.0
+toml==0.10.2
+tomli==1.2.3
+toolz==0.11.2
+TPOT==0.11.7
+tqdm==4.66.4
+traitlets==5.1.1
+typing_extensions==4.12.2
+uncertainties==3.2.1
+update-checker==0.18.0
+urllib3==1.26.8
+virtualenv==20.13.0
+wcwidth==0.2.5
+xgboost==1.5.2
+zipp==3.19.2]
+}
+
+}
