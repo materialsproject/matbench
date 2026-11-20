@@ -1,0 +1,14 @@
+{
+    "authors": "Keqiang Yan, Cong Fu, Xiaofeng Qian, Xiaoning Qian, Shuiwang Ji",
+    "algorithm": "iComFormer",
+    "algorithm_long": "Complete and efficient graph transformer for materials property prediction",
+    "bibtex_refs": "@inproceedings{ \n yan2024complete, \n title={Complete and Efficient Graph Transformers for Crystal Material Property Prediction},\n author={Keqiang Yan and Cong Fu and Xiaofeng Qian and Xiaoning Qian and Shuiwang Ji},\n booktitle={The Twelfth International Conference on Learning Representations},\n year={2024},\n url={https://openreview.net/forum?id=BnQY9XiRAS}\n}",
+    "notes": "This is the invariant version of ComFormer",
+    "requirements": {
+        "python": [
+            "pytorch==1.13.1",
+            "torch_geometric==2.3.0",
+            "matbench==0.1.0, pymatgen=2023.3.23"
+        ]
+    }
+}
