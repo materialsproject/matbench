@@ -1,0 +1,49 @@
+{
+  "frozen_at_utc": "2026-11-18T08:25:58.192525+00:00",
+  "method": "TabPFN-HYD-Universal-FT",
+  "version": 1,
+  "task": {
+    "name": "matbench_phonons",
+    "input": "structure",
+    "target": "last phdos peak",
+    "rows": 1265,
+    "unit": "cm^-1",
+    "id_prefix": "mb-phonons-",
+    "id_width": 4,
+    "data_sha256": "4db551f21ec5f577e6202725f10e34dfc509aa7df3a6bdaac497da7f6dbbb9b3",
+    "official_url": "https://ml.materialsproject.org/projects/matbench_phonons.json.gz"
+  },
+  "original_checkpoint_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+  "official_native_revision": "35f88110a51adf817a53515780d99fc34f614bf8",
+  "official_splits_sha256": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+  "scientific_source_sha256": {
+    "hyd_regression_candidates.py": "3f40befbe151345afb8b34c28c9048d7b47dce9b0e1fed658ef11f49d218a472",
+    "hyd_regression_features.py": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
+    "hyd_regression_reproduce.py": "3bddf7cf7763df01bccfd128609c9da480fd52be99d76700276b5cfc3934b223",
+    "hyd_regression_stage.py": "ca256c5ffbdcc655926a40e40a5f0f5dae93461117ec026cbc5c524ed3b06ca0",
+    "hyd_regression_training.py": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c",
+    "hyd_regression_workflow.py": "f6844b5e505763ef79f1c1f4cbaabe7f361c7f67f0b604cde65a40e8bfd4d617"
+  },
+  "feature_options": [
+    "composition260",
+    "all370"
+  ],
+  "random_seed": 3042,
+  "search": "Same predeclared 1206-candidate closure for every outer TRAIN; six fixed TabPFN schedules, six MLPs, eight frozen comparators, positive blends. No task-score-driven narrowing.",
+  "inner_selection": "composition GroupKFold3 mean validation MAE; fixed candidate-index tie break",
+  "real_gradient_training_required": true,
+  "gradient_free_standalone_ineligible": true,
+  "label_boundary": "Only this outer TRAIN labels in its candidate/final jobs. Every training/imputation/scaling operation uses own inner TRAIN. TEST arrays contain IDs/features only; no cross-fold adaptive design changes.",
+  "scientific_iteration": "Predeclared inner-TRAIN alternatives only. Do not adapt the shared grid using any outer-fold development report after starting. Further scientific changes require independent external development evidence and a separately disclosed future protocol.",
+  "final_evaluation": "All five final trained models freeze before any official held-out predictions or scores. Record this result regardless of direction; never select between submissions using test MAE.",
+  "prior_exposure": "Prior steel and JDFT2D results informed this transferable method. No phonon target/prediction/score file opened for design. Previous conversational leaderboard reference is not tuning evidence. No claim that third-party foundation pretraining is completely unseen.",
+  "output_disposition": "Retain exact checkpoints, candidate weights/update proofs, optimizer tensor digests, final full optimizers, predictions, source/data checksums and failures.",
+  "owned_gpu_limit": 1,
+  "container_timeout_seconds": 1200,
+  "backoff_limit": 0,
+  "failed_gpu_auto_retry": false,
+  "stage_count": 31,
+  "ft_candidate_jobs_split_by_schedule_blocks_for_runtime_only": true,
+  "public_first_confirmed": false,
+  "pre_GPU_boundary_amendment": "Added explicit training/inner-group boundary validation before any training or target inspection for design; candidate axes and loss unchanged."
+}

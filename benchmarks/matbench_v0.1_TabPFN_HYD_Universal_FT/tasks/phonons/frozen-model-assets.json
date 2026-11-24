@@ -1,0 +1,157 @@
+{
+  "publication_status": "planned_URLs_not_yet_verified",
+  "task": "matbench_phonons",
+  "foundation_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+  "original_freeze_sha256": "87a42a01bcc53e1b2c9a406a63255d4468f4f428ee96eb5488d4b0154a669b8f",
+  "context_files": [
+    "selection-0.json",
+    "selection-1.json",
+    "selection-2.json",
+    "selection-3.json",
+    "selection-4.json",
+    "test-0.npz",
+    "test-1.npz",
+    "test-2.npz",
+    "test-3.npz",
+    "test-4.npz",
+    "test-predictions.json",
+    "train-0.npz",
+    "train-1.npz",
+    "train-2.npz",
+    "train-3.npz",
+    "train-4.npz"
+  ],
+  "files": {
+    "all-five-models-freeze.json": {
+      "bytes": 7447,
+      "sha256": "87a42a01bcc53e1b2c9a406a63255d4468f4f428ee96eb5488d4b0154a669b8f"
+    },
+    "fold-0.pth": {
+      "bytes": 133182931,
+      "sha256": "5fa22a62d02f3525c27d408ca887636986f709b971e6d0614de13238ab5dbaf1"
+    },
+    "fold-1.pth": {
+      "bytes": 133182931,
+      "sha256": "a7929146ec6a982830777383a7f9c74ddad5c17bde4d6b87f0731d2849e009c5"
+    },
+    "fold-2.pth": {
+      "bytes": 133183455,
+      "sha256": "814b2f322ea42c4543efdc94452b897383ee2dfa8d339b93625d37f7ef74e609"
+    },
+    "fold-3.pth": {
+      "bytes": 133183455,
+      "sha256": "5e797d50ee2bb854932be17a0848d3044ebab175ccba3f51e99f25326e450056"
+    },
+    "fold-4.pth": {
+      "bytes": 133183455,
+      "sha256": "a3f4d63b284b3a71191cb28b409210fda9dad8b773add411f40aafe2575adb5f"
+    },
+    "selection-0.json": {
+      "bytes": 468813,
+      "sha256": "6ffb228f8f8487426fe22f390ae4afe543723c002a4c7c6d4d64c5e07c75c2ef"
+    },
+    "selection-1.json": {
+      "bytes": 468956,
+      "sha256": "bb432873c3306894da783b46d4eb0ad63838df316055176cd1e67c78f73f4439"
+    },
+    "selection-2.json": {
+      "bytes": 469120,
+      "sha256": "117807bdcdf09bca14aa7577626a3e8765a737edce2bc8006fd17c99c44f3463"
+    },
+    "selection-3.json": {
+      "bytes": 469177,
+      "sha256": "5ca8e10193f128aaac4b2a25fd427fdf11a42035d435d703314fda8e047e3356"
+    },
+    "selection-4.json": {
+      "bytes": 469150,
+      "sha256": "109689430e16728eaf781d487aa125179e6f7211804690afb25f590e5492e33c"
+    },
+    "test-0.npz": {
+      "bytes": 89269,
+      "sha256": "d3150d1085384be191910e79164ea0c76c0ef14f4d2985b368411eec085091f7"
+    },
+    "test-1.npz": {
+      "bytes": 89235,
+      "sha256": "e7ffee4ce270fec49060610aa3e1401b4b03dcd6814f0a5234556c243f29cf2d"
+    },
+    "test-2.npz": {
+      "bytes": 90968,
+      "sha256": "c6974d0c9edccd20551f6affc50eb2a5feadf9afed43a9694f019bd727ad5c00"
+    },
+    "test-3.npz": {
+      "bytes": 89453,
+      "sha256": "ebed6895f4e604b22eb2e806429b7c8626fe7f01501ad308ae1d455534192636"
+    },
+    "test-4.npz": {
+      "bytes": 87899,
+      "sha256": "f5c83732e917fcdb87c6bdb957b270ad489af7e7893085ddf196fb9880b1ed87"
+    },
+    "test-predictions.json": {
+      "bytes": 112996,
+      "sha256": "6e2f708874cc03e7ad43a62499c84a090ce91da5bf8d3ffc76af50328fa1f559"
+    },
+    "train-0.npz": {
+      "bytes": 353738,
+      "sha256": "16b1798f05c5f891db44ae8796ff976397b531cb670986f92ffc2d93613ad56b"
+    },
+    "train-1.npz": {
+      "bytes": 352393,
+      "sha256": "eb742a3009b74c0a2d9bd80954f2ec5bbc4dfe362166bd3448394454c8ed4946"
+    },
+    "train-2.npz": {
+      "bytes": 350989,
+      "sha256": "39ce8070050e53c7cd01b56d83bd0747b1b46e744d5c2a58515ec6b1a264498f"
+    },
+    "train-3.npz": {
+      "bytes": 352872,
+      "sha256": "7a18b6c89ec170c818966476fcf82452770d2fbc10c769e211f8f5dd69e634dd"
+    },
+    "train-4.npz": {
+      "bytes": 354321,
+      "sha256": "948183aec0dd49779a1f5369f16bc62bd0a835f0137f1bda93171253e6a4d301"
+    }
+  },
+  "downloads": {
+    "all-five-models-freeze.json": {
+      "bytes": 7447,
+      "sha256": "87a42a01bcc53e1b2c9a406a63255d4468f4f428ee96eb5488d4b0154a669b8f",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-all-five-models-freeze.json"
+    },
+    "fold-0.pth": {
+      "bytes": 133182931,
+      "sha256": "5fa22a62d02f3525c27d408ca887636986f709b971e6d0614de13238ab5dbaf1",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-fold-0.pth"
+    },
+    "fold-1.pth": {
+      "bytes": 133182931,
+      "sha256": "a7929146ec6a982830777383a7f9c74ddad5c17bde4d6b87f0731d2849e009c5",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-fold-1.pth"
+    },
+    "fold-2.pth": {
+      "bytes": 133183455,
+      "sha256": "814b2f322ea42c4543efdc94452b897383ee2dfa8d339b93625d37f7ef74e609",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-fold-2.pth"
+    },
+    "fold-3.pth": {
+      "bytes": 133183455,
+      "sha256": "5e797d50ee2bb854932be17a0848d3044ebab175ccba3f51e99f25326e450056",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-fold-3.pth"
+    },
+    "fold-4.pth": {
+      "bytes": 133183455,
+      "sha256": "a3f4d63b284b3a71191cb28b409210fda9dad8b773add411f40aafe2575adb5f",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-fold-4.pth"
+    },
+    "replay-context.zip": {
+      "bytes": 2553885,
+      "sha256": "2fc79b122386c0dfa44fee1cc97dbf671d0c72bd7bf692699e320bed54817e2a",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-replay-context.zip"
+    }
+  },
+  "inference_source_sha256": {
+    "hyd_regression_features.py": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
+    "hyd_regression_training.py": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c",
+    "hyd_regression_candidates.py": "3f40befbe151345afb8b34c28c9048d7b47dce9b0e1fed658ef11f49d218a472",
+    "hyd_regression_workflow.py": "f6844b5e505763ef79f1c1f4cbaabe7f361c7f67f0b604cde65a40e8bfd4d617"
+  }
+}

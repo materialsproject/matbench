@@ -1,0 +1,32 @@
+{
+  "jdft2d_geometry_features.py": {
+    "original_sha256": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
+    "generalized_file": "hyd_regression_features.py",
+    "generalized_sha256": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6"
+  },
+  "matbench_jdft2d_training.py": {
+    "original_sha256": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c",
+    "generalized_file": "hyd_regression_training.py",
+    "generalized_sha256": "4dc6bee3648d06e8aee7f6c013218552cc76d26650ed33791d2dcdc23054688c"
+  },
+  "jdft2d_review_candidates.py": {
+    "original_sha256": "2d932d0b7abde7c0682429b5e0dbcaf269771089a4c1ba73ae07f3fd8ee5478c",
+    "generalized_file": "hyd_regression_candidates.py",
+    "generalized_sha256": "d0a9419a36fd57f1e3777d0fc9f1fe8f2feb05af8be911d544bb55c98014ad16"
+  },
+  "jdft2d_review_workflow.py": {
+    "original_sha256": "612f855a2e9036dee6c02f374ad45f01645d176631bb67f89150daf2f596b3a6",
+    "generalized_file": "hyd_regression_workflow.py",
+    "generalized_sha256": "7b96a1249c8ce2e3fb778f16edf93701afbb8ba0c276f4c156e7395c0718f403"
+  },
+  "jdft2d_review_stage.py": {
+    "original_sha256": "669bba4aa55358fc3dbb0a61ef3821ef5e0e9d793daa0cfce4a5d3b7bc8a0213",
+    "generalized_file": "hyd_regression_stage.py",
+    "generalized_sha256": "ca256c5ffbdcc655926a40e40a5f0f5dae93461117ec026cbc5c524ed3b06ca0"
+  },
+  "jdft2d_review_reproduce.py": {
+    "original_sha256": "699a154ece7d99a9a132fefffbc7a967778b8aa01d6996a553b34358b7c9b5f6",
+    "generalized_file": "hyd_regression_reproduce.py",
+    "generalized_sha256": "3bddf7cf7763df01bccfd128609c9da480fd52be99d76700276b5cfc3934b223"
+  }
+}

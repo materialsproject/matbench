@@ -1,0 +1,20 @@
+{
+  "scientific_source_unchanged_since_final_preGPU_freeze": true,
+  "candidate_axes_and_selection_unchanged_since_first_plan": true,
+  "original_public_master_interrupted": true,
+  "host_continuation_used_identical_frozen_prepare_select_train_predict_native_functions": true,
+  "interruptions": [
+    {
+      "stage": "before first prepared data/GPU",
+      "cause": "Inherited previous launcher-only runtime-amendment lookup",
+      "repair": "New package checks its own exact source hashes directly; original failure and pre-GPU source amendment retained"
+    },
+    {
+      "stage": "before second dataset creation/GPU",
+      "cause": "Internal dataset ID exceeded documented50-character limit",
+      "repair": "Private transport prefix shortened;31unique IDs longest45; completed first stage SHA-adopted without rerunning"
+    }
+  ],
+  "automatic_failed_GPU_retries": 0,
+  "private_course_executor_not_a_public_dependency": true
+}

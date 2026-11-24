@@ -1,0 +1,199 @@
+{
+  "frozen_at_utc": "2026-11-18T14:37:23.210468+00:00",
+  "protocol_sha256": "963451f78e439f74d31b80b0d00f99ca34153769c91f293d1a79bb9a97a5173d",
+  "models": [
+    {
+      "outer_fold": 0,
+      "checkpoint_relative": "model/checkpoint_1K_5.pth",
+      "checkpoint_sha256": "5fa22a62d02f3525c27d408ca887636986f709b971e6d0614de13238ab5dbaf1",
+      "selected": {
+        "index": 481,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s4-e8-median",
+          "baseline_key": null,
+          "weight": 1.0
+        },
+        "mean_fold_mae": 32.00007931075634,
+        "folds": [
+          32.22466187736375,
+          31.085630869709846,
+          32.689945185195434
+        ]
+      },
+      "selection_sha256": "6ffb228f8f8487426fe22f390ae4afe543723c002a4c7c6d4d64c5e07c75c2ef",
+      "actual_training_proof": {
+        "gradient_steps": 35,
+        "epochs": 5,
+        "changed_parameter_tensors": 129,
+        "checkpoint_sha256": "5fa22a62d02f3525c27d408ca887636986f709b971e6d0614de13238ab5dbaf1",
+        "checkpoint_file": "checkpoint_1K_5.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 24.79878264386207,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-phonons-3042-v1:6",
+      "compute": {
+        "training_card_hours": 0.42333333333333334,
+        "wall_seconds": 1498.629232945852,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 1,
+      "checkpoint_relative": "model/checkpoint_1K_5.pth",
+      "checkpoint_sha256": "a7929146ec6a982830777383a7f9c74ddad5c17bde4d6b87f0731d2849e009c5",
+      "selected": {
+        "index": 481,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s4-e8-median",
+          "baseline_key": null,
+          "weight": 1.0
+        },
+        "mean_fold_mae": 31.1019815389236,
+        "folds": [
+          32.663124324353184,
+          30.951492764704433,
+          29.69132752771319
+        ]
+      },
+      "selection_sha256": "bb432873c3306894da783b46d4eb0ad63838df316055176cd1e67c78f73f4439",
+      "actual_training_proof": {
+        "gradient_steps": 35,
+        "epochs": 5,
+        "changed_parameter_tensors": 129,
+        "checkpoint_sha256": "a7929146ec6a982830777383a7f9c74ddad5c17bde4d6b87f0731d2849e009c5",
+        "checkpoint_file": "checkpoint_1K_5.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 24.402988977730274,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-phonons-3042-v1:12",
+      "compute": {
+        "training_card_hours": 0.48138888888888887,
+        "wall_seconds": 1511.3017071550712,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 2,
+      "checkpoint_relative": "model/checkpoint_1K_20.pth",
+      "checkpoint_sha256": "814b2f322ea42c4543efdc94452b897383ee2dfa8d339b93625d37f7ef74e609",
+      "selected": {
+        "index": 135,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s1-e4-median",
+          "baseline_key": "frozen-all370-e4-median",
+          "weight": 0.25
+        },
+        "mean_fold_mae": 30.193683335003794,
+        "folds": [
+          27.817553806595225,
+          28.529426181208528,
+          34.23407001720763
+        ]
+      },
+      "selection_sha256": "117807bdcdf09bca14aa7577626a3e8765a737edce2bc8006fd17c99c44f3463",
+      "actual_training_proof": {
+        "gradient_steps": 140,
+        "epochs": 20,
+        "changed_parameter_tensors": 129,
+        "checkpoint_sha256": "814b2f322ea42c4543efdc94452b897383ee2dfa8d339b93625d37f7ef74e609",
+        "checkpoint_file": "checkpoint_1K_20.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 70.58451261278242,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-phonons-3042-v1:18",
+      "compute": {
+        "training_card_hours": 0.49583333333333335,
+        "wall_seconds": 1587.6740248496644,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 3,
+      "checkpoint_relative": "model/checkpoint_1K_20.pth",
+      "checkpoint_sha256": "5e797d50ee2bb854932be17a0848d3044ebab175ccba3f51e99f25326e450056",
+      "selected": {
+        "index": 43,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s0-e4-median",
+          "baseline_key": "frozen-all370-e8-median",
+          "weight": 0.75
+        },
+        "mean_fold_mae": 29.216177075169156,
+        "folds": [
+          33.7834146236329,
+          29.316109604712484,
+          24.54900699716208
+        ]
+      },
+      "selection_sha256": "5ca8e10193f128aaac4b2a25fd427fdf11a42035d435d703314fda8e047e3356",
+      "actual_training_proof": {
+        "gradient_steps": 140,
+        "epochs": 20,
+        "changed_parameter_tensors": 129,
+        "checkpoint_sha256": "5e797d50ee2bb854932be17a0848d3044ebab175ccba3f51e99f25326e450056",
+        "checkpoint_file": "checkpoint_1K_20.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 67.06384067516774,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-phonons-3042-v1:24",
+      "compute": {
+        "training_card_hours": 0.44333333333333336,
+        "wall_seconds": 1572.114620151464,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 4,
+      "checkpoint_relative": "model/checkpoint_1K_20.pth",
+      "checkpoint_sha256": "a3f4d63b284b3a71191cb28b409210fda9dad8b773add411f40aafe2575adb5f",
+      "selected": {
+        "index": 81,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s0-e8-median",
+          "baseline_key": null,
+          "weight": 1.0
+        },
+        "mean_fold_mae": 29.499287710667573,
+        "folds": [
+          27.60669561916531,
+          26.194577139706414,
+          34.696590373131
+        ]
+      },
+      "selection_sha256": "109689430e16728eaf781d487aa125179e6f7211804690afb25f590e5492e33c",
+      "actual_training_proof": {
+        "gradient_steps": 140,
+        "epochs": 20,
+        "changed_parameter_tensors": 129,
+        "checkpoint_sha256": "a3f4d63b284b3a71191cb28b409210fda9dad8b773add411f40aafe2575adb5f",
+        "checkpoint_file": "checkpoint_1K_20.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 64.22780817653984,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-phonons-3042-v1:30",
+      "compute": {
+        "training_card_hours": 0.4852777777777778,
+        "wall_seconds": 1544.9870505183935,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    }
+  ],
+  "all_five_genuinely_trained": true,
+  "corrected_test_predictions_made": false,
+  "manual_host_recovery_disclosed": true
+}
