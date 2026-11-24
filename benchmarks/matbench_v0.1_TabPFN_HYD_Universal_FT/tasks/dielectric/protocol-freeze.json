@@ -1,0 +1,58 @@
+{
+  "frozen_at_utc": "2026-11-19T03:20:40.046372+00:00",
+  "method": "TabPFN-HYD-Universal-FT",
+  "version": 2,
+  "task": {
+    "name": "matbench_dielectric",
+    "input": "structure",
+    "target": "n",
+    "rows": 4764,
+    "unit": "unitless refractive index",
+    "id_prefix": "mb-dielectric-",
+    "id_width": 4,
+    "data_sha256": "83befa09bc2ec2f4b6143afc413157827a90e5e2e42c1eb507ccfa01bf26a1d6",
+    "official_url": "https://ml.materialsproject.org/projects/matbench_dielectric.json.gz"
+  },
+  "original_checkpoint_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+  "official_native_revision": "35f88110a51adf817a53515780d99fc34f614bf8",
+  "official_splits_sha256": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+  "scientific_source_sha256": {
+    "hyd_regression_candidates.py": "3f40befbe151345afb8b34c28c9048d7b47dce9b0e1fed658ef11f49d218a472",
+    "hyd_regression_features.py": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
+    "hyd_regression_reproduce.py": "c2b8ac9afaec4643ca2a835699d63483f29a24fa525b609f202b947d23b4ebb4",
+    "hyd_regression_stage.py": "ca256c5ffbdcc655926a40e40a5f0f5dae93461117ec026cbc5c524ed3b06ca0",
+    "hyd_regression_training.py": "9e571e5274004fbeac01f978ffb6e9e2d98267e87372f7b36887ccb46744c06b",
+    "hyd_regression_workflow.py": "f6844b5e505763ef79f1c1f4cbaabe7f361c7f67f0b604cde65a40e8bfd4d617"
+  },
+  "feature_options": [
+    "composition260",
+    "all370"
+  ],
+  "random_seed": 3042,
+  "search": "Same predeclared 1206-candidate closure for every outer TRAIN; six fixed TabPFN schedules, six MLPs, eight frozen comparators, positive blends. No task-score-driven narrowing.",
+  "inner_selection": "composition GroupKFold3 mean validation MAE; fixed candidate-index tie break",
+  "real_gradient_training_required": true,
+  "gradient_free_standalone_ineligible": true,
+  "label_boundary": "Only this outer TRAIN labels in its candidate/final jobs. Every training/imputation/scaling operation uses own inner TRAIN. TEST arrays contain IDs/features only; no cross-fold adaptive design changes.",
+  "scientific_iteration": "Predeclared inner-TRAIN alternatives only. Do not adapt the shared grid using any outer-fold development report after starting. Further scientific changes require independent external development evidence and a separately disclosed future protocol.",
+  "final_evaluation": "Freeze all five final models before any dielectric TEST inference or score. Retain the complete result regardless of direction; never use it to choose a different grid, checkpoint, feature set, blend or head.",
+  "prior_exposure": "Steel/JDFT2D/phonon results are already known. This transfers their frozen common method, not trained task weights or test-driven changes. Dielectric targets/predictions/scores have not been opened for scientific design. Third-party foundation pretraining is not claimed unseen.",
+  "output_disposition": "Retain exact checkpoints, candidate weights/update proofs, optimizer tensor digests, final full optimizers, predictions, source/data checksums and failures.",
+  "owned_gpu_limit": 1,
+  "container_timeout_seconds": 1200,
+  "backoff_limit": 0,
+  "failed_gpu_auto_retry": false,
+  "stage_count": 71,
+  "ft_candidate_jobs_split_by_schedule_blocks_for_runtime_only": true,
+  "public_first_confirmed": false,
+  "operation_only_changes": {
+    "schedules_per_job": 1,
+    "inner_folds_per_job": 3,
+    "fit_time_limit_seconds": 300,
+    "previous_fit_time_limit_seconds": 120,
+    "incomplete_epoch_is_failure": true,
+    "epochs_and_all_candidate_axes_unchanged": true
+  },
+  "initialization": "Every candidate/final fit starts from the exact original pinned V2 checkpoint; no phonon checkpoint selection or transfer.",
+  "scale_boundary": "One fixed schedule per candidate job instead of three, solely to respect the 1200s container cap for larger TRAIN. If any complete prescribed fit cannot finish, stop and diagnose rather than shorten epochs or select an incomplete model."
+}

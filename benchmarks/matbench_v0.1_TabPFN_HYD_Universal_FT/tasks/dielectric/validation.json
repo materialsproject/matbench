@@ -1,0 +1,54 @@
+{
+  "task": {
+    "name": "matbench_dielectric",
+    "input": "structure",
+    "target": "n",
+    "rows": 4764,
+    "unit": "unitless refractive index",
+    "id_prefix": "mb-dielectric-",
+    "id_width": 4,
+    "data_sha256": "83befa09bc2ec2f4b6143afc413157827a90e5e2e42c1eb507ccfa01bf26a1d6",
+    "official_url": "https://ml.materialsproject.org/projects/matbench_dielectric.json.gz"
+  },
+  "original_result_sha256": "2da6f93c74b33472573c3cd6a77c0c2476b9eb878ab4a2e9ff8480e53035a5e3",
+  "original_protocol_sha256": "10eca18edb645cd6e28e9746d08854332565bdaeff5e1ac29432c23a31e2bb89",
+  "original_freeze_sha256": "d32ca0d0557996401b340a27c8e5e3e80fa07cf9b329c241354283b000030a02",
+  "completed_stages": 71,
+  "inner_real_gradient_fits": 270,
+  "final_real_gradient_fits": 5,
+  "fresh_process_TRAIN_witness_replay_rows": 80,
+  "heldout_predictions": 4764,
+  "additional_full_GPU_replay_passed": false,
+  "additional_full_GPU_replay_rows": 0,
+  "standalone_default_local_A100_end_to_end_retraining_separately_executed": false,
+  "native_scores": {
+    "mae": {
+      "mean": 0.2564567309263447,
+      "max": 0.37791477041057886,
+      "min": 0.1542756526698827,
+      "std": 0.07292975450284772
+    },
+    "rmse": {
+      "mean": 1.7071111488902797,
+      "max": 2.938714663939704,
+      "min": 0.6450807087852188,
+      "std": 0.8282220792030063
+    },
+    "mape": {
+      "mean": 0.06062103164687317,
+      "max": 0.07253177081289865,
+      "min": 0.04365110061108853,
+      "std": 0.011792263884362199
+    },
+    "max_error": {
+      "mean": 35.03545193313231,
+      "max": 59.15507709315409,
+      "min": 14.737414153666801,
+      "std": 17.705406831207007
+    }
+  },
+  "original_scientific_source_SHA_exact": true,
+  "all_output_SHA_and_release_checks_passed": true,
+  "scientific_acceptance_pending": true,
+  "public_first_confirmed": false
+}

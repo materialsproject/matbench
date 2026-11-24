@@ -1,0 +1,199 @@
+{
+  "frozen_at_utc": "2026-11-20T04:10:36.179009+00:00",
+  "protocol_sha256": "10eca18edb645cd6e28e9746d08854332565bdaeff5e1ac29432c23a31e2bb89",
+  "models": [
+    {
+      "outer_fold": 0,
+      "checkpoint_relative": "model/checkpoint_3K_10.pth",
+      "checkpoint_sha256": "80c168e03690d48204814f68a1cfcef2dce1fef5ff5903b706bb1fe003323c58",
+      "selected": {
+        "index": 586,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s5-e8-median",
+          "baseline_key": "frozen-all370-e4-median",
+          "weight": 0.5
+        },
+        "mean_fold_mae": 0.3016122055113395,
+        "folds": [
+          0.28998527139205715,
+          0.3481549359138513,
+          0.26669640922811005
+        ]
+      },
+      "selection_sha256": "e0ea0e428cfddb5dab3ff40a15e5377c175b52e164f8eca1936230e8ae284584",
+      "actual_training_proof": {
+        "gradient_steps": 290,
+        "epochs": 10,
+        "changed_parameter_tensors": 4,
+        "checkpoint_sha256": "80c168e03690d48204814f68a1cfcef2dce1fef5ff5903b706bb1fe003323c58",
+        "checkpoint_file": "checkpoint_3K_10.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 97.79411068744957,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-dielectric-3042-v1:14",
+      "compute": {
+        "training_card_hours": 1.4305555555555556,
+        "wall_seconds": 4653.033117493615,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 1,
+      "checkpoint_relative": "model/checkpoint_3K_10.pth",
+      "checkpoint_sha256": "ec2b60b943b002cfaa01e12d2422ab2dbe70c71e1c6a62c43badea593f544924",
+      "selected": {
+        "index": 542,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s5-e4-median",
+          "baseline_key": "frozen-all370-e8-median",
+          "weight": 0.5
+        },
+        "mean_fold_mae": 0.2809283479690443,
+        "folds": [
+          0.3084383372774634,
+          0.2995413538422827,
+          0.23480535278738685
+        ]
+      },
+      "selection_sha256": "b966d8888e134594acc211a16e0612f560d36e2b6ff8d389dd0e93c5fdef77b9",
+      "actual_training_proof": {
+        "gradient_steps": 290,
+        "epochs": 10,
+        "changed_parameter_tensors": 4,
+        "checkpoint_sha256": "ec2b60b943b002cfaa01e12d2422ab2dbe70c71e1c6a62c43badea593f544924",
+        "checkpoint_file": "checkpoint_3K_10.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 94.51903802901506,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-dielectric-3042-v1:28",
+      "compute": {
+        "training_card_hours": 1.5363888888888888,
+        "wall_seconds": 4557.6812385071535,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 2,
+      "checkpoint_relative": "model/checkpoint_3K_10.pth",
+      "checkpoint_sha256": "42d38a906b796be22bc645114ee87baa7befa6076cdabf147b054faa6a758061",
+      "selected": {
+        "index": 592,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s5-e8-median",
+          "baseline_key": "frozen-all370-e8-median",
+          "weight": 0.5
+        },
+        "mean_fold_mae": 0.24613095530002768,
+        "folds": [
+          0.25232870358035747,
+          0.24221079331496503,
+          0.2438533690047605
+        ]
+      },
+      "selection_sha256": "0cd38986ddc127b73a214bd4c7e4c7d2e7434afd31280e89b6dedb7888211153",
+      "actual_training_proof": {
+        "gradient_steps": 290,
+        "epochs": 10,
+        "changed_parameter_tensors": 4,
+        "checkpoint_sha256": "42d38a906b796be22bc645114ee87baa7befa6076cdabf147b054faa6a758061",
+        "checkpoint_file": "checkpoint_3K_10.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 95.8115230279509,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-dielectric-3042-v1:42",
+      "compute": {
+        "training_card_hours": 1.3836111111111111,
+        "wall_seconds": 4565.796078255866,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 3,
+      "checkpoint_relative": "model/checkpoint_3K_10.pth",
+      "checkpoint_sha256": "806a547e756aebacaf8961f7e1649450ace7971bffb94f6bd40feff7dab695a5",
+      "selected": {
+        "index": 543,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s5-e4-median",
+          "baseline_key": "frozen-all370-e8-median",
+          "weight": 0.75
+        },
+        "mean_fold_mae": 0.26693713542954417,
+        "folds": [
+          0.26340560175590993,
+          0.27222725275128873,
+          0.2651785517814339
+        ]
+      },
+      "selection_sha256": "f75f99286cce1062cf6875e843b95e1f77ee4d0c4153be51ce23f37d8aed1d06",
+      "actual_training_proof": {
+        "gradient_steps": 290,
+        "epochs": 10,
+        "changed_parameter_tensors": 4,
+        "checkpoint_sha256": "806a547e756aebacaf8961f7e1649450ace7971bffb94f6bd40feff7dab695a5",
+        "checkpoint_file": "checkpoint_3K_10.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 95.00435452722013,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-dielectric-3042-v1:56",
+      "compute": {
+        "training_card_hours": 1.2666666666666666,
+        "wall_seconds": 4519.126682274044,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 4,
+      "checkpoint_relative": "model/checkpoint_3K_20.pth",
+      "checkpoint_sha256": "f48b2335c92b0cb0e9c0d06f2cb106724e38bb87c40a018b25301b9fa185654c",
+      "selected": {
+        "index": 91,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s0-e8-median",
+          "baseline_key": "frozen-all370-e8-median",
+          "weight": 0.25
+        },
+        "mean_fold_mae": 0.27241117571983753,
+        "folds": [
+          0.20626039076315225,
+          0.274150072226491,
+          0.3368230641698693
+        ]
+      },
+      "selection_sha256": "9182ba39058109f219d1dd4b1ffa7399dd18381fa4cc341ca62fc2f71f71e607",
+      "actual_training_proof": {
+        "gradient_steps": 580,
+        "epochs": 20,
+        "changed_parameter_tensors": 129,
+        "checkpoint_sha256": "f48b2335c92b0cb0e9c0d06f2cb106724e38bb87c40a018b25301b9fa185654c",
+        "checkpoint_file": "checkpoint_3K_20.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 232.91685182973742,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-dielectric-3042-v1:70",
+      "compute": {
+        "training_card_hours": 1.2983333333333333,
+        "wall_seconds": 4628.011453662766,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    }
+  ],
+  "all_five_genuinely_trained": true,
+  "corrected_test_predictions_made": false,
+  "manual_host_recovery_disclosed": true
+}

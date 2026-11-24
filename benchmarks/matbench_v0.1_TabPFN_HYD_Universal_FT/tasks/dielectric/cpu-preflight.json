@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "at_utc": "2026-11-19T03:21:28.902774+00:00",
+  "protocol_sha256": "10eca18edb645cd6e28e9746d08854332565bdaeff5e1ac29432c23a31e2bb89",
+  "official_data_sha256": "83befa09bc2ec2f4b6143afc413157827a90e5e2e42c1eb507ccfa01bf26a1d6",
+  "official_splits_sha256": "94c17bc3dac32c67d33d69289927a5fec174497e74bbc47293e23d3d147e9a6d",
+  "scientific_source_SHA_all_verified": true,
+  "rows": 4764,
+  "features": 370,
+  "actual_prepared_folds": [
+    {
+      "fold": 0,
+      "train_rows": 3811,
+      "test_geometry_rows": 953,
+      "inner_group_separation": true,
+      "heldout_id_in_TRAIN_rejected": true,
+      "inner_overlap_rejected": true,
+      "test_targets_absent": true,
+      "training_sha256": "9d1fd571c32883ffe8704b50f7e675fba29ff4ce2872c2ad0dcb9d3576b73ed5"
+    },
+    {
+      "fold": 1,
+      "train_rows": 3811,
+      "test_geometry_rows": 953,
+      "inner_group_separation": true,
+      "heldout_id_in_TRAIN_rejected": true,
+      "inner_overlap_rejected": true,
+      "test_targets_absent": true,
+      "training_sha256": "23bb774ba5989e577481d82074920c5331a267b41326214bfa574fde386482d4"
+    },
+    {
+      "fold": 2,
+      "train_rows": 3811,
+      "test_geometry_rows": 953,
+      "inner_group_separation": true,
+      "heldout_id_in_TRAIN_rejected": true,
+      "inner_overlap_rejected": true,
+      "test_targets_absent": true,
+      "training_sha256": "19214389ddd0dcce06b7881e300fc1422a3991742cdea5dc0936cfcc13eb3876"
+    },
+    {
+      "fold": 3,
+      "train_rows": 3811,
+      "test_geometry_rows": 953,
+      "inner_group_separation": true,
+      "heldout_id_in_TRAIN_rejected": true,
+      "inner_overlap_rejected": true,
+      "test_targets_absent": true,
+      "training_sha256": "a76bc5075bd8d51533eead10e1f00d715bdaec1eb447d0801d1138ef71270fc3"
+    },
+    {
+      "fold": 4,
+      "train_rows": 3812,
+      "test_geometry_rows": 952,
+      "inner_group_separation": true,
+      "heldout_id_in_TRAIN_rejected": true,
+      "inner_overlap_rejected": true,
+      "test_targets_absent": true,
+      "training_sha256": "a5f1bddc19062e355095797dbe70a6dbe97ae00974f4527a04f0399013f0fa5f"
+    }
+  ],
+  "target_perturbation_leaves_features_exactly_unchanged": true,
+  "deterministic_candidate_count": 1206,
+  "positive_gradient_candidates_only": true,
+  "no_official_test_score_computed": true,
+  "not_a_GPU_training_success_claim": true
+}
