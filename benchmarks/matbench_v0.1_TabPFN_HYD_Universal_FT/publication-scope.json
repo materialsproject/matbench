@@ -6,5 +6,8 @@
     "matbench_log_kvrh"
   ],
   "remaining_tasks_continue_under_original_frozen_scientific_protocols": true,
-  "no_TEST_based_model_or_task_exclusion": true
+  "no_TEST_based_model_or_task_exclusion": true,
+  "remaining_shear_status": "Stopped on incomplete prescribed20epoch guard before TEST; failure retained; no automatic GPU retry",
+  "remaining_bulk_status": "Not started",
+  "original_five_task_declaration_retained": true
 }

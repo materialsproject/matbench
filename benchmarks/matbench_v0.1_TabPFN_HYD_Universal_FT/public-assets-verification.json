@@ -1,0 +1,217 @@
+{
+  "at_utc": "2026-11-24T10:51:59.128Z",
+  "all_expected_anonymous_full_downloads_verified": true,
+  "assets": [
+    {
+      "name": "dielectric-all-five-models-freeze.json",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-all-five-models-freeze.json",
+      "bytes": 7543,
+      "sha256": "d32ca0d0557996401b340a27c8e5e3e80fa07cf9b329c241354283b000030a02",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "dielectric-fold-0.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-fold-0.pth",
+      "bytes": 76366046,
+      "sha256": "80c168e03690d48204814f68a1cfcef2dce1fef5ff5903b706bb1fe003323c58",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "dielectric-fold-1.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-fold-1.pth",
+      "bytes": 76366046,
+      "sha256": "ec2b60b943b002cfaa01e12d2422ab2dbe70c71e1c6a62c43badea593f544924",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "dielectric-fold-2.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-fold-2.pth",
+      "bytes": 76366046,
+      "sha256": "42d38a906b796be22bc645114ee87baa7befa6076cdabf147b054faa6a758061",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "dielectric-fold-3.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-fold-3.pth",
+      "bytes": 76366046,
+      "sha256": "806a547e756aebacaf8961f7e1649450ace7971bffb94f6bd40feff7dab695a5",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "dielectric-fold-4.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-fold-4.pth",
+      "bytes": 133183455,
+      "sha256": "f48b2335c92b0cb0e9c0d06f2cb106724e38bb87c40a018b25301b9fa185654c",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "dielectric-frozen-model-assets.json",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-frozen-model-assets.json",
+      "bytes": 6013,
+      "sha256": "776403e968294c7f597c17439c2f71f0a835bece055275c0ac783eb2fffe4ec8",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "dielectric-replay-context.zip",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-replay-context.zip",
+      "bytes": 10461864,
+      "sha256": "ade650304c2dcb302064bc7a592e7578c423a1aa0dd19fffe7ca18f5fc8c9e6a",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "expt_gap-all-five-models-freeze.json",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-all-five-models-freeze.json",
+      "bytes": 7439,
+      "sha256": "19921f1768495ad17298b9addecec4bd185efe034970729ce1a06956458bff5a",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "expt_gap-fold-0.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-fold-0.pth",
+      "bytes": 133183455,
+      "sha256": "5fe5027ae8fa70aa3f73bd05f98876a16bc4d6d780577ecc14203db856ad2549",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "expt_gap-fold-1.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-fold-1.pth",
+      "bytes": 133182931,
+      "sha256": "9b4efa4dec56abe6043bb71e8892ffeddf46159b49a6a35de4a850ec250089e3",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "expt_gap-fold-2.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-fold-2.pth",
+      "bytes": 133182931,
+      "sha256": "7399d38cab3f559820e6cf208116b1247401eb75d89a035420c782d1327df36d",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "expt_gap-fold-3.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-fold-3.pth",
+      "bytes": 133183455,
+      "sha256": "838e9bd9a0cdd0560e73a5ad6afb1360012bd82385315a9ef91c92dd21d2b92b",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 2
+    },
+    {
+      "name": "expt_gap-fold-4.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-fold-4.pth",
+      "bytes": 133183455,
+      "sha256": "3d79753b7d1802dc357dc1fcfaba6bc10a6532e711603cdd1e0081b140c7cca4",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "expt_gap-frozen-model-assets.json",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-frozen-model-assets.json",
+      "bytes": 5999,
+      "sha256": "2e673fc45d9037cfd8c2ac1c3ba3212c7a4f432e57d8a40f399b8a2cd73f4e7f",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "expt_gap-replay-context.zip",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-replay-context.zip",
+      "bytes": 5836642,
+      "sha256": "3546ad78c483490d403568d000ff1be26da77e889d957f7b501fd7352ae93560",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "LICENSE-TabPFN.txt",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/LICENSE-TabPFN.txt",
+      "bytes": 11483,
+      "sha256": "08b1851b4b6136b5fb0cb124d3258e0d91e3e1623f1be5904b77e4d270d112d8",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "phonons-all-five-models-freeze.json",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-all-five-models-freeze.json",
+      "bytes": 7447,
+      "sha256": "87a42a01bcc53e1b2c9a406a63255d4468f4f428ee96eb5488d4b0154a669b8f",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "phonons-fold-0.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-fold-0.pth",
+      "bytes": 133182931,
+      "sha256": "5fa22a62d02f3525c27d408ca887636986f709b971e6d0614de13238ab5dbaf1",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "phonons-fold-1.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-fold-1.pth",
+      "bytes": 133182931,
+      "sha256": "a7929146ec6a982830777383a7f9c74ddad5c17bde4d6b87f0731d2849e009c5",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "phonons-fold-2.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-fold-2.pth",
+      "bytes": 133183455,
+      "sha256": "814b2f322ea42c4543efdc94452b897383ee2dfa8d339b93625d37f7ef74e609",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "phonons-fold-3.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-fold-3.pth",
+      "bytes": 133183455,
+      "sha256": "5e797d50ee2bb854932be17a0848d3044ebab175ccba3f51e99f25326e450056",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "phonons-fold-4.pth",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-fold-4.pth",
+      "bytes": 133183455,
+      "sha256": "a3f4d63b284b3a71191cb28b409210fda9dad8b773add411f40aafe2575adb5f",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "phonons-frozen-model-assets.json",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-frozen-model-assets.json",
+      "bytes": 5986,
+      "sha256": "c44c5777330d9a5c912180dff56e8afb309a6029bf8cef82fa77c63db783a7a8",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "phonons-replay-context.zip",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/phonons-replay-context.zip",
+      "bytes": 2553885,
+      "sha256": "2fc79b122386c0dfa44fee1cc97dbf671d0c72bd7bf692699e320bed54817e2a",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    },
+    {
+      "name": "SHA256SUMS",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/SHA256SUMS",
+      "bytes": 2274,
+      "sha256": "f5f3366e7421e1667b199aa7d4b97848402e7d7bbcb0d19074b5bbbe3306db4e",
+      "anonymous_full_GET_verified": true,
+      "download_attempts": 1
+    }
+  ],
+  "release_url": "https://github.com/donkeey11/matbench/releases/tag/unified-regression-three-tasks-v1",
+  "public_first_confirmed": false,
+  "actual_verification": "Complete anonymous standard Node HTTPS GET of every asset, exact original bytes/SHA256; no cookies, credentials, TLS/proxy settings changes or API-digest-only shortcuts"
+}
