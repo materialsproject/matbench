@@ -1,0 +1,36 @@
+{
+  "scored_at_utc": "2026-11-23T13:01:59.639966+00:00",
+  "native_five_fold_scores": {
+    "mae": {
+      "mean": 0.31707419178786395,
+      "max": 0.3512194249914661,
+      "min": 0.28514543006635795,
+      "std": 0.021642045162478318
+    },
+    "rmse": {
+      "mean": 0.8230682034299026,
+      "max": 0.9573919378070539,
+      "min": 0.7158785654134733,
+      "std": 0.07770087554470914
+    },
+    "mape": {
+      "mean": 0.3343414461955478,
+      "max": 0.39926114369058247,
+      "min": 0.2776377950016848,
+      "std": 0.039670082805129445
+    },
+    "max_error": {
+      "mean": 7.501209667267799,
+      "max": 11.097611099123416,
+      "min": 6.380319539706149,
+      "std": 1.8081602609965073
+    }
+  },
+  "n_predictions": 4604,
+  "result_sha256": "baa0d5d2bb2a158e5033f925b277f01941642632af60776fafa788d87ca979de",
+  "protocol_sha256": "0595680a838fe4c5d6fb0594914964afa6f0cb57b9efae440e302f6167e8f06e",
+  "old_score_used_for_model_selection": false,
+  "replacement_independent_of_score_direction": true,
+  "method_transfer_from_other_tasks_disclosed": true,
+  "public_first_confirmed": false
+}
