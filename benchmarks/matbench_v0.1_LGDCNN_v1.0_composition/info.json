@@ -1,0 +1,8 @@
+{
+    "authors": "Hongwei Du, Hong Wang (original code by Hongwei Du)",
+    "algorithm": "LGDCNN",
+    "algorithm_long": "Rational Design of Deep Learning Networks Based on Fusion Strategy for Improved Materials Property Predictions. See github page for more information: https://github.com/dhw059/DeepModelFusion.",
+    "bibtex_refs": "@article{UnderReview, author = {Hongwei Du, Hong Wang}, title = {Rational Design of Deep Learning Networks Based on Fusion Strategy for Improved Materials Property Predictions}, journal = {Journal of Chemical Theory and Computation}, volume = {}, number = {}, pages = {}, year = {2024}, doi = {Under Review}, URL = {}, eprint = {}}",
+    "requirements": "See GitHub page for LGDCNN.",
+    "notes": ""
+}
