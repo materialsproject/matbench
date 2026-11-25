@@ -1,0 +1,17 @@
+{
+  "authors": "Isaac Lyngaas and Massimiliano Lupo Pasini and Benjamin Stump and Linda Ungerboeck",
+  "algorithm": "Hydragnn",
+  "algorithm_long": "",
+  "bibtex_refs": [
+    "@article{pasini2026exascale,\n      title={Exascale Multi-Task Graph Foundation Models for Imbalanced, Multi-Fidelity Atomistic Data},\n      author={Pasini, Massimiliano Lupo and Choi, Jong Youl and Mehta, Kshitij and Messerly, Richard and Weaver, Rylie and Ungerboeck, Linda and Lyngaas, Isaac and Stump, Benajmin and Aji, Ashwin M and Schulz, Karl W and others},\n      journal={arXiv preprint arXiv:2604.15380},\n      year={2026}\n}",
+    "@techreport{lupo2026hydragnn_predictive_gfm_2026,\n      title={HydraGNN\_Predictive\_GFM\_2026-Ensemble of predictive graph foundation models for atomistic materials modeling},\n      author={Lupo Pasini, Massimiliano and Choi, Jong Youl and Mehta, Kshitij and Messerly, Richard and Weaver, Rylie and Aji, Ashwin M and Schulz, Karl W and Polo, Jorda},\n      year={2026},\n      institution={Oak Ridge National Laboratory (ORNL), Oak Ridge, TN (United States)}"
+}
+  ],
+  "notes": "The original version is not capable to train on the official matbench. The data needs to be preprocessed in order to finetune with pre-trained Hydragnn models. Finetuning is performed using code from the HydraGNN and HydraGNN_GFM_FineTuning4Materials repositories which are both pip installable and used within the local scripts preprocess_data.py, finetune.py, evaluate.py, and compile.py . We provide two bash scripts one that evaluates finetuned models that we have trained ourselves and one that goes through the entire workflow of preprocessing, finetuning, evaluating and compiling. Only two matbench tasks are finetuned matbench_jdft2d and matbench_mp_is_metal.",
+  "requirements": {
+    "python": [
+      "git+https://github.com/ORNL/HydraGNN.git",
+      "git+https://github.com/ORNL/HydraGNN_GFM_FineTuning4Materials.git"
+    ]
+  }
+}
