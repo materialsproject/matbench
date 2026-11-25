@@ -1,0 +1,54 @@
+{
+  "task": {
+    "name": "matbench_expt_gap",
+    "input": "composition",
+    "target": "gap expt",
+    "rows": 4604,
+    "unit": "eV",
+    "id_prefix": "mb-expt-gap-",
+    "id_width": 4,
+    "data_sha256": "783e7d1461eb83b00b2f2942da4b95fda5e58a0d1ae26b581c24cf8a82ca75b2",
+    "official_url": "https://ml.materialsproject.org/projects/matbench_expt_gap.json.gz"
+  },
+  "original_result_sha256": "baa0d5d2bb2a158e5033f925b277f01941642632af60776fafa788d87ca979de",
+  "original_protocol_sha256": "0595680a838fe4c5d6fb0594914964afa6f0cb57b9efae440e302f6167e8f06e",
+  "original_freeze_sha256": "19921f1768495ad17298b9addecec4bd185efe034970729ce1a06956458bff5a",
+  "completed_stages": 71,
+  "inner_real_gradient_fits": 270,
+  "final_real_gradient_fits": 5,
+  "fresh_process_TRAIN_witness_replay_rows": 80,
+  "heldout_predictions": 4604,
+  "additional_full_GPU_replay_passed": false,
+  "additional_full_GPU_replay_rows": 0,
+  "standalone_default_local_A100_end_to_end_retraining_separately_executed": false,
+  "native_scores": {
+    "mae": {
+      "mean": 0.31707419178786395,
+      "max": 0.3512194249914661,
+      "min": 0.28514543006635795,
+      "std": 0.021642045162478318
+    },
+    "rmse": {
+      "mean": 0.8230682034299026,
+      "max": 0.9573919378070539,
+      "min": 0.7158785654134733,
+      "std": 0.07770087554470914
+    },
+    "mape": {
+      "mean": 0.3343414461955478,
+      "max": 0.39926114369058247,
+      "min": 0.2776377950016848,
+      "std": 0.039670082805129445
+    },
+    "max_error": {
+      "mean": 7.501209667267799,
+      "max": 11.097611099123416,
+      "min": 6.380319539706149,
+      "std": 1.8081602609965073
+    }
+  },
+  "original_scientific_source_SHA_exact": true,
+  "all_output_SHA_and_release_checks_passed": true,
+  "scientific_acceptance_pending": true,
+  "public_first_confirmed": false
+}

@@ -1,0 +1,199 @@
+{
+  "frozen_at_utc": "2026-11-23T12:31:05.976716+00:00",
+  "protocol_sha256": "0595680a838fe4c5d6fb0594914964afa6f0cb57b9efae440e302f6167e8f06e",
+  "models": [
+    {
+      "outer_fold": 0,
+      "checkpoint_relative": "model/checkpoint_3K_10.pth",
+      "checkpoint_sha256": "5fe5027ae8fa70aa3f73bd05f98876a16bc4d6d780577ecc14203db856ad2549",
+      "selected": {
+        "index": 381,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s3-e8-median",
+          "baseline_key": null,
+          "weight": 1.0
+        },
+        "mean_fold_mae": 0.32938513968508426,
+        "folds": [
+          0.32853242280889866,
+          0.3251261174491935,
+          0.3344968787971608
+        ]
+      },
+      "selection_sha256": "87601585285029abeab21b816ba45ab930116be565e1c0480b4505d4c568bbde",
+      "actual_training_proof": {
+        "gradient_steps": 280,
+        "epochs": 10,
+        "changed_parameter_tensors": 129,
+        "checkpoint_sha256": "5fe5027ae8fa70aa3f73bd05f98876a16bc4d6d780577ecc14203db856ad2549",
+        "checkpoint_file": "checkpoint_3K_10.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 117.84534429199994,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-expt-gap-3042-v1:14",
+      "compute": {
+        "training_card_hours": 1.3797222222222223,
+        "wall_seconds": 4536.644794735126,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 1,
+      "checkpoint_relative": "model/checkpoint_3K_5.pth",
+      "checkpoint_sha256": "9b4efa4dec56abe6043bb71e8892ffeddf46159b49a6a35de4a850ec250089e3",
+      "selected": {
+        "index": 481,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s4-e8-median",
+          "baseline_key": null,
+          "weight": 1.0
+        },
+        "mean_fold_mae": 0.32545064517762445,
+        "folds": [
+          0.31544203589993447,
+          0.31494729695646806,
+          0.3459626026764709
+        ]
+      },
+      "selection_sha256": "a8c80b97ff3bb2aa899a26cf17e5cb8430bfc3c63f7d7b8a8f3956fedfca66f1",
+      "actual_training_proof": {
+        "gradient_steps": 140,
+        "epochs": 5,
+        "changed_parameter_tensors": 129,
+        "checkpoint_sha256": "9b4efa4dec56abe6043bb71e8892ffeddf46159b49a6a35de4a850ec250089e3",
+        "checkpoint_file": "checkpoint_3K_5.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 66.07587354443967,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-expt-gap-3042-v1:28",
+      "compute": {
+        "training_card_hours": 1.3769444444444445,
+        "wall_seconds": 4364.807430919493,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 2,
+      "checkpoint_relative": "model/checkpoint_3K_5.pth",
+      "checkpoint_sha256": "7399d38cab3f559820e6cf208116b1247401eb75d89a035420c782d1327df36d",
+      "selected": {
+        "index": 481,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s4-e8-median",
+          "baseline_key": null,
+          "weight": 1.0
+        },
+        "mean_fold_mae": 0.3279493236532567,
+        "folds": [
+          0.34727430955662136,
+          0.3527127629312318,
+          0.28386089847191687
+        ]
+      },
+      "selection_sha256": "7c075ee6ba1f821072b73ef23aa5ba7060d38db1202170329c1af55ee27235f4",
+      "actual_training_proof": {
+        "gradient_steps": 140,
+        "epochs": 5,
+        "changed_parameter_tensors": 129,
+        "checkpoint_sha256": "7399d38cab3f559820e6cf208116b1247401eb75d89a035420c782d1327df36d",
+        "checkpoint_file": "checkpoint_3K_5.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 87.24831736087799,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-expt-gap-3042-v1:42",
+      "compute": {
+        "training_card_hours": 1.4522222222222223,
+        "wall_seconds": 4808.797520597465,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 3,
+      "checkpoint_relative": "model/checkpoint_3K_10.pth",
+      "checkpoint_sha256": "838e9bd9a0cdd0560e73a5ad6afb1360012bd82385315a9ef91c92dd21d2b92b",
+      "selected": {
+        "index": 981,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-composition260-s3-e8-median",
+          "baseline_key": null,
+          "weight": 1.0
+        },
+        "mean_fold_mae": 0.3427102056358076,
+        "folds": [
+          0.3355129350860709,
+          0.33413427372031673,
+          0.3584834081010352
+        ]
+      },
+      "selection_sha256": "2593220471b773dc734540b8ed479f9d0c2d9b3dda215a752bd85960513117af",
+      "actual_training_proof": {
+        "gradient_steps": 280,
+        "epochs": 10,
+        "changed_parameter_tensors": 129,
+        "checkpoint_sha256": "838e9bd9a0cdd0560e73a5ad6afb1360012bd82385315a9ef91c92dd21d2b92b",
+        "checkpoint_file": "checkpoint_3K_10.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 149.4290148410946,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-expt-gap-3042-v1:56",
+      "compute": {
+        "training_card_hours": 1.5327777777777778,
+        "wall_seconds": 4864.810425239848,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    },
+    {
+      "outer_fold": 4,
+      "checkpoint_relative": "model/checkpoint_3K_10.pth",
+      "checkpoint_sha256": "3d79753b7d1802dc357dc1fcfaba6bc10a6532e711603cdd1e0081b140c7cca4",
+      "selected": {
+        "index": 381,
+        "candidate": {
+          "kind": "finetune_blend",
+          "key": "ft-all370-s3-e8-median",
+          "baseline_key": null,
+          "weight": 1.0
+        },
+        "mean_fold_mae": 0.33126081138751606,
+        "folds": [
+          0.3235796776334238,
+          0.3278413278004927,
+          0.34236142872863173
+        ]
+      },
+      "selection_sha256": "dc57ab2d93e243b164263080f827287bef5639cf48b835ca0b8c68ba7aa616e3",
+      "actual_training_proof": {
+        "gradient_steps": 280,
+        "epochs": 10,
+        "changed_parameter_tensors": 129,
+        "checkpoint_sha256": "3d79753b7d1802dc357dc1fcfaba6bc10a6532e711603cdd1e0081b140c7cca4",
+        "checkpoint_file": "checkpoint_3K_10.pth",
+        "checkpoint_reload_max_abs_difference": 0.0,
+        "same_process_checkpoint_reload_not_fresh_process": true,
+        "seconds": 115.00729087553918,
+        "probe_role": "TRAIN_witness_only"
+      },
+      "model_ref": "hyd-unified-expt-gap-3042-v1:70",
+      "compute": {
+        "training_card_hours": 1.6391666666666667,
+        "wall_seconds": 5843.8011839659885,
+        "scope": "candidate selection plus final refit; executor intervals exclude queues/archives"
+      }
+    }
+  ],
+  "all_five_genuinely_trained": true,
+  "corrected_test_predictions_made": false,
+  "manual_host_recovery_disclosed": true
+}

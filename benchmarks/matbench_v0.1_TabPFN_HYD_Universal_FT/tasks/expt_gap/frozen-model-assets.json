@@ -1,0 +1,157 @@
+{
+  "publication_status": "planned_URLs_not_yet_verified",
+  "task": "matbench_expt_gap",
+  "foundation_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+  "original_freeze_sha256": "19921f1768495ad17298b9addecec4bd185efe034970729ce1a06956458bff5a",
+  "context_files": [
+    "selection-0.json",
+    "selection-1.json",
+    "selection-2.json",
+    "selection-3.json",
+    "selection-4.json",
+    "test-0.npz",
+    "test-1.npz",
+    "test-2.npz",
+    "test-3.npz",
+    "test-4.npz",
+    "test-predictions.json",
+    "train-0.npz",
+    "train-1.npz",
+    "train-2.npz",
+    "train-3.npz",
+    "train-4.npz"
+  ],
+  "files": {
+    "all-five-models-freeze.json": {
+      "bytes": 7439,
+      "sha256": "19921f1768495ad17298b9addecec4bd185efe034970729ce1a06956458bff5a"
+    },
+    "fold-0.pth": {
+      "bytes": 133183455,
+      "sha256": "5fe5027ae8fa70aa3f73bd05f98876a16bc4d6d780577ecc14203db856ad2549"
+    },
+    "fold-1.pth": {
+      "bytes": 133182931,
+      "sha256": "9b4efa4dec56abe6043bb71e8892ffeddf46159b49a6a35de4a850ec250089e3"
+    },
+    "fold-2.pth": {
+      "bytes": 133182931,
+      "sha256": "7399d38cab3f559820e6cf208116b1247401eb75d89a035420c782d1327df36d"
+    },
+    "fold-3.pth": {
+      "bytes": 133183455,
+      "sha256": "838e9bd9a0cdd0560e73a5ad6afb1360012bd82385315a9ef91c92dd21d2b92b"
+    },
+    "fold-4.pth": {
+      "bytes": 133183455,
+      "sha256": "3d79753b7d1802dc357dc1fcfaba6bc10a6532e711603cdd1e0081b140c7cca4"
+    },
+    "selection-0.json": {
+      "bytes": 555902,
+      "sha256": "87601585285029abeab21b816ba45ab930116be565e1c0480b4505d4c568bbde"
+    },
+    "selection-1.json": {
+      "bytes": 555816,
+      "sha256": "a8c80b97ff3bb2aa899a26cf17e5cb8430bfc3c63f7d7b8a8f3956fedfca66f1"
+    },
+    "selection-2.json": {
+      "bytes": 555891,
+      "sha256": "7c075ee6ba1f821072b73ef23aa5ba7060d38db1202170329c1af55ee27235f4"
+    },
+    "selection-3.json": {
+      "bytes": 555898,
+      "sha256": "2593220471b773dc734540b8ed479f9d0c2d9b3dda215a752bd85960513117af"
+    },
+    "selection-4.json": {
+      "bytes": 555918,
+      "sha256": "dc57ab2d93e243b164263080f827287bef5639cf48b835ca0b8c68ba7aa616e3"
+    },
+    "test-0.npz": {
+      "bytes": 227671,
+      "sha256": "dc841c0ed455bf8dcdd7a02ea0850b0bc6454a65945825ac9008af0580468636"
+    },
+    "test-1.npz": {
+      "bytes": 228399,
+      "sha256": "a13445d2108cf754b6775ee486afcc8b6e9d8386dfd4bcecfb7d594aa5b83011"
+    },
+    "test-2.npz": {
+      "bytes": 224813,
+      "sha256": "305722cb50a13f8fae3436dba53d0178f10665f5cacd72c63d1146912f939fcb"
+    },
+    "test-3.npz": {
+      "bytes": 227153,
+      "sha256": "7ef63cca2e33a2a04a9c83d4646981749a4839d2dbe6b726cbaaf8e3e9051e24"
+    },
+    "test-4.npz": {
+      "bytes": 228993,
+      "sha256": "7e08eb111eabaeb95ca2225525794600c4049cc580f26ffe6537932e9999ee08"
+    },
+    "test-predictions.json": {
+      "bytes": 427537,
+      "sha256": "d49ce67e9d86ce698b555ae7f541a3b2dd2e8f8577868efbb14c0b673666930a"
+    },
+    "train-0.npz": {
+      "bytes": 866099,
+      "sha256": "f9b6d9a991be65f34182b5f851e8e3a27b8df6030c4c7a53709b7f022731609e"
+    },
+    "train-1.npz": {
+      "bytes": 865913,
+      "sha256": "14cd39d98366474bccd6ef72f9fd901e677610d42ca626d821723bfdbb3470b9"
+    },
+    "train-2.npz": {
+      "bytes": 868225,
+      "sha256": "c3f31f2b9c75d5875d9185121ee4657713fd1620019c6ff36e82befd2ff5105a"
+    },
+    "train-3.npz": {
+      "bytes": 868367,
+      "sha256": "726e3b45221d60b698575f0fb5302ea9de615f4dab669f4088eab747d26d806e"
+    },
+    "train-4.npz": {
+      "bytes": 863710,
+      "sha256": "ac9b57fd24cfd1d93605e3b2bab46ae9e3ea027ab0422d222520defc845b1221"
+    }
+  },
+  "downloads": {
+    "all-five-models-freeze.json": {
+      "bytes": 7439,
+      "sha256": "19921f1768495ad17298b9addecec4bd185efe034970729ce1a06956458bff5a",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-all-five-models-freeze.json"
+    },
+    "fold-0.pth": {
+      "bytes": 133183455,
+      "sha256": "5fe5027ae8fa70aa3f73bd05f98876a16bc4d6d780577ecc14203db856ad2549",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-fold-0.pth"
+    },
+    "fold-1.pth": {
+      "bytes": 133182931,
+      "sha256": "9b4efa4dec56abe6043bb71e8892ffeddf46159b49a6a35de4a850ec250089e3",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-fold-1.pth"
+    },
+    "fold-2.pth": {
+      "bytes": 133182931,
+      "sha256": "7399d38cab3f559820e6cf208116b1247401eb75d89a035420c782d1327df36d",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-fold-2.pth"
+    },
+    "fold-3.pth": {
+      "bytes": 133183455,
+      "sha256": "838e9bd9a0cdd0560e73a5ad6afb1360012bd82385315a9ef91c92dd21d2b92b",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-fold-3.pth"
+    },
+    "fold-4.pth": {
+      "bytes": 133183455,
+      "sha256": "3d79753b7d1802dc357dc1fcfaba6bc10a6532e711603cdd1e0081b140c7cca4",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-fold-4.pth"
+    },
+    "replay-context.zip": {
+      "bytes": 5836642,
+      "sha256": "3546ad78c483490d403568d000ff1be26da77e889d957f7b501fd7352ae93560",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/expt_gap-replay-context.zip"
+    }
+  },
+  "inference_source_sha256": {
+    "hyd_regression_features.py": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
+    "hyd_regression_training.py": "9e571e5274004fbeac01f978ffb6e9e2d98267e87372f7b36887ccb46744c06b",
+    "hyd_regression_candidates.py": "3f40befbe151345afb8b34c28c9048d7b47dce9b0e1fed658ef11f49d218a472",
+    "hyd_regression_workflow.py": "f6844b5e505763ef79f1c1f4cbaabe7f361c7f67f0b604cde65a40e8bfd4d617"
+  }
+}

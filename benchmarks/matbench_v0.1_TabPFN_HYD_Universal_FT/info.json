@@ -1,0 +1,21 @@
+{
+  "authors": "HYD (donkeey11)",
+  "algorithm": "TabPFN-HYD-Universal-FT",
+  "algorithm_long": "Unified material regression with target-independent descriptors, genuine TabPFN-v2/MLP gradient training and the same predeclared per-TRAIN 1206-recipe selection design. Three complete regression tasks. Built with PriorLabs-TabPFN.",
+  "bibtex_refs": "@article{dunn2020matbench,\n title={Benchmarking materials property prediction methods: the Matbench test set and Automatminer reference algorithm},\n author={Dunn, Alexander and Wang, Qi and Ganose, Alex and Dopp, Daniel and Jain, Anubhav},\n journal={npj Computational Materials}, volume={6}, pages={138}, year={2020}, doi={10.1038/s41524-020-00406-3}}\n@article{hollmann2025tabpfn,\n title={Accurate predictions on small data with a tabular foundation model},\n author={Hollmann, Noah and Muller, Samuel and Purucker, Lennart and Krishnakumar, Arjun and Korfer, Max and Hoo, Shi Bin and Schirrmeister, Robin Tibor and Hutter, Frank},\n journal={Nature}, volume={637}, pages={319--326}, year={2025}, doi={10.1038/s41586-024-08328-6}}\n@article{ward2018matminer,\n title={Matminer: An open source toolkit for materials data mining}, author={Ward, Logan and others},\n journal={Computational Materials Science}, volume={152}, pages={60--69}, year={2018}, doi={10.1016/j.commatsci.2018.05.018}}\n@article{pedregosa2011scikit,\n title={Scikit-learn: Machine Learning in Python}, author={Pedregosa, Fabian and others},\n journal={Journal of Machine Learning Research}, volume={12}, pages={2825--2830}, year={2011}}\n",
+  "notes": "Three complete native five-fold tasks: phonons MAE24.924304469958248 cm^-1; refractive index (matbench_dielectric) MAE0.2564567309263447; experimental band gap MAE0.31707419178786395 eV. Each has270 inner gradient fits and5final trained models frozen before TEST inference. Own-TRAIN composition-group3fold selection with fixed ties; no adaptive shared-grid narrowing. Exact historical six-source snapshots retained per task: larger tasks change only fit timeout and job partitioning. Band gap has composition input only; its all370 option has missing structure slots, not observed crystal geometry. Prior JDFT2D exposure/correction and foundation limitations disclosed. Additional full1265GPU replay passed for phonons only; dielectric and gap provide full replay code/context with80TRAIN witnesses in their original fresh inference processes, no additional all-row replay claimed. Original task artifacts/predictions unchanged; this metadata-only native merge does not choose by score. Public release assets include all15full checkpoints/original freezes and target-free TEST replay contexts. Two declared modulus tasks remain planned and will be reported regardless of score: shear has a retained incomplete-epoch compute failure before any TEST score, and bulk training has not started. No automatic GPU retry was performed. No13-task completion or official first-place claim.",
+  "requirements": {
+    "python": [
+      "numpy==2.5.4",
+      "scikit-learn==1.9.1",
+      "scipy==1.18.1",
+      "joblib==1.6.0",
+      "threadpoolctl==3.7.0",
+      "tabpfn==9.2.0",
+      "torch==2.13.0",
+      "matminer==0.10.1",
+      "pymatgen==2026.10.24",
+      "matbench @ git+https://github.com/materialsproject/matbench.git@35f88110a51adf817a53515780d99fc34f614bf8"
+    ]
+  }
+}

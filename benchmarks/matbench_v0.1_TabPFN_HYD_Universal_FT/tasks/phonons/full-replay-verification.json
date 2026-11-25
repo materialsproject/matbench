@@ -1,0 +1,46 @@
+{
+  "experiment_succeeded": true,
+  "all1265_replayed": true,
+  "n_predictions": 1265,
+  "all_asset_SHA_verified": true,
+  "original_freeze_sha256": "87a42a01bcc53e1b2c9a406a63255d4468f4f428ee96eb5488d4b0154a669b8f",
+  "folds": [
+    {
+      "fold": 0,
+      "rows": 253,
+      "passed": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "fold": 1,
+      "rows": 253,
+      "passed": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "fold": 2,
+      "rows": 253,
+      "passed": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "fold": 3,
+      "rows": 253,
+      "passed": true,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "fold": 4,
+      "rows": 253,
+      "passed": true,
+      "maximum_absolute_difference": 0.0
+    }
+  ],
+  "atol": 0.001,
+  "rtol": 0.0001,
+  "test_targets_loaded": false,
+  "gradient_updates": 0,
+  "benchmark_score_computed": false,
+  "models_or_recipes_changed": false,
+  "real_HF_snapshot_symlink_adapter_passed": true
+}

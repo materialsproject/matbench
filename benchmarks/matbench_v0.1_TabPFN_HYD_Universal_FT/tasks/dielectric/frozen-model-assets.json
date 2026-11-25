@@ -1,0 +1,157 @@
+{
+  "publication_status": "planned_URLs_not_yet_verified",
+  "task": "matbench_dielectric",
+  "foundation_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+  "original_freeze_sha256": "d32ca0d0557996401b340a27c8e5e3e80fa07cf9b329c241354283b000030a02",
+  "context_files": [
+    "selection-0.json",
+    "selection-1.json",
+    "selection-2.json",
+    "selection-3.json",
+    "selection-4.json",
+    "test-0.npz",
+    "test-1.npz",
+    "test-2.npz",
+    "test-3.npz",
+    "test-4.npz",
+    "test-predictions.json",
+    "train-0.npz",
+    "train-1.npz",
+    "train-2.npz",
+    "train-3.npz",
+    "train-4.npz"
+  ],
+  "files": {
+    "all-five-models-freeze.json": {
+      "bytes": 7543,
+      "sha256": "d32ca0d0557996401b340a27c8e5e3e80fa07cf9b329c241354283b000030a02"
+    },
+    "fold-0.pth": {
+      "bytes": 76366046,
+      "sha256": "80c168e03690d48204814f68a1cfcef2dce1fef5ff5903b706bb1fe003323c58"
+    },
+    "fold-1.pth": {
+      "bytes": 76366046,
+      "sha256": "ec2b60b943b002cfaa01e12d2422ab2dbe70c71e1c6a62c43badea593f544924"
+    },
+    "fold-2.pth": {
+      "bytes": 76366046,
+      "sha256": "42d38a906b796be22bc645114ee87baa7befa6076cdabf147b054faa6a758061"
+    },
+    "fold-3.pth": {
+      "bytes": 76366046,
+      "sha256": "806a547e756aebacaf8961f7e1649450ace7971bffb94f6bd40feff7dab695a5"
+    },
+    "fold-4.pth": {
+      "bytes": 133183455,
+      "sha256": "f48b2335c92b0cb0e9c0d06f2cb106724e38bb87c40a018b25301b9fa185654c"
+    },
+    "selection-0.json": {
+      "bytes": 569299,
+      "sha256": "e0ea0e428cfddb5dab3ff40a15e5377c175b52e164f8eca1936230e8ae284584"
+    },
+    "selection-1.json": {
+      "bytes": 569392,
+      "sha256": "b966d8888e134594acc211a16e0612f560d36e2b6ff8d389dd0e93c5fdef77b9"
+    },
+    "selection-2.json": {
+      "bytes": 569372,
+      "sha256": "0cd38986ddc127b73a214bd4c7e4c7d2e7434afd31280e89b6dedb7888211153"
+    },
+    "selection-3.json": {
+      "bytes": 569210,
+      "sha256": "f75f99286cce1062cf6875e843b95e1f77ee4d0c4153be51ce23f37d8aed1d06"
+    },
+    "selection-4.json": {
+      "bytes": 569517,
+      "sha256": "9182ba39058109f219d1dd4b1ffa7399dd18381fa4cc341ca62fc2f71f71e607"
+    },
+    "test-0.npz": {
+      "bytes": 396724,
+      "sha256": "bf934b476d48b55557cfebeb4bef1149566d096b267fd95e2e2ccff72b3854a3"
+    },
+    "test-1.npz": {
+      "bytes": 390217,
+      "sha256": "e3fb9282b4220b6e8641a5f251762a8e86074443fbd42562cb4ea47aef9b7991"
+    },
+    "test-2.npz": {
+      "bytes": 395198,
+      "sha256": "a1b1387e4b5119ba1c53e573c541948b53971b90cabf7e27ba6526ffcc5a5fdb"
+    },
+    "test-3.npz": {
+      "bytes": 397287,
+      "sha256": "27bb0ffdf6eb2c41337c1aa320412aa3ed3d4c934c320d253dfd1d2803e79b13"
+    },
+    "test-4.npz": {
+      "bytes": 394053,
+      "sha256": "5f2ad105da6b9961668787a82fc268cfb8890ea4ff979236230ae33bed733933"
+    },
+    "test-predictions.json": {
+      "bytes": 441079,
+      "sha256": "95934b66892559070326237d116b280057e753d815f981ffd6a268c5e3011ea3"
+    },
+    "train-0.npz": {
+      "bytes": 1614124,
+      "sha256": "9d1fd571c32883ffe8704b50f7e675fba29ff4ce2872c2ad0dcb9d3576b73ed5"
+    },
+    "train-1.npz": {
+      "bytes": 1621380,
+      "sha256": "23bb774ba5989e577481d82074920c5331a267b41326214bfa574fde386482d4"
+    },
+    "train-2.npz": {
+      "bytes": 1615260,
+      "sha256": "19214389ddd0dcce06b7881e300fc1422a3991742cdea5dc0936cfcc13eb3876"
+    },
+    "train-3.npz": {
+      "bytes": 1612289,
+      "sha256": "a76bc5075bd8d51533eead10e1f00d715bdaec1eb447d0801d1138ef71270fc3"
+    },
+    "train-4.npz": {
+      "bytes": 1614635,
+      "sha256": "a5f1bddc19062e355095797dbe70a6dbe97ae00974f4527a04f0399013f0fa5f"
+    }
+  },
+  "downloads": {
+    "all-five-models-freeze.json": {
+      "bytes": 7543,
+      "sha256": "d32ca0d0557996401b340a27c8e5e3e80fa07cf9b329c241354283b000030a02",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-all-five-models-freeze.json"
+    },
+    "fold-0.pth": {
+      "bytes": 76366046,
+      "sha256": "80c168e03690d48204814f68a1cfcef2dce1fef5ff5903b706bb1fe003323c58",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-fold-0.pth"
+    },
+    "fold-1.pth": {
+      "bytes": 76366046,
+      "sha256": "ec2b60b943b002cfaa01e12d2422ab2dbe70c71e1c6a62c43badea593f544924",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-fold-1.pth"
+    },
+    "fold-2.pth": {
+      "bytes": 76366046,
+      "sha256": "42d38a906b796be22bc645114ee87baa7befa6076cdabf147b054faa6a758061",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-fold-2.pth"
+    },
+    "fold-3.pth": {
+      "bytes": 76366046,
+      "sha256": "806a547e756aebacaf8961f7e1649450ace7971bffb94f6bd40feff7dab695a5",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-fold-3.pth"
+    },
+    "fold-4.pth": {
+      "bytes": 133183455,
+      "sha256": "f48b2335c92b0cb0e9c0d06f2cb106724e38bb87c40a018b25301b9fa185654c",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-fold-4.pth"
+    },
+    "replay-context.zip": {
+      "bytes": 10461864,
+      "sha256": "ade650304c2dcb302064bc7a592e7578c423a1aa0dd19fffe7ca18f5fc8c9e6a",
+      "url": "https://github.com/donkeey11/matbench/releases/download/unified-regression-three-tasks-v1/dielectric-replay-context.zip"
+    }
+  },
+  "inference_source_sha256": {
+    "hyd_regression_features.py": "f6b83fd63e73956e457b38937f6716d017f9100d93cd05bccfa686d873613de6",
+    "hyd_regression_training.py": "9e571e5274004fbeac01f978ffb6e9e2d98267e87372f7b36887ccb46744c06b",
+    "hyd_regression_candidates.py": "3f40befbe151345afb8b34c28c9048d7b47dce9b0e1fed658ef11f49d218a472",
+    "hyd_regression_workflow.py": "f6844b5e505763ef79f1c1f4cbaabe7f361c7f67f0b604cde65a40e8bfd4d617"
+  }
+}

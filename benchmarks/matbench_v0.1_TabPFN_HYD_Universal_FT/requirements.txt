@@ -1,0 +1,10 @@
+numpy==2.5.4
+scikit-learn==1.9.1
+scipy==1.18.1
+joblib==1.6.0
+threadpoolctl==3.7.0
+tabpfn==9.2.0
+torch==2.13.0
+matminer==0.10.1
+pymatgen==2026.10.24
+matbench @ git+https://github.com/materialsproject/matbench.git@35f88110a51adf817a53515780d99fc34f614bf8
