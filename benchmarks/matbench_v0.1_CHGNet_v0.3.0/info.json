@@ -1,0 +1,14 @@
+{
+    "authors": "Archie Mingze Yao and Changwen Xu",
+    "algorithm": "CHGNet v0.3.0",
+    "algorithm_long": "Finetune CHGNet v0.3.0 with new prediction head",
+    "bibtex_refs": "@article{deng2023chgnet, title={CHGNet as a pretrained universal neural network potential for charge-informed atomistic modelling}, author={Deng, Bowen and Zhong, Peichen and Jun, KyuJung and Riebesell, Janosh and Han, Kevin and Bartel, Christopher J and Ceder, Gerbrand}, journal={Nature Machine Intelligence}, volume={5}, number={9}, pages={1031--1041}, year={2023}, publisher={Nature Publishing Group UK London}}",
+    "notes": "",
+    "requirements": {
+      "python":  [
+        "matminer==0.7.4",
+        "chgnet==0.3.8", 
+        "matbench==0.6"
+      ]
+    }
+  }
